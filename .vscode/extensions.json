@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "donjayamanne.githistory",
+    "felipecaputo.git-project-manager",
+    "cschleiden.vscode-github-actions",
+    "github.vscode-pull-request-github",
+    "eamodio.gitlens",
+    "ms-toolsai.jupyter",
+    "ms-python.vscode-pylance",
+    "ms-python.python",
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-preview-github-styles",
+    "davidanson.vscode-markdownlint",
+    "esbenp.prettier-vscode",
+    "lextudio.restructuredtext",
+    "reverbc.vscode-pytest",
+    "stkb.rewrap"
+  ]
+}
