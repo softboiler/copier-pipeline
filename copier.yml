@@ -4,14 +4,4 @@ project_name: my_project_name
 _envops:
   keep_trailing_newline: true
 
-_exclude:
-  - .gitignore
-  # Default
-  - copier.yaml
-  - copier.yml
-  - ~*
-  - "*.py[co]"
-  - __pycache__
-  - .git
-  - .DS_Store
-  - .svn
+_subdirectory: template
