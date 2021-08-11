@@ -8,7 +8,7 @@ _exclude:
   - .gitignore
   # Default
   - copier.yaml
-  - copier.yaml
+  - copier.yml
   - ~*
   - "*.py[co]"
   - __pycache__
