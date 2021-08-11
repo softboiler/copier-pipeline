@@ -1,5 +1,8 @@
-github_user: ""
-project_name: ""
+github_user:
+  type: str
+
+project_name:
+  type: str
 
 _envops:
   keep_trailing_newline: true
