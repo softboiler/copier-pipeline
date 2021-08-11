@@ -1,0 +1,25 @@
+# This project
+-e .
+
+# Project-specific
+
+# Build
+twine~=3.4
+
+# Experiment
+jupyter~=1.0
+nbstripout==0.5.0
+
+# Format
+black==21.7b0  # doesn't follow semver
+
+# Lint
+-r requirements_lint.txt
+flake8-codes~=0.1  # flake8 error code introspection
+
+# Test
+pytest~=6.2
+pytest-cov~=2.12
+
+# Templating
+copier-6.0.0a7-py3-none-any.whl

@@ -1,0 +1,10 @@
+{
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blakeNaccarato/wikiman.git"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "pyright": "~1.1"
+  }
+}

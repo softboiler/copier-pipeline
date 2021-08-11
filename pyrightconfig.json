@@ -1,0 +1,11 @@
+{
+  "typeCheckingMode": "strict",
+  "include": ["src"],
+  "extraPaths": ["examples", "tests"],
+  "reportMissingTypeStubs": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownLambdaType": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownVariableType": "none"
+}
