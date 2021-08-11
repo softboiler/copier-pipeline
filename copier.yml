@@ -1,5 +1,5 @@
-name: Sample Person
-project_name: my_project_name
+github_user:
+project_name:
 
 _envops:
   keep_trailing_newline: true
