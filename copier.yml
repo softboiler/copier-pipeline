@@ -1,7 +1,9 @@
 github_user:
+  default: githubUser
   type: str
 
-project_name:
+github_repo:
+  default: github_repo
   type: str
 
 _envops:
