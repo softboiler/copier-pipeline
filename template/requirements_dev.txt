@@ -20,6 +20,3 @@ flake8-codes~=0.1  # flake8 error code introspection
 # Test
 pytest~=6.2
 pytest-cov~=2.12
-
-# Templating
-copier-6.0.0a7-py3-none-any.whl
