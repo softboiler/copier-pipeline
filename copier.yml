@@ -32,6 +32,7 @@ _envops:
   keep_trailing_newline: true
 
 _skip_if_exists:
+  - pyproject.toml
   - README.md
   - __init__.py
   - "test_{{ project_name }}.py.jinja"
