@@ -1,0 +1,12 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "{{ project_name }}"
+authors = [{name = "{{ project_owner_name }}", email = "{{ project_email }}"}]
+classifiers = ["License :: OSI Approved :: MIT License"]
+dynamic = ["version", "description"]
+
+[project.urls]
+Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"

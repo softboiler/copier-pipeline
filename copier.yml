@@ -1,15 +1,26 @@
 project_owner_github_username:
   type: str
   help: The username of the GitHub user hosting this project.
+  default:
 
 project_owner_name:
   type: str
   help: The name (or names) that will populate the LICENSE file if not the username above.
   default: "{{ project_owner_github_username }}"
 
+year_of_project_creation:
+  type: int
+  help: The year in which this project was created. For the LICENSE file.
+
+project_email:
+  type: str
+  help: The email address that will be associated with this project.
+  default:
+
 github_repo_name:
   type: str
   help: The name of the GitHub repo hosting this project.
+  default:
 
 project_name:
   type: str
