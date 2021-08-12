@@ -6,10 +6,6 @@ github_repo_name:
   type: str
   help: The name of the GitHub repo hosting this project. 
 
-project_info_same_as_above:
-  type: bool
-  help: Whether you want to specify a different project name or owner (as in the LICENSE).
-
 project_owner_name:
   type: str
   help: "The name (or names) that will populate the LICENSE file. Default: {{ project_owner_github_username }}"
