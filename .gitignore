@@ -6,8 +6,8 @@ package.json
 pyrightconfig.json
 pytest.ini
 requirements_both.txt
-requirements_dev.txt
 requirements_cicd.txt
+requirements_dev.txt
 update.ps1
 
 # * -------------------------------------------------------------------------------- * #
