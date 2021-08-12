@@ -34,7 +34,7 @@ _envops:
 _skip_if_exists:
   - pyproject.toml
   - README.md
-  - "__init__.py"
-  - "test_{{ project_name }}.py.jinja"
+  - "src/{{ project_name }}/__init__.py"
+  - "tests/test_{{ project_name }}.py.jinja"
 
 _subdirectory: template
