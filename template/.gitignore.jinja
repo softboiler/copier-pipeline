@@ -6,11 +6,11 @@ pyrightconfig.json
 pytest.ini
 setup.ps1
 
-{% if not gitignore_dependencies %}# Dependencies to be maintained in one place{% endif %}
+{% if gitignore_dependencies %}# Dependencies to be maintained in one place
 package.json
 requirements_both.txt
 requirements_cicd.txt
-requirements_dev.txt
+requirements_dev.txt{% endif %}
 
 # * -------------------------------------------------------------------------------- * #
 # * https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
