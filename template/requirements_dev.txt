@@ -1,10 +1,7 @@
-# This project
--e .
-
 # Project-specific
 
 # Build
-twine~=3.4
+flit~=3.3
 
 # Experiment
 jupyter~=1.0
