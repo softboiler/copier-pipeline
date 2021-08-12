@@ -1,3 +1,10 @@
+_min_copier_version: "6.0.0a7"
+
+_subdirectory: template
+
+_envops:
+  keep_trailing_newline: true
+
 project_owner_github_username:
   type: str
   help: The username of the GitHub user hosting this project.
@@ -33,15 +40,8 @@ gitignore_dependencies:
   help: Whether to ignore dependencies. Should almost always be "yes".
   default: yes
 
-_envops:
-  keep_trailing_newline: true
-
-_min_copier_version: "6.0.0a7"
-
 _skip_if_exists:
   - pyproject.toml
   - README.md
   - "src/{{ project_name }}/__init__.py"
   - "tests/test_{{ project_name }}.py"
-
-_subdirectory: template
