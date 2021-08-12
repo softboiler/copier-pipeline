@@ -17,8 +17,9 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install -r requirements_cicd.txt
+          pip install -r requirements.txt
           copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          pip install -r requirements_cicd.txt
           flit install
       - run: flake8
 
@@ -31,8 +32,9 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install -r requirements_cicd.txt
+          pip install -r requirements.txt
           copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          pip install -r requirements_cicd.txt
           flit install
       - uses: actions/setup-node@v2.4.0
         with:
@@ -49,8 +51,9 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install -r requirements_cicd.txt
+          pip install -r requirements.txt
           copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          pip install -r requirements_cicd.txt
           flit install
       - run: pytest --cov
       - uses: codecov/codecov-action@v2.0.2
