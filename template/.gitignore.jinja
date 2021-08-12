@@ -6,7 +6,7 @@ pyrightconfig.json
 pytest.ini
 setup.ps1
 
-{%- if not gitignore_dependencies -%}# Dependencies to be maintained in one place{%- endif -%}
+{% if not gitignore_dependencies %}# Dependencies to be maintained in one place{% endif %}
 package.json
 requirements_both.txt
 requirements_cicd.txt
