@@ -40,11 +40,6 @@ gitignore_dependencies:
   help: Whether to ignore dependencies. Should almost always be "yes".
   default: yes
 
-copier_version_for_workflows:
-  type: str
-  help: The version of Copier used in workflows. You shouldn't need to change this.
-  default: {{ _min_copier_version }}
-
 _skip_if_exists:
   - pyproject.toml
   - README.md
