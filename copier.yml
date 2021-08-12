@@ -12,21 +12,13 @@ project_info_same_as_above:
 
 project_owner_name:
   type: str
-  help: The name (or names) that will populate the LICENSE file.
+  help: "The name (or names) that will populate the LICENSE file. Default: {{ project_owner_github_username }}"
   default: "{{ project_owner_github_username }}"
-  when: "{% if not project_info_same_as_above %}true{% endif %}"
 
 project_name:
   type: str
-  help: "The name of this project. Default: github_repo_name"
+  help: "The name of this project.  Default: {{ github_repo_name }}"
   default: "{{ github_repo_name }}"
-  when: "{% if not project_info_same_as_above %}true{% endif %}"
-
-project_owner_name: "{{ project_owner_github_username }}"
-  when: "{% if project_info_same_as_above %}true{% endif %}"
-
-project_name: "{{ github_repo_name }}"
-  when: "{% if project_info_same_as_above %}true{% endif %}"
 
 _envops:
   keep_trailing_newline: true
