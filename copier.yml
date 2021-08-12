@@ -34,5 +34,6 @@ _envops:
 _skip_if_exists:
   - README.md
   - __init__.py
+  - "test_{{ project_name }}.py.jinja"
 
 _subdirectory: template
