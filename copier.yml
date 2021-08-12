@@ -11,6 +11,7 @@ project_owner_name:
 year_of_project_creation:
   type: int
   help: The year in which this project was created. For the LICENSE file.
+  default: 2021
 
 project_email:
   type: str
