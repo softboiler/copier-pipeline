@@ -1,6 +1,6 @@
 # Experiment
 jupyter~=1.0
-nbstripout==0.5.0
+nbstripout~=0.5.0
 
 # Format
 black==21.7b0  # doesn't follow semver
