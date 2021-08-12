@@ -18,7 +18,7 @@ jobs:
       - run: |
           pip install -U pip
           pip install -r requirements.txt
-          copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          copier gh:blakeNaccarato/copier-python . -f -r 0.0.3
           pip install -r requirements_cicd.txt
           flit install
       - run: flake8
@@ -33,7 +33,7 @@ jobs:
       - run: |
           pip install -U pip
           pip install -r requirements.txt
-          copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          copier gh:blakeNaccarato/copier-python . -f -r 0.0.3
           pip install -r requirements_cicd.txt
           flit install
       - uses: actions/setup-node@v2.4.0
@@ -52,7 +52,7 @@ jobs:
       - run: |
           pip install -U pip
           pip install -r requirements.txt
-          copier gh:blakeNaccarato/copier-python . -r HEAD -f
+          copier gh:blakeNaccarato/copier-python . -f -r 0.0.3
           pip install -r requirements_cicd.txt
           flit install
       - run: pytest --cov
