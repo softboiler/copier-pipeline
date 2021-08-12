@@ -1,0 +1,3 @@
+copier==6.0.0a7  # will revert to semver on release of v6
+
+-r requirements_both.txt
