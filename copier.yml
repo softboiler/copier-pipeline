@@ -8,12 +8,12 @@ github_repo_name:
 
 project_owner_name:
   type: str
-  help: "The name (or names) that will populate the LICENSE file. Default: {{ project_owner_github_username }}"
+  help: The name (or names) that will populate the LICENSE file if not the username above.
   default: "{{ project_owner_github_username }}"
 
 project_name:
   type: str
-  help: "The name of this project.  Default: {{ github_repo_name }}"
+  help: The name of this project if it is different from the repo name above.
   default: "{{ github_repo_name }}"
 
 _envops:
