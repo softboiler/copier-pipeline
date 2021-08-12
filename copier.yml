@@ -9,7 +9,6 @@ github_repo_name:
 project_info_same_as_above:
   type: bool
   help: Whether you want to specify a different project name or owner (as in the LICENSE).
-  default: yes
 
 project_owner_name:
   type: str
