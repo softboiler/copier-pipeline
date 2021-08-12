@@ -1,6 +1,3 @@
-"""Short description of your project.
-
-Long description of your project.
-"""
+"""A dummy project to run workflows on."""
 
 __version__ = "0.0.0"
