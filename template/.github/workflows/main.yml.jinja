@@ -17,6 +17,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
+          pip install wheel
           pip install --pre copier
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
@@ -32,6 +33,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
+          pip install wheel
           pip install --pre copier
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
@@ -51,6 +53,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
+          pip install wheel
           pip install --pre copier
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
