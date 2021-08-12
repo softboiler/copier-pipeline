@@ -17,7 +17,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install copier==6.0.0a7
+          pip install copier=={{ _min_copier_version }}
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
           flit install
@@ -32,7 +32,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install copier==6.0.0a7
+          pip install copier=={{ _min_copier_version }}
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
           flit install
@@ -51,7 +51,7 @@ jobs:
           python-version: 3.9
       - run: |
           pip install -U pip
-          pip install copier==6.0.0a7
+          pip install copier=={{ _min_copier_version }}
           copier gh:blakeNaccarato/copier-python . -f -r {{ _commit }}
           pip install -r requirements_cicd.txt
           flit install

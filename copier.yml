@@ -36,6 +36,8 @@ gitignore_dependencies:
 _envops:
   keep_trailing_newline: true
 
+_min_copier_version: "6.0.0a7"
+
 _skip_if_exists:
   - pyproject.toml
   - README.md
