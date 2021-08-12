@@ -19,4 +19,8 @@ project_name:
 _envops:
   keep_trailing_newline: true
 
+_skip_if_exists:
+  - README.md
+  - __init__.py
+
 _subdirectory: template
