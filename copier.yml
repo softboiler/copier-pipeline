@@ -22,6 +22,12 @@ project_name:
   default: "{{ github_repo_name }}"
   when: "{% if not project_info_same_as_above %}true{% endif %}"
 
+project_owner_name: "{{ project_owner_github_username }}"
+  when: "{% if project_info_same_as_above %}true{% endif %}"
+
+project_name: "{{ github_repo_name }}"
+  when: "{% if project_info_same_as_above %}true{% endif %}"
+
 _envops:
   keep_trailing_newline: true
 
