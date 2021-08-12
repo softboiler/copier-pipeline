@@ -1,12 +1,33 @@
-github_user:
-  default: githubUser
+project_owner_github_username:
   type: str
+  help: The username of the GitHub user hosting this project.
 
-github_repo:
-  default: github_repo
+github_repo_name:
   type: str
+  help: The name of the GitHub repo hosting this project. 
+
+project_info_same_as_above:
+  type: bool
+  help: Whether you want to specify a different project name or owner (as in the LICENSE).
+  default: yes
+
+project_owner_name:
+  type: str
+  help: The name (or names) that will populate the LICENSE file.
+  default: "{{ project_owner_github_username }}"
+  when: "{% if not project_info_same_as_above %}"
+
+project_name:
+  type: str
+  help: "The name of this project. Default: github_repo_name"
+  default: "{{ github_repo_name }}"
+  when: "{% if not project_info_same_as_above %}"
 
 _envops:
   keep_trailing_newline: true
+
+_skip_if_exists:
+  - README.md
+  - __init__.py
 
 _subdirectory: template
