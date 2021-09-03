@@ -43,15 +43,42 @@
     "editor.wordWrapColumn": 124,
     "editor.rulers": [124]
   },
+
+  //! Extension: Better Jinja
+  "[jinja-md]": {
+    //* Roughly matches the width of GitHub Markdown
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 124,
+    "editor.rulers": [124]
+  },
+  "[jinja-toml]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* Use Prettier and word wrap in commented JSON files
   "[jsonc]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  //* Word wrap in RST files
   "[restructuredtext]": {
     "editor.wordWrap": "wordWrapColumn"
   },
+
+  //* Word wrap in TXT files
   "[plaintext]": {
     "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* Word wrap in TOML files
+  "[toml]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* Indent with tabs in TSV files
+  "[tsv]": {
+    "editor.insertSpaces": false
   },
 
   //* Formatting configuration
