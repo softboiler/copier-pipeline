@@ -94,6 +94,9 @@
 
   //! Built-in
 
+  //* Enable native bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
+
   //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
   "editor.formatOnSave": true,
 
