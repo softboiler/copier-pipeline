@@ -123,24 +123,6 @@
   "restructuredtext.languageServer.disabled": true,
   "restructuredtext.preview.scrollEditorWithPreview": false,
 
-  //* File associations and language-specific settings
-  "files.associations": {
-    ".coveragerc": "ini",
-    ".env": "dotenv",
-    "pyrightconfig.json": "jsonc",
-    "*requirements*.txt": "pip-requirements"
-  },
-
-  //* Additional folders to exclude from the file watcher
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/.hg/store/**": true,
-    "**/.venv/**": true,
-    "**/.mypy_cache/**": true
-  },
-
   "shellLauncher.shells.windows": [
     {
       //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
