@@ -3,7 +3,7 @@ jupyter~=1.0
 nbstripout~=0.5.0
 
 # Format
-black==21.7b0  # doesn't follow semver
+black==21.8b0  # doesn't follow semver
 
 # Lint
 flake8-codes~=0.1  # flake8 error code introspection
