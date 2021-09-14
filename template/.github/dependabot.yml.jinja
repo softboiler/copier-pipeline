@@ -3,10 +3,10 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip"
+  {% if gitignore_dependencies %}- package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "daily"{% endif %}
   {% if not gitignore_dependencies %}- package-ecosystem: "github-actions"
     directory: "/"
     schedule:
