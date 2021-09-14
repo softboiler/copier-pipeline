@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Nothing yet.
+- Don't track `pip` dependencies in separate `tooling` repo meant for keeping GitHub Actions up to date.
 
 ## [0.1.1]
 
