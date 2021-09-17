@@ -3,11 +3,11 @@
 
 version: 2
 updates:
-  {% if gitignore_dependencies %}- package-ecosystem: "pip"
+  - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"{% endif %}
-  {% if not gitignore_dependencies %}- package-ecosystem: "github-actions"
+      interval: "daily"
+  {% if tooling_tracking_repo %}- package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"{% endif %}

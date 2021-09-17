@@ -35,6 +35,11 @@ project_name:
   help: The name of this project, if it is different from the repo name above.
   default: "{{ github_repo_name }}"
 
+tooling_tracking_repo:
+  type: bool
+  help: Whether this is a repository for tracking tooling updates. Almost always "No".
+  default: false
+
 _skip_if_exists:
   - pyproject.toml
   - README.md
