@@ -40,10 +40,10 @@ tooling_tracking_repo:
   help: Whether this is a repository for tracking tooling updates. Almost always "No".
   default: false
 
-_skip_if_exists:
-  - CHANGELOG.md
-  - LICENSE
-  - pyproject.toml
-  - README.md
-  - "src/{{ project_name }}/__init__.py"
-  - "tests/test_{{ project_name }}.py"
+# _skip_if_exists:
+#   - CHANGELOG.md
+#   - LICENSE
+#   - pyproject.toml
+#   - README.md
+#   - "src/{{ project_name }}/__init__.py"
+#   - "tests/test_{{ project_name }}.py"
