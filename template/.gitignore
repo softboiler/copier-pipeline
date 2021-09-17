@@ -4,7 +4,6 @@
 .flake8
 pyrightconfig.json
 pytest.ini
-setup.ps1
 
 # Dependencies to be maintained in one place
 package.json
