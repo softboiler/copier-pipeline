@@ -1,19 +1,20 @@
 {
   "recommendations": [
-    "donjayamanne.githistory",
-    "felipecaputo.git-project-manager",
-    "cschleiden.vscode-github-actions",
-    "github.vscode-pull-request-github",
-    "eamodio.gitlens",
-    "ms-toolsai.jupyter",
-    "ms-python.vscode-pylance",
-    "ms-python.python",
-    "yzhang.markdown-all-in-one",
     "bierner.markdown-preview-github-styles",
+    "cschleiden.vscode-github-actions",
     "davidanson.vscode-markdownlint",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
     "esbenp.prettier-vscode",
+    "felipecaputo.git-project-manager",
+    "github.vscode-pull-request-github",
     "lextudio.restructuredtext",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "npxms.hide-gitignored",
     "reverbc.vscode-pytest",
-    "stkb.rewrap"
+    "stkb.rewrap",
+    "yzhang.markdown-all-in-one"
   ]
 }

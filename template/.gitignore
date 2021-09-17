@@ -1,12 +1,11 @@
-# Tooling configuration
+# Tooling
 .vscode/
 .coveragerc
 .flake8
+.gitattributes
+package.json
 pyrightconfig.json
 pytest.ini
-
-# Dependencies to be maintained in one place
-package.json
 requirements_both.txt
 requirements_cicd.txt
 requirements_dev.txt

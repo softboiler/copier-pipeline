@@ -41,7 +41,9 @@ tooling_tracking_repo:
   default: false
 
 _skip_if_exists:
-  - pyproject.toml
-  - README.md
   - "src/{{ project_name }}/__init__.py"
   - "tests/test_{{ project_name }}.py"
+  - CHANGELOG.md
+  - LICENSE
+  - pyproject.toml
+  - README.md
