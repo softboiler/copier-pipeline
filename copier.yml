@@ -35,11 +35,6 @@ project_name:
   help: The name of this project, if it is different from the repo name above.
   default: "{{ github_repo_name }}"
 
-gitignore_dependencies:
-  type: bool
-  help: Whether to ignore dependencies. Should almost always be "yes".
-  default: yes
-
 _skip_if_exists:
   - pyproject.toml
   - README.md
