@@ -45,4 +45,5 @@ _skip_if_exists:
   - LICENSE
   - pyproject.toml
   - README.md
+  - tests/conftest.py
   - "src/{{ project_name }}/__init__.py"
