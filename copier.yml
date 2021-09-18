@@ -46,4 +46,3 @@ _skip_if_exists:
   - pyproject.toml
   - README.md
   - "src/{{ project_name }}/__init__.py"
-  - "tests/test_{{ project_name }}.py"
