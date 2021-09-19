@@ -46,6 +46,7 @@ tooling_tracking_repo:
   default: false
 
 _skip_if_exists:
+  - .gitignore
   - CHANGELOG.md
   - LICENSE
   - pyproject.toml
