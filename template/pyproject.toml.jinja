@@ -7,8 +7,11 @@ build-backend = "flit_core.buildapi"
 [project]
 name = "{{ project_name }}"
 readme = "README.md"
-authors = [{name = "{{ project_owner_name }}", email = "{{ project_email }}"}]
+authors = [{ name = "{{ project_owner_name }}", email = "{{ project_email }}" }]
 dynamic = ["version", "description"]
 
 [project.urls]
 Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
+
+# Workaround for flit 3.3.0 https://github.com/takluyver/flit/issues/432
+[project.optional-dependencies]
