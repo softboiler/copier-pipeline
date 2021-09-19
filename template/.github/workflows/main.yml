@@ -15,7 +15,7 @@ jobs:
       - uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.9
-      - run: chmod +x ./setup_cicd.sh; ./setup_cicd.sh
+      - run: chmod +x tooling/setup_cicd.sh; tooling/setup_cicd.sh
       - run: flake8
 
   pyright:
@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.9
-      - run: chmod +x ./setup_cicd.sh; ./setup_cicd.sh
+      - run: chmod +x tooling/setup_cicd.sh; tooling/setup_cicd.sh
       - uses: actions/setup-node@v2.4.0
         with:
           node-version: "14"
@@ -39,6 +39,6 @@ jobs:
       - uses: actions/setup-python@v2.2.2
         with:
           python-version: 3.9
-      - run: chmod +x ./setup_cicd.sh; ./setup_cicd.sh
+      - run: chmod +x tooling/setup_cicd.sh; tooling/setup_cicd.sh
       - run: pytest --cov
       - uses: codecov/codecov-action@v2.1.0
