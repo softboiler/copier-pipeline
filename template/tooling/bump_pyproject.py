@@ -1,14 +1,17 @@
+"""Bump `pyproject.toml` with changes in `tooling/requirements_pyproject.txt`"""
+
 import toml
 from pathlib import Path
 
 REQUIREMENTS = Path("tooling/requirements.txt")
-with open(REQUIREMENTS) as file:
-    DEPENDENCIES = [line.rstrip() for line in file]
-
 PYPROJECT = Path("pyproject.toml")
+
+with open(REQUIREMENTS) as file:
+    dependencies = [line.rstrip() for line in file]
+
 with open(PYPROJECT) as file:
     content = toml.load(file)
-    content["project"]["dependencies"] = DEPENDENCIES
+    content["project"]["dependencies"] = dependencies
 
 with open(PYPROJECT, "w") as file:
     toml.dump(content, file)
