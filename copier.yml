@@ -20,11 +20,6 @@ year_of_project_creation:
   help: The year in which this project was created. For the LICENSE file.
   default: 2021
 
-project_email:
-  type: str
-  help: The email address that will be associated with this project.
-  default:
-
 github_repo_name:
   type: str
   help: The name of the GitHub repo hosting this project.
@@ -35,9 +30,19 @@ project_name:
   help: The name of this project, if it is different from the repo name above.
   default: "{{ github_repo_name }}"
 
+project_email:
+  type: str
+  help: The email address that will be associated with this project. If you'd like, type your regular email address before the "+", messages will still come to your inbox but they will have the {{ proejct_name }} suffix!
+  default: +{{ project_name }}@gmail.com
+
+python_version:
+  type: str
+  help: This project will only support a Python version at least this high.
+  default: "3.9"
+
 tooling_tracking_repo:
   type: bool
-  help: Whether this is a repository for tracking tooling updates. Almost always "No".
+  help: Whether this is a repository for tracking tooling updates. Should almost always be "No".
   default: false
 
 _skip_if_exists:

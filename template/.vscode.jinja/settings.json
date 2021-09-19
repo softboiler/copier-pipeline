@@ -25,7 +25,6 @@
 
   // * -------------------------------------------------------------------------- * //
   // * GENERAL SETTINGS * //
-
   //! Line-width related options
 
   //* Soft wrap settings
@@ -51,10 +50,11 @@
     "editor.wordWrapColumn": 124,
     "editor.rulers": [124]
   },
-  "[jinja-toml]": {
-    "editor.wordWrap": "wordWrapColumn"
-  },
 
+  //* Use Prettier in JSON files
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   //* Use Prettier and word wrap in commented JSON files
   "[jsonc]": {
     "editor.wordWrap": "wordWrapColumn",
@@ -73,7 +73,8 @@
 
   //* Word wrap in TOML files
   "[toml]": {
-    "editor.wordWrap": "wordWrapColumn"
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
 
   //* Indent with tabs in TSV files
@@ -86,10 +87,20 @@
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
 
-  //* Extension: YAML
+  //! Extension: YAML
   "yaml.format.printWidth": 88,
   "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "[jinja-yaml]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //! Extension: Even Better TOML
+  "evenBetterToml.formatter.columnWidth": 88,
+  "[jinja-toml]": {
+    "editor.wordWrap": "wordWrapColumn"
   },
 
   //! Built-in

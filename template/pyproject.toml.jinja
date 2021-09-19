@@ -6,6 +6,9 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "{{ project_name }}"
+requires-python = ">={{ python_version }}"
+dependencies = []
+
 readme = "README.md"
 authors = [{ name = "{{ project_owner_name }}", email = "{{ project_email }}" }]
 dynamic = ["version", "description"]

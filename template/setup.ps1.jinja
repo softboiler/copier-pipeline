@@ -1,5 +1,5 @@
 copier {{ _src_path }} . -r {{ _commit }}
-py -3.9 -m venv .venv
+py -{{ python_version }} -m venv .venv
 .venv/Scripts/activate
 pip install -U pip  # throws [WinError 5], but still works on its own
 pip install wheel
