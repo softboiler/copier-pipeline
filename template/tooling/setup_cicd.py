@@ -1,12 +1,14 @@
 import toml
 from pathlib import Path
 
-DEPENDENCIES = ["fire~=0.4"]
-PATH = Path("pyproject.toml")
+REQUIREMENTS = Path("tooling/requirements.txt")
+with open(REQUIREMENTS) as file:
+    DEPENDENCIES = [line.rstrip() for line in file]
 
-with open(PATH) as file:
+PYPROJECT = Path("pyproject.toml")
+with open(PYPROJECT) as file:
     content = toml.load(file)
     content["project"]["dependencies"] = DEPENDENCIES
 
-with open(PATH, "w") as file:
+with open(PYPROJECT, "w") as file:
     toml.dump(content, file)
