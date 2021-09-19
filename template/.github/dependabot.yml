@@ -7,7 +7,3 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-  {% if tooling_tracking_repo %}- package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "daily"{% endif %}
