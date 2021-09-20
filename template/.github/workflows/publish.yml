@@ -13,7 +13,8 @@ jobs:
         with:
           python-version: 3.9
       - run: bash tooling/setup_cicd.sh
-      - run: flit publish
+      - name: publish
         env:
-          FLIT_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          FLIT_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          FLIT_USERNAME: __token__
+          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+        run: flit publish
