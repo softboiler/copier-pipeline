@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ["tooling/requirements.txt"]
+    paths: ["tooling/requirements_pyproject.txt"]
 
 jobs:
   bump:
