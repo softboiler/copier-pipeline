@@ -43,15 +43,44 @@
     "editor.wordWrapColumn": 124,
     "editor.rulers": [124]
   },
+
+  //! Extension: Better Jinja
+  "[jinja-md]": {
+    //* Roughly matches the width of GitHub Markdown
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 124,
+    "editor.rulers": [124]
+  },
+
+  //* Use Prettier in JSON files
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  //* Use Prettier and word wrap in commented JSON files
   "[jsonc]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+
+  //* Word wrap in RST files
   "[restructuredtext]": {
     "editor.wordWrap": "wordWrapColumn"
   },
+
+  //* Word wrap in TXT files
   "[plaintext]": {
     "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* Word wrap in TOML files
+  "[toml]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+
+  //* Indent with tabs in TSV files
+  "[tsv]": {
+    "editor.insertSpaces": false
   },
 
   //* Formatting configuration
@@ -59,13 +88,26 @@
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
 
-  //* Extension: YAML
+  //! Extension: YAML
   "yaml.format.printWidth": 88,
   "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "[jinja-yaml]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //! Extension: Even Better TOML
+  "evenBetterToml.formatter.columnWidth": 88,
+  "[jinja-toml]": {
+    "editor.wordWrap": "wordWrapColumn"
   },
 
   //! Built-in
+
+  //* Enable native bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
 
   //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
   "editor.formatOnSave": true,
@@ -92,24 +134,6 @@
   //* Disable language server so that "snooty" isn't required in every .venv
   "restructuredtext.languageServer.disabled": true,
   "restructuredtext.preview.scrollEditorWithPreview": false,
-
-  //* File associations and language-specific settings
-  "files.associations": {
-    ".coveragerc": "ini",
-    ".env": "dotenv",
-    "pyrightconfig.json": "jsonc",
-    "*requirements*.txt": "pip-requirements"
-  },
-
-  //* Additional folders to exclude from the file watcher
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/node_modules/*/**": true,
-    "**/.hg/store/**": true,
-    "**/.venv/**": true,
-    "**/.mypy_cache/**": true
-  },
 
   "shellLauncher.shells.windows": [
     {

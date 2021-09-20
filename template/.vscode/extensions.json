@@ -1,19 +1,25 @@
 {
   "recommendations": [
+    "aaron-bond.better-comments",
+    "alefragnani.bookmarks",
     "bierner.markdown-preview-github-styles",
+    "blackmist.linkcheckmd",
     "cschleiden.vscode-github-actions",
-    "davidanson.vscode-markdownlint",
-    "donjayamanne.githistory",
-    "eamodio.gitlens",
+    "dotjoshjohnson.xml",
     "esbenp.prettier-vscode",
-    "felipecaputo.git-project-manager",
-    "github.vscode-pull-request-github",
     "lextudio.restructuredtext",
-    "ms-python.python",
     "ms-python.vscode-pylance",
-    "ms-toolsai.jupyter",
+    "ms-toolsai.jupyter-keymap",
+    "npxms.hide-gitignored",
+    "redhat.vscode-yaml",
     "reverbc.vscode-pytest",
+    "ryanluker.vscode-coverage-gutters",
+    "samuelcolvin.jinjahtml",
+    "sourcery.sourcery",
     "stkb.rewrap",
+    "tamasfe.even-better-toml",
+    "trond-snekvik.simple-rst",
+    "tyriar.shell-launcher",
     "yzhang.markdown-all-in-one"
   ]
 }
