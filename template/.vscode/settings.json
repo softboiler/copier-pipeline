@@ -1,0 +1,131 @@
+{
+  // * -------------------------------------------------------------------------- * //
+  // * PROJECT-SPECIFIC SETTINGS * //
+
+  //* Extension: Pylance
+  "python.languageServer": "Pylance",
+  "python.analysis.autoSearchPaths": false,
+
+  //* workflows
+  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+
+  //* pytest
+  "python.testing.pytestArgs": ["tests"],
+  "python.testing.unittestEnabled": false,
+  "python.testing.nosetestsEnabled": false,
+  "python.testing.pytestEnabled": true,
+
+  //* markdownlint
+  "markdownlint.config": {
+    "first-line-heading": false
+  },
+
+  //* flake8
+  "python.linting.flake8Args": ["--config", ".flake8"],
+
+  // * -------------------------------------------------------------------------- * //
+  // * GENERAL SETTINGS * //
+
+  //! Line-width related options
+
+  //* Soft wrap settings
+
+  //? Set wrapping column
+  "editor.wordWrapColumn": 88,
+  "editor.rulers": [88],
+
+  //* Markdown editor moves jarringly when this is "true"
+  "markdown.preview.scrollEditorWithPreview": false,
+  //* Soft wrap in *.md, *.jsonc (like settings.json), and *.rst
+  "[markdown]": {
+    //* Roughly matches the width of GitHub Markdown
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 124,
+    "editor.rulers": [124]
+  },
+  "[jsonc]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[restructuredtext]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "[plaintext]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* Formatting configuration
+  "python.formatting.provider": "black",
+  "rewrap.wrappingColumn": 88,
+  "rewrap.wholeComment": false,
+
+  //* Extension: YAML
+  "yaml.format.printWidth": 88,
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+
+  //! Built-in
+
+  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  "editor.formatOnSave": true,
+
+  //* Enforce whitespace and newlines.
+  //? Automatically enforce whitespace conventions.
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+
+  //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  //! Linting
+  //* Also see the "Linting" section under the "NOT SYNCED" heading
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+
+  //* Linting args
+  "python.sortImports.args": ["--profile", "black"],
+
+  //! Extension: reStructuredText
+  //* Disable language server so that "snooty" isn't required in every .venv
+  "restructuredtext.languageServer.disabled": true,
+  "restructuredtext.preview.scrollEditorWithPreview": false,
+
+  //* File associations and language-specific settings
+  "files.associations": {
+    ".coveragerc": "ini",
+    ".env": "dotenv",
+    "pyrightconfig.json": "jsonc",
+    "*requirements*.txt": "pip-requirements"
+  },
+
+  //* Additional folders to exclude from the file watcher
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/.venv/**": true,
+    "**/.mypy_cache/**": true
+  },
+
+  "shellLauncher.shells.windows": [
+    {
+      //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
+      //*
+      //* Use alongside the following keybind in your "keybindings.json".
+      //*
+      // //! Extension: Shell Launcher
+      // {
+      //   "key": "ctrl+alt+1",
+      //   "command": "shellLauncher.launch"
+      // },
+      //*
+      "label": "IPython (.venv)",
+      "shell": "pwsh.exe",
+      "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
+    }
+  ]
+}
