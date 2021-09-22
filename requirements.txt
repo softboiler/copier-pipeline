@@ -1,0 +1,3 @@
+-r template/tooling/requirements_both.txt
+-r template/tooling/requirements_cicd.txt
+-r template/tooling/requirements_dev.txt
