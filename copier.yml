@@ -40,11 +40,6 @@ python_version:
   help: This project will only support a Python version at least this high.
   default: "3.9"
 
-tooling_tracking_repo:
-  type: bool
-  help: Whether this is a repository for tracking tooling updates. Should almost always be "No".
-  default: false
-
 _skip_if_exists:
   - .gitignore
   - CHANGELOG.md
