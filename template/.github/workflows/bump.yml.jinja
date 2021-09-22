@@ -1,0 +1,21 @@
+name: bump
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ["requirements.txt"]
+
+jobs:
+  bump:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/setup-python@v2.2.2
+        with:
+          python-version: {{ python_version }}
+      - run: bash tooling/cicd_setup.sh
+      - run: python tooling/bump_pyproject.py
+      - uses: stefanzweifel/git-auto-commit-action@v4.12.0
+        with:
+          commit_message: Bump `pyproject.toml` dependencies
