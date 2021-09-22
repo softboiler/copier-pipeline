@@ -4,7 +4,9 @@ from pathlib import Path
 
 COMMON_PATH = ".github/workflows"
 source_folder = Path("./dependabot") / COMMON_PATH
-destination_folder = Path("./tooling/") / COMMON_PATH
+destination_folder = Path("./template/") / COMMON_PATH
 
-for file in source_folder.iterdir():
-    file.rename(source_folder / (file.name + ".jinja"))
+for source in source_folder.iterdir():
+    destination = destination_folder / (source.name + ".jinja")
+    destination.unlink()
+    source.rename(destination)
