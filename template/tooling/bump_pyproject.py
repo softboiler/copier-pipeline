@@ -3,7 +3,7 @@
 import toml
 from pathlib import Path
 
-REQUIREMENTS = Path("tooling/requirements_pyproject.txt")
+REQUIREMENTS = Path("requirements.txt")
 PYPROJECT = Path("pyproject.toml")
 
 with open(REQUIREMENTS) as file:
