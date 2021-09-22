@@ -1,0 +1,1 @@
+# Dependabot complains if we don't have a `requirements.txt` somewhere. Even though we use `requirements_*.txt` in the template
