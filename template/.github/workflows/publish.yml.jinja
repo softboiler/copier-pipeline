@@ -16,5 +16,5 @@ jobs:
       - name: publish
         env:
           FLIT_USERNAME: __token__
-          FLIT_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          FLIT_PASSWORD: {{ ${{ secrets.PYPI_TOKEN }} }}
         run: flit publish
