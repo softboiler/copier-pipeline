@@ -19,5 +19,4 @@ jobs:
         with:
           commit_message: Bump dependencies
           commit_user_name: blakeNaccarato
-          commit_email: 20692450+blakeNaccarato@users.noreply.github.com
-          commit_author: Blake Naccarato <20692450+blakeNaccarato@users.noreply.github.com>
+          commit_user_email: 20692450+blakeNaccarato@users.noreply.github.com
