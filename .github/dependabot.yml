@@ -3,23 +3,23 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pip"
-    directory: "/"
+  - package-ecosystem: pip
+    directory: /
     schedule:
-      interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "/"
+      interval: daily
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "/dependabot"
+      interval: daily
+  - package-ecosystem: github-actions
+    directory: /dependabot
     schedule:
-      interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "/template"
+      interval: daily
+  - package-ecosystem: github-actions
+    directory: /template
     schedule:
-      interval: "daily"
-  - package-ecosystem: "npm"
-    directory: "/template"
+      interval: daily
+  - package-ecosystem: npm
+    directory: /template
     schedule:
-      interval: "daily"
+      interval: daily
