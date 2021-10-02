@@ -40,6 +40,11 @@ python_version:
   help: This project will only support a Python version at least this high.
   default: "3.9"
 
+include_funding:
+  type: bool
+  help: Include GitHub Sponsors link for {{ project_owner_github_username }}?
+  default: no
+
 _skip_if_exists:
   - .gitignore
   - CHANGELOG.md
