@@ -14,4 +14,4 @@ pep8-naming~=0.12
 
 # Test
 pytest~=6.2
-pytest-cov~=2.12
+pytest-cov~=3.0
