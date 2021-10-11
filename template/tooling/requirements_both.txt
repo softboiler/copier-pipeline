@@ -1,5 +1,5 @@
 # Build
-flit~=3.3
+flit~=3.4
 
 # Lint
 flake8~=3.9
