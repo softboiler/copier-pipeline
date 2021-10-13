@@ -2,7 +2,7 @@
 flit~=3.4
 
 # Lint
-flake8~=3.9
+flake8~=4.0
 flake8-absolute-import~=1.0
 flake8-bandit~=2.1
 flake8-black~=0.2
