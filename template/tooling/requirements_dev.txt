@@ -6,6 +6,6 @@ nbstripout~=0.5.0
 black==21.12b0  # doesn't follow semver
 
 # Lint
-flake8-codes~=0.1  # flake8 error code introspection
+flake8-codes~=0.2  # flake8 error code introspection
 
 -r requirements_both.txt
