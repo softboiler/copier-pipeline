@@ -5,5 +5,5 @@ This Copier template contains all the tooling for my projects. Use `pipx` to be 
 ```Shell
 py -m pip install pipx
 py -m pipx ensurepath
-py -m pipx install copier==6.0.0a7
+py -m pipx install copier==6.0.0a9
 ```

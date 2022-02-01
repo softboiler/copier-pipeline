@@ -1,4 +1,4 @@
-_min_copier_version: "6.0.0a7"
+_min_copier_version: "6.0.0a9"
 
 _subdirectory: template
 
@@ -18,7 +18,7 @@ project_owner_name:
 year_of_project_creation:
   type: int
   help: The year in which this project was created. For the LICENSE file.
-  default: 2021
+  default: 2022
 
 github_repo_name:
   type: str
@@ -38,7 +38,7 @@ project_email:
 python_version:
   type: str
   help: This project will only support a Python version at least this high.
-  default: "3.9"
+  default: "3.10"
 
 include_funding:
   type: bool
