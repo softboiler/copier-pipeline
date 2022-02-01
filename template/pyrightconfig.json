@@ -1,6 +1,7 @@
 {
   "typeCheckingMode": "strict",
   "include": ["src"],
+  "ignore": ["tooling/pythonrc.py"],
   "extraPaths": ["examples", "tests"],
   "reportMissingTypeStubs": "none",
   "reportUnknownArgumentType": "none",
