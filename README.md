@@ -18,4 +18,4 @@ Once you have `copier` available at the command line, run the following in a cle
 copier gh:blakeNaccarato/copier-python .
 ```
 
-If you already had a `.gitignore` in your project prior to copying this template, you may want to manually replace its contents with the contents of [template/.gitignore](https://raw.githubusercontent.com/blakeNaccarato/copier-python/main/template/.gitignore.jinja). This makes sure that tooling configurations are not checked into the project.
+If you already had a `.gitignore` in your project prior to copying this template, you may want to manually replace its contents with the contents of [template/.gitignore](https://raw.githubusercontent.com/blakeNaccarato/copier-python/main/template/.gitignore.jinja). This makes sure that tooling configurations are not checked into the project. This template does not overwrite your `.gitignore` if it already exists because you may have customized your `.gitignore` beyond the default Python `.gitignore`.
