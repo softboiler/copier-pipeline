@@ -1,5 +1,7 @@
 # copier-python
 
+Copier template for Python projects.
+
 ## Installing
 
 This Copier template contains all the tooling for my projects. Use `pipx` to be able to access Copier from the command line.
