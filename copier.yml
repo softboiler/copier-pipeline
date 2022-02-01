@@ -32,7 +32,7 @@ project_name:
 
 project_email:
   type: str
-  help: The email address that will be associated with this project. If you'd like, type your regular email address before the "+", messages will still come to your inbox but they will have the {{ proejct_name }} suffix!
+  help: The email address that will be associated with this project. If you'd like, type your regular email address before the "+", messages will still come to your inbox but they will have the {{ project_name }} suffix!
   default: +{{ project_name }}@gmail.com
 
 python_version:
