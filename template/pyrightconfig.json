@@ -8,5 +8,6 @@
   "reportUnknownLambdaType": "none",
   "reportUnknownMemberType": "none",
   "reportUnknownParameterType": "none",
-  "reportUnknownVariableType": "none"
+  "reportUnknownVariableType": "none",
+  "useLibraryCodeForTypes": false
 }
