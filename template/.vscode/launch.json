@@ -7,7 +7,6 @@
       "request": "launch",
       "program": "${file}",
       "console": "internalConsole",
-      "autoReload": { "enable": true }
     }
   ]
 }
