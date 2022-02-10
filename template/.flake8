@@ -1,5 +1,10 @@
 [flake8]
 
+; So pep8-naming doesn't complain about Pydantic validators
+classmethod-decorators =
+    classmethod
+    validator
+
 ; compatibility with black
 max-line-length = 88
 
