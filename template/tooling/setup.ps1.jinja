@@ -1,6 +1,7 @@
 copier -rf {{ _commit }}
 py -{{ python_version }} -m venv --clear --upgrade .venv
 .venv/Scripts/activate
+pip uninstall -y {{ project_name }}
 pip install -U pip  # throws [WinError 5], but works
 pip install -U setuptools wheel  # must be done separately from above
 pip install -r tooling/requirements_dev.txt
