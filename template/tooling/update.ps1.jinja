@@ -1,7 +1,7 @@
 copier -rf {{ _commit }}
 .venv/Scripts/activate
-pip uninstall -y {{ project_name }}
 pip install -U pip  # throws [WinError 5], but still works on its own
 pip install -U setuptools wheel  # must be done separately from above
 pip install -r tooling/requirements_dev.txt
-flit install -s
+pip uninstall -y {{ project_name }}
+pip install -e .
