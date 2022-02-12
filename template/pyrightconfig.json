@@ -2,7 +2,6 @@
   "typeCheckingMode": "strict",
   "include": ["src"],
   "ignore": ["tooling/pythonrc.py"],
-  "extraPaths": ["examples", "tests"],
   "reportMissingTypeStubs": "none",
   "reportMissingParameterType": "none",
   "reportUnknownArgumentType": "none",
