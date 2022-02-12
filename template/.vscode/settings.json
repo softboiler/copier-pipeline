@@ -10,7 +10,6 @@
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
 
   //* pytest
-  "python.testing.pytestArgs": ["tests"],
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
 
@@ -121,7 +120,7 @@
   //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
   "git.autofetch": true,
   "git.confirmSync": false,
-  
+
   //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,

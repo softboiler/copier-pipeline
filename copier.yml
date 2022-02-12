@@ -52,4 +52,5 @@ _skip_if_exists:
   - pyproject.toml
   - README.md
   - tests/conftest.py
+  - "tests/test_{{ project_name }}.py"
   - "src/{{ project_name }}/__init__.py"
