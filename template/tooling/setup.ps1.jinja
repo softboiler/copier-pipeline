@@ -1,4 +1,4 @@
-copier -rf {{ _commit }}
+copier -f -r {{ _commit }}
 py -{{ python_version }} -m venv --clear --upgrade .venv
 .venv/Scripts/activate
 pip install -U pip  # throws [WinError 5], but works
