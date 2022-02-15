@@ -1,6 +1,5 @@
 {
-  "extraPaths": ["examples", "tests"],
-  "ignore": ["tooling/pythonrc.py"],
+  "ignore": ["tooling"],
   "include": ["src"],
   "reportMissingParameterType": "none",
   "reportMissingTypeStubs": "none",
