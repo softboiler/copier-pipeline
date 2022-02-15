@@ -1,13 +1,14 @@
 {
-  "typeCheckingMode": "strict",
-  "include": ["src"],
+  "extraPaths": ["examples", "tests"],
   "ignore": ["tooling/pythonrc.py"],
-  "reportMissingTypeStubs": "none",
+  "include": ["src"],
   "reportMissingParameterType": "none",
+  "reportMissingTypeStubs": "none",
   "reportUnknownArgumentType": "none",
   "reportUnknownLambdaType": "none",
   "reportUnknownMemberType": "none",
   "reportUnknownParameterType": "none",
   "reportUnknownVariableType": "none",
-  "useLibraryCodeForTypes": false
+  "typeCheckingMode": "strict",
+  "useLibraryCodeForTypes": false,
 }

@@ -3,8 +3,14 @@
   // * PROJECT-SPECIFIC SETTINGS * //
 
   //! Extension: Pylance
+  //* Pylance settings aren't very discoverable.
+  //* https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
   "python.languageServer": "Pylance",
-  "python.analysis.autoSearchPaths": false,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.indexing": true,
+  "python.analysis.autoSearchPaths": false,  // See "include" and "extrapaths" in pyrightconfig.json
+  "python.analysis.typeCheckingMode": "off", // See "useLibraryCodeForTypes" in pyrightconfig.json
+
 
   //! Extension: GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
