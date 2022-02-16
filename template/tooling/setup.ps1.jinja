@@ -1,9 +1,4 @@
 copier -f -r {{ _commit }}
 Remove-Item .venv -Recurse -ErrorAction SilentlyContinue
 py -{{ python_version }} -m venv .venv
-.venv/Scripts/activate
-pip install -U pip  # throws [WinError 5], but works
-pip install -U setuptools wheel  # must be done separately from above
-pip install -r tooling/requirements_dev.txt
-pip uninstall -y {{ project_name }}
-pip install -e .
+. tooling/update.ps1
