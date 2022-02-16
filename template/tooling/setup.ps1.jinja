@@ -1,5 +1,5 @@
 copier -f -r {{ _commit }}
-py -{{ python_version }} -m venv --clear --upgrade .venv
+py -{{ python_version }} -m venv --clear .venv
 .venv/Scripts/activate
 pip install -U pip  # throws [WinError 5], but works
 pip install -U setuptools wheel  # must be done separately from above
