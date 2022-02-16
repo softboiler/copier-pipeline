@@ -45,7 +45,8 @@
     //* Roughly matches the width of GitHub Markdown
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 124,
-    "editor.rulers": [124]
+    "editor.rulers": [124],
+    "rewrap.autoWrap.enabled": false
   },
 
   //! Extension: Better Jinja
