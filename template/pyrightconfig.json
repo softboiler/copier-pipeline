@@ -1,6 +1,6 @@
 {
   "ignore": ["tooling"],
-  "include": ["src"],
+  "include": ["src", "examples"],
   "reportMissingParameterType": "none",
   "reportMissingTypeStubs": "none",
   "reportUnknownArgumentType": "none",
@@ -9,5 +9,5 @@
   "reportUnknownParameterType": "none",
   "reportUnknownVariableType": "none",
   "typeCheckingMode": "strict",
-  "useLibraryCodeForTypes": false,
+  "useLibraryCodeForTypes": false
 }
