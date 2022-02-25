@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: bash tooling/cicd_setup.sh
-      - uses: actions/setup-node@v2.5.1
+      - uses: actions/setup-node@v3.0.0
         with:
           node-version: 14
       - run: npm install
