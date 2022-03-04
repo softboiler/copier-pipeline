@@ -10,8 +10,8 @@ jobs:
   bump:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: actions/setup-python@v2.3.2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: "{{ python_version }}"
       - run: bash tooling/cicd_setup.sh
