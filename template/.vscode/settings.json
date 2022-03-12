@@ -8,9 +8,8 @@
   "python.languageServer": "Pylance",
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.indexing": true,
-  "python.analysis.autoSearchPaths": false,  // See "include" and "extrapaths" in pyrightconfig.json
+  "python.analysis.autoSearchPaths": false, // See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.typeCheckingMode": "off", // See "useLibraryCodeForTypes" in pyrightconfig.json
-
 
   //! Extension: GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -24,8 +23,23 @@
     "first-line-heading": false
   },
 
-  //* flake8
-  "python.linting.flake8Args": ["--config", ".flake8"],
+  "shellLauncher.shells.windows": [
+    {
+      //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
+      //*
+      //* Use alongside the following keybind in your "keybindings.json".
+      //*
+      // //! Extension: Shell Launcher
+      // {
+      //   "key": "ctrl+alt+1",
+      //   "command": "shellLauncher.launch"
+      // },
+      //*
+      "label": "IPython (.venv)",
+      "shell": "pwsh.exe",
+      "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
+    }
+  ],
 
   // * -------------------------------------------------------------------------- * //
   // * GENERAL SETTINGS * //
@@ -143,23 +157,5 @@
   //! Extension: reStructuredText
   //* Disable language server so that "snooty" isn't required in every .venv
   "restructuredtext.languageServer.disabled": true,
-  "restructuredtext.preview.scrollEditorWithPreview": false,
-
-  "shellLauncher.shells.windows": [
-    {
-      //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
-      //*
-      //* Use alongside the following keybind in your "keybindings.json".
-      //*
-      // //! Extension: Shell Launcher
-      // {
-      //   "key": "ctrl+alt+1",
-      //   "command": "shellLauncher.launch"
-      // },
-      //*
-      "label": "IPython (.venv)",
-      "shell": "pwsh.exe",
-      "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
-    }
-  ]
+  "restructuredtext.preview.scrollEditorWithPreview": false
 }
