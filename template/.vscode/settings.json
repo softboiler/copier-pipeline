@@ -11,6 +11,11 @@
   "python.analysis.autoSearchPaths": false, // See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.typeCheckingMode": "off", // See "useLibraryCodeForTypes" in pyrightconfig.json
 
+  //! Linting
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true,
+  "python.sortImports.args": ["--profile", "black"],
+
   //! Extension: GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
 
@@ -145,14 +150,6 @@
   //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
-
-  //! Linting
-  //* Also see the "Linting" section under the "NOT SYNCED" heading
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-
-  //* Linting args
-  "python.sortImports.args": ["--profile", "black"],
 
   //! Extension: reStructuredText
   //* Disable language server so that "snooty" isn't required in every .venv
