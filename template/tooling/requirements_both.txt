@@ -1,3 +1,6 @@
+# Bump
+toml~=0.10.2
+
 # Build
 flit~=3.7
 
