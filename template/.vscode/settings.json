@@ -62,6 +62,7 @@
   //* Soft wrap in *.md, *.jsonc (like settings.json), and *.rst
   "[markdown]": {
     //* Roughly matches the width of GitHub Markdown
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 124,
     "editor.rulers": [124],
