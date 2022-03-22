@@ -51,5 +51,6 @@ _skip_if_exists:
   - LICENSE
   - pyproject.toml
   - README.md
+  - requirements.txt
   - "tests/test_{{ project_name }}.py"
   - "src/{{ project_name }}/__init__.py"
