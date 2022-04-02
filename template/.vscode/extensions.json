@@ -11,7 +11,6 @@
     "esbenp.prettier-vscode",
     "felipecaputo.git-project-manager",
     "github.vscode-pull-request-github",
-    "lextudio.restructuredtext",
     "ms-python.python",
     "ms-python.vscode-pylance",
     "ms-toolsai.jupyter-keymap",
@@ -24,7 +23,6 @@
     "sourcery.sourcery",
     "stkb.rewrap",
     "tamasfe.even-better-toml",
-    "trond-snekvik.simple-rst",
     "tyriar.shell-launcher",
     "yzhang.markdown-all-in-one"
   ]
