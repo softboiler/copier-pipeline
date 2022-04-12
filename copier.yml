@@ -103,4 +103,4 @@ _skip_if_exists:
   - "src/{{ project_name }}/__init__.py"
 
 _tasks:
-  - ["{{ _copier_python }}", tooling/scripts/merge_gitignore.py]
+  - [.venv/Scripts/python, tooling/scripts/merge_gitignore.py]
