@@ -54,6 +54,30 @@ override:
 
 # Overrides
 
+override_vscode_settings:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/settings"
+  default: no
+
+override_vscode_extensions:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/extensions"
+  default: no
+
+override_vscode_launch:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/launch"
+  default: no
+
+override_vscode_tasks:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/tasks"
+  default: no
+
 override_coveragerc:
   when: "{{ override }}"
   type: bool
