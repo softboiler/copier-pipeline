@@ -4,7 +4,6 @@ _subdirectory: template
 
 _envops:
   keep_trailing_newline: true
-  trim_blocks: true
 
 project_owner_github_username:
   type: str
