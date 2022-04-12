@@ -4,6 +4,7 @@ _subdirectory: template
 
 _envops:
   keep_trailing_newline: true
+  trim_blocks: true
 
 project_owner_github_username:
   type: str
@@ -117,7 +118,7 @@ override_pytest:
 # * -------------------------------------------------------------------------------- # *
 
 _skip_if_exists:
-  # - .gitignore
+  - .gitignore
   - CHANGELOG.md
   - LICENSE
   - pyproject.toml
