@@ -11,16 +11,30 @@
         "showReuseMessage": false,
         "clear": true
       },
-      "isTestCommand": true,
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      }
+      "problemMatcher": []
     },
     {
       "label": "Black: Ignore magic comma",
-      "type": "shell",
-      "command": "black -C ${file}",
+      "type": "process",
+      "command": "black",
+      "args": ["-C", "${file}"],
+      "presentation": {
+        "reveal": "never",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Git: Rebase back to fork",
+      "type": "process",
+      "command": "git",
+      "args": ["rebase", "-i", "--fork-point", "main"],
+      "presentation": {
+        "reveal": "never",
+        "showReuseMessage": false,
+        "clear": true
+      },
       "problemMatcher": []
     }
   ]
