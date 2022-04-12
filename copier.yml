@@ -44,23 +44,29 @@ include_funding:
   type: bool
   help: "Include GitHub Sponsors link for {{ project_owner_github_username }}?"
   default: no
+# * -------------------------------------------------------------------------------- # *
+# * OVERRIDES
 
-optional_question:
+override:
   type: bool
-  help: Ask optional questions?
+  help: Do you want to override any template files?
   default: no
 
-test_1:
-  when: "{{ optional_question }}"
+# Overrides
+
+env:
+  when: "{{ override }}"
   type: bool
-  help: test_1?
+  help: Override `.env`?
   default: no
 
 test_2:
-  when: "{{ optional_question }}"
+  when: "{{ override }}"
   type: bool
   help: test_2?
   default: no
+
+# * -------------------------------------------------------------------------------- # *
 
 _skip_if_exists:
   - .gitignore
