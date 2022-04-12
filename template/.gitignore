@@ -7,6 +7,9 @@
 # *
 # * Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
 
+.vscode/*  # need "*" to allow negations in .vscode/.gitignore
+*.rej
+package.json
 #[[
 #]]
 

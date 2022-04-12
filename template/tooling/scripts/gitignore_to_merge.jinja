@@ -4,12 +4,3 @@
 {% if not override_gitattributes %}.gitattributes{% endif -%}
 {% if not override_pyrightconfig %}pyrightconfig.json{% endif -%}
 {% if not override_pytest %}pytest.ini{% endif -%}
-.vscode/*  # need "*" to allow negations in .vscode/.gitignore
-*.rej
-package.json
-tooling/pythonrc.py
-tooling/requirements_both.txt
-tooling/requirements_cicd.txt
-tooling/requirements_dev.txt
-tooling/scripts/bump_pyproject.py
-tooling/scripts/merge_gitignore.py
