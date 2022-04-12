@@ -1,5 +1,5 @@
 # Tooling
-.coveragerc
+{% if not override_coveragerc  %}.coveragerc{% endif %}
 .env
 .flake8
 .gitattributes
@@ -7,7 +7,7 @@
 *.rej
 package.json
 pyrightconfig.json
-pytest.ini
+{% if not override_pytest  %}pytest.ini{% endif %}
 tooling/bump_pyproject.py
 tooling/pythonrc.py
 tooling/requirements_both.txt

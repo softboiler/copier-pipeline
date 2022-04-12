@@ -54,22 +54,46 @@ override:
 
 # Overrides
 
-env:
+override_coveragerc:
   when: "{{ override }}"
   type: bool
-  help: Override `.env`?
+  help: "Override: .coveragerc"
   default: no
 
-test_2:
+override_env:
   when: "{{ override }}"
   type: bool
-  help: test_2?
+  help: "Override: .env"
+  default: no
+
+override_flake8:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .flake8"
+  default: no
+
+override_gitattributes:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .gitattributes"
+  default: no
+
+override_pyrightconfig:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: pyrightconfig.json"
+  default: no
+
+override_pytest:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: pytest.ini"
   default: no
 
 # * -------------------------------------------------------------------------------- # *
 
 _skip_if_exists:
-  - .gitignore
+  # - .gitignore
   - CHANGELOG.md
   - LICENSE
   - pyproject.toml
