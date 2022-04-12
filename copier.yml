@@ -42,8 +42,79 @@ python_version:
 
 include_funding:
   type: bool
-  help: Include GitHub Sponsors link for {{ project_owner_github_username }}?
+  help: "Include GitHub Sponsors link for {{ project_owner_github_username }}?"
   default: no
+# * -------------------------------------------------------------------------------- # *
+# * OVERRIDES
+
+override:
+  type: bool
+  help: Do you want to override any template files?
+  default: no
+
+# Overrides
+
+override_vscode_settings:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/settings"
+  default: no
+
+override_vscode_extensions:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/extensions"
+  default: no
+
+override_vscode_launch:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/launch"
+  default: no
+
+override_vscode_tasks:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .vscode/tasks"
+  default: no
+
+override_coveragerc:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .coveragerc"
+  default: no
+
+override_env:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .env"
+  default: no
+
+override_flake8:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .flake8"
+  default: no
+
+override_gitattributes:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .gitattributes"
+  default: no
+
+override_pyrightconfig:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: pyrightconfig.json"
+  default: no
+
+override_pytest:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: pytest.ini"
+  default: no
+
+# * -------------------------------------------------------------------------------- # *
 
 _skip_if_exists:
   - .gitignore
@@ -54,3 +125,6 @@ _skip_if_exists:
   - requirements.txt
   - "tests/test_{{ project_name }}.py"
   - "src/{{ project_name }}/__init__.py"
+
+_tasks:
+  - [py, "-{{ python_version }}", tooling/scripts/merge_gitignore.py]

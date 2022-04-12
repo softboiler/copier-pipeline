@@ -1,26 +1,30 @@
-# Tooling
-.coveragerc
-.env
-.flake8
-.gitattributes
-.vscode/
-*.rej
-package.json
-pyrightconfig.json
-pytest.ini
-tooling/bump_pyproject.py
-tooling/pythonrc.py
-tooling/requirements_both.txt
-tooling/requirements_cicd.txt
-tooling/requirements_dev.txt
+# * -------------------------------------------------------------------------------- * #
+# * PROJECT-SPECIFIC GITIGNORE
+
 
 # * -------------------------------------------------------------------------------- * #
+# * TEMPLATE GITIGNORE
+# *
+# * Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+
+# need "*" to allow negations in .vscode/.gitignore
+.vscode/*
+*.rej
+package.json
+#[[
+#]]
+
+# * -------------------------------------------------------------------------------- * #
+# * Node.gitignore
+# *
 # * https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 
 # NPM/Node.JS because of Pyright CI/CD dependency
 node_modules/
 
 # * -------------------------------------------------------------------------------- * #
+# * Python.gitignore
+# *
 # * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
@@ -130,7 +134,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
