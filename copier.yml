@@ -45,6 +45,21 @@ include_funding:
   help: Include GitHub Sponsors link for {{ project_owner_github_username }}?
   default: no
 
+optional_question:
+  type: bool
+  help: Ask optional questions?
+  default: no
+
+  test_1:
+    type: bool
+    help: test_1?
+    default: no
+
+  test_2:
+    type: bool
+    help: test_2?
+    default: no
+
 _skip_if_exists:
   - .gitignore
   - CHANGELOG.md
