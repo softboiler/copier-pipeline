@@ -101,3 +101,6 @@ _skip_if_exists:
   - requirements.txt
   - "tests/test_{{ project_name }}.py"
   - "src/{{ project_name }}/__init__.py"
+
+_tasks:
+  - ["{{ _copier_python }}", tooling/scripts/merge_gitignore.py]
