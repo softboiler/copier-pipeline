@@ -1,10 +1,9 @@
 $original = Get-Content -Delimiter \0 -Path .gitignore
 $replace = Get-Content -Delimiter \0 -Path tooling/scripts/gitignore_to_merge
 
-$multiline = '(?m)'
-$lookbehind = '(?<=^#\[\[\n)'
-$match = '[\s\S]*'
-$lookahead = '(?=^#\]\]\n)'
+$lookbehind = '(?<=\s#\[\[\s)'  # "#[[\n" (have to use \s instead of \n)
+$match = '[\s\S]*'  # anything in-between
+$lookahead = '(?=\s#\]\]\s)'  # "#]]\n" (have to use \s instead of \n)
 
-$original -replace ($multiline + $lookbehind + $match + $lookahead), $replace |
-    Set-Content -Path .gitignore
+$original -replace "$multiline$lookbehind$match$lookahead", $replace |
+    Set-Content -NoNewline -Path .gitignore
