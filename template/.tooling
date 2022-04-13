@@ -1,1 +1,0 @@
-This is the parent file for a special case of VSCode's experimental file nesting feature. It allows for certain files to be visually nested under another file without actually putting them in a subfolder. This allows us to hide these tooling configuration files, but still keep them at the root of the repo, where such configs are normally kept.

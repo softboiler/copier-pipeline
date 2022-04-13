@@ -1,0 +1,3 @@
+This is the parent file for a special case of VSCode's experimental file nesting feature. It allows for certain files to be visually nested under another file without actually putting them in a subfolder.
+
+In this case, we are nesting all Markdown files in the root of the repo here.
