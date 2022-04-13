@@ -10,6 +10,7 @@ max-line-length = 88
 
 ; Exclude hidden directories and files
 exclude =
+
     ; Default from: https://flake8.pycqa.org/en/latest/user/options.html#cmdoption-flake8-exclude
     .svn,
     CVS,
@@ -21,6 +22,8 @@ exclude =
     .nox,
     .eggs,
     *.egg,
+
+    ; Additionally, exclude all other dot-prefixed files and folders
     .*
 
 ; McCabe complexity
