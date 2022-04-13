@@ -118,13 +118,13 @@ override_pytest:
 
 _skip_if_exists:
   - ./.gitignore
-  - CHANGELOG.md
-  - LICENSE
-  - pyproject.toml
-  - README.md
-  - requirements.txt
-  - "tests/test_{{ project_name }}.py"
-  - "src/{{ project_name }}/__init__.py"
+  - ./CHANGELOG.md
+  - ./LICENSE
+  - ./pyproject.toml
+  - ./README.md
+  - ./requirements.txt
+  - "./tests/test_{{ project_name }}.py"
+  - "./src/{{ project_name }}/__init__.py"
 
 _tasks:
   - [py, "-{{ python_version }}", tooling/scripts/merge_gitignore.py]
