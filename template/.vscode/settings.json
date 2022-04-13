@@ -149,7 +149,7 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    "_tooling": ".coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache"
+    ".tooling": ".copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache"
   },
 
   //* Custom file associations
@@ -159,7 +159,7 @@
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
     "*requirements*.txt": "pip-requirements",
-    "_tooling": "plaintext"
+    ".tooling": "plaintext"
   },
 
   //* Enforce whitespace and newlines.
