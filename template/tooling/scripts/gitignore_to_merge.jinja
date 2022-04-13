@@ -1,3 +1,8 @@
+# need "*" to allow negations in .vscode/.gitignore
+.vscode/*
+*.rej
+package.json
+.nest_*
 {% if not override_coveragerc %}.coveragerc{% endif %}
 {% if not override_env %}.env{% endif %}
 {% if not override_flake8 %}.flake8{% endif %}
