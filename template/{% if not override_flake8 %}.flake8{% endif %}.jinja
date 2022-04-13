@@ -9,7 +9,19 @@ classmethod-decorators =
 max-line-length = 88
 
 ; Exclude hidden directories and files
-exclude = .*
+exclude =
+    ; Default from: https://flake8.pycqa.org/en/latest/user/options.html#cmdoption-flake8-exclude
+    .svn,
+    CVS,
+    .bzr,
+    .hg,
+    .git,
+    __pycache__,
+    .tox,
+    .nox,
+    .eggs,
+    *.egg,
+    .*
 
 ; McCabe complexity
 max_complexity = 10

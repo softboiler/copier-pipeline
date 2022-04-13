@@ -14,8 +14,8 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: "{{ python_version }}"
-      - run: bash tooling/cicd_setup.sh
-      - run: python tooling/scripts/bump_pyproject.py
+      - run: bash .tooling/cicd_setup.sh
+      - run: python .tooling/scripts/bump_pyproject.py
       - uses: stefanzweifel/git-auto-commit-action@v4.14.0
         with:
           commit_message: Bump `pyproject.toml` dependencies
