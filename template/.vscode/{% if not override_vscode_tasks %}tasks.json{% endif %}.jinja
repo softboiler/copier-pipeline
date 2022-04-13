@@ -36,6 +36,21 @@
         "clear": true
       },
       "problemMatcher": []
+    },
+    {
+      "label": "pwsh: Remove *.rej",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "Get-ChildItem * -Include *.rej -Recurse | Remove-Item"
+      ],
+      "presentation": {
+        "reveal": "never",
+        "showReuseMessage": false,
+        "clear": true
+      },
+      "problemMatcher": []
     }
   ]
 }
