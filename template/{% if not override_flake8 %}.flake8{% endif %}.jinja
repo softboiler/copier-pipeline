@@ -9,22 +9,13 @@ classmethod-decorators =
 max-line-length = 88
 
 ; Exclude hidden directories and files
-exclude =
-
-    ; Default from: https://flake8.pycqa.org/en/latest/user/options.html#cmdoption-flake8-exclude
-    .svn,
-    CVS,
-    .bzr,
-    .hg,
-    .git,
-    __pycache__,
-    .tox,
-    .nox,
-    .eggs,
-    *.egg,
-
-    ; Additionally, exclude all other dot-prefixed files and folders
-    .*
+extend-exclude =
+    ;  dot-prefixed files and folders
+    .github
+    .pytest_cache
+    .tooling
+    .venv
+    .vscode
 
 ; McCabe complexity
 max_complexity = 10
@@ -38,9 +29,9 @@ ignore =
     W503,
 
     ; Conflict with Better Comments
-    ; Inline comment should start with '#'
+    ; Inline comment should start with ';'
     E262,
-    ; Block comment should start with '#', conflict with Better Comments
+    ; Block comment should start with ';', conflict with Better Comments
     E265,
 
     ; flake8-black handles line length considerations better
@@ -63,15 +54,9 @@ per-file-ignores =
         ; argument name should be lowercase
         N803,
 
-        ; Ignore darglint
-        DAR,
-
         ; Ignore assert from bandit. Not a security issue in tests
         S101,
 
     __init__.py:
-        ; So that we can un-nest modules for the end user
-        ; Module imported but unused
-        F401,
         ; 'from module import *' used
         F403,
