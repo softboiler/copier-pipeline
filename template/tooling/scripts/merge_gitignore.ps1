@@ -5,5 +5,5 @@ $lookbehind = '(?<=\s#\[\[\s)'  # "#[[\n" (have to use \s instead of \n)
 $match = '[\s\S]*'  # anything in-between
 $lookahead = '(?=\s#\]\]\s)'  # "#]]\n" (have to use \s instead of \n)
 
-$original -replace "$multiline$lookbehind$match$lookahead", $replace |
+$original -replace "$lookbehind$match$lookahead", $replace |
     Set-Content -NoNewline -Path .gitignore
