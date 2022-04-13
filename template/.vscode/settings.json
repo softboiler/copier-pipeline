@@ -149,7 +149,8 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    ".tooling": ".copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache"
+    ".tooling": ".copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache",
+    "readme.md": "*.md"
   },
 
   //* Custom file associations
