@@ -6,11 +6,6 @@
       "type": "process",
       "command": ".venv/Scripts/python.exe",
       "args": ["-m", "pytest", "-q", "-ra", "--cov", "--cov-report", "xml"],
-      "presentation": {
-        "reveal": "never",
-        "showReuseMessage": false,
-        "clear": true
-      },
       "problemMatcher": []
     },
     {
@@ -18,11 +13,6 @@
       "type": "process",
       "command": "black",
       "args": ["-C", "${file}"],
-      "presentation": {
-        "reveal": "never",
-        "showReuseMessage": false,
-        "clear": true
-      },
       "problemMatcher": []
     },
     {
@@ -30,11 +20,13 @@
       "type": "process",
       "command": "git",
       "args": ["rebase", "-i", "--fork-point", "main"],
-      "presentation": {
-        "reveal": "never",
-        "showReuseMessage": false,
-        "clear": true
-      },
+      "problemMatcher": []
+    },
+    {
+      "label": "pwsh: Set up project",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tooling/setup.ps1"],
       "problemMatcher": []
     },
     {
@@ -45,11 +37,6 @@
         "-Command",
         "Get-ChildItem * -Include *.rej -Recurse | Remove-Item"
       ],
-      "presentation": {
-        "reveal": "never",
-        "showReuseMessage": false,
-        "clear": true
-      },
       "problemMatcher": []
     }
   ]
