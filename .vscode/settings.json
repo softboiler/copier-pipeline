@@ -22,6 +22,7 @@
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
     "*requirements*.txt": "pip-requirements",
-    ".nest_*": "plaintext"
+    ".nest_*": "plaintext",
+    "*.json*.jinja": "jsonc"
   }
 }
