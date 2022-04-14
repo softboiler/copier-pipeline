@@ -35,7 +35,7 @@
       "command": "pwsh",
       "args": [
         "-Command",
-        "Get-ChildItem * -Include *.rej -Recurse | Remove-Item"
+        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
       ],
       "problemMatcher": []
     }
