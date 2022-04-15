@@ -1,9 +1,14 @@
 # need "*" to allow negations in .vscode/.gitignore
 .vscode/*
+# to avoid committing rejected changes upon bumping template
 *.rej
 package.json
 pythonrc.py
 .nest_*
+# don't commit convenience scripts in root, but still commit those in subfolder
+/setup.ps1
+/update.ps1
+# overrides
 {% if not override_coveragerc %}.coveragerc{% endif %}
 {% if not override_env %}.env{% endif %}
 {% if not override_flake8 %}.flake8{% endif %}

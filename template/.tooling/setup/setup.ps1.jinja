@@ -1,4 +1,4 @@
 copier -f -r {{ _commit }}
 Remove-Item .venv -Recurse -ErrorAction SilentlyContinue
 py -{{ python_version }} -m venv .venv --upgrade-deps
-. .tooling/update.ps1
+. .tooling/setup/update.ps1
