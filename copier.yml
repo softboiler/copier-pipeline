@@ -44,6 +44,7 @@ include_funding:
   type: bool
   help: "Include GitHub Sponsors link for {{ project_owner_github_username }}?"
   default: no
+
 # * -------------------------------------------------------------------------------- # *
 # * OVERRIDES
 
@@ -115,16 +116,7 @@ override_pytest:
   default: no
 
 # * -------------------------------------------------------------------------------- # *
-
-_skip_if_exists:
-  - ./.gitignore
-  - ./CHANGELOG.md
-  - ./LICENSE
-  - ./pyproject.toml
-  - ./README.md
-  - ./requirements.txt
-  - "./tests/test_{{ project_name }}.py"
-  - "./src/{{ project_name }}/__init__.py"
+# * TASKS
 
 _tasks:
   - [pwsh, .tooling/scripts/merge_gitignore.ps1]
