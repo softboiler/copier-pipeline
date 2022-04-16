@@ -1,6 +1,6 @@
 {
   // * -------------------------------------------------------------------------- * //
-  // * PROJECT-SPECIFIC SETTINGS * //
+  // * PROJECT-SPECIFIC * //
 
   //! Extension: Pylance
   //* Pylance settings aren't very discoverable.
@@ -11,14 +11,18 @@
   "python.analysis.autoSearchPaths": false, // See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.typeCheckingMode": "off", // See "useLibraryCodeForTypes" in pyrightconfig.json
 
+  //! Extension: GitHub Actions
+  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+
   //! Linting
+
+  //* flake8
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": ["--config", ".flake8"],
-  "python.sortImports.args": ["--profile", "black"],
 
-  //! Extension: GitHub Actions
-  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+  //* isort
+  "python.sortImports.args": ["--profile", "black"],
 
   //* pytest
   "python.testing.unittestEnabled": false,
@@ -48,7 +52,7 @@
   ],
 
   // * -------------------------------------------------------------------------- * //
-  // * GENERAL SETTINGS * //
+  // * GENERAL * //
 
   //! Line-width related options
 
@@ -69,6 +73,55 @@
     "editor.rulers": [124],
     "rewrap.autoWrap.enabled": false
   },
+
+  //! Built-in
+
+  //* Enable native bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  "editor.formatOnSave": true,
+
+  //* Experimental File Nesting
+  "explorer.sortOrder": "foldersNestsFiles",
+  "explorer.experimental.fileNesting.enabled": true,
+  "explorer.experimental.fileNesting.expand": false,
+  "explorer.experimental.fileNesting.operateAsGroup": false,
+  "explorer.experimental.fileNesting.patterns": {
+    "*.ts": "${capture}.js",
+    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
+    "*.jsx": "${capture}.js",
+    "*.tsx": "${capture}.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock",
+    ".nest_tooling": "setup.ps1, update.ps1, pythonrc.py, .copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache",
+    ".nest_markdown": "*.md, LICENSE"
+  },
+
+  //* Custom file associations
+  "files.associations": {
+    ".coveragerc": "ini",
+    ".env": "dotenv",
+    ".pylintrc": "ini",
+    "pyrightconfig.json": "jsonc",
+    "*requirements*.txt": "pip-requirements",
+    ".nest_*": "plaintext"
+  },
+
+  //* Enforce whitespace and newlines.
+  //? Automatically enforce whitespace conventions.
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+
+  //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
+  "git.inputValidationSubjectLength": 88,
+  "git.inputValidationLength": 1e100,
 
   //! Extension: Better Jinja
   "[jinja-md]": {
@@ -129,55 +182,6 @@
   "[jinja-toml]": {
     "editor.wordWrap": "wordWrapColumn"
   },
-
-  //! Built-in
-
-  //* Enable native bracket pair colorization
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-
-  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
-  "editor.formatOnSave": true,
-
-  //* Experimental File Nesting
-  "explorer.sortOrder": "foldersNestsFiles",
-  "explorer.experimental.fileNesting.enabled": true,
-  "explorer.experimental.fileNesting.expand": false,
-  "explorer.experimental.fileNesting.operateAsGroup": false,
-  "explorer.experimental.fileNesting.patterns": {
-    "*.ts": "${capture}.js",
-    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
-    "*.jsx": "${capture}.js",
-    "*.tsx": "${capture}.ts",
-    "tsconfig.json": "tsconfig.*.json",
-    "package.json": "package-lock.json, yarn.lock",
-    ".nest_tooling": "setup.ps1, update.ps1, pythonrc.py, .copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache",
-    ".nest_markdown": "*.md, LICENSE"
-  },
-
-  //* Custom file associations
-  "files.associations": {
-    ".coveragerc": "ini",
-    ".env": "dotenv",
-    ".pylintrc": "ini",
-    "pyrightconfig.json": "jsonc",
-    "*requirements*.txt": "pip-requirements",
-    ".nest_*": "plaintext"
-  },
-
-  //* Enforce whitespace and newlines.
-  //? Automatically enforce whitespace conventions.
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "files.trimFinalNewlines": true,
-
-  //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
-  "git.autofetch": true,
-  "git.confirmSync": false,
-
-  //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
-  "git.inputValidationSubjectLength": 88,
-  "git.inputValidationLength": 1e100,
 
   //! Extension: reStructuredText
   //* Disable language server so that "snooty" isn't required in every .venv
