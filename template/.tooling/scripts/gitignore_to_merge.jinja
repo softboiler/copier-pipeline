@@ -8,10 +8,3 @@ pythonrc.py
 # don't commit convenience scripts in root, but still commit those in subfolder
 /setup.ps1
 /update.ps1
-# overrides
-{% if not override_coveragerc %}.coveragerc{% endif %}
-{% if not override_env %}.env{% endif %}
-{% if not override_flake8 %}.flake8{% endif %}
-{% if not override_gitattributes %}.gitattributes{% endif %}
-{% if not override_pyrightconfig %}pyrightconfig.json{% endif %}
-{% if not override_pytest %}pytest.ini{% endif %}
