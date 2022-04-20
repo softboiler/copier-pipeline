@@ -13,7 +13,7 @@
   //? See "useLibraryCodeForTypes" in pyrightconfig.json
   "python.analysis.typeCheckingMode": "off",
 
-  //! Lint, test, format
+  //! Lint, test
 
   //* flake8
   "python.linting.enabled": true,
@@ -28,11 +28,6 @@
   "markdownlint.config": {
     "first-line-heading": false
   },
-
-  //* Formatting
-  "python.formatting.provider": "black",
-  "rewrap.wrappingColumn": 88,
-  "rewrap.wholeComment": false,
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -118,6 +113,11 @@
   "markdown.preview.scrollEditorWithPreview": false,
 
   //! Line-width
+
+  //* Formatting
+  "python.formatting.provider": "black",
+  "rewrap.wrappingColumn": 88,
+  "rewrap.wholeComment": false,
 
   //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
   "git.inputValidationSubjectLength": 88,
