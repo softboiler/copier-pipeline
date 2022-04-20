@@ -1,5 +1,7 @@
 {
-  //* Experimental File Nesting
+  //! Files
+
+  //* Experimental file nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.experimental.fileNesting.enabled": true,
   "explorer.experimental.fileNesting.expand": false,
@@ -11,9 +13,13 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    ".nest_tooling": "setup.ps1, update.ps1, pythonrc.py, {{ _copier_conf.answers_file }}.jinja, *{% endif %}.jinja, package.json",
-    ".nest_markdown": "*.md, *.md.jinja, LICENSE.jinja"
+    ".nest_tools_config": "{{ _copier_conf.answers_file }}.jinja, *{% endif %}.jinja, package.json",
+    ".nest_md": "*.md, *.md.jinja, LICENSE.jinja"
   },
+  "vsicons.associations.files": [
+    { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
+    { "icon": "markdown", "extensions": ["nest_md"], "format": "svg" }
+  ],
 
   //* Custom file associations
   "files.associations": {
@@ -22,7 +28,22 @@
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
     "*requirements*.txt": "pip-requirements",
-    ".nest_*": "plaintext",
+    ".nest_md": "plaintext",
+    ".nest_tools_config": "plaintext",
     "*.json*.jinja": "jsonc"
+  },
+
+  //! Jinja
+  "[jinja-md]": {
+    //* Roughly matches the width of GitHub Markdown
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 124,
+    "editor.rulers": [124]
+  },
+  "[jinja-yaml]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+  "[jinja-toml]": {
+    "editor.wordWrap": "wordWrapColumn"
   }
 }

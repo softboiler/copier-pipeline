@@ -2,27 +2,23 @@
   // * -------------------------------------------------------------------------- * //
   // * PROJECT-SPECIFIC * //
 
-  //! Extension: Pylance
+  //! Pylance
   //* Pylance settings aren't very discoverable.
   //* https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
   "python.languageServer": "Pylance",
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.indexing": true,
-  "python.analysis.autoSearchPaths": false, // See "include" and "extrapaths" in pyrightconfig.json
-  "python.analysis.typeCheckingMode": "off", // See "useLibraryCodeForTypes" in pyrightconfig.json
+  //? See "include" and "extrapaths" in pyrightconfig.json
+  "python.analysis.autoSearchPaths": false,
+  //? See "useLibraryCodeForTypes" in pyrightconfig.json
+  "python.analysis.typeCheckingMode": "off",
 
-  //! Extension: GitHub Actions
-  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
-
-  //! Linting
+  //! Lint, test, format
 
   //* flake8
   "python.linting.enabled": true,
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Args": ["--config", ".flake8"],
-
-  //* isort
-  "python.sortImports.args": ["--profile", "black"],
 
   //* pytest
   "python.testing.unittestEnabled": false,
@@ -33,57 +29,34 @@
     "first-line-heading": false
   },
 
+  //* Formatting
+  "python.formatting.provider": "black",
+  "rewrap.wrappingColumn": 88,
+  "rewrap.wholeComment": false,
+
+  //! GitHub Actions
+  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+
+  //! Shell Launcher
   "shellLauncher.shells.windows": [
     {
       //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
       //*
       //* Use alongside the following keybind in your "keybindings.json".
       //*
-      // //! Extension: Shell Launcher
-      // {
-      //   "key": "ctrl+alt+1",
-      //   "command": "shellLauncher.launch"
-      // },
-      //*
+      //? {
+      //?   "key": "ctrl+alt+1",
+      //?   "command": "shellLauncher.launch"
+      //? },
       "label": "IPython (.venv)",
       "shell": "pwsh.exe",
       "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
     }
   ],
 
-  // * -------------------------------------------------------------------------- * //
-  // * GENERAL * //
+  //! Files
 
-  //! Line-width related options
-
-  //* Soft wrap settings
-
-  //? Set wrapping column
-  "editor.wordWrapColumn": 88,
-  "editor.rulers": [88],
-
-  //* Markdown editor moves jarringly when this is "true"
-  "markdown.preview.scrollEditorWithPreview": false,
-  //* Soft wrap in *.md, *.jsonc (like settings.json), and *.rst
-  "[markdown]": {
-    //* Roughly matches the width of GitHub Markdown
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 124,
-    "editor.rulers": [124],
-    "rewrap.autoWrap.enabled": false
-  },
-
-  //! Built-in
-
-  //* Enable native bracket pair colorization
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-
-  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
-  "editor.formatOnSave": true,
-
-  //* Experimental File Nesting
+  //* Experimental file nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.experimental.fileNesting.enabled": true,
   "explorer.experimental.fileNesting.expand": false,
@@ -95,19 +68,41 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    ".nest_tooling": "setup.ps1, update.ps1, pythonrc.py, .copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache",
-    ".nest_markdown": "*.md, LICENSE"
+    ".nest_tools_config": ".copier-answers.yml, .coveragerc, .env, .flake8, .gitattributes, package.json, pyrightconfig.json, pytest.ini, .pytest_cache",
+    ".nest_md": "*.md, LICENSE"
   },
 
-  //* Custom file associations
+  //* File associations
   "files.associations": {
     ".coveragerc": "ini",
     ".env": "dotenv",
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
     "*requirements*.txt": "pip-requirements",
-    ".nest_*": "plaintext"
+    ".nest_md": "plaintext",
+    ".nest_tools_config": "plaintext"
   },
+
+  //* File icon associations
+  "workbench.iconTheme": "vscode-icons",
+  "vsicons.presets.hideExplorerArrows": true,
+  "vsicons.dontShowNewVersionMessage": false,
+  "vsicons.associations.files": [
+    { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
+    { "icon": "markdown", "extensions": ["nest_md"], "format": "svg" }
+  ],
+
+  // * -------------------------------------------------------------------------- * //
+  // * GENERAL * //
+
+  //! Built-in
+
+  //* Enable native bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  "editor.formatOnSave": true,
 
   //* Enforce whitespace and newlines.
   //? Automatically enforce whitespace conventions.
@@ -119,72 +114,62 @@
   "git.autofetch": true,
   "git.confirmSync": false,
 
+  //* Markdown editor moves jarringly when this is "true"
+  "markdown.preview.scrollEditorWithPreview": false,
+
+  //! Line-width
+
   //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
 
-  //! Extension: Better Jinja
-  "[jinja-md]": {
-    //* Roughly matches the width of GitHub Markdown
+  //* Default wrapping
+  "editor.wordWrapColumn": 88,
+  "editor.rulers": [88],
+
+  //! Filetype specifics (incl. line width)
+
+  //* MD
+  "[markdown]": {
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
     "editor.wordWrap": "wordWrapColumn",
+    //? Roughly matches the width of GitHub Markdown
     "editor.wordWrapColumn": 124,
-    "editor.rulers": [124]
+    "editor.rulers": [124],
+    "rewrap.autoWrap.enabled": false
   },
 
-  //* Use Prettier in JSON files
+  //* JSON
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  //* Use Prettier and word wrap in commented JSON files
   "[jsonc]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
-  //* Word wrap in RST files
-  "[restructuredtext]": {
-    "editor.wordWrap": "wordWrapColumn"
-  },
-
-  //* Word wrap in TXT files
+  //* TXT
   "[plaintext]": {
     "editor.wordWrap": "wordWrapColumn"
   },
 
-  //* Word wrap in TOML files
+  //* TOML
+  "evenBetterToml.formatter.columnWidth": 88,
   "[toml]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
 
-  //* Indent with tabs in TSV files
+  //* TSV
   "[tsv]": {
+    //? Indent with tabs
     "editor.insertSpaces": false
   },
 
-  //* Formatting configuration
-  "python.formatting.provider": "black",
-  "rewrap.wrappingColumn": 88,
-  "rewrap.wholeComment": false,
-
-  //! Extension: YAML
+  //* YAML
   "yaml.format.printWidth": 88,
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",
     "editor.wordWrap": "wordWrapColumn"
-  },
-  "[jinja-yaml]": {
-    "editor.wordWrap": "wordWrapColumn"
-  },
-
-  //! Extension: Even Better TOML
-  "evenBetterToml.formatter.columnWidth": 88,
-  "[jinja-toml]": {
-    "editor.wordWrap": "wordWrapColumn"
-  },
-
-  //! Extension: reStructuredText
-  //* Disable language server so that "snooty" isn't required in every .venv
-  "restructuredtext.languageServer.disabled": true,
-  "restructuredtext.preview.scrollEditorWithPreview": false
+  }
 }

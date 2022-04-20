@@ -1,5 +1,5 @@
 # Tell Dependabot to monitor these requirements specifically.
 -r template/requirements.txt
--r template/.tooling/requirements/requirements_both.txt
--r template/.tooling/requirements/requirements_cicd.txt
--r template/.tooling/requirements/requirements_dev.txt
+-r template/.tools/requirements_both.txt
+-r template/.tools/requirements_cicd.txt
+-r template/.tools/requirements_dev.txt

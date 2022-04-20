@@ -1,0 +1,8 @@
+copier -f -r {{ _commit }}
+Remove-Item .venv -Recurse -ErrorAction SilentlyContinue
+py -{{ python_version }} -m venv .venv --upgrade-deps
+<<<<<<< Updated upstream:template/.tools/setup/setup.ps1.jinja
+. .tooling/setup/update.ps1
+=======
+. .tools/update.ps1
+>>>>>>> Stashed changes:template/.tools/setup.ps1.jinja
