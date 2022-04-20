@@ -8,5 +8,5 @@ source_folder = Path("./dependabot") / COMMON_PATH
 destination_folder = Path("./template/") / COMMON_PATH
 
 for source in source_folder.iterdir():
-    destination = destination_folder / (source.name + ".jinja")
+    destination = destination_folder / f"{source.name}.jinja"
     copy(source, destination)
