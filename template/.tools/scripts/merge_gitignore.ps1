@@ -9,8 +9,3 @@ if(Test-Path -Path .gitignore){
     $original -replace "$lookbehind$match$lookahead", $replace |
         Set-Content -NoNewline -Path .gitignore
 }
-else{
-    git add .
-    git commit -m "Initialize template"
-    . .tools/scripts/init_template.ps1
-}
