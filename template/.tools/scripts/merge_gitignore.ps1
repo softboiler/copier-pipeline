@@ -10,5 +10,7 @@ if(Test-Path -Path .gitignore){
         Set-Content -NoNewline -Path .gitignore
 }
 else{
+    git add .
+    git commit -m "Initialize template"
     . .tools/scripts/init_template.ps1
 }
