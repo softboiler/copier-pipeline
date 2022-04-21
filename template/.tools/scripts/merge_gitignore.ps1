@@ -10,5 +10,5 @@ if(Test-Path -Path .gitignore){
         Set-Content -NoNewline -Path .gitignore
 }
 else{
-    . ./init_template.ps1
+    . .tools/scripts/init_template.ps1
 }
