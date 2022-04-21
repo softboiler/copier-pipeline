@@ -19,3 +19,6 @@ $repo_replacement = 'gh:blakeNaccarato/copier-python-init'
 $new_answers = $original_answers -replace $commit, $commit_replacement
 $new_answers = $new_answers -replace $repo, $repo_replacement
 $new_answers | Set-Content -NoNewline -Path $new_answers_file
+
+# Run copier
+copier --answers-file $new_answers_file -f
