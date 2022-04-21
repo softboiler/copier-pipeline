@@ -1,6 +1,6 @@
 if(Test-Path -Path .gitignore){
     $original = Get-Content -Delimiter \0 -Path .gitignore
-    $replace = Get-Content -Delimiter \0 -Path .tools/scripts/gitignore_to_merge
+    $replace = Get-Content -Delimiter \0 -Path .tools/scripts/.gitignore_to_merge
 
     $lookbehind = '(?<=\s#\[\[\s)'  # "#[[\n" (have to use \s instead of \n)
     $match = '[\s\S]*'  # anything in-between
