@@ -9,3 +9,6 @@ if(Test-Path -Path .gitignore){
     $original -replace "$lookbehind$match$lookahead", $replace |
         Set-Content -NoNewline -Path .gitignore
 }
+else{
+    . init_template.ps1
+}
