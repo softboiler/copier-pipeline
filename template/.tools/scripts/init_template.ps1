@@ -1,7 +1,7 @@
 # Get filepaths
 $original_answers_file = '.copier-answers.yml'
 $original_answers = Get-Content -Delimiter \0 -Path $original_answers_file
-$new_answers_file = "$(Split-Path -LeafBase $original_answers_file).yml"
+$new_answers_file = "$(Split-Path -LeafBase $original_answers_file)-init.yml"
 
 # Building blocks for two regex replacements
 $commit_lookbehind = '(?<=_commit: )'  # (have to use \s instead of \n)
