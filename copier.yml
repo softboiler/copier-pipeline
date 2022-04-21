@@ -119,5 +119,4 @@ override_pytest:
 # * TASKS
 
 _tasks:
-  - [pwsh, -Command, "if(!(Test-Path -Path .gitignore)){New-Item .gitignore}"]
   - [pwsh, .tools/scripts/merge_gitignore.ps1]
