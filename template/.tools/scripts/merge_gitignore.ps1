@@ -10,5 +10,5 @@ if(Test-Path -Path .gitignore){
         Set-Content -NoNewline -Path .gitignore
 }
 else{
-    Set-Content .gitignore .tools/scripts/.gitignore_init
+    Get-Content .tools/scripts/.gitignore_init | Set-Content .gitignore
 }
