@@ -1,1 +1,1 @@
-. .tooling/setup/setup.ps1
+. .tools/setup/setup.ps1
