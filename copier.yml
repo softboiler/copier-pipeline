@@ -124,5 +124,5 @@ override_sourcery:
 # * -------------------------------------------------------------------------------- # *
 # * TASKS
 
-_tasks:
-  - [pwsh, .tools/scripts/merge_gitignore.ps1]
+# _tasks:
+#   - [pwsh, .tools/scripts/merge_gitignore.ps1]
