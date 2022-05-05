@@ -115,6 +115,12 @@ override_pytest:
   help: "Override: pytest.ini"
   default: no
 
+override_sourcery:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .sourcery.yaml"
+  default: no
+
 # * -------------------------------------------------------------------------------- # *
 # * TASKS
 

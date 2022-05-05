@@ -22,14 +22,15 @@
 
   //* Custom file associations
   "files.associations": {
-    ".coveragerc": "ini",
-    ".env": "dotenv",
-    ".gitignore_*": "ignore",
-    ".pylintrc": "ini",
-    "pyrightconfig.json": "jsonc",
+    "*.coveragerc*.jinja": "ini",
+    "*.env*.jinja": "dotenv",
+    "*.gitignore*": "ignore",
+    "*.pylintrc*.jinja": "ini",
+    "*pyrightconfig.json*.jinja": "jsonc",
     "*requirements*.txt": "pip-requirements",
     ".nest_md": "plaintext",
     ".nest_tools_config": "plaintext",
+    "*.sourcery.yaml*.jinja": "yaml",
     "*.json*.jinja": "jsonc"
   },
 
