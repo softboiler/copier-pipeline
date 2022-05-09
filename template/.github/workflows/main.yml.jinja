@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: bash .tools/scripts/cicd_setup.sh
-      - run: flake8 -v --config .flake8
+      - run: flake8
 
   pyright:
     runs-on: ubuntu-20.04
