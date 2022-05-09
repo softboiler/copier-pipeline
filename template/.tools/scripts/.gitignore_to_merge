@@ -5,6 +5,3 @@
 # Only needed in dev environments
 pythonrc.py
 .nest_*
-# Don't commit convenience scripts in root, but still commit those in subfolder
-/setup.ps1
-/update.ps1
