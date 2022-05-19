@@ -22,9 +22,13 @@
 
   //* Custom file associations
   "files.associations": {
+    "*.codecov.yaml*.jinja": "yaml",
     "*.coveragerc*.jinja": "ini",
     "*.env*.jinja": "dotenv",
+    "*.flake8*.jinja": "ini",
     "*.gitignore*": "ignore",
+    "*.isort.cfg*": "ini",
+    "*.pre-commit-config.yaml*.jinja": "yaml",
     "*.pylintrc*.jinja": "ini",
     "*pyrightconfig.json*.jinja": "jsonc",
     "*requirements*.txt": "pip-requirements",

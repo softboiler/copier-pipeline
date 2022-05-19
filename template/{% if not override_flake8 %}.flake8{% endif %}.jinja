@@ -17,6 +17,11 @@ extend-exclude =
     .venv
     .vscode
 
+; So flake8-bugbear B008 doesn't complain about Typer constructs
+extend-immutable-calls =
+    Argument
+    Option
+
 ; McCabe complexity
 max_complexity = 10
 

@@ -1,0 +1,40 @@
+files: |
+  (?x)^(
+      src/.*
+      |examples/.*
+      |tests/.*
+  )$
+
+# Note: Can't use anything in `.venv` for local hooks when commiting from VSCode GUI.
+# This is because VSCode Source Control doesn't activate `.venv` before running `git
+# commit`.
+#
+# Example script to run via "target: pwsh script.ps1"
+#
+#     & ./.venv/Scripts/Activate.ps1
+#     foreach ($arg in $args) {
+#         autoflake -i --remove-all-unused-imports --ignore-init-module-imports $arg
+#     }
+#
+# (https://github.com/microsoft/vscode-python/issues/10165)
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: "v4.2.0"
+    hooks:
+      - id: check-docstring-first
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/PyCQA/autoflake
+    rev: "v1.4"
+    hooks:
+      - id: autoflake
+        args: [-i, --remove-all-unused-imports, --ignore-init-module-imports]
+  - repo: https://github.com/psf/black
+    hooks:
+      - id: black
+    rev: "22.3.0"
+  - repo: https://github.com/PyCQA/isort
+    rev: "5.10.1"
+    hooks:
+      - id: isort

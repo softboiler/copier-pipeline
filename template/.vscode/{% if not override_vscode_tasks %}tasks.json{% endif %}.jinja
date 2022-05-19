@@ -1,56 +1,87 @@
+// Calling `pwsh` first leverages my personal $PROFILE to activate `.venv`.
+// Alternatively, we could use `.venv/Scripts/python.exe` and change the `args`, but
+// this is platform-specific anyways.
+
 {
   "version": "2.0.0",
   "tasks": [
+    // * -------------------------------------------------------------------------- * //
+    // * GIT * //
     {
-      "label": "pytest-cov",
-      "type": "process",
-      "command": ".venv/Scripts/python.exe",
-      "args": ["-m", "pytest", "-q", "-ra", "--cov", "--cov-report", "xml"],
-      "problemMatcher": []
-    },
-    {
-      "label": "Black: Ignore magic comma",
-      "type": "process",
-      "command": "black",
-      "args": ["-C", "${file}"],
-      "problemMatcher": []
-    },
-    {
-      "label": "Git: Rebase back to fork",
+      "label": "git: Rebase back to fork",
       "type": "process",
       "command": "git",
       "args": ["rebase", "-i", "--fork-point", "main"],
       "problemMatcher": []
     },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PROJECT SETUP * //
     {
-      "label": "pwsh: Initialize template",
+      "label": "setup: Initialize template",
       "type": "process",
       "command": "pwsh",
       "args": [".tools/scripts/init_template.ps1"],
       "problemMatcher": []
     },
     {
-      "label": "pwsh: Setup project",
+      "label": "setup: Setup project",
       "type": "process",
       "command": "pwsh",
       "args": ["setup.ps1"],
       "problemMatcher": []
     },
     {
-      "label": "pwsh: Update project",
+      "label": "setup: Update project",
       "type": "process",
       "command": "pwsh",
       "args": ["update.ps1"],
       "problemMatcher": []
     },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PRE-COMMIT * //
+
     {
-      "label": "pwsh: Remove *.rej",
+      "label": "autoflake: All files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run autoflake --all-files"],
+      "problemMatcher": []
+    },
+    {
+      "label": "autoflake: Current file",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run autoflake --files ${file}"],
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * OTHER TASKS * //
+
+    {
+      "label": "task: pytest-cov",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Remove *.rej",
       "type": "process",
       "command": "pwsh",
       "args": [
         "-Command",
         "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
       ],
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Ignore magic comma in all project files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C src tests"],
       "problemMatcher": []
     }
   ]
