@@ -1,7 +1,8 @@
 """Bump `pyproject.toml` with changes in `requirements.txt`"""
 
-import toml
 from pathlib import Path
+
+import toml
 
 REQUIREMENTS = Path("requirements.txt")
 PYPROJECT = Path("pyproject.toml")
