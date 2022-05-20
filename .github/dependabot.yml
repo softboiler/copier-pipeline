@@ -9,7 +9,7 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "github-actions"
-    directory: "dependabot"
+    directory: "dependabot/.github/workflows/bump.yml"
     schedule:
       interval: "daily"
 #   - package-ecosystem: "github-actions"
