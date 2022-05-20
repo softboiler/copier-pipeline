@@ -5,15 +5,15 @@ updates:
     schedule:
       interval: daily
   - package-ecosystem: github-actions
-    directory: /
+    directory: /.github/workflows
     schedule:
       interval: daily
   - package-ecosystem: github-actions
-    directory: /dependabot
+    directory: /dependabot/.github/workflows
     schedule:
       interval: daily
   - package-ecosystem: github-actions
-    directory: /template
+    directory: /template/.github/workflows
     schedule:
       interval: daily
   - package-ecosystem: npm
