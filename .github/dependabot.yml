@@ -1,22 +1,22 @@
 version: 2
 updates:
-  - package-ecosystem: pip
-    directory: /
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: daily
-  - package-ecosystem: github-actions
-    directory: /.github/workflows
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    directory: ".github/workflows"
     schedule:
-      interval: daily
-  - package-ecosystem: github-actions
-    directory: /dependabot/.github/workflows
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    directory: "dependabot/.github/workflows"
     schedule:
-      interval: daily
-  - package-ecosystem: github-actions
-    directory: /template/.github/workflows
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    directory: "template/.github/workflows"
     schedule:
-      interval: daily
-  - package-ecosystem: npm
-    directory: /template
+      interval: "daily"
+  - package-ecosystem: "npm"
+    directory: "template"
     schedule:
-      interval: daily
+      interval: "daily"
