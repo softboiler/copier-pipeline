@@ -9,7 +9,7 @@ updates:
     schedule:
       interval: "daily"
   - package-ecosystem: "github-actions"
-    directory: "dependabot/.github/workflows"
+    directory: "dependabot"
     schedule:
       interval: "daily"
 #   - package-ecosystem: "github-actions"
