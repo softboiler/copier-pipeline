@@ -3,7 +3,7 @@
 from pathlib import Path
 from shutil import copy
 
-source_folder = Path(".github/template")
+source_folder = Path(".github/workflows/template")
 destination_folder = Path("template/.github/workflows")
 
 for source in source_folder.iterdir():
