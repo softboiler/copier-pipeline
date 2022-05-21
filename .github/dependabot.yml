@@ -8,10 +8,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "template_workflows"
-    schedule:
-      interval: "daily"
   - package-ecosystem: "npm"
     directory: "template"
     schedule:
