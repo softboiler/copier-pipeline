@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [dependabot/**]
+    paths: [.github/template/**]
 
 jobs:
   bump:
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-      - run: python dependabot/bump.py
+      - run: python bump.py
       - uses: stefanzweifel/git-auto-commit-action@v4.14.1
         with:
           commit_message: Bump dependencies

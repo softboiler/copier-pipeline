@@ -8,14 +8,6 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "dependabot"
-    schedule:
-      interval: "daily"
-  - package-ecosystem: "github-actions"
-    directory: "template"
-    schedule:
-      interval: "daily"
   - package-ecosystem: "npm"
     directory: "template"
     schedule:
