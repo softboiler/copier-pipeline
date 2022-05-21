@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [template_workflows/*]
+    paths: [.github/workflows/*]
 
 jobs:
   bump:
