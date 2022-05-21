@@ -1,7 +1,0 @@
-# Need "*" to allow negations in .vscode/.gitignore
-.vscode/*
-# To avoid committing rejected changes upon bumping template
-*.rej
-# Only needed in dev environments
-pythonrc.py
-.nest_*

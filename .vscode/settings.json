@@ -22,20 +22,21 @@
 
   //* Custom file associations
   "files.associations": {
+    ".nest_md": "plaintext",
+    ".nest_tools_config": "plaintext",
     "*.codecov.yaml*.jinja": "yaml",
     "*.coveragerc*.jinja": "ini",
     "*.env*.jinja": "dotenv",
     "*.flake8*.jinja": "ini",
     "*.gitignore*": "ignore",
     "*.isort.cfg*": "ini",
+    "*.json*.jinja": "jsonc",
+    "*.ps1.jinja": "powershell",
     "*.pre-commit-config.yaml*.jinja": "yaml",
     "*.pylintrc*.jinja": "ini",
-    "*pyrightconfig.json*.jinja": "jsonc",
-    "*requirements*.txt": "pip-requirements",
-    ".nest_md": "plaintext",
-    ".nest_tools_config": "plaintext",
     "*.sourcery.yaml*.jinja": "yaml",
-    "*.json*.jinja": "jsonc"
+    "*pyrightconfig.json*.jinja": "jsonc",
+    "*requirements*.txt": "pip-requirements"
   },
 
   //! Jinja

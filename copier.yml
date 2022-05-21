@@ -138,9 +138,3 @@ override_sourcery:
   type: bool
   help: "Override: .sourcery.yaml"
   default: no
-
-# * -------------------------------------------------------------------------------- # *
-# * TASKS
-
-_tasks:
-  - [pwsh, .tools/scripts/merge_gitignore.ps1]
