@@ -1,0 +1,20 @@
+name: bump
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [.github/workflows/**]
+
+jobs:
+  bump:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - run: python bump.py
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        with:
+          commit_message: Bump dependencies
