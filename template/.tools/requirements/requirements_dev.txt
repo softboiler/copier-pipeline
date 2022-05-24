@@ -15,6 +15,6 @@ flake8-codes~=0.2.0  # flake8 error code introspection
 pre-commit~=2.19.0
 
 # For local publishing to PyPi with flit
-keyring~=23.5.0
+keyring~=23.5.1
 
 -r requirements_both.txt
