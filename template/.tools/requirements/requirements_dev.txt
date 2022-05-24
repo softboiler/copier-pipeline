@@ -9,7 +9,7 @@ rich~=12.4.1
 black~=22.3.0  # doesn't follow semver
 
 # Lint
-flake8-codes~=0.2.0  # flake8 error code introspection
+flake8-codes~=0.2.2  # flake8 error code introspection
 
 # Pre-commit
 pre-commit~=2.19.0
