@@ -50,6 +50,10 @@ ignore =
     ; flake8: Assigned to but never used, Pylance(reportUnusedVariable)
     F841,
 
+    ; Sometimes we want to save keystrokes in dict writing
+    ; flake8: Unnecessary dict call - rewrite as a literal
+    C408
+
 per-file-ignores =
 
     tests/*:
