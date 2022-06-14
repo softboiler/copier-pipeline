@@ -24,7 +24,7 @@
   "files.associations": {
     ".nest_md": "plaintext",
     ".nest_tools_config": "plaintext",
-    "*.codecov.yaml*.jinja": "yaml",
+    "*codecov.yaml*.jinja": "yaml",
     "*.coveragerc*.jinja": "ini",
     "*.env*.jinja": "dotenv",
     "*.flake8*.jinja": "ini",
