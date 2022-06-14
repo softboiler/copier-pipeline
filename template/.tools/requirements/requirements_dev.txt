@@ -11,6 +11,9 @@ black~=22.3.0  # doesn't follow semver
 # Lint
 flake8-codes~=0.2.2  # flake8 error code introspection
 
+# Profiling
+snakeviz~=2.2.1
+
 # Pre-commit
 pre-commit~=2.19.0
 
