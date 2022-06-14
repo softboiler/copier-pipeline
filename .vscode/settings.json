@@ -12,7 +12,7 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    ".nest_tools_config": "*.ps1.jinja, {{ _copier_conf.answers_file }}.jinja, *{% endif %}.jinja, package.json",
+    ".nest_tools_config": "*.ps1.jinja, {{ _copier_conf.answers_file }}.jinja, *{% endif %}.jinja, package.json, pytest_local.ini, pythonrc.py",
     ".nest_md": "*.md, *.md.jinja, LICENSE.jinja"
   },
   "vsicons.associations.files": [
