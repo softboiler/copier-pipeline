@@ -43,14 +43,21 @@
     // * PRE-COMMIT * //
 
     {
-      "label": "autoflake: All files",
+      "label": "pre-commit: All files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run --all-files"],
+      "problemMatcher": []
+    },
+    {
+      "label": "pre-commit: autoflake: All files",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "pre-commit run autoflake --all-files"],
       "problemMatcher": []
     },
     {
-      "label": "autoflake: Current file",
+      "label": "pre-commit: autoflake: Current file",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "pre-commit run autoflake --files ${file}"],
@@ -61,10 +68,17 @@
     // * OTHER TASKS * //
 
     {
-      "label": "task: pytest-cov",
+      "label": "task: snakeviz",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "args": ["-Command", "snakeviz .prof"],
+      "problemMatcher": []
+    },
+    {
+      "label": "task: pytest-cov: Generate coverage",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pytest -c pytest_local.ini --cov --cov-report xml"],
       "problemMatcher": []
     },
     {
@@ -78,7 +92,14 @@
       "problemMatcher": []
     },
     {
-      "label": "task: Ignore magic comma in all project files",
+      "label": "task: black: Ignore magic comma in this file",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C ${file}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "task: black: Ignore magic comma in all project files",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C src tests"],
