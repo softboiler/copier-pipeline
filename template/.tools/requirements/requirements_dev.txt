@@ -6,7 +6,7 @@ nbstripout~=0.5.0
 rich~=12.4.4
 
 # Format
-black~=22.3.0  # doesn't follow semver
+black~=22.6.0  # doesn't follow semver
 
 # Lint
 flake8-codes~=0.2.2  # flake8 error code introspection
