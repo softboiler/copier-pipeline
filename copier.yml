@@ -109,6 +109,12 @@ override_gitattributes:
   help: "Override: .gitattributes"
   default: no
 
+override_gitignore:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .gitignore"
+  default: no
+
 override_isort:
   when: "{{ override }}"
   type: bool
