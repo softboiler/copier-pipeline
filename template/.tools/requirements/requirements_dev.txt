@@ -3,7 +3,7 @@ jupyter~=1.0.0
 nbstripout~=0.5.0
 
 # For `python` and `ipython` via `pythonrc.py`
-rich~=12.4.4
+rich~=12.5.1
 
 # Format
 black~=22.6.0  # doesn't follow semver
