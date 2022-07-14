@@ -18,6 +18,6 @@ snakeviz~=2.1.1
 pre-commit~=2.20.0
 
 # For local publishing to PyPi with flit
-keyring~=23.6.0
+keyring~=23.7.0
 
 -r requirements_both.txt
