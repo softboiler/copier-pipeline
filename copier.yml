@@ -45,6 +45,11 @@ include_funding:
   help: "Include GitHub Sponsors link for {{ project_owner_github_username }}?"
   default: no
 
+use_dvc:
+  type: bool
+  help: "Use the Data Version Control package? If yes, make sure you also add the dependency to your project manually, so that it may be updated independently from this template."
+  default: no
+
 # * -------------------------------------------------------------------------------- # *
 # * OVERRIDES
 

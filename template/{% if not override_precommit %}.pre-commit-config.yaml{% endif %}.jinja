@@ -2,7 +2,6 @@ files: |
   (?x)^(
       src/.*
       |tests/.*
-      |examples/.*
   )$
 
 # Note: Can't use anything in `.venv` for local hooks when commiting from VSCode GUI.
@@ -20,7 +19,7 @@ files: |
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: "v4.2.0"
+    rev: "v4.3.0"
     hooks:
       - id: check-docstring-first
       - id: end-of-file-fixer
@@ -33,8 +32,28 @@ repos:
   - repo: https://github.com/psf/black
     hooks:
       - id: black
-    rev: "22.3.0"
+    rev: "22.6.0"
   - repo: https://github.com/PyCQA/isort
     rev: "5.10.1"
     hooks:
       - id: isort
+  {% if use_dvc %}
+  - repo: https://github.com/iterative/dvc
+    rev: "2.18.0"
+    hooks:
+      - id: dvc-pre-commit
+        language_version: python3
+        stages:
+          - commit
+      - id: dvc-pre-push
+        # use s3/gs/etc instead of all to only install specific cloud support
+        additional_dependencies: [".[gs]"]
+        language_version: python3
+        stages:
+          - push
+      - always_run: true
+        id: dvc-post-checkout
+        language_version: python3
+        stages:
+          - post-checkout
+  {% endif %}
