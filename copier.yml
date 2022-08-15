@@ -69,25 +69,25 @@ override_update:
 override_vscode_extensions:
   when: "{{ override }}"
   type: bool
-  help: "Override: .vscode/extensions"
+  help: "Override: .vscode/extensions.json"
   default: no
 
 override_vscode_launch:
   when: "{{ override }}"
   type: bool
-  help: "Override: .vscode/launch"
+  help: "Override: .vscode/launch.json"
   default: no
 
 override_vscode_settings:
   when: "{{ override }}"
   type: bool
-  help: "Override: .vscode/settings"
+  help: "Override: .vscode/settings.json"
   default: no
 
 override_vscode_tasks:
   when: "{{ override }}"
   type: bool
-  help: "Override: .vscode/tasks"
+  help: "Override: .vscode/tasks.json"
   default: no
 
 override_codecov:
