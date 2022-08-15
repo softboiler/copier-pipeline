@@ -2,6 +2,10 @@
   // * -------------------------------------------------------------------------- * //
   // * PROJECT-SPECIFIC * //
 
+  // Environment variables don't load properly otherwise
+  // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
+  "terminal.integrated.defaultProfile.linux": "pwsh",
+
   //! Pylance
   //* Pylance settings aren't very discoverable.
   //* https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
