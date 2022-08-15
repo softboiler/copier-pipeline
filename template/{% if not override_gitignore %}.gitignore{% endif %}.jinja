@@ -25,7 +25,20 @@
 node_modules/
 
 # * -------------------------------------------------------------------------------- * #
-# * Python.gitignore
+# * Modifications to the below Python.gitignore
+# *
+# * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+
+
+# IPython
+.ipython/profile_default/*
+!.ipython/profile_default/startup/
+.ipython/profile_default/startup/README
+ipython_config.py
+
+
+# * -------------------------------------------------------------------------------- * #
+# * Modified Python.gitignore
 # *
 # * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
 
@@ -108,10 +121,6 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
 
 # pyenv
 #   For a library or package, you might want to ignore these files since the code is
