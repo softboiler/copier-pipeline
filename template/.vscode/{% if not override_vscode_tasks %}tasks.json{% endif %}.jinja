@@ -49,20 +49,6 @@
       "args": ["-Command", "pre-commit run --all-files"],
       "problemMatcher": []
     },
-    {
-      "label": "pre-commit: autoflake: All files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pre-commit run autoflake --all-files"],
-      "problemMatcher": []
-    },
-    {
-      "label": "pre-commit: autoflake: Current file",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pre-commit run autoflake --files ${file}"],
-      "problemMatcher": []
-    },
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
@@ -72,6 +58,16 @@
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "snakeviz .prof"],
+      "problemMatcher": []
+    },
+    {
+      "label": "task: autoflake current file",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}"
+      ],
       "problemMatcher": []
     },
     {

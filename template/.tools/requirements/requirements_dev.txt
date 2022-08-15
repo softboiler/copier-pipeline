@@ -6,6 +6,7 @@ nbstripout~=0.6.0
 rich~=12.5.1
 
 # Format
+autoflake~=1.4
 black~=22.6.0  # doesn't follow semver
 
 # Lint
