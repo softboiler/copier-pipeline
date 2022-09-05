@@ -3,7 +3,7 @@
   "extends": ["config:base"],
   "automerge": true,
   "pip_requirements": {
-    "fileMatch": ["requirements*.txt"]
+    "fileMatch": ["requirements.*\\.txt"]
   },
 
   "packageRules": [
@@ -25,11 +25,7 @@
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchFiles": [
-        "template/.tools/requirements/requirements_both.txt",
-        "template/.tools/requirements/requirements_cicd.txt",
-        "template/.tools/requirements/requirements_dev.txt"
-      ],
+      "matchPaths": ["template/.tools/requirements/*"],
       "matchPackagePatterns": [".*"]
     }
   ]
