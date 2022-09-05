@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-source_file = Path("bump/pre-commit-config.yaml")
+source_file = Path("bump/.pre-commit-config.yaml")
 destination_file = Path(
     "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
 )

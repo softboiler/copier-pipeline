@@ -1,6 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
+  "extends": [
+    "config:base",
+    "group:allNonMajor",
+    ":preserveSemverRanges",
+    ":enablePreCommit"
+  ],
   "automerge": true,
   "enabledManagers": [
     "npm",
@@ -11,9 +16,6 @@
   ],
   "pip_requirements": {
     "fileMatch": ["requirements.*\\.txt"]
-  },
-  "pre-commit": {
-    "enabled": true
   },
   "packageRules": [
     {
@@ -33,8 +35,8 @@
       "matchFiles": ["template/package.json"]
     },
     {
-      "groupName": "template/pre-commit-config.yaml",
-      "matchFiles": ["bump/pre-commit-config.yaml"]
+      "groupName": "bump/.pre-commit-config.yaml",
+      "matchFiles": ["bump/.pre-commit-config.yaml"]
     }
   ]
 }
