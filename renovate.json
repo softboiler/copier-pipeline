@@ -12,6 +12,9 @@
   "pip_requirements": {
     "fileMatch": ["requirements.*\\.txt"]
   },
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "groupName": ".github/workflows/bump_workflows.yml",
@@ -29,6 +32,12 @@
     {
       "groupName": "template/package.json",
       "matchFiles": ["template/package.json"]
+    },
+    {
+      "groupName": "template/pre-commit-config.yaml",
+      "matchFiles": [
+        "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
+      ]
     }
   ]
 }
