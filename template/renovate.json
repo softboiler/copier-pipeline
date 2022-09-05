@@ -2,10 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
   "automerge": true,
-  "enabledManagers": ["pip_requirements", "poetry", "pre-commit"],
-  "pre-commit": {
-    "enabled": true
-  },
+  "enabledManagers": ["pip_requirements", "poetry"],
   "packageRules": [
     {
       "groupName": "requirements.txt",
