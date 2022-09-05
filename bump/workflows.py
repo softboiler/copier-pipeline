@@ -1,7 +1,6 @@
 """Copy bumped workflows to the template folder, appending the `.jinja` suffix."""
 
 from pathlib import Path
-from shutil import copy
 
 source_folder = Path(".github/workflows")
 destination_folder = Path("template/.github/workflows")
