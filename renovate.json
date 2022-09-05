@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":preserveSemverRanges"],
+  "extends": ["config:base", ":preserveSemverRanges", "group:all"],
   "automerge": true,
   "pip_requirements": {
     "fileMatch": ["requirements.*\\.txt"]
@@ -9,24 +9,16 @@
   "packageRules": [
     {
       "groupName": ".github/workflows/bump_workflows.yml",
-      "matchFiles": [".github/workflows/bump_workflows.yml"],
-      "matchPackagePatterns": [".*"]
+      "matchFiles": [".github/workflows/bump_workflows.yml"]
     },
     {
-      "groupName": ".github/workflows/<except bump_workflows.yml>",
-      "matchFiles": [
-        ".github/workflows/bump.yml",
-        ".github/workflows/changerelease.yml",
-        ".github/workflows/codeql-analysis.yml",
-        ".github/workflows/main.yml",
-        ".github/workflows/publish.yml"
-      ],
-      "matchPackagePatterns": [".*"]
+      "groupName": ".github/workflows/<all except bump_workflows.yml>",
+      "matchPaths": [".github/workflows"],
+      "ignorePaths": [".github/workflows/bump_workflows.yml"]
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchPaths": ["template/.tools/requirements/*"],
-      "matchPackagePatterns": [".*"]
+      "matchPaths": ["template/.tools/requirements/*"]
     }
   ]
 }
