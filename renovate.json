@@ -19,8 +19,8 @@
   },
   "packageRules": [
     {
-      "groupName": ".github/workflows/bump_workflows.yml",
-      "matchFiles": [".github/workflows/bump_workflows.yml"]
+      "groupName": ".github/workflows",
+      "matchPaths": [".github/workflows"]
     },
     {
       "groupName": "bump/workflows",
