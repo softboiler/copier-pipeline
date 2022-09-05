@@ -17,8 +17,8 @@
       "ignorePaths": [".github/workflows/bump_workflows.yml"]
     },
     {
-      "groupName": "template/.tools/requirements/*",
-      "matchPaths": ["template/.tools/requirements/*"]
+      "groupName": "template/.tools/requirements",
+      "matchPaths": ["template/.tools/requirements"]
     }
   ]
 }
