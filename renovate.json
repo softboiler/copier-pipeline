@@ -2,6 +2,10 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "automerge": true,
+  "pip_requirements": {
+    "fileMatch": ["requirements_*.txt"]
+  },
+
   "packageRules": [
     {
       "groupName": ".github/workflows/bump_workflows.yml",
@@ -32,11 +36,7 @@
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchFiles": [
-        "template/.tools/requirements/requirements_both.txt",
-        "template/.tools/requirements/requirements_cicd.txt",
-        "template/.tools/requirements/requirements_dev.txt"
-      ],
+      "matchPaths": ["template/.tools/requirements"],
       "matchPackagePatterns": [".*"]
     }
   ]
