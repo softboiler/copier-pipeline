@@ -19,6 +19,10 @@
     {
       "groupName": "template/.tools/requirements",
       "matchPaths": ["template/.tools/requirements"]
+    },
+    {
+      "groupName": "template/package.json",
+      "matchFiles": ["template/package.json"]
     }
   ]
 }
