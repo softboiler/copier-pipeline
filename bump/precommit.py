@@ -8,8 +8,8 @@ destination_file = Path(
 )
 
 replace = {
-    "#  {% if use_dvc -%}": "  {% if use_dvc -%}",
-    "#  {% endif -%}": "  {% endif -%}",
+    "  #{% if use_dvc -%}": "  {% if use_dvc -%}",
+    "  #{% endif -%}": "  {% endif -%}",
 }
 
 text = source_file.read_text(encoding="utf-8")
