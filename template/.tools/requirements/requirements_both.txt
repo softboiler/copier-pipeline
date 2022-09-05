@@ -2,7 +2,7 @@
 toml~=0.10.2
 
 # Build
-flit~=3.6.0
+flit~=3.7.1
 
 # Lint
 flake8~=5.0.4

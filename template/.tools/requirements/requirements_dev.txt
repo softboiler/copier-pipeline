@@ -7,7 +7,7 @@ rich~=12.5.1
 
 # Format
 autoflake~=1.4
-black~=22.6.0  # doesn't follow semver
+black~=22.8.0  # doesn't follow semver
 
 # Lint
 flake8-codes~=0.2.2  # flake8 error code introspection
