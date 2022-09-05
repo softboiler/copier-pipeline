@@ -24,17 +24,6 @@
       "matchPackagePatterns": [".*"]
     },
     {
-      "groupName": ".github/workflows/<except bump_workflows.yml>",
-      "matchFiles": [
-        ".github/workflows/bump.yml",
-        ".github/workflows/changerelease.yml",
-        ".github/workflows/codeql-analysis.yml",
-        ".github/workflows/main.yml",
-        ".github/workflows/publish.yml"
-      ],
-      "matchPackagePatterns": [".*"]
-    },
-    {
       "groupName": "template/.tools/requirements/*",
       "matchFiles": [
         "template/.tools/requirements/requirements_both.txt",
