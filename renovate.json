@@ -3,7 +3,7 @@
   "extends": ["config:base"],
   "packageRules": [
     {
-      "groupName": "bump_workflows",
+      "groupName": "bump_workflows.yml",
       "matchFiles": [".github/workflows/bump_workflows.yml"],
       "matchPackagePatterns": [
         "stefanzweifel/git-auto-commit-action",
