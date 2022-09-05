@@ -3,7 +3,7 @@
   "extends": ["config:base"],
   "automerge": true,
   "pip_requirements": {
-    "fileMatch": ["requirements_*.txt"]
+    "fileMatch": ["requirements*.txt"]
   },
 
   "packageRules": [
