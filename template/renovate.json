@@ -3,6 +3,9 @@
   "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
   "automerge": true,
   "enabledManagers": ["pip_requirements", "poetry", "pre-commit"],
+  "pre-commit": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "groupName": "requirements.txt",
