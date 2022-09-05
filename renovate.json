@@ -2,10 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base", ":preserveSemverRanges", "group:all"],
   "automerge": true,
+  "enabledManagers": [
+    "npm",
+    "pip_requirements",
+    "poetry",
+    "github-actions",
+    "pre-commit"
+  ],
   "pip_requirements": {
     "fileMatch": ["requirements.*\\.txt"]
   },
-
   "packageRules": [
     {
       "groupName": ".github/workflows/bump_workflows.yml",
