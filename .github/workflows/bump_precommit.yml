@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: [bump/pre-commit-config.yaml]
+    paths: [bump/.pre-commit-config.yaml]
 
 jobs:
   bump:
