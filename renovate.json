@@ -32,7 +32,7 @@
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchPaths": ["template/.tools/requirements/*"],
+      "matchPaths": ["template/.tools/requirements/requirements_*.txt"],
       "matchPackagePatterns": [".*"]
     }
   ]
