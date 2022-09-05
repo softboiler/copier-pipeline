@@ -15,6 +15,6 @@ jobs:
         with:
           python-version: "3.10"
       - run: python bump.py
-      - uses: stefanzweifel/git-auto-commit-action@v4.14.0
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
         with:
           commit_message: Bump dependencies
