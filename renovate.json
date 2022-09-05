@@ -5,10 +5,7 @@
     {
       "groupName": "bump_workflows.yml",
       "matchFiles": [".github/workflows/bump_workflows.yml"],
-      "matchPackagePatterns": [
-        "stefanzweifel/git-auto-commit-action",
-        "actions/checkout"
-      ],
+      "matchPackagePatterns": [".*"],
       "separateMajorMinor": false
     }
   ]
