@@ -16,4 +16,5 @@ jobs:
         with:
           python-version: "3.10"
       - run: pip install -U pip setuptools wheel
+      - run: touch template/.tools/requirements/requirements_project.txt
       - run: pip install -r template/.tools/requirements/requirements_cicd.txt
