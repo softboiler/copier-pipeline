@@ -5,17 +5,12 @@
   "enabledManagers": ["pip_requirements"],
   "packageRules": [
     {
-      "groupName": "package_requirements",
+      "groupName": "package",
       "matchFiles": ["requirements.txt"]
     },
     {
-      "groupName": "tooling",
-      "matchFiles": [
-        "template/.tools/requirements/project_specific/requirements_both.txt",
-        "template/.tools/requirements/project_specific/requirements_cicd.txt",
-        "template/.tools/requirements/project_specific/requirements_dev.txt",
-        "template/.tools/requirements/project_specific/requirements_docs.txt"
-      ]
+      "groupName": "project_tooling",
+      "matchFiles": ["template/.tools/requirements/requirements_project.txt"]
     }
   ]
 }
