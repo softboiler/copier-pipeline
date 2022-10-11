@@ -1,0 +1,7 @@
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  job:
+    runs-on: ubuntu-20.04

@@ -2,15 +2,20 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
   "automerge": true,
-  "enabledManagers": ["pip_requirements", "poetry"],
+  "enabledManagers": ["pip_requirements"],
   "packageRules": [
     {
-      "groupName": "requirements.txt",
+      "groupName": "package_requirements",
       "matchFiles": ["requirements.txt"]
     },
     {
-      "groupName": "pyproject.toml",
-      "matchFiles": ["pyproject.toml"]
+      "groupName": "tooling",
+      "matchFiles": [
+        "template/.tools/requirements/project_specific/requirements_both.txt",
+        "template/.tools/requirements/project_specific/requirements_cicd.txt",
+        "template/.tools/requirements/project_specific/requirements_dev.txt",
+        "template/.tools/requirements/project_specific/requirements_docs.txt"
+      ]
     }
   ]
 }

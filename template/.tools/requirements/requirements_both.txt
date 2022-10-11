@@ -1,3 +1,6 @@
+# Project-specific
+-r requirements_project.txt
+
 # Bump
 toml~=0.10.2
 
@@ -19,3 +22,6 @@ pep8-naming~=0.13.2
 # Test
 pytest~=7.1.2
 pytest-cov~=3.0.0
+
+# Document
+-r requirements_docs.txt

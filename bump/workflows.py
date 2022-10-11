@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-source_folder = Path(".github/workflows")
+source_folder = Path("bump/workflows")
 destination_folder = Path("template/.github/workflows")
 
 template_sources = [
@@ -15,6 +15,7 @@ template_sources = [
         "codeql-analysis.yml",
         "main.yml",
         "publish.yml",
+        "sphinx.yml",
     ]
 ]
 
