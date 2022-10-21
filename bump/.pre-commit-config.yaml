@@ -38,7 +38,7 @@ repos:
       - id: isort
   #{% if use_dvc -%}
   - repo: https://github.com/iterative/dvc
-    rev: "2.30.0"
+    rev: "2.30.1"
     hooks:
       - id: dvc-pre-commit
         language_version: python3
