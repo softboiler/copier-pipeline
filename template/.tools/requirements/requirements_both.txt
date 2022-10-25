@@ -20,7 +20,7 @@ flake8-noqa~=1.2.9
 pep8-naming~=0.13.2
 
 # Test
-pytest~=7.1.2
+pytest~=7.2.0
 pytest-cov~=4.0.0
 
 # Document
