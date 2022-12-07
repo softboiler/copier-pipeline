@@ -12,10 +12,18 @@
   "python.languageServer": "Pylance",
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.indexing": true,
+  //? Auto imports
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.extraCommitChars": true,
+  //? Inlay hints
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
   //? See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.autoSearchPaths": false,
   //? See "useLibraryCodeForTypes" in pyrightconfig.json
   "python.analysis.typeCheckingMode": "off",
+  "python.analysis.completeFunctionParens": false, // Buggy for now
 
   //! Lint, test
 
