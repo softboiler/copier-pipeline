@@ -1,9 +1,25 @@
 {
+  // Paths
   "ignore": [".tools"],
   "include": ["src"],
-  "extraPaths": ["tests", "examples"],
+  "extraPaths": ["tests"],
+
+  // Type inference helps with untyped upstream, but can be unpredictable
+  "useLibraryCodeForTypes": true,
+
+  // Sets most checks to "error". Every possible non-default check is below.
   "typeCheckingMode": "strict",
+
+  // Explicitly enabled checks
+  "reportCallInDefaultInitializer": "error",
+  "reportPropertyTypeMismatch": "error",
+  "reportUninitializedInstanceVariable": "error",
+  "reportUnnecessaryTypeIgnoreComment": "error",
+
+  // Disabled checks
+  "reportImplicitStringConcatenation": "none",
   "reportMissingParameterType": "none",
+  "reportMissingSuperCall": "none",
   "reportMissingTypeStubs": "none",
   "reportUnknownArgumentType": "none",
   "reportUnknownLambdaType": "none",
@@ -11,6 +27,5 @@
   "reportUnknownParameterType": "none",
   "reportUnknownVariableType": "none",
   "reportUntypedBaseClass": "none",
-  "useLibraryCodeForTypes": true,
-  "reportUnnecessaryTypeIgnoreComment": true
+  "reportUnusedCallResult": "none"
 }
