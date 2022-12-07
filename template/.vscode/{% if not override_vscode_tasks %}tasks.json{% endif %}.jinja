@@ -54,6 +54,13 @@
     // * OTHER TASKS * //
 
     {
+      "label": "task: sphinx-autobuild",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "sphinx-autobuild docs _site"],
+      "problemMatcher": []
+    },
+    {
       "label": "task: snakeviz",
       "type": "process",
       "command": "pwsh",
