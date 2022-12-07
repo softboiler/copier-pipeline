@@ -7,6 +7,9 @@ toml~=0.10.2
 # Build
 flit~=3.8.0
 
+# Type checking
+pyright==1.1.278
+
 # Lint
 flake8~=5.0.4
 flake8-absolute-import~=1.0.0.1

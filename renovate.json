@@ -31,10 +31,6 @@
       "matchPaths": ["template/.tools/requirements"]
     },
     {
-      "groupName": "template/package.json",
-      "matchFiles": ["template/package.json"]
-    },
-    {
       "groupName": "bump/.pre-commit-config.yaml",
       "matchFiles": ["bump/.pre-commit-config.yaml"]
     }
