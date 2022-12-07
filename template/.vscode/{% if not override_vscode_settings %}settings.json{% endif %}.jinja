@@ -25,12 +25,7 @@
   "python.analysis.typeCheckingMode": "off",
   "python.analysis.completeFunctionParens": false, // Buggy for now
 
-  //! Lint, test
-
-  //* flake8
-  "python.linting.enabled": true,
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Args": ["--config", ".flake8"],
+  //! Lint, test, format
 
   //* pytest
   "python.testing.unittestEnabled": false,
@@ -40,6 +35,10 @@
   "markdownlint.config": {
     "first-line-heading": false
   },
+
+  //* black
+  // This might become unnecessary eventually, but for now it's needed
+  "python.formatting.provider": "black",
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -127,7 +126,6 @@
   //! Line-width
 
   //* Formatting
-  "python.formatting.provider": "black",
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
 
