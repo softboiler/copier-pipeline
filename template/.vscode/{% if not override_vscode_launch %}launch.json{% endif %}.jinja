@@ -1,12 +1,21 @@
 {
   "version": "0.2.0",
   "configurations": [
+    // * -------------------------------------------------------------------------- * //
+    // * GENERAL * //
     {
-      "name": "Python: Current File",
+      "name": "Python: Current file",
       "type": "python",
       "request": "launch",
       "program": "${file}",
-      "console": "internalConsole",
+      "console": "internalConsole"
+    },
+    {
+      "name": "Python: Current file: Not just my code",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "justMyCode": false,
+      "console": "internalConsole"
     }
-  ]
 }
