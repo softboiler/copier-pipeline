@@ -3,10 +3,19 @@
 
 # Be sure to override .gitignore in the template questions before putting anything here.
 
+#{% if use_dvc -%}
+# DVC
+dvc_plots
+data/*
+!data/*.dvc
+#{% endif -%}
+
 # * -------------------------------------------------------------------------------- * #
 # * TEMPLATE-SPECIFIC
 # *
 
+# Exclude type stubs from search results in VSCode
+typings
 # To avoid committing profiler results
 *.prof
 # To avoid committing rejected changes upon bumping template
