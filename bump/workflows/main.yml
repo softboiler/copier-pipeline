@@ -22,15 +22,13 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
       - uses: actions/setup-python@v4
         with:
           python-version:
       - run: bash .tools/scripts/cicd_setup.sh
-      - uses: actions/setup-node@v3.4.1
-        with:
-          node-version: 14
-      - run: npm install
-      - run: node_modules/.bin/pyright
+      - run: pyright
 
   pytest-cov:
     runs-on: ubuntu-20.04
