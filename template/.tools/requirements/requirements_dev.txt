@@ -14,6 +14,7 @@ autoflake~=1.4
 black~=22.12.0  # doesn't follow semver
 
 # Lint
+sourcery-cli~=1.0.2
 flake8-codes~=0.2.2  # flake8 error code introspection
 
 # Profiling
