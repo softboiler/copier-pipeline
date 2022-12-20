@@ -110,6 +110,13 @@
       "command": "pwsh",
       "args": ["-Command", "black -C ${file}"],
       "problemMatcher": []
+    },
+    {
+      "label": "task: black: Ignore magic comma in all project files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C src tests"],
+      "problemMatcher": []
     }
   ]
 }
