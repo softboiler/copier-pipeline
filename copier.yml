@@ -138,6 +138,12 @@ override_isort:
   help: "Override: .isort.cfg"
   default: no
 
+override_markdownlint:
+  when: "{{ override }}"
+  type: bool
+  help: "Override: .markdownlint.yaml"
+  default: no
+
 override_precommit:
   when: "{{ override }}"
   type: bool

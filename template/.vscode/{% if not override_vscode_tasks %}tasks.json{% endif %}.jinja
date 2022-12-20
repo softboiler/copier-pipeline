@@ -6,12 +6,23 @@
   "version": "2.0.0",
   "tasks": [
     // * -------------------------------------------------------------------------- * //
+    // * PROJECT-SPECIFIC * //
+    // Introduce any project-specific tasks here.
+
+    // * -------------------------------------------------------------------------- * //
     // * GIT * //
     {
       "label": "git: Rebase back to fork",
       "type": "process",
       "command": "git",
       "args": ["rebase", "-i", "--fork-point", "main"],
+      "problemMatcher": []
+    },
+    {
+      "label": "git: Stage all files",
+      "type": "process",
+      "command": "git",
+      "args": ["add", "-A"],
       "problemMatcher": []
     },
 
@@ -41,12 +52,11 @@
 
     // * -------------------------------------------------------------------------- * //
     // * PRE-COMMIT * //
-
     {
-      "label": "pre-commit: All files",
+      "label": "pre-commit",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "pre-commit run --all-files"],
+      "args": ["-Command", "pre-commit"],
       "problemMatcher": []
     },
 
@@ -99,13 +109,6 @@
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C ${file}"],
-      "problemMatcher": []
-    },
-    {
-      "label": "task: black: Ignore magic comma in all project files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "black -C src tests"],
       "problemMatcher": []
     }
   ]
