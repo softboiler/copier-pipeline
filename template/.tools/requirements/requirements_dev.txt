@@ -10,7 +10,7 @@ debugpy~=1.6.4
 rich~=12.6.0
 
 # Format
-autoflake~=1.4
+autoflake~=2.0
 black~=22.12.0  # doesn't follow semver
 
 # Lint
