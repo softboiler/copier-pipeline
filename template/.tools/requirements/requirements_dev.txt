@@ -21,7 +21,7 @@ flake8-codes~=0.2.2  # flake8 error code introspection
 snakeviz~=2.1.1
 
 # Pre-commit
-pre-commit~=2.20.0
+pre-commit~=2.21.0
 
 # For local publishing to PyPi with flit
 keyring~=23.13.1
