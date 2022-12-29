@@ -4,4 +4,3 @@ Remove-Item -ErrorAction SilentlyContinue -Recurse -Force .venv
 Invoke-Expression "$GLOBAL_PYTHON -m venv .venv --upgrade-deps"
 . ./update.ps1
 pre-commit install --install-hooks
-git submodule add https://github.com/blakeNaccarato/pylance-stubs-unofficial.git typings
