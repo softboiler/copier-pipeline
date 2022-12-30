@@ -6,7 +6,7 @@ ipympl~=0.9.2
 debugpy~=1.6.4
 
 # For `python` and `ipython` via `pythonrc.py`
-rich~=12.6.0
+rich~=13.0.0
 
 # Format
 autoflake~=2.0
