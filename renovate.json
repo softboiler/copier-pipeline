@@ -20,7 +20,7 @@
   "packageRules": [
     {
       "groupName": ".github/workflows/*",
-      "matchPaths": [".github/workflows/*"]
+      "matchFiles": [".github/workflows/bump.yml"]
     },
     {
       "groupName": "bump/workflows/*",
