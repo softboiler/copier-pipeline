@@ -18,12 +18,12 @@
     "fileMatch": ["requirements.*\\.txt"]
   },
   "github-actions": {
-    "fileMatch": [".github/workflows/bump_precommit.yml"]
+    "fileMatch": ["^bump/workflows/*"]
   },
   "packageRules": [
     {
       "groupName": ".github/workflows/*",
-      "matchFiles": [".github/workflows/bump_precommit.yml"]
+      "matchPaths": [".github/workflows/*"]
     },
     {
       "groupName": "bump/workflows/*",
