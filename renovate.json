@@ -18,24 +18,24 @@
     "fileMatch": ["requirements.*\\.txt"]
   },
   "github-actions": {
-    "fileMatch": ["^bump/workflows/*"]
+    "fileMatch": ["^template/.github/workflows/*"]
   },
   "packageRules": [
     {
       "groupName": ".github/workflows/*",
-      "matchPaths": [".github/workflows/*"]
+      "matchPaths": ["^template/.github/workflows/*"]
     },
     {
       "groupName": "bump/workflows/*",
-      "matchPaths": ["bump/workflows/*"]
+      "matchPaths": ["^bump/workflows/*"]
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchPaths": ["template/.tools/requirements/*"]
+      "matchPaths": ["^template/.tools/requirements/*"]
     },
     {
       "groupName": "bump/.pre-commit-config.yaml",
-      "matchFiles": ["bump/.pre-commit-config.yaml"]
+      "matchFiles": ["^bump/.pre-commit-config.yaml"]
     }
   ]
 }

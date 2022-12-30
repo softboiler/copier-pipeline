@@ -1,0 +1,23 @@
+name: bump_template
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths: [.gitmodules]
+
+jobs:
+  bump:
+    runs-on: {{ actions_runner }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "{{ python_version }}"
+      - run: python -m pip install -U pip
+      - run: pip install -U setuptools wheel
+      - run: pip install copier
+      - run: copier -f
+      - uses: stefanzweifel/git-auto-commit-action@v4.14.1
+        with:
+          commit_message: Bump copier-python template
