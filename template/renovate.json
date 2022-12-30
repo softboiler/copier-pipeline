@@ -3,7 +3,7 @@
   "extends": ["config:base", ":preserveSemverRanges", "group:allNonMajor"],
   "automerge": true,
   "git-submodules": { "enabled": true },
-  "enabledManagers": ["pip_requirements"],
+  "enabledManagers": ["pip_requirements", "git-submodules"],
   "packageRules": [
     {
       "groupName": "package",
