@@ -21,6 +21,7 @@ replace = {
     "  #{% if use_dvc -%}": "  {% if use_dvc -%}",
     "  #{% endif -%}": "  {% endif -%}",
     '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
+    "        args: [--py310-plus]": '        args: [--py{{ python_version | replace(".", "") }}-plus]',
 }
 lines = text.split("\n")
 for line_no, line in enumerate(lines):
