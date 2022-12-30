@@ -20,7 +20,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: {% raw %}${{ matrix.language }}{% endraw %}
+          languages: "{% raw %}${{ matrix.language }}{% endraw %}"
       - name: Autobuild
         uses: github/codeql-action/autobuild@v2
       - name: Perform CodeQL Analysis

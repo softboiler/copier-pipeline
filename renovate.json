@@ -19,15 +19,15 @@
   },
   "packageRules": [
     {
-      "groupName": ".github/workflows",
-      "matchPaths": [".github/workflows"]
+      "groupName": ".github/workflows/*",
+      "matchPaths": [".github/workflows/*"]
     },
     {
-      "groupName": "bump/workflows",
-      "matchPaths": ["bump/workflows"]
+      "groupName": "bump/workflows/*",
+      "matchPaths": ["bump/workflows/*"]
     },
     {
-      "groupName": "template/.tools/requirements",
+      "groupName": "template/.tools/requirements/*",
       "matchPaths": ["template/.tools/requirements"]
     },
     {
