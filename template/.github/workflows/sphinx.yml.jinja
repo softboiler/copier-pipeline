@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: {{ actions_runner }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -30,7 +30,7 @@ jobs:
     environment:
       name: github-pages
       url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
-    runs-on: ubuntu-latest
+    runs-on: {{ actions_runner }}
     needs: build
     steps:
       - id: deployment

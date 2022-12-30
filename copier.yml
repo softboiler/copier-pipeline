@@ -40,6 +40,14 @@ python_version:
   help: This project will only support a Python version at least this high.
   default: "3.11"
 
+actions_runner:
+  type: choice
+  help: "Which GitHub Actions runner should be used?"
+  choices:
+    - "ubuntu-latest"
+    - "windows-latest"
+    - "macos-latest"
+
 include_funding:
   type: bool
   help: "Include GitHub Sponsors link for {{ project_owner_github_username }}?"

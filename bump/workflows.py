@@ -7,6 +7,7 @@ source_folder = Path("bump/workflows")
 destination_folder = Path("template/.github/workflows")
 
 replace = {
+    "    runs-on: ubuntu-latest": "    runs-on: {{ actions_runner }}",
     "          python-version:": '          python-version: "{{ python_version }}"',
     "          github_token:": "          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}",
     "          FLIT_PASSWORD:": "          FLIT_PASSWORD: {% raw %}${{ secrets.PYPI_TOKEN }}{% endraw %}",
