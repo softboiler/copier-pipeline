@@ -15,30 +15,23 @@
     "pre-commit"
   ],
   "pip_requirements": {
-    "fileMatch": ["requirements.*\\.txt"]
+    "fileMatch": ["^template/tools/requirements/*"]
   },
   "github-actions": {
     "fileMatch": ["^template/.github/workflows/*"]
   },
   "pre-commit": {
-    "fileMatch": [
-      "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
-    ]
+    "fileMatch": ["^template/*.pre-commit-config.yaml*"]
   },
   "packageRules": [
-    {
-      "matchPaths": ["^template/.github/workflows/*"]
-    },
     {
       "matchPaths": ["^.github/workflows/*"]
     },
     {
-      "matchPaths": ["^template/.tools/requirements/*"]
+      "matchPaths": ["^template/.github/workflows/*"]
     },
     {
-      "matchFiles": [
-        "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
-      ]
+      "matchFiles": ["^template/*.pre-commit-config.yaml*"]
     }
   ]
 }
