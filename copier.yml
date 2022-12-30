@@ -47,6 +47,7 @@ actions_runner:
     - "ubuntu-latest"
     - "windows-latest"
     - "macos-latest"
+  default: "ubuntu-latest"
 
 include_funding:
   type: bool
