@@ -41,7 +41,7 @@ python_version:
   default: "3.11"
 
 actions_runner:
-  type: choice
+  type: str
   help: "Which GitHub Actions runner should be used?"
   choices:
     - "ubuntu-latest"
