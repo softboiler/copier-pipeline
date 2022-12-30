@@ -28,7 +28,7 @@
     },
     {
       "groupName": "template/.tools/requirements/*",
-      "matchPaths": ["template/.tools/requirements"]
+      "matchPaths": ["template/.tools/requirements/*"]
     },
     {
       "groupName": "bump/.pre-commit-config.yaml",
