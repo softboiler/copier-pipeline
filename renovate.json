@@ -22,16 +22,5 @@
   },
   "pre-commit": {
     "fileMatch": ["^template/*.pre-commit-config.yaml*"]
-  },
-  "packageRules": [
-    {
-      "matchPaths": ["^.github/workflows/*"]
-    },
-    {
-      "matchPaths": ["^template/.github/workflows/*"]
-    },
-    {
-      "matchFiles": ["^template/*.pre-commit-config.yaml*"]
-    }
-  ]
+  }
 }
