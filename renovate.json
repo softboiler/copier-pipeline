@@ -9,7 +9,7 @@
   "automerge": true,
   "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
   "pip_requirements": {
-    "fileMatch": ["^template/tools/requirements/requirements_*.txt"]
+    "fileMatch": ["^template/.tools/requirements/*"]
   },
   "github-actions": {
     "fileMatch": ["^template/.github/workflows/*"]
