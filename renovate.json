@@ -17,6 +17,9 @@
   "pip_requirements": {
     "fileMatch": ["requirements.*\\.txt"]
   },
+  "github-actions": {
+    "fileMatch": [".github/workflows/bump_precommit.yml"]
+  },
   "packageRules": [
     {
       "groupName": ".github/workflows/*",
