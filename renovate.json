@@ -7,13 +7,7 @@
     ":enablePreCommit"
   ],
   "automerge": true,
-  "enabledManagers": [
-    "npm",
-    "pip_requirements",
-    "poetry",
-    "github-actions",
-    "pre-commit"
-  ],
+  "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
   "pip_requirements": {
     "fileMatch": ["^template/tools/requirements/*"]
   },
