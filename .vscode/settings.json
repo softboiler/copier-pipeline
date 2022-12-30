@@ -24,7 +24,6 @@
   "files.associations": {
     ".nest_md": "plaintext",
     ".nest_tools_config": "plaintext",
-    "*codecov.yaml*.jinja": "yaml",
     "*.coveragerc*.jinja": "ini",
     "*.env*.jinja": "dotenv",
     "*.flake8*.jinja": "ini",
@@ -32,11 +31,15 @@
     "*.isort.cfg*": "ini",
     "*.json*.jinja": "jsonc",
     "*.ps1.jinja": "powershell",
-    "*.pre-commit-config.yaml*.jinja": "yaml",
     "*.pylintrc*.jinja": "ini",
-    "*.sourcery.yaml*.jinja": "yaml",
+    "**/.github/workflows/*.yaml*.jinja": "yaml",
+    "**/.github/workflows/*.yml*.jinja": "yaml",
     "*pyrightconfig.json*.jinja": "jsonc",
     "*requirements*.txt": "pip-requirements"
+  },
+
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": ["*.yml.jinja"]
   },
 
   //! Jinja

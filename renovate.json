@@ -20,6 +20,11 @@
   "github-actions": {
     "fileMatch": ["^template/.github/workflows/*"]
   },
+  "pre-commit": {
+    "fileMatch": [
+      "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
+    ]
+  },
   "packageRules": [
     {
       "matchPaths": ["^template/.github/workflows/*"]
@@ -28,12 +33,12 @@
       "matchPaths": ["^.github/workflows/*"]
     },
     {
-      "groupName": "template/.tools/requirements/*",
       "matchPaths": ["^template/.tools/requirements/*"]
     },
     {
-      "groupName": "bump/.pre-commit-config.yaml",
-      "matchFiles": ["^bump/.pre-commit-config.yaml"]
+      "matchFiles": [
+        "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
+      ]
     }
   ]
 }
