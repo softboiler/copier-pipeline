@@ -1,0 +1,28 @@
+# Experiment
+jupyter
+ipympl
+
+# Debug
+debugpy
+
+# For `python` and `ipython` via `pythonrc.py`
+rich
+
+# Format
+autoflake
+black
+
+# Lint
+sourcery-cli
+flake8-codes
+
+# Profiling
+snakeviz
+
+# Pre-commit
+pre-commit
+
+# For local publishing to PyPi with flit
+keyring
+
+-r requirements_both.txt

@@ -1,4 +1,9 @@
 {
+  // * -------------------------------------------------------------------------- * //
+  // * PROJECT-SPECIFIC * //
+  // Introduce any project-specific settings here.
+  // Be sure to say override this file in the Copier questionnaire to keep changes.
+
   //! Files
 
   //* Experimental file nesting
@@ -13,7 +18,9 @@
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
     ".nest_tools_config": "*.ps1.jinja, {{ _copier_conf.answers_file }}.jinja, *{% endif %}.jinja, .gitmodules, pythonrc.py, renovate.json",
-    ".nest_md": "*.md, *.md.jinja, LICENSE.jinja"
+    ".nest_md": "*.md, *.md.jinja, LICENSE.jinja",
+    ".nest_tools_config_top": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .flake8, .gitattributes, .gitmodules, .isort.cfg, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
+    ".nest_md_top": "*.md, LICENSE"
   },
   "vsicons.associations.files": [
     { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
@@ -35,7 +42,15 @@
     "**/.github/workflows/*.yaml*.jinja": "yaml",
     "**/.github/workflows/*.yml*.jinja": "yaml",
     "*pyrightconfig.json*.jinja": "jsonc",
-    "*requirements*.txt": "pip-requirements"
+    // Project-specific
+    ".coveragerc": "ini",
+    ".env": "dotenv",
+    ".pylintrc": "ini",
+    "pyrightconfig.json": "jsonc",
+    "*requirements*.txt": "pip-requirements",
+    ".nest_md_top": "markdown",
+    ".nest_tools_config_top": "plaintext",
+    ".sourcery.yaml": "yaml"
   },
 
   "yaml.schemas": {
@@ -54,5 +69,169 @@
   },
   "[jinja-toml]": {
     "editor.wordWrap": "wordWrapColumn"
-  }
+  },
+
+  // * -------------------------------------------------------------------------- * //
+  // * GENERAL * //
+
+  // Environment variables don't load properly otherwise
+  // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
+  "terminal.integrated.defaultProfile.linux": "pwsh",
+
+  //! Pylance
+  //* Pylance settings aren't very discoverable.
+  //* https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
+  "python.languageServer": "Pylance",
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.indexing": true,
+  //? Auto imports
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.extraCommitChars": true,
+  //? Inlay hints
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  //? See "include" and "extrapaths" in pyrightconfig.json
+  "python.analysis.autoSearchPaths": false,
+  //? See "useLibraryCodeForTypes" in pyrightconfig.json
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.completeFunctionParens": false, // Buggy for now
+
+  //! Lint, test, format
+
+  //* pytest
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+
+  //* markdownlint
+  "markdownlint.config": {
+    "first-line-heading": false
+  },
+
+  //* black
+  // This might become unnecessary eventually, but for now it's needed
+  "python.formatting.provider": "black",
+
+  //! GitHub Actions
+  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+
+  //! Shell Launcher
+  "shellLauncher.shells.windows": [
+    {
+      //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
+      //*
+      //* Use alongside the following keybind in your "keybindings.json".
+      //*
+      //? {
+      //?   "key": "ctrl+alt+1",
+      //?   "command": "shellLauncher.launch"
+      //? },
+      "label": "IPython (.venv)",
+      "shell": "pwsh.exe",
+      "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
+    }
+  ],
+
+  //! Files
+
+  //* File icon associations
+  "workbench.iconTheme": "vscode-icons",
+  "vsicons.presets.hideExplorerArrows": true,
+  "vsicons.dontShowNewVersionMessage": false,
+
+  //! Built-in
+
+  //* Enable native bracket pair colorization
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true,
+
+  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  "editor.formatOnSave": true,
+
+  //* Enforce whitespace and newlines.
+  //? Automatically enforce whitespace conventions.
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+
+  //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  //* Markdown editor moves jarringly when this is "true"
+  "markdown.preview.scrollEditorWithPreview": false,
+
+  //! Line-width
+
+  //* Formatting
+  "rewrap.wrappingColumn": 88,
+  "rewrap.wholeComment": false,
+
+  //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
+  "git.inputValidationSubjectLength": 88,
+  "git.inputValidationLength": 1e100,
+
+  //* Default wrapping
+  "editor.wordWrapColumn": 88,
+  "editor.rulers": [88],
+
+  //! Filetype specifics (incl. line width)
+
+  //* IPYNB
+  "[ipynb]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  //* MD
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "wordWrapColumn",
+    //? Roughly matches the width of GitHub Markdown
+    "editor.wordWrapColumn": 124,
+    "editor.rulers": [124],
+    "rewrap.autoWrap.enabled": false
+  },
+
+  //* JSON
+  "[json]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  //* PYTHON
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+
+  //* TXT
+  "[plaintext]": {
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //* TOML
+  "evenBetterToml.formatter.columnWidth": 88,
+  "[toml]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+
+  //* TSV
+  "[tsv]": {
+    //? Indent with tabs
+    "editor.insertSpaces": false
+  },
+
+  //* YAML
+  "yaml.format.printWidth": 88,
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "wordWrapColumn"
+  },
+
+  //! Extension: Jupyter Notebooks
+  "jupyter.notebookFileRoot": "${workspaceFolder}"
 }

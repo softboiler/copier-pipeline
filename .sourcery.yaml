@@ -1,0 +1,20 @@
+version: "1" # The schema version of this config file
+
+ignore:
+  - ".*"
+
+rule_settings:
+  python_version: "3.10"
+  enable:
+    - "default"
+    - "gpsg"
+  disable:
+    - "avoid-global-variables"
+    - "avoid-single-character-names-variables"
+    - "do-not-use-staticmethod"
+    - "docstrings-for-classes"
+    - "docstrings-for-functions"
+    - "docstrings-for-modules"
+    - "lambdas-should-be-short"
+    - "require-parameter-annotation"
+    - "require-return-annotation"

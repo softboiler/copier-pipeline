@@ -16,12 +16,11 @@ pattern = re.compile(
     rev: "(?P<black_version>[\d.]+)"
 """
 )
-black_version = pattern.search(text)["black_version"]
+black_version = pattern.search(text)["black_version"]  # type: ignore
 replace = {
     "  #{% if use_dvc -%}": "  {% if use_dvc -%}",
     "  #{% endif -%}": "  {% endif -%}",
     '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
-    "        args: [--py3##-plus]": '        args: [--py{{ python_version | replace(".", "") }}-plus]',
 }
 lines = text.split("\n")
 for line_no, line in enumerate(lines):

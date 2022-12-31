@@ -1,0 +1,6 @@
+sphinx
+myst-parser
+sphinx-book-theme
+sphinx-design
+# doesn't follow semver
+sphinx-autobuild

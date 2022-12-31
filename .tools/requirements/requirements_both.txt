@@ -1,0 +1,35 @@
+# HELLO!
+
+# Project-specific
+-r requirements_project.txt
+
+# Bump
+toml
+
+# Build
+flit
+
+# Type checking
+pyright
+
+# Type checking dependencies
+IPython
+
+# Lint
+flake8
+flake8-absolute-import
+flake8-bandit
+flake8-black
+flake8-builtins
+flake8-bugbear
+flake8-comprehensions
+flake8-fixme
+flake8-noqa
+pep8-naming
+
+# Test
+pytest
+pytest-cov
+
+# Document
+-r requirements_docs.txt

@@ -1,0 +1,71 @@
+[flake8]
+
+; So pep8-naming doesn't complain about Pydantic validators
+classmethod-decorators =
+    classmethod
+    validator
+
+; compatibility with black
+max-line-length = 88
+
+; Exclude hidden directories and files
+extend-exclude =
+    ;  dot-prefixed files and folders
+    .github
+    .pytest_cache
+    .tools
+    .venv
+    .vscode
+
+; So flake8-bugbear B008 doesn't complain about Typer constructs
+extend-immutable-calls =
+    Argument
+    Option
+
+; McCabe complexity
+max_complexity = 10
+
+ignore =
+
+    ; Conflict with black
+    ; Whitespace before ''
+    E203,
+    ; Line break before binary operator
+    W503,
+
+    ; Conflict with Better Comments
+    ; Inline comment should start with ';'
+    E262,
+    ; Block comment should start with ';', conflict with Better Comments
+    E265,
+
+    ; flake8-black handles line length considerations better
+    E501,
+
+    ; Duplicates Pylance/Pyright
+    ; flake8: Imported but unused, Pylance(reportUnusedImport)
+    F401,
+    ; flake8: Undefined name, Pylance(reportUndefinedVariable)
+    F821,
+    ; flake8: Assigned to but never used, Pylance(reportUnusedVariable)
+    F841,
+
+    ; Sometimes we want to save keystrokes in dict writing
+    ; flake8: Unnecessary dict call - rewrite as a literal
+    C408
+
+per-file-ignores =
+
+    tests/*:
+        ; We indicate custom fixtures w/ ALL_CAPS to distinguish from other args
+        ; function name should be lowercase
+        N802,
+        ; argument name should be lowercase
+        N803,
+
+        ; Ignore assert from bandit. Not a security issue in tests
+        S101,
+
+    __init__.py:
+        ; 'from module import *' used
+        F403,
