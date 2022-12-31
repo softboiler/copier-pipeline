@@ -9,12 +9,12 @@
   "automerge": true,
   "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
   "pip_requirements": {
-    "fileMatch": ["^template/.tools/requirements/*"]
+    "fileMatch": ["^template/\\.tools/requirements/*"]
   },
   "github-actions": {
-    "fileMatch": ["^template/.github/workflows/*"]
+    "fileMatch": ["^template/\\.github/workflows/*"]
   },
   "pre-commit": {
-    "fileMatch": ["^template/.pre-commit-config.yaml"]
+    "fileMatch": ["^template/\\.pre-commit-config\\.yaml"]
   }
 }
