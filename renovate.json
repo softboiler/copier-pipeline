@@ -15,6 +15,6 @@
     "fileMatch": ["^template/.github/workflows/*"]
   },
   "pre-commit": {
-    "fileMatch": ["^template/*.pre-commit-config.yaml*"]
+    "fileMatch": ["^template/.pre-commit-config.yaml.jinja"]
   }
 }
