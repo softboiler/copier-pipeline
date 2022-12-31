@@ -16,8 +16,5 @@
   },
   "pre-commit": {
     "fileMatch": ["^template/*.pre-commit-config.yaml*"]
-    // "fileMatch": [
-    //   "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
-    // ]
   }
 }
