@@ -28,6 +28,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
+      - run: "git config user.email github-action@users.noreply.github.com"
       - uses: "actions/setup-python@v4"
         with:
           python-version: "3.11"
