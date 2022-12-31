@@ -45,7 +45,7 @@ repos:
     rev: "v3.3.1"
     hooks:
       - id: pyupgrade
-        args: [--py{{ python_version | replace(".", "") }}-plus]
+        args: ["--py{{ python_version | replace('.', '') }}-plus"]
   - repo: https://github.com/asottile/blacken-docs
     rev: "v1.12.1"
     hooks:
@@ -55,7 +55,7 @@ repos:
     rev: "v0.5.1"
     hooks:
       - id: markdownlint-cli2-fix
-  {% if use_dvc -%}
+  #{% if use_dvc -%}
   - repo: https://github.com/iterative/dvc
     rev: "2.38.1"
     hooks:
@@ -74,4 +74,4 @@ repos:
         language_version: python3
         stages:
           - post-checkout
-  {% endif -%}
+  #{% endif -%}
