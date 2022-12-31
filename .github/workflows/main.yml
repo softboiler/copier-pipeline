@@ -8,7 +8,22 @@ on:
     branches: ["main"]
 
 jobs:
+  changes:
+    runs-on: "ubuntu-latest"
+    permissions:
+      pull-requests: "read"
+    outputs:
+      bump_precommit: "${{ steps.filter.outputs.bump_precommit }}"
+    steps:
+      - uses: "dorny/paths-filter@v2"
+        id: "filter"
+        with:
+          filters: |
+            bump_precommit:
+              - "bump/.pre-commit-config.yaml"
   bump_precommit:
+    needs: "changes"
+    if: "${{ needs.changes.outputs.bump_precommit == 'true' }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -21,6 +36,7 @@ jobs:
           commit_message: "Bump dependencies"
   job:
     needs: "bump_precommit"
+    if: "${{ always() }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
