@@ -6,7 +6,7 @@
     ":preserveSemverRanges",
     ":enablePreCommit"
   ],
-  "gitIgnoredAuthors": ["github-actions"],
+  "gitIgnoredAuthors": ["action@github.com"],
   "automerge": true,
   "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
   "pip_requirements": {
