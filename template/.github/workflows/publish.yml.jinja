@@ -1,22 +1,22 @@
-name: publish
+name: "publish"
 on:
   workflow_dispatch: {}
   release:
     types:
-      - published
-      - released
+      - "published"
+      - "released"
 
 jobs:
   publish:
-    runs-on: {{ actions_runner }}
+    runs-on: "{{ actions_runner }}"
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: bash .tools/scripts/cicd_setup.sh
-      - name: publish
+      - run: "bash .tools/scripts/cicd_setup.sh"
+      - name: "publish"
         env:
-          FLIT_USERNAME: __token__
-          FLIT_PASSWORD: {% raw %}${{ secrets.PYPI_TOKEN }}{% endraw %}
-        run: flit publish
+          FLIT_USERNAME: "__token__"
+          FLIT_PASSWORD: "{% raw %}${{ secrets.PYPI_TOKEN }}{% endraw %}"
+        run: "flit publish"

@@ -1,42 +1,42 @@
-name: main
+name: "main"
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: ["main"]
   pull_request:
-    branches: [main]
+    branches: ["main"]
 
 jobs:
   flake8:
-    runs-on: {{ actions_runner }}
+    runs-on: "{{ actions_runner }}"
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: bash .tools/scripts/cicd_setup.sh
-      - run: flake8
+      - run: "bash .tools/scripts/cicd_setup.sh"
+      - run: "flake8"
 
   pyright:
-    runs-on: {{ actions_runner }}
+    runs-on: "{{ actions_runner }}"
     steps:
-      - uses: actions/checkout@v3
+      - uses: "actions/checkout@v3"
         with:
           submodules: true
-      - uses: actions/setup-python@v4
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: bash .tools/scripts/cicd_setup.sh
-      - run: pyright
+      - run: "bash .tools/scripts/cicd_setup.sh"
+      - run: "pyright"
 
   pytest-cov:
-    runs-on: {{ actions_runner }}
+    runs-on: "{{ actions_runner }}"
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: bash .tools/scripts/cicd_setup.sh
-      - run: pytest --cov
-      - uses: codecov/codecov-action@v3.1.1
+      - run: "bash .tools/scripts/cicd_setup.sh"
+      - run: "pytest --cov"
+      - uses: "codecov/codecov-action@v3.1.1"

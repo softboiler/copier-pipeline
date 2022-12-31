@@ -1,23 +1,23 @@
-name: bump
+name: "bump"
 
 on:
   workflow_dispatch:
   push:
-    branches: [main]
-    paths: [requirements.txt]
+    branches: ["main"]
+    paths: ["requirements.txt"]
 
 jobs:
   bump:
-    runs-on: {{ actions_runner }}
+    runs-on: "{{ actions_runner }}"
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: python -m pip install -U pip
-      - run: pip install -U setuptools wheel
-      - run: pip install -r .tools/requirements/requirements_cicd.txt
-      - run: python .tools/scripts/bump_pyproject.py
-      - uses: stefanzweifel/git-auto-commit-action@v4.16.0
+      - run: "python -m pip install -U pip"
+      - run: "pip install -U setuptools wheel"
+      - run: "pip install -r .tools/requirements/requirements_cicd.txt"
+      - run: "python .tools/scripts/bump_pyproject.py"
+      - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
         with:
-          commit_message: Bump `pyproject.toml` dependencies
+          commit_message: "Bump `pyproject.toml` dependencies"
