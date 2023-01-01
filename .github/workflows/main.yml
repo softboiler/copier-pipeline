@@ -27,6 +27,9 @@ jobs:
     if: "${{ needs.changes.outputs.bump_precommit == 'true' }}"
     runs-on: "ubuntu-latest"
     steps:
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
       - uses: "actions/checkout@v3"
       - run: "git config user.email github-action@users.noreply.github.com"
       - uses: "actions/setup-python@v4"
