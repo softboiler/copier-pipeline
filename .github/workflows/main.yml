@@ -15,7 +15,6 @@ jobs:
     outputs:
       bump_precommit: "${{ steps.filter.outputs.bump_precommit }}"
     steps:
-      - run: "git config user.email"
       - uses: "actions/checkout@v3"
       - uses: "dorny/paths-filter@v2"
         id: "filter"
