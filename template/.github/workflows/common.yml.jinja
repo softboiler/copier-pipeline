@@ -1,0 +1,12 @@
+on:
+  workflow_call:
+
+jobs:
+  setup:
+    runs-on: "{{ actions_runner }}"
+    steps:
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
+        with:
+          python-version: "{{ python_version }}"
+      - run: "bash .tools/scripts/cicd_setup.sh"

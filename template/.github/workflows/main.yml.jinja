@@ -11,11 +11,7 @@ jobs:
   flake8:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
-        with:
-          python-version: "{{ python_version }}"
-      - run: "bash .tools/scripts/cicd_setup.sh"
+      - uses: "./.github/workflows/common.yml"
       - run: "flake8"
 
   pyright:
