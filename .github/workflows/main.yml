@@ -15,6 +15,7 @@ jobs:
     outputs:
       bump_precommit: "${{ steps.filter.outputs.bump_precommit }}"
     steps:
+      - run: "git config user.email"
       - uses: "actions/checkout@v3"
       - uses: "dorny/paths-filter@v2"
         id: "filter"
@@ -35,7 +36,6 @@ jobs:
       - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
         with:
           commit_message: "Bump dependencies"
-      - run: "git config user.email"
   job:
     needs: "bump_precommit"
     if: "${{ always() }}"
