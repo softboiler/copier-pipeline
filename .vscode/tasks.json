@@ -1,0 +1,136 @@
+// Calling `pwsh` first leverages my personal $PROFILE to activate `.venv`.
+// Alternatively, we could use `.venv/Scripts/python.exe` and change the `args`, but
+// this is platform-specific anyways.
+
+{
+  "version": "2.0.0",
+  "tasks": [
+    // * -------------------------------------------------------------------------- * //
+    // * PROJECT-SPECIFIC * //
+    // Introduce any project-specific tasks here.
+    // Be sure to say override this file in the Copier questionnaire to keep changes.
+
+    // * -------------------------------------------------------------------------- * //
+    // * GIT * //
+    {
+      "label": "git: Rebase back to fork",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git rebase -i --fork-point main"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
+      "label": "git: Stage all files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git add -A"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PROJECT SETUP * //
+    {
+      "label": "setup: Initialize template",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/init_template.ps1"],
+      "icon": { "id": "folder" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Setup project",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["setup.ps1"],
+      "icon": { "id": "folder" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Update project",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["update.ps1"],
+      "icon": { "id": "folder" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PRE-COMMIT * //
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * OTHER TASKS * //
+
+    {
+      "label": "task: sphinx-autobuild docs (preview)",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "sphinx-autobuild docs _site"],
+      "icon": { "id": "book" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: snakeviz",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "snakeviz .prof"],
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: autoflake current file",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}"
+      ],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: pytest-cov: Generate coverage",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "icon": { "id": "beaker" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Remove *.rej",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
+      ],
+      "icon": { "id": "folder" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: black: Ignore magic comma in this file",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C ${file}"],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: black: Ignore magic comma in all project files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C src tests"],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    }
+  ]
+}

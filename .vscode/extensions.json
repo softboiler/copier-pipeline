@@ -1,0 +1,26 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "bierner.markdown-preview-github-styles",
+    "blackmist.linkcheckmd",
+    "cschleiden.vscode-github-actions",
+    "davidanson.vscode-markdownlint",
+    "donjayamanne.githistory",
+    "dotjoshjohnson.xml",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "felipecaputo.git-project-manager",
+    "github.vscode-pull-request-github",
+    "ms-python.black-formatter",
+    "ms-python.flake8",
+    "ms-python.isort",
+    "redhat.vscode-yaml",
+    "reverbc.vscode-pytest",
+    "ryanluker.vscode-coverage-gutters",
+    "sourcery.sourcery",
+    "stkb.rewrap",
+    "tamasfe.even-better-toml",
+    "tyriar.shell-launcher",
+    "yzhang.markdown-all-in-one"
+  ]
+}

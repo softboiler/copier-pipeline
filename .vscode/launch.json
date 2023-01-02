@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // * -------------------------------------------------------------------------- * //
+    // * PROJECT-SPECIFIC * //
+    // Introduce any project-specific debug configurations here.
+    // Be sure to say override this file in the Copier questionnaire to keep changes.
+
+    // * -------------------------------------------------------------------------- * //
+    // * GENERAL * //
+    {
+      "name": "Python: Current file",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "internalConsole"
+    },
+    {
+      "name": "Python: Current file: Not just my code",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "justMyCode": false,
+      "console": "internalConsole"
+    }
+  ]
+}

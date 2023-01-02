@@ -1,0 +1,31 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: b2c4bb0
+_src_path: gh:blakeNaccarato/copier-python
+actions_runner: ubuntu-latest
+github_repo_name: copier-python
+include_funding: true
+override: false
+override_codecov: false
+override_coveragerc: false
+override_env: false
+override_flake8: false
+override_gitattributes: false
+override_gitignore: false
+override_isort: false
+override_markdownlint: false
+override_precommit: false
+override_pyrightconfig: false
+override_pytest: false
+override_sourcery: false
+override_update: false
+override_vscode_extensions: false
+override_vscode_launch: false
+override_vscode_settings: false
+override_vscode_tasks: false
+project_email: blake.naccarato+copier-python@gmail.com
+project_name: copier-python
+project_owner_github_username: blakeNaccarato
+project_owner_name: Blake Naccarato
+python_version: '3.11'
+use_dvc: false
+year_of_project_creation: 2022
