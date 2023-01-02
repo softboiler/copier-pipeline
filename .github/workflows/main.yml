@@ -35,7 +35,7 @@ jobs:
           commit_message: "Update pre-commit config"
   test_installable:
     needs: "bump_precommit"
-    if: "${{ !failed() }}"
+    if: "${{ !failure() }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
