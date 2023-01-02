@@ -13,7 +13,7 @@ jobs:
     permissions:
       pull-requests: "read"
     outputs:
-      pull_request_: "${{ steps.filter.outputs.template_changed }}"
+      pull_request_: "{% raw %}${{ steps.filter.outputs.template_changed }}{% endraw %}"
     steps:
       - uses: "actions/checkout@v3"
       - uses: "dorny/paths-filter@v2"
@@ -37,7 +37,7 @@ jobs:
           python -m pip install -U pip
           pip install -U setuptools wheel
           pip install copier
-          copier copy template . -f
+          copier -f
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Bump `copier-python` template"
