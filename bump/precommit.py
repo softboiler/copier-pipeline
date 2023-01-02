@@ -25,4 +25,4 @@ lines = text.split("\n")
 for line_no, line in enumerate(lines):
     if replacement := replace.get(line):
         lines[line_no] = replacement
-destination_file.write_text("\n".join(lines))
+destination_file.write_text("\n".join(lines[:-1]))
