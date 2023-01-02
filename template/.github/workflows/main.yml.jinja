@@ -8,23 +8,21 @@ on:
     branches: ["main"]
 
 jobs:
-  template_changed:
+  changes:
     runs-on: "{{ actions_runner }}"
-    permissions:
-      pull-requests: "read"
-    outputs:
-      pull_request_: "{% raw %}${{ steps.filter.outputs.template_changed }}{% endraw %}"
     steps:
       - uses: "actions/checkout@v3"
-      - uses: "dorny/paths-filter@v2"
-        id: "filter"
+      - id: filter
+        uses: "dorny/paths-filter@v2"
         with:
           filters: |
-            template_changed:
-              - "template"
+            template:
+              - "template/**"
+    outputs:
+      template: "{% raw %}${{ steps.filter.outputs.template }}{% endraw %}"
   bump_template:
-    needs: "template_changed"
-    if: "{% raw %}${{ needs.template_changed.outputs.template_changed == 'true' }}{% endraw %}"
+    needs: "changes"
+    if: "{% raw %}${{ needs.changes.outputs.template == 'true' }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "actions/checkout@v3"
@@ -33,7 +31,7 @@ jobs:
       - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
-      - run: >-
+      - run: |-
           python -m pip install -U pip
           pip install -U setuptools wheel
           pip install copier

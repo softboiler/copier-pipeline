@@ -46,6 +46,6 @@ jobs:
           python-version: "3.11"
       # Have to touch the file in a separate step before installing requirements
       - run: touch template/.tools/requirements/requirements_project.txt
-      - run: >-
+      - run: |-
           pip install -U pip setuptools wheel
           pip install -r template/.tools/requirements/requirements_cicd.txt

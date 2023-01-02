@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       # Duplicates some logic to avoid dependency cycle
-      - run: >-
+      - run: |-
           pip install -U pip setuptools wheel
           pip install -r .tools/requirements/requirements_cicd.txt
       - run: "python .tools/scripts/bump_pyproject.py"
