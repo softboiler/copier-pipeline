@@ -99,12 +99,6 @@ override_vscode_tasks:
   help: "Override: .vscode/tasks.json"
   default: no
 
-override_cicd_setup:
-  when: "{{ override }}"
-  type: bool
-  help: "Override: .tools/scripts/cicd_setup.sh"
-  default: no
-
 override_codecov:
   when: "{{ override }}"
   type: bool

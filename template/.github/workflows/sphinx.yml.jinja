@@ -19,12 +19,10 @@ jobs:
   build:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
         with:
           python-version: "{{ python_version }}"
-      - run: "bash .tools/scripts/cicd_setup.sh"
-      - run: "python -m sphinx -T -E docs _site"
+      - run: python -m sphinx -T -E docs _site
       - uses: "actions/upload-pages-artifact@v1"
   deploy:
     environment:

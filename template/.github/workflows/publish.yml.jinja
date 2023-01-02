@@ -10,13 +10,10 @@ jobs:
   publish:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
         with:
           python-version: "{{ python_version }}"
-      - run: "bash .tools/scripts/cicd_setup.sh"
-      - name: "publish"
+      - run: "flit publish"
         env:
           FLIT_USERNAME: "__token__"
           FLIT_PASSWORD: "{% raw %}${{ secrets.PYPI_TOKEN }}{% endraw %}"
-        run: "flit publish"
