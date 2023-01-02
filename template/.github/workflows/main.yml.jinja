@@ -43,7 +43,7 @@ jobs:
           commit_message: "Bump `copier-python` template"
   flake8:
     needs: "bump_template"
-    if: "${{ always() }}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
@@ -53,7 +53,7 @@ jobs:
 
   pyright:
     needs: "bump_template"
-    if: "${{ always() }}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
@@ -63,7 +63,7 @@ jobs:
 
   pytest-cov:
     needs: "bump_template"
-    if: "${{ always() }}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
