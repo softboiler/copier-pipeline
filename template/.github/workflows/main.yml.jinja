@@ -24,7 +24,7 @@ jobs:
               - "template"
   bump_template:
     needs: "template_changed"
-    if: "${{ needs.template_changed.outputs.template_changed == 'true' }}"
+    if: "{% raw %}${{ needs.template_changed.outputs.template_changed == 'true' }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "actions/checkout@v3"
