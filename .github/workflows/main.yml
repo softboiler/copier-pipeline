@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: "python bump/precommit.py"
-      - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
+      - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Bump dependencies"
   job:

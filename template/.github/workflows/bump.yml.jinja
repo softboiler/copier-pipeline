@@ -19,6 +19,6 @@ jobs:
           pip install -U pip setuptools wheel
           pip install -r .tools/requirements/requirements_cicd.txt
       - run: "python .tools/scripts/bump_pyproject.py"
-      - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
+      - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Bump `pyproject.toml` dependencies"
