@@ -12,8 +12,8 @@ jobs:
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "actions/checkout@v3"
-      - id: filter
-        uses: "dorny/paths-filter@v2"
+      - uses: "dorny/paths-filter@v2"
+        id: "filter"
         with:
           filters: |
             template:
@@ -38,7 +38,7 @@ jobs:
           copier -f
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
-          commit_message: "Bump `copier-python` template"
+          commit_message: "Update repo to latest template"
   flake8:
     needs: "bump_template"
     if: "{% raw %}${{ !failed() }}{% endraw %}"

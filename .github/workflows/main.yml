@@ -10,21 +10,19 @@ on:
 jobs:
   changes:
     runs-on: "ubuntu-latest"
-    permissions:
-      pull-requests: "read"
-    outputs:
-      bump_precommit: "${{ steps.filter.outputs.bump_precommit }}"
     steps:
       - uses: "actions/checkout@v3"
       - uses: "dorny/paths-filter@v2"
         id: "filter"
         with:
           filters: |
-            bump_precommit:
+            precommit:
               - "bump/.pre-commit-config.yaml"
+    outputs:
+      precommit: "${{ steps.filter.outputs.precommit }}"
   bump_precommit:
     needs: "changes"
-    if: "${{ needs.changes.outputs.bump_precommit == 'true' }}"
+    if: "${{ needs.changes.outputs.precommit == 'true' }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -34,10 +32,10 @@ jobs:
       - run: "python bump/precommit.py"
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
-          commit_message: "Bump dependencies"
+          commit_message: "Update pre-commit config"
   test_installable:
     needs: "bump_precommit"
-    if: "${{ always() }}"
+    if: "${{ !failed() }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
