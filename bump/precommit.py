@@ -1,7 +1,7 @@
 """Copy bumped pre-commit to the template folder, appending the `.jinja` suffix."""
 
-import re
 from pathlib import Path
+import re
 
 source_file = Path("bump/.pre-commit-config.yaml")
 destination_file = Path(
@@ -19,11 +19,11 @@ pattern = re.compile(
 black_version = pattern.search(text)["black_version"]  # type: ignore
 replace = {
     "  #{% if use_dvc -%}": "  {% if use_dvc -%}",
-    "  #{% endif -%}": "  {% endif -%}",
+    "  #{%- endif %}": "  {%- endif %}",
     '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
 }
 lines = text.split("\n")
 for line_no, line in enumerate(lines):
     if replacement := replace.get(line):
         lines[line_no] = replacement
-destination_file.write_text("\n".join(lines[:-1]))
+destination_file.write_text("\n".join(lines))
