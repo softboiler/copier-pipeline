@@ -19,7 +19,6 @@ pattern = re.compile(
 black_version = pattern.search(text)["black_version"]  # type: ignore
 replace = {
     "  #{% if use_dvc -%}": "  {% if use_dvc -%}",
-    "  #{%- endif %}": "  {%- endif %}",
     '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
 }
 lines = text.split("\n")
