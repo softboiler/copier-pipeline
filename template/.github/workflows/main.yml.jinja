@@ -33,7 +33,7 @@ jobs:
           python -m pip install -U pip
           pip install -U setuptools wheel
           pip install copier
-          copier -f
+          copier -f -r $(git rev-parse HEAD:template)
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Update repo to latest template"
