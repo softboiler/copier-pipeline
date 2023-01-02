@@ -39,7 +39,7 @@ jobs:
           commit_message: "Update repo to latest template"
   flake8:
     needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
@@ -48,7 +48,7 @@ jobs:
       - run: "flake8"
   pyright:
     needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
@@ -57,7 +57,7 @@ jobs:
       - run: "pyright"
   pytest-cov:
     needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
+    if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
