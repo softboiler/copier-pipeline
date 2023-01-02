@@ -11,6 +11,9 @@
 #
 # (https://github.com/microsoft/vscode-python/issues/10165)
 
+ci:
+  autoupdate_schedule: quarterly
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
@@ -55,4 +58,3 @@ repos:
     rev: "v0.6.0"
     hooks:
       - id: markdownlint-cli2-fix
-  
