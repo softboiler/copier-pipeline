@@ -24,6 +24,8 @@ jobs:
     needs: "changes"
     if: "{% raw %}${{ needs.changes.outputs.template == 'true' }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
+    permissions:
+      actions: "write"
     steps:
       - uses: "actions/checkout@v3"
         with:
@@ -48,7 +50,6 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: "flake8"
-
   pyright:
     needs: "bump_template"
     if: "{% raw %}${{ always() }}{% endraw %}"
@@ -58,7 +59,6 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: "pyright"
-
   pytest-cov:
     needs: "bump_template"
     if: "{% raw %}${{ always() }}{% endraw %}"
