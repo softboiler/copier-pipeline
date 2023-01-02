@@ -44,7 +44,7 @@ jobs:
     if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
         with:
           python-version: "{{ python_version }}"
       - run: "flake8"
@@ -54,7 +54,7 @@ jobs:
     if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
         with:
           python-version: "{{ python_version }}"
       - run: "pyright"
@@ -64,7 +64,7 @@ jobs:
     if: "{% raw %}${{ always() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.7"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.8"
         with:
           python-version: "{{ python_version }}"
       - run: "pytest --cov"
