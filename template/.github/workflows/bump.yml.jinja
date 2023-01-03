@@ -10,14 +10,11 @@ jobs:
   bump:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.9"
         with:
           python-version: "{{ python_version }}"
-      # Duplicates some logic to avoid dependency cycle
-      - run: |-
-          pip install -U pip setuptools wheel
-          pip install -r .tools/requirements/requirements_cicd.txt
+          # Don't `pip install .` to avoid dependency cycle
+          install-project: false
       - run: "python .tools/scripts/bump_pyproject.py"
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
