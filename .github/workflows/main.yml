@@ -1,11 +1,6 @@
 name: "main"
 
-on:
-  workflow_dispatch:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main"]
+on: ["workflow_dispatch", "push"]
 
 jobs:
   changes:
@@ -35,7 +30,7 @@ jobs:
           commit_message: "Update pre-commit config"
   test_installable:
     needs: "bump_precommit"
-    if: "${{ always() }}"
+    if: "${{ !failure() }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
