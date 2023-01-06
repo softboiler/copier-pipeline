@@ -69,15 +69,25 @@
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
-
-    {
+    {% if docs_engine == 'MyST' %}{
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "sphinx-autobuild docs _site"],
       "icon": { "id": "book" },
       "problemMatcher": []
-    },
+    },{% endif %}
+    {% if docs_engine == 'Jupyter Book' %}{
+      "label": "task: sphinx-autobuild docs (preview)",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "watchfiles 'jupyter-book build docs --path-output _site' docs"
+      ],
+      "icon": { "id": "book" },
+      "problemMatcher": []
+    },{% endif %}
     {
       "label": "task: snakeviz",
       "type": "process",

@@ -1,0 +1,6 @@
+# For watching files until Live Preview supports it natively
+# https://github.com/microsoft/vscode-livepreview/issues/233
+watchfiles~=0.18.1
+
+# Instead of just MyST
+jupyter-book~=0.13.1

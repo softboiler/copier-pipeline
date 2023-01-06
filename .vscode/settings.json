@@ -47,7 +47,7 @@
     ".env": "dotenv",
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
-    "*requirements*.txt": "pip-requirements",
+    "*requirements*.txt*": "pip-requirements",
     ".nest_md_top": "markdown",
     ".nest_tools_config_top": "plaintext",
     ".sourcery.yaml": "yaml"
