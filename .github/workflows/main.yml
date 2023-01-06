@@ -28,7 +28,23 @@ jobs:
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Update pre-commit config"
-  test_installable:
+  test_installable_myst:
+    needs: "bump_precommit"
+    if: "${{ !failure() }}"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
+        with:
+          python-version: "3.11"
+      # Have to touch the file in a separate step before installing requirements
+      - run: touch template/.tools/requirements/requirements_project.txt
+      - run: touch template/.tools/requirements/requirements_docs.txt
+      - run: |-
+          pip install -U pip setuptools wheel
+          pip install -r template/.tools/requirements/requirements_cicd.txt
+      - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
+  test_installable_jupyter_book:
     needs: "bump_precommit"
     if: "${{ !failure() }}"
     runs-on: "ubuntu-latest"
@@ -44,4 +60,3 @@ jobs:
           pip install -U pip setuptools wheel
           pip install -r template/.tools/requirements/requirements_cicd.txt
       - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''Jupyter Book'' %}requirements_docs copy.txt{% endif %}"'
-      - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
