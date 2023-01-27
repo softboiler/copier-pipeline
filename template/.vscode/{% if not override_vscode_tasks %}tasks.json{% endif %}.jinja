@@ -40,6 +40,14 @@
       "problemMatcher": []
     },
     {
+      "label": "setup: Bump template",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["copier -f -r $(git rev-parse HEAD:template)"],
+      "icon": { "id": "folder" },
+      "problemMatcher": []
+    },
+    {
       "label": "setup: Setup project",
       "type": "process",
       "command": "pwsh",
