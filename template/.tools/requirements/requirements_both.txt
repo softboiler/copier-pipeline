@@ -8,10 +8,10 @@ toml~=0.10.2
 flit~=3.8.0
 
 # Type checking
-pyright==1.1.287
+pyright==1.1.291
 
 # Type checking dependencies
-IPython~=8.8.0
+IPython~=8.9.0
 
 # Lint
 flake8~=6.0.0
