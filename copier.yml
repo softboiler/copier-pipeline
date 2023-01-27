@@ -79,7 +79,7 @@ docs_engine:
   choices:
     - "MyST"
     - "Jupyter Book"
-  default: "MYST"
+  default: "MyST"
 
 # * -------------------------------------------------------------------------------- # *
 # * OVERRIDES
