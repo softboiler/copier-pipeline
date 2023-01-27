@@ -3,4 +3,3 @@ try { Invoke-Expression $("$GLOBAL_PYTHON --version") } catch [System.Management
 Remove-Item -ErrorAction SilentlyContinue -Recurse -Force .venv
 Invoke-Expression "$GLOBAL_PYTHON -m venv .venv --upgrade-deps"
 . ./update.ps1
-pre-commit install --install-hooks
