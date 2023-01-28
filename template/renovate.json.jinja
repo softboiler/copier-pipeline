@@ -3,10 +3,10 @@
   "extends": [
     "config:base",
     "group:allNonMajor",
+    ":automergeAll",
     {% if override_precommit %}":enablePreCommit",{% endif %}
     ":preserveSemverRanges"
   ],
-  "automerge": true,
   "enabledManagers": ["pip_requirements", "git-submodules"],
   "git-submodules": { "enabled": true },
   "packageRules": [
