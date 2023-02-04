@@ -21,7 +21,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/PyCQA/autoflake
-    rev: "v2.0.0"
+    rev: "v2.0.1"
     hooks:
       - id: autoflake
         args: [-i, --remove-all-unused-imports, --ignore-init-module-imports]
@@ -60,7 +60,7 @@ repos:
       - id: markdownlint-cli2-fix
 #{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
   - repo: https://github.com/iterative/dvc
-    rev: "2.43.1"
+    rev: "2.43.2"
     hooks:
       - id: dvc-pre-commit
         language_version: python3
