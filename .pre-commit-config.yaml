@@ -22,7 +22,7 @@ repos:
         exclude: template/{{ _copier_conf\.answers_file }}\.jinja|bump/\.pre-commit-config\.yaml|template/{% if not override_precommit %}\.pre-commit-config\.yaml{% endif %}\.jinja
       - id: trailing-whitespace
   - repo: https://github.com/PyCQA/autoflake
-    rev: "v2.0.0"
+    rev: "v2.0.1"
     hooks:
       - id: autoflake
         args: [-i, --remove-all-unused-imports, --ignore-init-module-imports]
