@@ -11,7 +11,7 @@ flit~=3.8.0
 pyright==1.1.293
 
 # Type checking dependencies
-IPython~=8.9.0
+IPython~=8.10.0
 
 # Lint
 flake8~=6.0.0
