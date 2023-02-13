@@ -1,6 +1,5 @@
 $VENV_ACTIVATE_WINDOWS = '.venv/Scripts/activate'
 $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
-
 if ( Test-Path $VENV_ACTIVATE_WINDOWS ) { . $VENV_ACTIVATE_WINDOWS }
 elseif ( Test-Path $VENV_ACTIVATE_UNIX ) { . $VENV_ACTIVATE_UNIX }
 else {

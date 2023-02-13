@@ -53,6 +53,9 @@
       "command": "pwsh",
       "args": ["update.ps1"],
       "icon": { "id": "folder" },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
       "problemMatcher": []
     },
 
