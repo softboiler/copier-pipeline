@@ -41,9 +41,13 @@
     "first-line-heading": false
   },
 
-  //* black
-  // This might become unnecessary eventually, but for now it's needed
-  "python.formatting.provider": "black",
+  //* black, flake8, isort
+  // "black-formatter.interpreter": "fromEnvironment",  // ! Buggy right now
+  "black-formatter.args": [],
+  "flake8.importStrategy": "fromEnvironment",
+  "flake8.args": [],
+  "isort.importStrategy": "fromEnvironment",
+  "isort.args": [],
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
