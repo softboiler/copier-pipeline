@@ -9,6 +9,8 @@
     "dotjoshjohnson.xml",
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
+    "executablebookproject.myst-highlight",
+    "github.codespaces",
     "github.vscode-pull-request-github",
     "ms-python.black-formatter",
     "ms-python.flake8",
