@@ -7,8 +7,6 @@
 # * TEMPLATE-SPECIFIC
 # *
 
-# Exclude type stubs from search results in VSCode
-typings
 # To avoid committing profiler results
 *.prof
 # To avoid committing rejected changes upon bumping template
