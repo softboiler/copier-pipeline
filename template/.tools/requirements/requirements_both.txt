@@ -8,7 +8,7 @@ toml~=0.10.2
 flit~=3.8.0
 
 # Type checking
-pyright==1.1.293
+pyright==1.1.294
 
 # Type checking dependencies
 IPython~=8.10.0
