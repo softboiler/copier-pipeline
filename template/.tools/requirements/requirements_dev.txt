@@ -1,28 +1,28 @@
 # Experiment
-jupyter~=1.0.0
-ipympl~=0.9.2
+jupyter==1.0.0
+ipympl==0.9.2
 
 # Debug
-debugpy~=1.6.4
+debugpy==1.6.4
 
 # For `python` and `ipython` via `pythonrc.py`
-rich~=13.3.0
+rich==13.3.0
 
 # Format
-autoflake~=2.0
-black~=23.1.0  # doesn't follow semver
+autoflake==2.0
+black==23.1.0  # doesn't follow semver
 
 # Lint
-sourcery-cli~=1.0.2
-flake8-codes~=0.2.2  # flake8 error code introspection
+sourcery-cli==1.0.2
+flake8-codes==0.2.2  # flake8 error code introspection
 
 # Profiling
-snakeviz~=2.1.1
+snakeviz==2.1.1
 
 # Pre-commit
-pre-commit~=3.0.0
+pre-commit==3.0.0
 
 # For local publishing to PyPi with flit
-keyring~=23.13.1
+keyring==23.13.1
 
 -r requirements_both.txt
