@@ -7,6 +7,8 @@
   // * -------------------------------------------------------------------------- * //
   // * GENERAL * //
 
+  "task.allowAutomaticTasks": "on",
+
   // Environment variables don't load properly otherwise
   // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
   "terminal.integrated.defaultProfile.linux": "pwsh",
@@ -42,12 +44,16 @@
   },
 
   //* black, flake8, isort
-  // "black-formatter.interpreter": "fromEnvironment",  // ! Buggy right now
+  "black-formatter.interpreter": "fromEnvironment", // ! Buggy right now
   "black-formatter.args": [],
   "flake8.importStrategy": "fromEnvironment",
   "flake8.args": [],
   "isort.importStrategy": "fromEnvironment",
   "isort.args": [],
+  "isort.check": true,
+  "isort.severity": {
+    "E": "Warning"
+  },
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
