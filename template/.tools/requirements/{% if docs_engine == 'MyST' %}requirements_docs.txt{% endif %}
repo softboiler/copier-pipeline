@@ -1,6 +1,6 @@
 sphinx==4.5.0
 myst-parser==0.18.1
-sphinx-book-theme==0.3.3
+sphinx-book-theme==1.0.0
 sphinx-design==0.3.0
 # doesn't follow semver
 sphinx-autobuild==2021.03.14
