@@ -3,4 +3,4 @@
 watchfiles==0.18.1
 
 # Instead of just MyST
-jupyter-book==0.13.2
+jupyter-book==0.14.0
