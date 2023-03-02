@@ -1,5 +1,5 @@
 if ($Env:VIRTUAL_ENV) { deactivate }
-if (Test-Path .venv) {Remove-Item -Recurse -Force .venv}
+if (Test-Path .venv) { Remove-Item -Recurse -Force .venv }
 $GLOBAL_PYTHON = 'py -{{ python_version }}'
 try { Invoke-Expression $("$GLOBAL_PYTHON --version") }
 catch [System.Management.Automation.CommandNotFoundException] {
@@ -7,4 +7,3 @@ catch [System.Management.Automation.CommandNotFoundException] {
 }
 Invoke-Expression "$GLOBAL_PYTHON -m venv .venv --upgrade-deps"
 . ./update.ps1
-pre-commit install --install-hooks
