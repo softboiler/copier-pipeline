@@ -10,8 +10,8 @@ flit==3.8.0
 # Type checking
 pyright==1.1.296
 
-# Type checking dependencies
-IPython==8.11.0
+# Import sorting
+isort==5.12.0
 
 # Lint
 flake8==6.0.0
