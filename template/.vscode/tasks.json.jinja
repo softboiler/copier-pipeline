@@ -43,7 +43,7 @@
       "label": "setup: Recopy template",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "copier -f -r $(git rev-parse HEAD:template)"],
+      "args": [".tools/scripts/recopy_template.ps1"],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
