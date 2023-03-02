@@ -40,7 +40,7 @@ jobs:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
         with:
           python-version: "{{ python_version }}"
-      - run: "isort --check-only"
+      - run: "isort --check-only ."
   flake8:
     needs: "bump_template"
     if: "{% raw %}${{ !failure() }}{% endraw %}"
