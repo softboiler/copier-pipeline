@@ -7,8 +7,6 @@
   // * -------------------------------------------------------------------------- * //
   // * GENERAL * //
 
-  //! Touch
-
   "task.allowAutomaticTasks": "on",
 
   // Environment variables don't load properly otherwise
