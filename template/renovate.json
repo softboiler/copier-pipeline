@@ -8,6 +8,10 @@
   ],
   "enabledManagers": ["pip_requirements", "git-submodules"],
   "git-submodules": { "enabled": true },
+  "pip_requirements": {
+    "description": "Override default detection of other requirements files.",
+    "includePaths": ["requirements.txt"]
+  },
   "packageRules": [
     {
       "groupName": "package",
