@@ -9,8 +9,7 @@
   ],
   "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
   "pip_requirements": {
-    "description": "Override default detection of other requirements files.",
-    "includePaths": ["template/.tools/requirements"],
+    "description": "Additionally monitor these files",
     "fileMatch": ["^template/\\.tools/requirements/*"]
   },
   "github-actions": {
