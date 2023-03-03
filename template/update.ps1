@@ -2,6 +2,7 @@
 Update the local virtual environment to the latest tracked dependencies.
 #>
 
+# Activate environment
 $VENV_ACTIVATE_WINDOWS = '.venv/Scripts/activate'
 $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
 if ( Test-Path $VENV_ACTIVATE_WINDOWS ) { . $VENV_ACTIVATE_WINDOWS }
@@ -9,9 +10,18 @@ elseif ( Test-Path $VENV_ACTIVATE_UNIX ) { . $VENV_ACTIVATE_UNIX }
 else {
 throw [System.Management.Automation.ItemNotFoundException] 'Could not find a virtual environment.'
 }
-python -m pip install --upgrade pip # instructed to do this by pip
-pip install --upgrade setuptools wheel # must be done separately from above
-pip install --upgrade -r 'requirements.txt' -r '.tools/requirements/requirements_dev.txt'
+
+# Bump `pyproject.toml` with latest dependencies from `requirements.txt`
 python '.tools/scripts/bump_pyproject.py'
+
+# Install dev requirements
+python -m pip install --upgrade pip # Instructed to do this by pip
+pip install --upgrade setuptools wheel # Must be done separately from above
+pip install --upgrade --requirement '.tools/requirements/requirements_dev.txt'
+
+# Install the package and the lower bound of its requirements
 pip install --no-deps --editable '.'
+pip install --upgrade --requirement 'requirements.txt'
+
+# Ensure pre-commit hooks are applied and updated
 pre-commit install --install-hooks
