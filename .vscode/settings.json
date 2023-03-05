@@ -175,6 +175,12 @@
 
   //! Filetype specifics (incl. line width)
 
+  //* .ENV
+  "[dotenv]": {
+    "editor.wordWrap": "wordWrapColumn",
+    "rewrap.autoWrap.enabled": false
+  },
+
   //* IPYNB
   "[ipynb]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
