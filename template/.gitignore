@@ -14,6 +14,9 @@ first_time_setup.ps1
 *.code-workspace
 # Avoid committing local docs builds for previewing
 _site
+# If using Google Cloud Platform Workload Identity Federation, avoid committing keys
+# Ignore generated credentials from google-github-actions/auth
+gha-creds-*.json
 
 # * -------------------------------------------------------------------------------- * #
 # * Partial Node.gitignore
