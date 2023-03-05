@@ -6,20 +6,21 @@
     ":automergeAll",
     ":preserveSemverRanges"
   ],
-  "enabledManagers": ["pip_requirements", "git-submodules"],
   "git-submodules": { "enabled": true },
+  "enabledManagers": ["pip_requirements", "git-submodules"],
   "pip_requirements": {
-    "description": "Override default detection of other requirements files.",
+    "description": "Override default detection of other requirements files",
     "includePaths": ["requirements.txt"]
   },
   "packageRules": [
     {
-      "groupName": "package",
-      "matchFiles": ["requirements.txt"]
-    },
-    {
       "groupName": "project_tooling",
       "matchFiles": ["template/.tools/requirements/requirements_project.txt"]
+    },
+    {
+      "description": "",
+      "groupName": "project_dependencies",
+      "matchFiles": ["requirements.txt"]
     }
   ]
 }
