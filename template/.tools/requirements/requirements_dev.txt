@@ -12,12 +12,10 @@ rich==13.3.2
 ipython==8.11.0
 
 # Format
-autoflake==2.0.1
 black==23.1.0  # doesn't follow semver
 
 # Lint
 sourcery-cli==1.0.6
-flake8-codes==0.2.2  # flake8 error code introspection
 
 # Profiling
 snakeviz==2.1.1

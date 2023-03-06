@@ -14,16 +14,7 @@ pyright
 IPython
 
 # Lint
-flake8
-flake8-absolute-import
-flake8-bandit
-flake8-black
-flake8-builtins
-flake8-bugbear
-flake8-comprehensions
-flake8-fixme
-flake8-noqa
-pep8-naming
+ruff
 
 # Test
 pytest

@@ -14,8 +14,6 @@
     "github.codespaces",
     "github.vscode-pull-request-github",
     "ms-python.black-formatter",
-    "ms-python.flake8",
-    "ms-python.isort",
     "redhat.vscode-yaml",
     "reverbc.vscode-pytest",
     "ryanluker.vscode-coverage-gutters",

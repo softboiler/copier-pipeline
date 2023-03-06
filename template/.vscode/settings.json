@@ -43,17 +43,11 @@
     "first-line-heading": false
   },
 
-  //* black, flake8, isort
+  //* black, ruff
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": [],
   "flake8.importStrategy": "fromEnvironment",
   "flake8.args": [],
-  "isort.importStrategy": "fromEnvironment",
-  "isort.args": [],
-  "isort.check": true,
-  "isort.severity": {
-    "E": "Warning"
-  },
   "ruff.importStrategy": "fromEnvironment",
 
   //! GitHub Actions

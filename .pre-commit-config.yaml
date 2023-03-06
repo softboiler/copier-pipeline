@@ -30,10 +30,6 @@ repos:
     hooks:
       - id: black
     rev: "23.1.0"
-  - repo: https://github.com/PyCQA/isort
-    rev: "5.12.0"
-    hooks:
-      - id: isort
   - repo: https://github.com/srstevenson/nb-clean
     rev: "2.4.0"
     hooks:
