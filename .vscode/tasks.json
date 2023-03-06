@@ -14,6 +14,7 @@
     // * GIT * //
     {
       "label": "git: Rebase back to fork",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "git rebase -i --fork-point main"],
       "icon": { "id": "git-branch" },
@@ -21,6 +22,7 @@
     },
     {
       "label": "git: Stage all files",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "git add -A"],
       "icon": { "id": "git-branch" },
@@ -30,14 +32,24 @@
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
-      "label": "setup: Initialize template",
+      "label": "setup: Bump template",
+      "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/init_template.ps1"],
-      "icon": { "id": "folder" },
+      "args": [".tools/scripts/Update-Template.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Recopy template",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/Copy-Template.ps1"],
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
       "label": "setup: Setup project",
+      "type": "process",
       "command": "pwsh",
       "args": ["setup.ps1"],
       "icon": { "id": "folder" },
@@ -45,9 +57,13 @@
     },
     {
       "label": "setup: Update project",
+      "type": "process",
       "command": "pwsh",
       "args": ["update.ps1"],
       "icon": { "id": "folder" },
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // },
       "problemMatcher": []
     },
 
@@ -55,6 +71,7 @@
     // * PRE-COMMIT * //
     {
       "label": "pre-commit",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "pre-commit"],
       "icon": { "id": "git-commit" },
@@ -63,24 +80,18 @@
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
-
-    {
-      "label": "task: format notebook",
-      "command": "pwsh",
-      "args": ["-Command", "nbqa black ${file}; nbqa ruff --fix-only ${file}"],
-      "icon": { "id": "notebook" },
-      "presentation": { "close": true },
-      "problemMatcher": []
-    },
     {
       "label": "task: sphinx-autobuild docs (preview)",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "sphinx-autobuild docs _site"],
       "icon": { "id": "book" },
       "problemMatcher": []
     },
+
     {
       "label": "task: snakeviz",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "snakeviz .prof"],
       "icon": { "id": "graph-line" },
@@ -88,6 +99,7 @@
     },
     {
       "label": "task: autoflake current file",
+      "type": "process",
       "command": "pwsh",
       "args": [
         "-Command",
@@ -98,6 +110,7 @@
     },
     {
       "label": "task: pytest-cov: Generate coverage",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "pytest --cov --cov-report xml"],
       "icon": { "id": "beaker" },
@@ -105,6 +118,7 @@
     },
     {
       "label": "task: Remove *.rej",
+      "type": "process",
       "command": "pwsh",
       "args": [
         "-Command",
@@ -115,6 +129,7 @@
     },
     {
       "label": "task: black: Ignore magic comma in this file",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C ${file}"],
       "icon": { "id": "code" },
@@ -122,6 +137,7 @@
     },
     {
       "label": "task: black: Ignore magic comma in all project files",
+      "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C src tests"],
       "icon": { "id": "code" },

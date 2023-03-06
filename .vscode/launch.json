@@ -16,7 +16,7 @@
       "console": "internalConsole"
     },
     {
-      "name": "Python: Current file: Not just my code",
+      "name": "Python: Current file, not just my code",
       "type": "python",
       "request": "launch",
       "program": "${file}",

@@ -5,8 +5,11 @@ ipympl
 # Debug
 debugpy
 
-# For `python` and `ipython` via `pythonrc.py`
+# For `python` via `pythonrc.py`
 rich
+
+# Terminal experiments
+ipython
 
 # Format
 black

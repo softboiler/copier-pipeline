@@ -13,19 +13,18 @@
 
 ci:
   autoupdate_schedule: quarterly
+  #
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
     hooks:
       - id: end-of-file-fixer
-        exclude: template/{{ _copier_conf\.answers_file }}\.jinja|bump/\.pre-commit-config\.yaml|template/{% if not override_precommit %}\.pre-commit-config\.yaml{% endif %}\.jinja
       - id: trailing-whitespace
-  - repo: https://github.com/PyCQA/autoflake
-    rev: "v2.0.1"
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.245"
     hooks:
-      - id: autoflake
-        args: [-i, --remove-all-unused-imports, --ignore-init-module-imports]
+      - id: ruff
   - repo: https://github.com/psf/black
     hooks:
       - id: black
@@ -41,16 +40,11 @@ repos:
           - slideshow
           - special
           - --
-  - repo: https://github.com/asottile/pyupgrade
-    rev: "v3.3.1"
-    hooks:
-      - id: pyupgrade
-        args: ["--py311-plus"]
   - repo: https://github.com/asottile/blacken-docs
     rev: "1.13.0"
     hooks:
       - id: blacken-docs
-        additional_dependencies: ["black==22.12.0"]
+        additional_dependencies: ["black==23.1.0"]
   - repo: https://github.com/DavidAnson/markdownlint-cli2
     rev: "v0.6.0"
     hooks:

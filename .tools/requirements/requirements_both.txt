@@ -10,9 +10,6 @@ flit
 # Type checking
 pyright
 
-# Type checking dependencies
-IPython
-
 # Lint
 ruff
 
