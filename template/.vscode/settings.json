@@ -54,6 +54,7 @@
   "isort.severity": {
     "E": "Warning"
   },
+  "ruff.importStrategy": "fromEnvironment",
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
