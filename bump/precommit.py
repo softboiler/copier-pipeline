@@ -4,9 +4,7 @@ import re
 from pathlib import Path
 
 source_file = Path("bump/.pre-commit-config.yaml")
-destination_file = Path(
-    "template/{% if not override_precommit %}.pre-commit-config.yaml{% endif %}.jinja"
-)
+destination_file = Path("template/.pre-commit-config.yaml.jinja")
 text = source_file.read_text(encoding="utf-8")
 pattern = re.compile(
     r"""
