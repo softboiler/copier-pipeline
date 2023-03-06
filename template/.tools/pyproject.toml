@@ -1,0 +1,22 @@
+[tool.ruff]
+fix = true
+select = ["ALL"]
+src = ["src", "tests"]
+target-version = "py311"
+extend-exclude = ["template", "typings", ".github", ".tools", ".venv"]
+ignore = [
+    "ANN201", # Checks that public functions and methods have return type annotations.
+    "COM",    # Allow magic commas and magic missing commas
+    "D10",    # Missing docstrings
+    "D203",   # 1 blank line required before class docstring
+    "D213",   # Multi-line docstring summary should start at the second line
+    "DTZ",    # Timezones are important, but only contextually necessary.
+    "E501",   # Black enforces this
+    "INP001", # False positive. Checks for packages missing `__init__.py`
+]
+
+[tool.ruff.flake8-bugbear]
+extend-immutable-calls = ["typer.Argument", "typer.Option"]
+
+[tool.ruff.pep8-naming]
+classmethod-decorators = ["pydantic.validator"]
