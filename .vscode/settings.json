@@ -7,9 +7,6 @@
   //! Files
 
   //* Experimental file nesting
-  "explorer.sortOrder": "foldersNestsFiles",
-  "explorer.fileNesting.enabled": true,
-  "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
@@ -17,15 +14,11 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    ".nest_tools_config": "{{ _copier_conf.answers_file }}.jinja, coverage.xml*, setup.ps1*, update.ps1*, *.code-workspace, *.prof, .copier-answers.yml*, .coverage*, .coveragerc*, .env*, .flake8*, .gitattributes*, .gitmodules*, .isort.cfg*, .markdownlint.yaml*, .pre-commit-config.yaml*, .pytest_cache*, .sourcery.yaml*, codecov.yml*, pyrightconfig.json*, pytest.ini*, pythonrc.py*, renovate.json*",
-    ".nest_md": "*.md, *.md.jinja, LICENSE.jinja",
+    ".nest_tools_config": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .flake8, .gitattributes, .gitmodules, .isort.cfg, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
+    ".nest_md": "*.md, LICENSE",
     ".nest_tools_config_top": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .flake8, .gitattributes, .gitmodules, .isort.cfg, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
     ".nest_md_top": "*.md, LICENSE"
   },
-  "vsicons.associations.files": [
-    { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
-    { "icon": "markdown", "extensions": ["nest_md"], "format": "svg" }
-  ],
 
   //* Custom file associations
   "files.associations": {
@@ -34,13 +27,6 @@
     "*.gitignore*": "ignore",
     "*.ini.jinja": "ini",
     "*.ps1.jinja": "powershell",
-    // "*.json*.jinja": "jsonc",
-    // "*.ps1.jinja": "powershell",
-    // "*.pylintrc*.jinja": "ini",
-    // "**/.github/workflows/*.yaml*.jinja": "yaml",
-    // "**/.github/workflows/*.yml*.jinja": "yaml",
-    // "*pyrightconfig.json*.jinja": "jsonc",
-    // Project-specific
     ".coveragerc": "ini",
     ".env": "dotenv",
     ".pylintrc": "ini",
@@ -71,6 +57,8 @@
 
   // * -------------------------------------------------------------------------- * //
   // * GENERAL * //
+
+  "task.allowAutomaticTasks": "on",
 
   // Environment variables don't load properly otherwise
   // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
@@ -106,9 +94,12 @@
     "first-line-heading": false
   },
 
-  //* black
-  // This might become unnecessary eventually, but for now it's needed
-  "python.formatting.provider": "black",
+  //* black, ruff
+  "black-formatter.importStrategy": "fromEnvironment",
+  "black-formatter.args": [],
+  "flake8.importStrategy": "fromEnvironment",
+  "flake8.args": [],
+  "ruff.importStrategy": "fromEnvironment",
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -132,10 +123,19 @@
 
   //! Files
 
+  //* Experimental file nesting
+  "explorer.sortOrder": "foldersNestsFiles",
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.expand": false,
+
   //* File icon associations
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
+  "vsicons.associations.files": [
+    { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
+    { "icon": "markdown", "extensions": ["nest_md"], "format": "svg" }
+  ],
 
   //! Built-in
 
@@ -143,8 +143,15 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
 
-  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  //* Editor format on save and more. Can run "File: Save without formatting" to skip.
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
 
   //* Enforce whitespace and newlines.
   //? Automatically enforce whitespace conventions.
@@ -158,6 +165,15 @@
 
   //* Markdown editor moves jarringly when this is "true"
   "markdown.preview.scrollEditorWithPreview": false,
+
+  //* Exclude
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/*.code-search": true,
+    "typings": true,
+    "template": true
+  },
 
   //! Line-width
 

@@ -9,8 +9,8 @@ debugpy
 rich
 
 # Format
-autoflake
 black
+nbqa
 
 # Lint
 sourcery-cli

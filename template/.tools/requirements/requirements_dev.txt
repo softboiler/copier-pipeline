@@ -12,7 +12,8 @@ rich==13.3.2
 ipython==8.11.0
 
 # Format
-black==23.1.0  # doesn't follow semver
+black==23.1.0
+nbqa==1.6.3
 
 # Lint
 sourcery-cli==1.0.6

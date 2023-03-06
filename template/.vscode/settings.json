@@ -114,8 +114,15 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
 
-  //* Format on save. Adjust CTRL+[SHIFT/ALT]+S in "keybindings.json" as well
+  //* Editor format on save and more. Can run "File: Save without formatting" to skip.
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  },
 
   //* Enforce whitespace and newlines.
   //? Automatically enforce whitespace conventions.
