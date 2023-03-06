@@ -22,6 +22,7 @@ ignore = [
     "PD901",  # Allow `df` variable name. We are all consenting adults here.
     "PGH003", # Until black stops wrapping special ignores, let's allow bare
     "RET",    # Return checks are flaky, Sourcery does fine analysing these paths
+    "TCH",    # Type checking linter doesn't play nicely with pydantic
     "TRY003", # Allow long exception messages
 ]
 
