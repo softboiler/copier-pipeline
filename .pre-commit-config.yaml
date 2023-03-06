@@ -1,4 +1,4 @@
-exclude: template/.pre-commit-config.yaml.jinja
+exclude: template/.pre-commit-config.yaml.jinja|template/{{ _copier_conf.answers_file }}.jinja
 
 # Note: Can't use anything in `.venv` for local hooks when commiting from VSCode GUI.
 # This is because VSCode Source Control doesn't activate `.venv` before running `git
