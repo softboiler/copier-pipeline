@@ -1,3 +1,9 @@
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 # Experiment
 jupyter==1.0.0
 ipympl==0.9.3
