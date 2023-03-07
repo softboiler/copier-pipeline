@@ -5,14 +5,31 @@ src = ["src", "tests"]
 target-version = "py311"
 extend-exclude = ["template", "typings", ".github", ".tools", ".venv"]
 ignore = [
-    "ANN201", # Checks that public functions and methods have return type annotations.
+    "ANN",    # Don't require type annotations
+    "ARG005", # Allow unused lambda argument. For consistency across df pipelines.
+    "C408",   # Allow dict calls
     "COM",    # Allow magic commas and magic missing commas
     "D10",    # Missing docstrings
-    "D203",   # 1 blank line required before class docstring
+    "D20",    # Don't reformat docstrings in these ways
     "D213",   # Multi-line docstring summary should start at the second line
     "DTZ",    # Timezones are important, but only contextually necessary.
     "E501",   # Black enforces this
-    "INP001", # False positive. Checks for packages missing `__init__.py`
+    "EM",     # Don't check for exception message issues
+    "ERA",    # False positives. Don't get rid of commented out code.
+    "FBT",    # Allow boolean "traps"
+    "INP001", # False positives. Checks for packages missing `__init__.py`
+    "ISC",    # False positives. Implicit string concatenation is fine.
+    "PD901",  # Allow `df` variable name. We are all consenting adults here.
+    "PGH003", # Until black stops wrapping special ignores, let's allow bare
+    "RET",    # Return checks are flaky, Sourcery does fine analysing these paths
+    "TCH",    # Type checking linter doesn't play nicely with pydantic
+    "TRY003", # Allow long exception messages
+]
+
+[tool.ruff.per-file-ignores]
+"tests/**" = [
+    "ARG001", # Allow unused arguments in tests
+    "S101",   # Allow assert in tests
 ]
 
 [tool.ruff.flake8-bugbear]
