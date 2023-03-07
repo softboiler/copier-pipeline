@@ -12,7 +12,7 @@ jobs:
   bump_project:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "copier-python-workflow-setup@v0.0.12"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "{{ python_version }}"
           install-project: false
