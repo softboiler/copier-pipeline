@@ -8,38 +8,38 @@ jobs:
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
-        with:
-          python-version: "3.11"
-      - run: "python bump/precommit.py"
       # Have to touch the file in a separate step before installing requirements
-      - run: touch template/.tools/requirements/requirements_project.txt
-      - run: touch template/.tools/requirements/requirements_docs.txt
-      - run: |-
-          pip install -U pip setuptools wheel
-          pip install -r template/.tools/requirements/requirements_cicd.txt
-      - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
+      - name: "Create requirements_project.txt"
+        run: "touch template/.tools/requirements/requirements_project.txt"
+      - name: "Create requirements_docs.txt"
+        run: "touch template/.tools/requirements/requirements_docs.txt"
+      - name: "Install CI requirements"
+        run: |-
+          pip install --upgrade pip
+          pip install --upgrade setuptools wheel
+          pip install --requirement template/.tools/requirements/requirements_cicd.txt
+      - run: 'pip install --requirement "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
   test_installable_jupyter_book:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
-        with:
-          python-version: "3.11"
       # Have to touch the file in a separate step before installing requirements
-      - run: touch template/.tools/requirements/requirements_project.txt
-      - run: touch template/.tools/requirements/requirements_docs.txt
-      - run: |-
+      - name: "Create requirements_project.txt"
+        run: "touch template/.tools/requirements/requirements_project.txt"
+      - name: "Create requirements_docs.txt"
+        run: "touch template/.tools/requirements/requirements_docs.txt"
+      - name: "Install CI requirements"
+        run: |-
           pip install -U pip setuptools wheel
           pip install -r template/.tools/requirements/requirements_cicd.txt
       - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''Jupyter Book'' %}requirements_docs.txt{% endif %}"'
   bump_precommit:
-    if: github.event.pull_request.merged == true
+    if: "github.event.pull_request.merged == true"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
-        with:
-          python-version: "3.11"
       - run: "python bump/precommit.py"
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
