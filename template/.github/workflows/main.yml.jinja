@@ -13,7 +13,7 @@ jobs:
       - run: |-
           python -m pip install --upgrade pip
           pip install --upgrade setuptools wheel
-          pip install copier yaml
+          pip install copier pyyaml
           copier --force --vcs-ref $(git rev-parse HEAD:template)
       - run: "python .tools/scripts/bump_pyproject.py"
       - run: |-
@@ -31,7 +31,7 @@ jobs:
       - run: |-
           python -m pip install --upgrade pip
           pip install --upgrade setuptools wheel
-          pip install copier yaml
+          pip install copier pyyaml
           copier --force --vcs-ref $(git rev-parse HEAD:template)
       - run: "python .tools/scripts/bump_pyproject.py"
       - run: |-
@@ -51,7 +51,7 @@ jobs:
       - run: |-
           python -m pip install --upgrade pip
           pip install --upgrade setuptools wheel
-          pip install copier yaml
+          pip install copier pyyaml
           copier --force --vcs-ref $(git rev-parse HEAD:template)
       - run: "python .tools/scripts/bump_pyproject.py"
       - uses: "stefanzweifel/git-auto-commit-action@v4"
