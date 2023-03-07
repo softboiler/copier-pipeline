@@ -56,7 +56,7 @@ repos:
       - id: markdownlint-cli2-fix
 #{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
   - repo: https://github.com/iterative/dvc
-    rev: "2.45.1"
+    rev: "2.46.0"
     hooks:
       - id: dvc-pre-commit
         language_version: python3
