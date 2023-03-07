@@ -1,5 +1,11 @@
 {
   "recommendations": [
+    // * -------------------------------------------------------------------------- * //
+    // * Changes below should persist in significant template updates.
+
+    // * -------------------------------------------------------------------------- * //
+    // * Changes below may be lost in significant template updates.
+
     "aaron-bond.better-comments",
     "bierner.markdown-preview-github-styles",
     "blackmist.linkcheckmd",

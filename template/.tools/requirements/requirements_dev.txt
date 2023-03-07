@@ -16,6 +16,7 @@ black==23.1.0
 nbqa==1.6.3
 
 # Lint
+ruff==0.0.254
 sourcery-cli==1.0.6
 
 # Profiling

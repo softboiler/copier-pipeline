@@ -6,28 +6,10 @@
   "version": "2.0.0",
   "tasks": [
     // * -------------------------------------------------------------------------- * //
-    // * PROJECT-SPECIFIC * //
-    // Introduce any project-specific tasks here.
-    // Be sure to say override this file in the Copier questionnaire to keep changes.
+    // * Changes below should persist in significant template updates.
 
     // * -------------------------------------------------------------------------- * //
-    // * GIT * //
-    {
-      "label": "git: Rebase back to fork",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "git rebase -i --fork-point main"],
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Stage all files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "git add -A"],
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
+    // * Changes below may be lost in significant template updates.
 
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
@@ -52,7 +34,7 @@
       "type": "process",
       "command": "pwsh",
       "args": ["setup.ps1"],
-      "icon": { "id": "folder" },
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
@@ -60,10 +42,21 @@
       "type": "process",
       "command": "pwsh",
       "args": ["update.ps1"],
-      "icon": { "id": "folder" },
+      "icon": { "id": "file-symlink-directory" },
       // "runOptions": {
       //   "runOn": "folderOpen"
       // },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Remove *.rej",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
+      ],
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
 
@@ -77,28 +70,64 @@
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run --all-files"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * GIT * //
+    {
+      "label": "git: Rebase back to fork",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git rebase -i --fork-point main"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
+      "label": "git: Stage all files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git add -A"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * BLACK * //
+    {
+      "label": "task: black: Ignore magic comma in this file",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C ${file}"],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: black: Ignore magic comma in all project files",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "black -C src tests"],
+      "icon": { "id": "code" },
+      "problemMatcher": []
+    },
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
-    {% if docs_engine == 'MyST' %}{
+    {
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "sphinx-autobuild docs _site"],
       "icon": { "id": "book" },
       "problemMatcher": []
-    },{% endif %}
-    {% if docs_engine == 'Jupyter Book' %}{
-      "label": "task: sphinx-autobuild docs (preview)",
-      "type": "process",
-      "command": "pwsh",
-      "args": [
-        "-Command",
-        "watchfiles 'jupyter-book build docs --path-output _site' docs"
-      ],
-      "icon": { "id": "book" },
-      "problemMatcher": []
-    },{% endif %}
+    },
+
     {
       "label": "task: snakeviz",
       "type": "process",
@@ -124,33 +153,6 @@
       "command": "pwsh",
       "args": ["-Command", "pytest --cov --cov-report xml"],
       "icon": { "id": "beaker" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Remove *.rej",
-      "type": "process",
-      "command": "pwsh",
-      "args": [
-        "-Command",
-        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
-      ],
-      "icon": { "id": "folder" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: black: Ignore magic comma in this file",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "black -C ${file}"],
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: black: Ignore magic comma in all project files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "black -C src tests"],
-      "icon": { "id": "code" },
       "problemMatcher": []
     }
   ]

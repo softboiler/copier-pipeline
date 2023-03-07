@@ -14,13 +14,40 @@
   },
   "packageRules": [
     {
-      "groupName": "project_tooling",
-      "matchFiles": ["template/.tools/requirements/requirements_project.txt"]
-    },
-    {
-      "description": "",
+      "description": "Update project dependencies.",
       "groupName": "project_dependencies",
       "matchFiles": ["requirements.txt"]
+    },
+    {
+      "description": "Update project tools, excluding those managed by the template.",
+      "groupName": "project_tooling",
+      "matchFiles": ["template/.tools/requirements/*"],
+      "ignoreDeps": [
+        "jupyter-book",
+        "watch-files",
+        "myst-parser",
+        "sphinx-autobuild",
+        "sphinx-book-theme",
+        "sphinx-design",
+        "toml",
+        "flit",
+        "pyright",
+        "ruff",
+        "pytest",
+        "pytest-cov",
+        "jupyter",
+        "ipympl",
+        "debugpy",
+        "rich",
+        "ipython",
+        "black",
+        "nbqa",
+        "ruff",
+        "sourcery-cli",
+        "snakeviz",
+        "pre-commit",
+        "keyring"
+      ]
     }
   ]
 }

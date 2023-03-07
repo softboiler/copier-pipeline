@@ -1,3 +1,9 @@
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 [submodule "template"]
 	path = template
 	url = https://github.com/blakeNaccarato/copier-python.git

@@ -1,13 +1,9 @@
 {
-  // * -------------------------------------------------------------------------- * //
-  // * PROJECT-SPECIFIC * //
-  // Introduce any project-specific settings here.
-  // Be sure to say override this file in the Copier questionnaire to keep changes.
+  // * ---------------------------------------------------------------------------- * //
+  // * Changes below should persist in significant template updates.
 
-  // * -------------------------------------------------------------------------- * //
-  // * GENERAL * //
-
-  "task.allowAutomaticTasks": "on",
+  // * ---------------------------------------------------------------------------- * //
+  // * Changes below may be lost in significant template updates.
 
   // Environment variables don't load properly otherwise
   // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
@@ -33,19 +29,17 @@
   "python.analysis.completeFunctionParens": false, // Buggy for now
 
   //! Lint, test, format
-
   //* pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-
   //* markdownlint
   "markdownlint.config": {
     "first-line-heading": false
   },
-
-  //* black, ruff
+  //* black
   "black-formatter.importStrategy": "fromEnvironment",
   "black-formatter.args": [],
+  //* ruff
   "ruff.importStrategy": "fromEnvironment",
 
   //! GitHub Actions
@@ -69,7 +63,6 @@
   ],
 
   //! Files
-
   //* Experimental file nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
@@ -84,7 +77,6 @@
     ".nest_tools_config": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .gitattributes, .gitmodules, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
     ".nest_md": "*.md, LICENSE"
   },
-
   //* File associations
   "files.associations": {
     ".coveragerc": "ini",
@@ -96,7 +88,6 @@
     ".nest_tools_config": "plaintext",
     ".sourcery.yaml": "yaml"
   },
-
   //* File icon associations
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
@@ -107,11 +98,11 @@
   ],
 
   //! Built-in
-
+  //* Allow auto-running tasks
+  "task.allowAutomaticTasks": "on",
   //* Enable native bracket pair colorization
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
-
   //* Editor format on save and more. Can run "File: Save without formatting" to skip.
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
@@ -121,20 +112,15 @@
     "source.fixAll": true,
     "source.organizeImports": true
   },
-
   //* Enforce whitespace and newlines.
-  //? Automatically enforce whitespace conventions.
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,
   "files.trimFinalNewlines": true,
-
   //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
   "git.autofetch": true,
   "git.confirmSync": false,
-
   //* Markdown editor moves jarringly when this is "true"
   "markdown.preview.scrollEditorWithPreview": false,
-
   //* Exclude
   "search.exclude": {
     "**/node_modules": true,
@@ -145,32 +131,26 @@
   },
 
   //! Line-width
-
   //* Formatting
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
-
   //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
-
   //* Default wrapping
   "editor.wordWrapColumn": 88,
   "editor.rulers": [88],
 
-  //! Filetype specifics (incl. line width)
-
+  //! Filetype specifics
   //* .ENV
   "[dotenv]": {
     "editor.wordWrap": "wordWrapColumn",
     "rewrap.autoWrap.enabled": false
   },
-
   //* IPYNB
   "[ipynb]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-
   //* MD
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
@@ -180,7 +160,6 @@
     "editor.rulers": [124],
     "rewrap.autoWrap.enabled": false
   },
-
   //* JSON
   "[json]": {
     "editor.wordWrap": "wordWrapColumn",
@@ -190,30 +169,25 @@
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   //* PYTHON
   "[python]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
-
   //* TXT
   "[plaintext]": {
     "editor.wordWrap": "wordWrapColumn"
   },
-
   //* TOML
   "evenBetterToml.formatter.columnWidth": 88,
   "[toml]": {
     "editor.wordWrap": "wordWrapColumn",
     "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
-
   //* TSV
   "[tsv]": {
     //? Indent with tabs
     "editor.insertSpaces": false
   },
-
   //* YAML
   "yaml.format.printWidth": 88,
   "[yaml]": {

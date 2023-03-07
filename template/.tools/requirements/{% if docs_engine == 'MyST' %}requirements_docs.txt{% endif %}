@@ -1,3 +1,9 @@
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 myst-parser==0.19.1
 sphinx-autobuild==2021.03.14
 sphinx-book-theme==1.0.0

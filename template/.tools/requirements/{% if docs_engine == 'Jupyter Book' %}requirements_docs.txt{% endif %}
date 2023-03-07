@@ -1,3 +1,9 @@
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 jupyter-book==0.14.0
 # For watching files until Live Preview supports it natively
 # https://github.com/microsoft/vscode-livepreview/issues/233

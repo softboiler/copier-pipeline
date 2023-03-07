@@ -6,6 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below may be lost in significant template updates.
+
   bump_project:
     runs-on: "{{ actions_runner }}"
     steps:
@@ -22,3 +25,6 @@ jobs:
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Bump `pyproject.toml` dependencies"
+
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below should persist in significant template updates.

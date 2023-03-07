@@ -3,6 +3,9 @@ name: "main"
 on: ["push", "workflow_dispatch"]
 
 jobs:
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes may be lost in significant template updates.
+
   pyright:
     runs-on: "{{ actions_runner }}"
     steps:
@@ -17,7 +20,7 @@ jobs:
           copier --force --vcs-ref $(git rev-parse HEAD:template)
       - run: "python .tools/scripts/bump_pyproject.py"
       - run: |-
-          pip install --requirement .tools/requirements/requirements_cicd.txt
+          pip install --requirement .tools/requirements/requirements_ci.txt
           pip install --no-deps .
           pip install --upgrade --requirement 'requirements.txt'
       - run: "pyright"
@@ -35,8 +38,11 @@ jobs:
           copier --force --vcs-ref $(git rev-parse HEAD:template)
       - run: "python .tools/scripts/bump_pyproject.py"
       - run: |-
-          pip install --requirement .tools/requirements/requirements_cicd.txt
+          pip install --requirement .tools/requirements/requirements_ci.txt
           pip install --no-deps .
           pip install --upgrade --requirement 'requirements.txt'
       - run: "pytest --cov"
       - uses: "codecov/codecov-action@v3.1.1"
+
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below should persist in significant template updates.
