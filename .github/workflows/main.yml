@@ -1,23 +1,9 @@
 name: "main"
 
-on: ["workflow_dispatch", "push"]
+on: ["push"]
 
 jobs:
-  changes:
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: "actions/checkout@v3"
-      - uses: "dorny/paths-filter@v2"
-        id: "filter"
-        with:
-          filters: |
-            precommit:
-              - "bump/.pre-commit-config.yaml"
-    outputs:
-      precommit: "${{ steps.filter.outputs.precommit }}"
-  bump_precommit:
-    needs: "changes"
-    if: "${{ needs.changes.outputs.precommit == 'true' }}"
+  test_installable_myst:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -25,18 +11,6 @@ jobs:
         with:
           python-version: "3.11"
       - run: "python bump/precommit.py"
-      - uses: "stefanzweifel/git-auto-commit-action@v4"
-        with:
-          commit_message: "Update pre-commit config"
-  test_installable_myst:
-    needs: "bump_precommit"
-    if: "${{ !failure() }}"
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
-        with:
-          python-version: "3.11"
       # Have to touch the file in a separate step before installing requirements
       - run: touch template/.tools/requirements/requirements_project.txt
       - run: touch template/.tools/requirements/requirements_docs.txt
@@ -45,8 +19,6 @@ jobs:
           pip install -r template/.tools/requirements/requirements_cicd.txt
       - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
   test_installable_jupyter_book:
-    needs: "bump_precommit"
-    if: "${{ !failure() }}"
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -60,3 +32,15 @@ jobs:
           pip install -U pip setuptools wheel
           pip install -r template/.tools/requirements/requirements_cicd.txt
       - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''Jupyter Book'' %}requirements_docs.txt{% endif %}"'
+  test:
+    if: github.event.pull_request.merged == true
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
+        with:
+          python-version: "3.11"
+      - run: "python bump/precommit.py"
+      - uses: "stefanzweifel/git-auto-commit-action@v4"
+        with:
+          commit_message: "Update pre-commit config"
