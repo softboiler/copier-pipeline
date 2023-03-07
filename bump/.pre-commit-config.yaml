@@ -13,7 +13,7 @@
 
 ci:
   autoupdate_schedule: quarterly
-  #{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
+#{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
   skip:
     - dvc-pre-commit
     - dvc-pre-push
@@ -54,7 +54,7 @@ repos:
     rev: "v0.6.0"
     hooks:
       - id: markdownlint-cli2-fix
-  #{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
+#{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
   - repo: https://github.com/iterative/dvc
     rev: "2.45.1"
     hooks:
