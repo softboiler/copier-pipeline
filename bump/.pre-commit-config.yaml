@@ -13,14 +13,13 @@
 
 ci:
   autoupdate_schedule: quarterly
-#{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
-  skip:
-    - dvc-pre-commit
-    - dvc-pre-push
-    - dvc-post-checkout
-#{% endif %}
 
 repos:
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below should persist in significant template updates.
+
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below may be lost in significant template updates.
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: "v4.4.0"
     hooks:
@@ -54,23 +53,3 @@ repos:
     rev: "v0.6.0"
     hooks:
       - id: markdownlint-cli2-fix
-#{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works
-  - repo: https://github.com/iterative/dvc
-    rev: "2.46.0"
-    hooks:
-      - id: dvc-pre-commit
-        language_version: python3
-        stages:
-          - commit
-      - id: dvc-pre-push
-        # use s3/gs/etc instead of all to only install specific cloud support
-        additional_dependencies: [".[gs]"]
-        language_version: python3
-        stages:
-          - push
-      - always_run: true
-        id: dvc-post-checkout
-        language_version: python3
-        stages:
-          - post-checkout
-#{% endif %}

@@ -16,9 +16,7 @@ pattern = re.compile(
 )
 black_version = pattern.search(text)["black_version"]  # pyright: ignore
 replace = {
-    "#{% if use_dvc %}  # Don't touch this, it makes an extra newline but it works": "{% if use_dvc %}",
     '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
-    "#{% endif %}": "{% endif %}",
 }
 lines = text.split("\n")
 for line_no, line in enumerate(lines):

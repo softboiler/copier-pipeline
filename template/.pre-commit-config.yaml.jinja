@@ -13,12 +13,6 @@
 
 ci:
   autoupdate_schedule: quarterly
-{% if use_dvc %}
-  skip:
-    - dvc-pre-commit
-    - dvc-pre-push
-    - dvc-post-checkout
-{% endif %}
 
 repos:
   # * ------------------------------------------------------------------------------ * #
@@ -60,23 +54,3 @@ repos:
     rev: "v0.6.0"
     hooks:
       - id: markdownlint-cli2-fix
-{% if use_dvc %}
-  - repo: https://github.com/iterative/dvc
-    rev: "2.45.1"
-    hooks:
-      - id: dvc-pre-commit
-        language_version: python3
-        stages:
-          - commit
-      - id: dvc-pre-push
-        # use s3/gs/etc instead of all to only install specific cloud support
-        additional_dependencies: [".[gs]"]
-        language_version: python3
-        stages:
-          - push
-      - always_run: true
-        id: dvc-post-checkout
-        language_version: python3
-        stages:
-          - post-checkout
-{% endif %}
