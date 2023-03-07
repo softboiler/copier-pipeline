@@ -1,23 +1,9 @@
 name: "main"
 
-on: ["workflow_dispatch", "push"]
+on: ["push", "workflow_dispatch"]
 
 jobs:
-  changes:
-    runs-on: "{{ actions_runner }}"
-    steps:
-      - uses: "actions/checkout@v3"
-      - uses: "dorny/paths-filter@v2"
-        id: "filter"
-        with:
-          filters: |
-            template:
-              - "template/**"
-    outputs:
-      template: "{% raw %}${{ steps.filter.outputs.template }}{% endraw %}"
-  bump_template:
-    needs: "changes"
-    if: "{% raw %}${{ needs.changes.outputs.template == 'true' }}{% endraw %}"
+  pyright:
     runs-on: "{{ actions_runner }}"
     steps:
       - uses: "actions/checkout@v3"
@@ -25,38 +11,49 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: |-
-          python -m pip install -U pip
-          pip install -U setuptools wheel
-          pip install copier
-          copier -f -r $(git rev-parse HEAD:template)
-      - uses: "stefanzweifel/git-auto-commit-action@v4"
-        with:
-          commit_message: "Update repo to latest template"
-  ruff:
-    needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
-    runs-on: "{{ actions_runner }}"
-    steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
-        with:
-          python-version: "{{ python_version }}"
-      - run: "ruff check --no-fix ."
-  pyright:
-    needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
-    runs-on: "{{ actions_runner }}"
-    steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
-        with:
-          python-version: "{{ python_version }}"
+          python -m pip install --upgrade pip
+          pip install --upgrade setuptools wheel
+          pip install copier yaml
+          copier --force --vcs-ref $(git rev-parse HEAD:template)
+      - run: "python .tools/scripts/bump_pyproject.py"
+      - run: |-
+          pip install --requirement .tools/requirements/requirements_cicd.txt
+          pip install --no-deps .
+          pip install --upgrade --requirement 'requirements.txt'
       - run: "pyright"
   pytest-cov:
-    needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
         with:
           python-version: "{{ python_version }}"
+      - run: |-
+          python -m pip install --upgrade pip
+          pip install --upgrade setuptools wheel
+          pip install copier yaml
+          copier --force --vcs-ref $(git rev-parse HEAD:template)
+      - run: "python .tools/scripts/bump_pyproject.py"
+      - run: |-
+          pip install --requirement .tools/requirements/requirements_cicd.txt
+          pip install --no-deps .
+          pip install --upgrade --requirement 'requirements.txt'
       - run: "pytest --cov"
       - uses: "codecov/codecov-action@v3.1.1"
+  bump_project:
+    if: "github.event.pull_request.merged == true"
+    runs-on: "{{ actions_runner }}"
+    steps:
+      - uses: "actions/checkout@v3"
+      - uses: "actions/setup-python@v4"
+        with:
+          python-version: "{{ python_version }}"
+      - run: |-
+          python -m pip install --upgrade pip
+          pip install --upgrade setuptools wheel
+          pip install copier yaml
+          copier --force --vcs-ref $(git rev-parse HEAD:template)
+      - run: "python .tools/scripts/bump_pyproject.py"
+      - uses: "stefanzweifel/git-auto-commit-action@v4"
+        with:
+          commit_message: "Bump `pyproject.toml` dependencies"
