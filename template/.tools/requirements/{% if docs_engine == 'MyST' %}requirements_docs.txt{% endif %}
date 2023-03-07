@@ -4,7 +4,7 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-myst-parser==0.19.1
+myst-parser==1.0.0
 sphinx-autobuild==2021.03.14
 sphinx-book-theme==1.0.0
 sphinx-design==0.3.0
