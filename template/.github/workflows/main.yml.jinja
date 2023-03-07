@@ -4,43 +4,21 @@ on: ["push", "workflow_dispatch"]
 
 jobs:
   # * ------------------------------------------------------------------------------ * #
-  # * Changes may be lost in significant template updates.
+  # * Changes below may be lost in significant template updates.
 
   pyright:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - uses: "copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "{{ python_version }}"
-      - run: |-
-          python -m pip install --upgrade pip
-          pip install --upgrade setuptools wheel
-          pip install copier toml
-          copier --force --vcs-ref $(git rev-parse HEAD:template)
-      - run: "python .tools/scripts/bump_pyproject.py"
-      - run: |-
-          pip install --requirement .tools/requirements/requirements_ci.txt
-          pip install --no-deps .
-          pip install --upgrade --requirement 'requirements.txt'
       - run: "pyright"
   pytest-cov:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
+      - uses: "copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "{{ python_version }}"
-      - run: |-
-          python -m pip install --upgrade pip
-          pip install --upgrade setuptools wheel
-          pip install copier toml
-          copier --force --vcs-ref $(git rev-parse HEAD:template)
-      - run: "python .tools/scripts/bump_pyproject.py"
-      - run: |-
-          pip install --requirement .tools/requirements/requirements_ci.txt
-          pip install --no-deps .
-          pip install --upgrade --requirement 'requirements.txt'
       - run: "pytest --cov"
       - uses: "codecov/codecov-action@v3.1.1"
 
