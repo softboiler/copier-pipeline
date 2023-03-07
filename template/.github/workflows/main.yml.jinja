@@ -32,15 +32,6 @@ jobs:
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
           commit_message: "Update repo to latest template"
-  isort:
-    needs: "bump_template"
-    if: "{% raw %}${{ !failure() }}{% endraw %}"
-    runs-on: "{{ actions_runner }}"
-    steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
-        with:
-          python-version: "{{ python_version }}"
-      - run: "isort --check-only ."
   ruff:
     needs: "bump_template"
     if: "{% raw %}${{ !failure() }}{% endraw %}"
