@@ -38,8 +38,7 @@
       "matchManagers": ["pip_requirements"],
       "matchDepNames": ["pyright"],
       "schedule": ["at any time"],
-      "automerge": false,
-      "groupSlug": ""
+      "automerge": false
     },
     {
       "description": "Ignore dependencies managed by the template. Do manage pyright.",
