@@ -4,24 +4,24 @@
     "config:base",
     "group:allNonMajor",
     ":automergeAll",
+    ":enablePreCommit",
     ":preserveSemverRanges"
   ],
   "git-submodules": { "enabled": true },
-  "enabledManagers": ["pip_requirements", "git-submodules"],
+  "enabledManagers": [
+    "git-submodules",
+    "github-actions",
+    "pip_requirements",
+    "pre-commit"
+  ],
   "pip_requirements": {
-    "description": "Override default detection of other requirements files",
-    "includePaths": ["requirements.txt"]
+    "description": "Additionally monitor these files",
+    "fileMatch": ["^template/\\.tools/requirements/*"]
   },
   "packageRules": [
     {
-      "description": "Update project dependencies.",
-      "groupName": "project_dependencies",
-      "matchFiles": ["requirements.txt"]
-    },
-    {
-      "description": "Update project tools, excluding those managed by the template.",
-      "groupName": "project_tooling",
-      "matchFiles": ["template/.tools/requirements/*"],
+      "description": "Ignore dependencies managed by the template.",
+      "matchPaths": ["template/.tools/requirements/*"],
       "ignoreDeps": [
         "jupyter-book",
         "watch-files",
@@ -47,6 +47,19 @@
         "snakeviz",
         "pre-commit",
         "keyring"
+      ]
+    },
+    {
+      "description": "Ignore dependencies managed by the template.",
+      "matchFiles": ["pre-commit-config.yaml"],
+      "ignoreDeps": [
+        "pre-commit/pre-commit-hooks",
+        "psf/black",
+        "charliermarsh/ruff-pre-commit",
+        "srstevenson/nb-clean",
+        "nbQA-dev/nbQA",
+        "asottile/blacken-docs",
+        "DavidAnson/markdownlint-cli2"
       ]
     }
   ]

@@ -3,23 +3,41 @@
 import re
 from pathlib import Path
 
-source_file = Path("bump/.pre-commit-config.yaml")
-destination_file = Path("template/.pre-commit-config.yaml.jinja")
-text = source_file.read_text(encoding="utf-8")
-pattern = re.compile(
-    r"""
-  - repo: https:\/\/github\.com\/psf\/black
-    hooks:
-      - id: black
-    rev: "(?P<black_version>[\d.]+)"
-"""
-)
-black_version = pattern.search(text)["black_version"]  # pyright: ignore
-replace = {
-    '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={black_version}"]',
+patterns = {
+    "black": r"""
+  - repo: "https:\/\/github\.com\/psf\/black"
+    rev: "v?(?P<version>[\d.]+)"
+""",
+    "ruff": r"""
+  - repo: "https:\/\/github\.com\/charliermarsh\/ruff-pre-commit"
+    rev: "v?(?P<version>[\d.]+)"
+""",
 }
-lines = text.split("\n")
-for line_no, line in enumerate(lines):
-    if replacement := replace.get(line):
-        lines[line_no] = replacement
-destination_file.write_text("\n".join(lines[:-1]))
+
+# Bump pre-commit
+pre_commit_source = Path("bump/.pre-commit-config.yaml")
+pre_commit_destination = Path("template/.pre-commit-config.yaml.jinja")
+pre_commit_text = pre_commit_source.read_text(encoding="utf-8")
+versions = {
+    package: re.search(pattern, pre_commit_text)["version"]  # pyright: ignore
+    for package, pattern in patterns.items()
+}
+pre_commit_replace = {
+    '        additional_dependencies: ["black=="]': f'        additional_dependencies: ["black=={versions["black"]}"]',
+    '        additional_dependencies: ["ruff=="]': f'        additional_dependencies: ["ruff=={versions["ruff"]}"]',
+}
+pre_commit_lines = pre_commit_text.split("\n")
+for line_number, line in enumerate(pre_commit_lines):
+    if replacement := pre_commit_replace.get(line):
+        pre_commit_lines[line_number] = replacement
+pre_commit_destination.write_text(encoding="utf-8", data="\n".join(pre_commit_lines))
+
+# Bump requirements
+requirements = Path("template/.tools/requirements/requirements_dev.txt")
+requirements_lines = requirements.read_text(encoding="utf-8").split("\n")
+for line_number, line in enumerate(requirements_lines):
+    if line.startswith("black"):
+        requirements_lines[line_number] = f"black=={versions['black']}"
+    if line.startswith("ruff"):
+        requirements_lines[line_number] = f"ruff=={versions['ruff']}"
+requirements.write_text(encoding="utf-8", data="\n".join(requirements_lines))

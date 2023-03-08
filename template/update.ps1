@@ -2,6 +2,9 @@
 Update the local virtual environment to the latest tracked dependencies.
 #>
 
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 # Activate environment
 $VENV_ACTIVATE_WINDOWS = '.venv/Scripts/activate'
 $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
@@ -24,3 +27,6 @@ pip install --upgrade --requirement 'requirements.txt'
 
 # Ensure pre-commit hooks are applied and updated
 pre-commit install --install-hooks
+
+# * ------------------------------------------------------------------------------ * #
+# * Changes below should persist in significant template updates.

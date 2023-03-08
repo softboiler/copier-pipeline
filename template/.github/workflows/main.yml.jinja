@@ -21,6 +21,17 @@ jobs:
           python-version: "{{ python_version }}"
       - run: "pytest --cov"
       - uses: "codecov/codecov-action@v3.1.1"
+  bump_project:
+    needs: ["pyright", "pytest-cov"]
+    runs-on: "{{ actions_runner }}"
+    steps:
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
+        with:
+          python-version: "{{ python_version }}"
+          install-project: false
+      - uses: "stefanzweifel/git-auto-commit-action@v4"
+        with:
+          commit_message: "Bump project template and compose `pyproject.toml`."
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.

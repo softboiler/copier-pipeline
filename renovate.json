@@ -7,17 +7,24 @@
     ":enablePreCommit",
     ":preserveSemverRanges"
   ],
-  "enabledManagers": ["pip_requirements", "github-actions", "pre-commit"],
-  "pip_requirements": {
-    "description": "Additionally monitor these files",
-    "fileMatch": ["^template/\\.tools/requirements/*"]
-  },
+  "enabledManagers": ["github-actions", "pip_requirements", "pre-commit"],
   "github-actions": {
     "description": "Additionally monitor these files",
     "fileMatch": ["^template/\\.github/workflows/*"]
   },
+  "pip_requirements": {
+    "description": "Additionally monitor these files",
+    "fileMatch": ["^template/\\.tools/requirements/*"]
+  },
   "pre-commit": {
     "description": "Additionally monitor these files",
     "fileMatch": ["^bump/\\.pre-commit-config\\.yaml$"]
-  }
+  },
+  "packageRules": [
+    {
+      "description": "Pre-commit bumping manages these requirements.",
+      "matchFiles": ["template/.tools/requirements/requirements_dev.txt"],
+      "ignoreDeps": ["black", "ruff"]
+    }
+  ]
 }

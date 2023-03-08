@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
+      - run: "python bump/precommit.py"
       # Have to touch the file in a separate step before installing requirements
       - name: "Create requirements_docs.txt"
         run: "touch template/.tools/requirements/requirements_docs.txt"
@@ -22,6 +23,7 @@ jobs:
     steps:
       - uses: "actions/checkout@v3"
       - uses: "actions/setup-python@v4"
+      - run: "python bump/precommit.py"
       # Have to touch the file in a separate step before installing requirements
       - name: "Create requirements_docs.txt"
         run: "touch template/.tools/requirements/requirements_docs.txt"
@@ -31,7 +33,7 @@ jobs:
           pip install -r template/.tools/requirements/requirements_ci.txt
       - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''Jupyter Book'' %}requirements_docs.txt{% endif %}"'
   bump_precommit:
-    if: "github.event.pull_request.merged == true"
+    needs: ["test_installable_myst", "test_installable_jupyter_book"]
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -39,4 +41,4 @@ jobs:
       - run: "python bump/precommit.py"
       - uses: "stefanzweifel/git-auto-commit-action@v4"
         with:
-          commit_message: "Update pre-commit config"
+          commit_message: "Bump pre-commit configuration and related dependencies"

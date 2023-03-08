@@ -19,11 +19,9 @@ ipython==8.11.0
 
 # Format
 black==23.1.0
-nbqa==1.6.3
-
-# Lint
 ruff==0.0.254
 sourcery-cli==1.0.6
+nbqa==1.6.3
 
 # Profiling
 snakeviz==2.1.1
