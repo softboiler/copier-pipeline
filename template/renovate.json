@@ -7,6 +7,7 @@
     ":enablePreCommit",
     ":preserveSemverRanges"
   ],
+  "schedule": ["on the first Sunday of the month"],
   "git-submodules": { "enabled": true },
   "enabledManagers": [
     "git-submodules",
@@ -21,7 +22,21 @@
   },
   "packageRules": [
     {
-      "description": "Ignore dependencies managed by the template.",
+      "description": "Check for typings updates all the time.",
+      "matchManagers": ["git-submodules"],
+      "matchDepNames": ["typings"],
+      "schedule": ["at any time"]
+    },
+    {
+      "description": "Don't automerge pyright. It should be manually synced with typings.",
+      "matchManagers": ["pip_requirements"],
+      "matchDepNames": ["pyright"],
+      "schedule": ["at any time"],
+      "automerge": false
+    },
+    {
+      "description": "Ignore dependencies managed by the template. Do manage pyright.",
+      "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": [
         "jupyter-book",
@@ -33,7 +48,6 @@
         "copier",
         "toml",
         "flit",
-        "pyright",
         "ruff",
         "pytest",
         "pytest-cov",
