@@ -22,7 +22,7 @@
   "packageRules": [
     {
       "description": "Ignore dependencies managed by the template.",
-      "matchPaths": ["template/.tools/requirements/*"],
+      "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": [
         "jupyter-book",
         "watch-files",
