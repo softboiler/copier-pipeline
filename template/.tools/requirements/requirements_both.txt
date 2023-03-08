@@ -12,7 +12,7 @@ toml==0.10.2
 flit==3.8.0
 
 # Type checking
-pyright==1.1.296
+pyright==1.1.297
 
 # Lint
 ruff==0.0.254
