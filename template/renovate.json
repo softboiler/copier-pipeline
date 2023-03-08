@@ -16,7 +16,8 @@
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["^template/\\.tools/requirements/*"]
+    "fileMatch": ["^template/\\.tools/requirements/*"],
+    "ignorePaths": ["frozen_requirements.txt"]
   },
   "packageRules": [
     {
@@ -51,7 +52,7 @@
     },
     {
       "description": "Ignore dependencies managed by the template.",
-      "matchFiles": ["pre-commit-config.yaml"],
+      "matchFiles": [".pre-commit-config.yaml"],
       "ignoreDeps": [
         "pre-commit/pre-commit-hooks",
         "psf/black",
