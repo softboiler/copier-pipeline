@@ -7,7 +7,7 @@
     ":enablePreCommit",
     ":preserveSemverRanges"
   ],
-  "schedule": ["on the first Saturday of the month"],
+  "schedule": ["on the first day of the month"],
   "enabledManagers": ["github-actions", "pip_requirements", "pre-commit"],
   "github-actions": {
     "description": "Additionally monitor these files",
