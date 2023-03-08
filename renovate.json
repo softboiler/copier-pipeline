@@ -23,13 +23,6 @@
   },
   "packageRules": [
     {
-      "description": "Check for typings and pyright updates all the time.",
-      "matchManagers": ["pip_requirements"],
-      "matchDepNames": ["pyright"],
-      "schedule": ["at any time"],
-      "automerge": false
-    },
-    {
       "description": "Pre-commit manages these requirements. Project repos manage pyright.",
       "matchManagers": ["pip_requirements"],
       "matchFiles": ["template/.tools/requirements/requirements_dev.txt"],
