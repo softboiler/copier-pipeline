@@ -15,5 +15,5 @@ catch [System.Management.Automation.CommandNotFoundException] {
 Invoke-Expression "$GLOBAL_PYTHON -m venv '.venv' --upgrade-deps"
 . './update.ps1'
 
-# * ------------------------------------------------------------------------------ * #
+# * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
