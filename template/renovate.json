@@ -2,12 +2,11 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
-    "group:allNonMajor",
     ":automergeAll",
     ":enablePreCommit",
     ":preserveSemverRanges"
   ],
-  "schedule": ["on the eighth day of the month"],
+  "schedule": ["on the 8th day of the month"],
   "git-submodules": { "enabled": true },
   "enabledManagers": [
     "git-submodules",
@@ -22,6 +21,13 @@
   },
   "packageRules": [
     {
+      "groupName": "all non-major dependencies except pyright",
+      "groupSlug": "all-minor-patch",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "excludeDepNames": ["pyright"]
+    },
+    {
       "description": "Check for typings updates all the time.",
       "matchManagers": ["git-submodules"],
       "matchDepNames": ["typings"],
@@ -32,7 +38,8 @@
       "matchManagers": ["pip_requirements"],
       "matchDepNames": ["pyright"],
       "schedule": ["at any time"],
-      "automerge": false
+      "automerge": false,
+      "groupSlug": ""
     },
     {
       "description": "Ignore dependencies managed by the template. Do manage pyright.",
