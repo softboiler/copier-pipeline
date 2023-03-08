@@ -25,7 +25,7 @@
     {
       "description": "Pre-commit manages these requirements. Project repos manage pyright.",
       "matchManagers": ["pip_requirements"],
-      "matchFiles": ["template/.tools/requirements/requirements_dev.txt"],
+      "matchPaths": ["template/.tools/requirements/*"],
       "ignoreDeps": ["black", "ruff", "pyright"]
     }
   ]
