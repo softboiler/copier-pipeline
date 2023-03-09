@@ -34,25 +34,26 @@ ignore = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below may be lost in significant template updates.
 
-    "ANN",    # Don't require type annotations
+    "ANN",    # Don't require type annotations.
     "ARG005", # Allow unused lambda argument. For consistency across df pipelines.
-    "C408",   # Allow dict calls
-    "COM",    # Allow magic commas and magic missing commas
-    "D10",    # Missing docstrings
-    "D20",    # Don't reformat docstrings in these ways
-    "D213",   # Multi-line docstring summary should start at the second line
+    "C408",   # Allow dict calls.
+    "COM",    # Allow magic commas and magic missing commas.
+    "D10",    # Missing docstrings.
+    "D20",    # Don't reformat docstrings in these ways.
+    "D213",   # Multi-line docstring summary should start at the second line.
     "DTZ",    # Timezones are important, but only contextually necessary.
-    "EM",     # Don't check for exception message issues
+    "E501",   # Black enforces this.
+    "EM",     # Don't check for exception message issues.
     "ERA",    # False positives. Don't get rid of commented out code.
-    "FBT",    # Allow boolean "traps"
-    "INP001", # False positives. Checks for packages missing `__init__.py`
+    "FBT",    # Allow boolean "traps".
+    "INP001", # False positives. Checks for packages missing `__init__.py`.
     "ISC",    # False positives. Implicit string concatenation is fine.
     "PD013",  # Allow `stack` instead of `melt`. They're not a direct swap.
     "PD901",  # Allow `df` variable name. We are all consenting adults here.
-    "PGH003", # Until black stops wrapping special ignores, let's allow bare
-    "RET",    # Return checks are flaky, Sourcery does fine analysing these paths
-    "TCH",    # Type checking linter doesn't play nicely with pydantic
-    "TRY003", # Allow long exception messages
+    "PGH003", # Until black stops wrapping special ignores, let's allow bare.
+    "RET",    # Return checks are flaky, Sourcery does fine analysing these paths.
+    "TCH",    # Type checking linter doesn't play nicely with pydantic.
+    "TRY003", # Allow long exception messages.
     # * ---------------------------------------------------------------------------- * #
     # * These Jupyter-specific ignores can't be per-file-ignores
     # * https://nbqa.readthedocs.io/en/latest/known-limitations.html
