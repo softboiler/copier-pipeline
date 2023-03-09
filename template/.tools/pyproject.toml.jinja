@@ -54,6 +54,12 @@ ignore = [
     "RET",    # Return checks are flaky, Sourcery does fine analysing these paths
     "TCH",    # Type checking linter doesn't play nicely with pydantic
     "TRY003", # Allow long exception messages
+    # * ---------------------------------------------------------------------------- * #
+    # * These Jupyter-specific ignores can't be per-file-ignores
+    # * https://nbqa.readthedocs.io/en/latest/known-limitations.html
+    "F821", # Allow undefined names, such as `display`
+    "S101", # Allow assert
+    "T201", # Allow print in notebooks
 ]
 unfixable = [
     # * ---------------------------------------------------------------------------- * #
