@@ -14,7 +14,7 @@
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
-      "label": "setup: Bump template",
+      "label": "setup: Re-answer template questions",
       "type": "process",
       "command": "pwsh",
       "args": [".tools/scripts/Update-Template.ps1"],
@@ -22,10 +22,10 @@
       "problemMatcher": []
     },
     {
-      "label": "setup: Recopy template",
+      "label": "setup: Bump template",
       "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/Copy-Template.ps1"],
+      "args": [".tools/scripts/Update-Template.ps1 -Remote -Force"],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
@@ -127,7 +127,6 @@
       "icon": { "id": "book" },
       "problemMatcher": []
     },
-
     {
       "label": "task: snakeviz",
       "type": "process",
