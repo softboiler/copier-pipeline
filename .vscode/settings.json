@@ -14,7 +14,7 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock",
-    "*.nest_tools_config": ".env, .gitattributes, .gitignore, .gitmodules, .markdownlint.yaml, codecov.yml, pytest.ini, pythonrc.py, renovate.json, update.ps1, *.jinja",
+    "*.nest_tools_config": ".env, .gitattributes, .gitignore, .gitmodules, .markdownlint.yaml, .pre-commit-config.yaml, codecov.yml, pytest.ini, pythonrc.py, renovate.json, update.ps1, *.jinja",
     "*.nest_md": "*.md.jinja, LICENSE.jinja",
     ".nest_tools_config_top": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .gitattributes, .gitmodules, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
     ".nest_md_top": "*.md, LICENSE"

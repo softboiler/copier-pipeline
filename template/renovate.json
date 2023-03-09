@@ -1,7 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Establish base config, schedule, and manager defaults.",
   "extends": [
     "config:base",
+    "group:allNonMajor",
     ":automergeAll",
     ":enablePreCommit",
     ":preserveSemverRanges"
@@ -15,29 +17,40 @@
     "pre-commit"
   ],
   "pip_requirements": {
-    "description": "Additionally monitor these files",
+    "description": "Additionally monitor these files.",
     "fileMatch": ["^\\.tools/requirements/*"],
     "ignorePaths": ["frozen_requirements.txt"]
   },
   "packageRules": [
     {
-      "groupName": "all non-major dependencies except pyright",
-      "groupSlug": "all-minor-patch",
+      "description": "Group all minor updates to dev tooling. Pyright is separate.",
+      "groupName": "all minor dev dependencies (except pyright)",
+      "groupSlug": "all-minor-dev",
+      "matchPaths": [".tools/requirements/*", ".pre-commit-config.yaml"],
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
       "excludeDepNames": ["pyright"]
     },
     {
-      "description": "Check for typings updates all the time.",
-      "matchManagers": ["git-submodules"],
-      "matchDepNames": ["typings"],
-      "schedule": ["at any time"]
+      "description": "Group all minor updates to package dependencies.",
+      "groupName": "all minor dependencies",
+      "groupSlug": "all-minor",
+      "matchFiles": ["requirements.txt"],
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "description": "Don't automerge pyright. It should be manually synced with typings.",
+      "description": "Check for typings updates weekly due to Pylance cadence.",
+      "matchManagers": ["git-submodules"],
+      "matchDepNames": ["typings"],
+      "schedule": ["every weekend"],
+      "automerge": false
+    },
+    {
+      "description": "Check for pyright updates weekly due to Pylance cadence.",
       "matchManagers": ["pip_requirements"],
       "matchDepNames": ["pyright"],
-      "schedule": ["at any time"],
+      "schedule": ["every weekend"],
       "automerge": false
     },
     {
