@@ -25,7 +25,7 @@
       "label": "setup: Bump template",
       "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/Update-Template.ps1 -Remote -Force"],
+      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
