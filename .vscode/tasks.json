@@ -6,9 +6,86 @@
   "version": "2.0.0",
   "tasks": [
     // * -------------------------------------------------------------------------- * //
-    // * PROJECT-SPECIFIC * //
-    // Introduce any project-specific tasks here.
-    // Be sure to say override this file in the Copier questionnaire to keep changes.
+    // * Changes below should persist in significant template updates.
+
+    // * -------------------------------------------------------------------------- * //
+    // * Changes below may be lost in significant template updates.
+
+    // * -------------------------------------------------------------------------- * //
+    // * PROJECT SETUP * //
+    {
+      "label": "setup: Re-answer template questions",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/Update-Template.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Re-answer template questions",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/Update-Template.ps1 -Remote -Force"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Setup project",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["setup.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Bump template",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Update project",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["update.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      // "runOptions": {
+      //   "runOn": "folderOpen"
+      // },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Remove *.rej",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
+      ],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+
+    // * -------------------------------------------------------------------------- * //
+    // * PRE-COMMIT * //
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+    {
+      "label": "pre-commit",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pre-commit run --all-files"],
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
 
     // * -------------------------------------------------------------------------- * //
     // * GIT * //
@@ -30,59 +107,21 @@
     },
 
     // * -------------------------------------------------------------------------- * //
-    // * PROJECT SETUP * //
+    // * BLACK * //
     {
-      "label": "setup: Re-answer template questions",
+      "label": "task: black: Ignore magic comma in this file",
       "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/Update-Template.ps1"],
-      "icon": { "id": "file-symlink-directory" },
+      "args": ["-Command", "black -C ${file}"],
+      "icon": { "id": "code" },
       "problemMatcher": []
     },
     {
-      "label": "setup: Bump template",
+      "label": "task: black: Ignore magic comma in all project files",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Recopy template",
-      "type": "process",
-      "command": "pwsh",
-      "args": [".tools/scripts/Copy-Template.ps1"],
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Setup project",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["setup.ps1"],
-      "icon": { "id": "folder" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Update project",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["update.ps1"],
-      "icon": { "id": "folder" },
-      // "runOptions": {
-      //   "runOn": "folderOpen"
-      // },
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * PRE-COMMIT * //
-    {
-      "label": "pre-commit",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pre-commit"],
-      "icon": { "id": "git-commit" },
+      "args": ["-Command", "black -C src tests"],
+      "icon": { "id": "code" },
       "problemMatcher": []
     },
 
@@ -96,7 +135,6 @@
       "icon": { "id": "book" },
       "problemMatcher": []
     },
-
     {
       "label": "task: snakeviz",
       "type": "process",
@@ -122,33 +160,6 @@
       "command": "pwsh",
       "args": ["-Command", "pytest --cov --cov-report xml"],
       "icon": { "id": "beaker" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Remove *.rej",
-      "type": "process",
-      "command": "pwsh",
-      "args": [
-        "-Command",
-        "Get-ChildItem -Recurse -Filter *.rej | Remove-Item"
-      ],
-      "icon": { "id": "folder" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: black: Ignore magic comma in this file",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "black -C ${file}"],
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: black: Ignore magic comma in all project files",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "black -C src tests"],
-      "icon": { "id": "code" },
       "problemMatcher": []
     }
   ]

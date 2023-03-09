@@ -1,7 +1,11 @@
-# Project-specific
--r requirements_project.txt
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
 
 # Bump
+copier
 toml
 
 # Build

@@ -1,8 +1,8 @@
 # * -------------------------------------------------------------------------------- * #
-# * PROJECT-SPECIFIC
+# * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
-# * TEMPLATE-SPECIFIC
+# * Changes below may be lost in significant template updates.
 
 # To avoid committing profiler results
 *.prof

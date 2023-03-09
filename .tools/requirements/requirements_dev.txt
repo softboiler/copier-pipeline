@@ -1,3 +1,9 @@
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
 # Experiment
 jupyter
 ipympl
@@ -13,10 +19,9 @@ ipython
 
 # Format
 black
-nbqa
-
-# Lint
+ruff
 sourcery-cli
+nbqa
 
 # Profiling
 snakeviz
