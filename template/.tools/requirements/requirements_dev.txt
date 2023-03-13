@@ -20,7 +20,7 @@ ipython==8.11.0
 # Format
 black==23.1.0
 ruff==0.0.254
-sourcery-cli==1.0.6
+sourcery-cli==1.0.7
 nbqa==1.6.3
 
 # Profiling
