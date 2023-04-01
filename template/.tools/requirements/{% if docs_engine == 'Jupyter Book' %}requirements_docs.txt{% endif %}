@@ -4,7 +4,7 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-jupyter-book==0.15.0
+jupyter-book==0.15.1
 # For watching files until Live Preview supports it natively
 # https://github.com/microsoft/vscode-livepreview/issues/233
-watchfiles==0.18.1
+watchfiles==0.19.0
