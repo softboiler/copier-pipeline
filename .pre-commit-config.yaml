@@ -62,4 +62,4 @@ repos:
       - id: "nbqa-black"
         additional_dependencies: ["black==23.1.0"]
       - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.254"]
+        additional_dependencies: ["ruff==0.0.260"]
