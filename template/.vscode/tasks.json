@@ -14,6 +14,14 @@
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
+      "label": "setup: Compose pyproject.toml",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "python .tools/scripts/compose_pyproject.py"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
       "label": "setup: Re-answer template questions",
       "type": "process",
       "command": "pwsh",
@@ -71,7 +79,7 @@
       "problemMatcher": []
     },
     {
-      "label": "pre-commit",
+      "label": "pre-commit: all",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "pre-commit run --all-files"],
@@ -128,7 +136,15 @@
       "problemMatcher": []
     },
     {
-      "label": "task: snakeviz",
+      "label": "task: profile this file",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "python -m cProfile -o .prof ${file}"],
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: view profile results with snakeviz",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "snakeviz .prof"],

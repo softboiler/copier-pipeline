@@ -10,18 +10,30 @@
   "terminal.integrated.defaultProfile.linux": "pwsh",
 
   //! Pylance
-  //* Pylance settings aren't very discoverable.
-  //* https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance
   "python.languageServer": "Pylance",
   "python.analysis.diagnosticMode": "workspace",
   "python.analysis.indexing": true,
+  //? These are safer defaults which are overridden in `pyrightconfig.json`.
+  "python.analysis.typeCheckingMode": "off",
+  "python.analysis.useLibraryCodeForTypes": false,
+  //? Refactoring
+  "python.analysis.fixAll": [
+    "source.convertImportFormat",
+    "source.unusedImports"
+  ],
+  "python.analysis.completeFunctionParens": false, // Buggy
+  "python.analysis.refactoring.allowMovingSymbols": true,
   //? Auto imports
+  "python.analysis.importFormat": "absolute",
+  "python.analysis.autoImportUserSymbols": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.extraCommitChars": true,
+  "python.analysis.addImport.exactMatchOnly": false,
   //? Inlay hints
   "editor.inlayHints.enabled": "offUnlessPressed",
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
   //? See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.autoSearchPaths": false,
   //? See "useLibraryCodeForTypes" in pyrightconfig.json
@@ -38,9 +50,14 @@
   },
   //* black
   "black-formatter.importStrategy": "fromEnvironment",
+  //? Ensure user setting args are cleared
+  "black-formatter.logLevel": "warn",
   "black-formatter.args": [],
   //* ruff
   "ruff.importStrategy": "fromEnvironment",
+  //? Ensure user setting args are cleared
+  "ruff.logLevel": "warn",
+  "ruff.args": [],
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -104,13 +121,12 @@
   "editor.bracketPairColorization.enabled": true,
   "editor.guides.bracketPairs": true,
   //* Editor format on save and more. Can run "File: Save without formatting" to skip.
-  "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
+  "python.formatting.provider": "black",
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.organizeImports": true
+    "source.fixAll": false,
+    "source.organizeImports": false
   },
   //* Enforce whitespace and newlines.
   "files.insertFinalNewline": true,
@@ -147,10 +163,6 @@
     "editor.wordWrap": "wordWrapColumn",
     "rewrap.autoWrap.enabled": false
   },
-  //* IPYNB
-  "[ipynb]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
-  },
   //* MD
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
@@ -171,6 +183,10 @@
   },
   //* PYTHON
   "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  //* IPYNB
+  "[ipynb]": {
     "editor.defaultFormatter": "ms-python.black-formatter"
   },
   //* TXT

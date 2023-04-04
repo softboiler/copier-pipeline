@@ -27,6 +27,19 @@ gha-creds-*.json
 node_modules/
 
 # * -------------------------------------------------------------------------------- * #
+# * Modifications to the below Python.gitignore
+# *
+# * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+
+
+# IPython
+.ipython/profile_default/*
+!.ipython/profile_default/startup/
+.ipython/profile_default/startup/README
+ipython_config.py
+
+
+# * -------------------------------------------------------------------------------- * #
 # * Modified Python.gitignore
 # *
 # * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore

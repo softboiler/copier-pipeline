@@ -1,0 +1,51 @@
+{
+  // Paths
+  "include": ["src"],
+  "extraPaths": ["tests"],
+
+  // Project-specific overrides
+  "reportPrivateUsage": "none",
+
+  // Type inference helps with untyped upstream, but can be unpredictable
+  "useLibraryCodeForTypes": false,
+
+  // Sets most checks to "error". See overrides below
+  "typeCheckingMode": "strict",
+
+  // These flags are "true" by default in strict mode
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "analyzeUnannotatedFunctions": true,
+  "strictParameterNoneValue": true,
+  "enableTypeIgnoreComments": true,
+
+  // Override these errors
+  "reportConstantRedefinition": "none",
+  "reportMissingParameterType": "none",
+  "reportMissingTypeStubs": "none",
+  "reportUnknownArgumentType": "none",
+  "reportUnknownLambdaType": "none",
+  "reportUnknownMemberType": "none",
+  "reportUnknownParameterType": "none",
+  "reportUnknownVariableType": "none",
+  "reportUnusedClass": "none",
+  "reportUnusedCoroutine": "none",
+  "reportUnusedExpression": "none",
+  "reportUnusedFunction": "none",
+  "reportUnusedImport": "none",
+  "reportUnusedVariable": "none",
+  "reportUntypedBaseClass": "none",
+
+  // Override these disabled diagnostics
+  "reportShadowedImports": "error",
+  "reportCallInDefaultInitializer": "error",
+  "reportPropertyTypeMismatch": "error",
+  "reportUninitializedInstanceVariable": "error",
+
+  // These diagnostics are "none" by default in strict mode
+  "reportImplicitStringConcatenation": "none",
+  "reportMissingSuperCall": "none",
+  "reportUnnecessaryTypeIgnoreComment": "none",
+  "reportUnusedCallResult": "none"
+}
