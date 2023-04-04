@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Establish base config, schedule, and manager defaults.",
   "extends": ["config:base", ":enablePreCommit", ":preserveSemverRanges"],
   "schedule": ["on the 8th day of the month"],
   "git-submodules": { "enabled": true },
@@ -9,6 +10,11 @@
     "pip_requirements",
     "pre-commit"
   ],
+  "pip_requirements": {
+    "description": "Additionally monitor these files.",
+    "fileMatch": ["^\\.tools/requirements/*"],
+    "ignorePaths": ["frozen_requirements.txt"]
+  },
   "packageRules": [
     {
       "groupName": "all non-major dependencies except pyright",
