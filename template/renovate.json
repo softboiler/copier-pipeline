@@ -1,8 +1,8 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Establish base config, schedule, and manager defaults.",
-  "extends": ["config:base", ":enablePreCommit", ":preserveSemverRanges"],
-  "schedule": ["on the 8th day of the month"],
+  "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
+  "schedule": ["on the 16th day of the month"],
   "git-submodules": { "enabled": true },
   "enabledManagers": [
     "git-submodules",
@@ -17,11 +17,45 @@
   },
   "packageRules": [
     {
+      "groupName": "pyright and type stubs",
+      "groupSlug": "pyright-and-type-stubs",
+      "matchPackagePatterns": ["*"],
+      "matchManagers": ["pip_requirements", "git-submodules"],
+      "matchPackageNames": ["pyright", "typings"]
+    },
+    {
       "groupName": "all non-major dependencies except pyright",
       "groupSlug": "all-minor-patch",
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch"],
       "excludeDepNames": ["pyright"]
+    },
+    {
+      "description": "Ignore github-actions dependencies managed by the template.",
+      "matchManagers": ["github-actions"],
+      "ignoreDeps": [
+        "dropseed/changerelease",
+        "actions/checkout",
+        "github/codeql-action",
+        "blakeNaccarato/copier-python-workflow-setup",
+        "codecov/codecov-action",
+        "stefanzweifel/git-auto-commit-action",
+        "actions/upload-pages-artifact",
+        "actions/deploy-pages"
+      ]
+    },
+    {
+      "description": "Ignore pre-commit dependencies managed by the template.",
+      "matchManagers": ["pre-commit"],
+      "ignoreDeps": [
+        "pre-commit/pre-commit-hooks",
+        "psf/black",
+        "charliermarsh/ruff-pre-commit",
+        "srstevenson/nb-clean",
+        "nbQA-dev/nbQA",
+        "asottile/blacken-docs",
+        "DavidAnson/markdownlint-cli2"
+      ]
     },
     {
       "description": "Ignore github-actions dependencies managed by the template.",
