@@ -19,7 +19,7 @@
     "fileMatch": ["^template/\\.tools/requirements/*"]
   },
   "pre-commit": {
-    "description": "Additionally monitor pre-commit config prior",
+    "description": "Additionally monitor pre-commit config.",
     "fileMatch": ["^template/\\.pre-commit-config\\.yaml$"]
   },
   "packageRules": [
