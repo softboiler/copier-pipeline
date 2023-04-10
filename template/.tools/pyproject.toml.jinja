@@ -58,12 +58,14 @@ ignore = [
     "PLR0913", # Allow more than five function arguments
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
+    "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
     "TCH",     # Type checking linter doesn't play nicely with pydantic
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
     # * ---------------------------------------------------------------------------- * #
     # * These Jupyter-specific ignores can't be per-file-ignores
     # * https://nbqa.readthedocs.io/en/latest/known-limitations.html
+    "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
     "F821", # Allow undefined names, such as `display`
     "S101", # Allow assert
     "T201", # Allow print in notebooks
