@@ -58,33 +58,6 @@
       ]
     },
     {
-      "description": "Ignore github-actions dependencies managed by the template.",
-      "matchManagers": ["github-actions"],
-      "ignoreDeps": [
-        "dropseed/changerelease",
-        "actions/checkout",
-        "github/codeql-action",
-        "blakeNaccarato/copier-python-workflow-setup",
-        "codecov/codecov-action",
-        "stefanzweifel/git-auto-commit-action",
-        "actions/upload-pages-artifact",
-        "actions/deploy-pages"
-      ]
-    },
-    {
-      "description": "Ignore pre-commit dependencies managed by the template.",
-      "matchManagers": ["pre-commit"],
-      "ignoreDeps": [
-        "pre-commit/pre-commit-hooks",
-        "psf/black",
-        "charliermarsh/ruff-pre-commit",
-        "srstevenson/nb-clean",
-        "nbQA-dev/nbQA",
-        "asottile/blacken-docs",
-        "DavidAnson/markdownlint-cli2"
-      ]
-    },
-    {
       "description": "Ignore dependencies managed by the template. Do manage pyright.",
       "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
