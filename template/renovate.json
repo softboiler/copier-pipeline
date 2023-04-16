@@ -19,7 +19,6 @@
     {
       "groupName": "pyright and type stubs",
       "groupSlug": "pyright-and-type-stubs",
-      "matchPackagePatterns": ["*"],
       "matchManagers": ["pip_requirements", "git-submodules"],
       "matchPackageNames": ["pyright", "typings"]
     },
