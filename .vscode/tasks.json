@@ -101,7 +101,7 @@
       "label": "git: Stage all files",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "git add -A"],
+      "args": ["-Command", "git add --all"],
       "icon": { "id": "git-branch" },
       "problemMatcher": []
     },
