@@ -10,16 +10,20 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "{{ project_name }}"
-requires-python = ">={{ python_version }}"
-dependencies = []
+version = "0.0.0"
+description = "{{ project_description }}"
 readme = "README.md"
-dynamic = ["version", "description"]
+license = { file = "LICENSE" }
+requires-python = ">={{ python_version }}"
+classifiers = ["License :: OSI Approved :: MIT License"]
 [[project.authors]]
 name = "{{ project_owner_name }}"
-email = "{{ project_email }}"
-
+{% if project_email %}email = "{{ project_email }}"{% endif -%}
 [project.urls]
+Changes = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/changelog.html"
+Docs = "https://github.com/{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
 Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
+Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 
 [tool.ruff]
 fix = true

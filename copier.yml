@@ -1,48 +1,49 @@
-_min_copier_version: "7.0.1"
+_min_copier_version: "7.2.0"
 
-_subdirectory: template
+_subdirectory: "template"
 
 _envops:
   keep_trailing_newline: true
 
 project_owner_github_username:
-  type: str
-  help: The username of the GitHub user hosting this project.
-  default:
+  type: "str"
+  help: "The GitHub username or organization that will host this project"
+
+github_repo_name:
+  type: "str"
+  help: "The name of the GitHub repository that will host this project"
+
+project_name:
+  type: "str"
+  help: "The name of this project, if different from the repository name"
+  default: "{{ github_repo_name }}"
 
 project_owner_name:
-  type: str
-  help: The name (or names) that will populate the LICENSE file if not the username above.
+  type: "str"
+  help: "The name (or names) for the MIT license, if different from the host user"
   default: "{{ project_owner_github_username }}"
 
 year_of_project_creation:
-  type: int
-  help: The year in which this project was created. For the LICENSE file.
-  default: 2022
+  type: "int"
+  help: "The year of project creation for the MIT license"
+  default: 2023
 
-github_repo_name:
-  type: str
-  help: The name of the GitHub repo hosting this project.
-  default:
-
-project_name:
-  type: str
-  help: The name of this project, if it is different from the repo name above.
-  default: "{{ github_repo_name }}"
+project_description:
+  type: "str"
+  help: "A brief description for your project. Required, but can easily be changed manually later"
 
 project_email:
-  type: str
-  help: The email address associated with this project (e.g. for publishing on PyPI). If omitted, no email will be used.
+  type: "str"
+  help: "If given, associate this email address with this project in `pyproject.toml`"
 
 python_version:
-  type: str
-  help: This project will only support a Python version at least this high.
+  type: "str"
+  help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`"
   default: "3.11"
 
 actions_runner:
-  when: "{{ advanced }}"
-  type: str
-  help: "Which GitHub Actions runner should be used?"
+  type: "str"
+  help: "The GitHub Actions runner to use"
   choices:
     - "ubuntu-latest"
     - "windows-latest"
