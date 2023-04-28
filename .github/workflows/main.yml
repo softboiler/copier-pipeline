@@ -3,7 +3,7 @@ name: "main"
 on: ["push", "workflow_dispatch"]
 
 jobs:
-  test_installable_myst:
+  test_installable:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"
@@ -17,23 +17,9 @@ jobs:
           pip install --upgrade pip
           pip install --upgrade setuptools wheel
           pip install --requirement template/.tools/requirements/requirements_ci.txt
-      - run: 'pip install --requirement "template/.tools/requirements/{% if docs_engine == ''MyST'' %}requirements_docs.txt{% endif %}"'
-  test_installable_jupyter_book:
-    runs-on: "ubuntu-latest"
-    steps:
-      - uses: "actions/checkout@v3"
-      - uses: "actions/setup-python@v4"
-      - run: "python .tools/scripts/bump_requirements.py"
-      # Have to touch the file in a separate step before installing requirements
-      - name: "Create requirements_docs.txt"
-        run: "touch template/.tools/requirements/requirements_docs.txt"
-      - name: "Install CI requirements"
-        run: |-
-          pip install -U pip setuptools wheel
-          pip install -r template/.tools/requirements/requirements_ci.txt
-      - run: 'pip install -r "template/.tools/requirements/{% if docs_engine == ''Jupyter Book'' %}requirements_docs.txt{% endif %}"'
+          pip install --requirement template/.tools/requirements/requirements_docs.txt
   bump_precommit:
-    needs: ["test_installable_myst", "test_installable_jupyter_book"]
+    needs: ["test_installable"]
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v3"

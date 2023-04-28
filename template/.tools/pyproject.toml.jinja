@@ -18,7 +18,7 @@ requires-python = ">={{ python_version }}"
 classifiers = ["License :: OSI Approved :: MIT License"]
 [[project.authors]]
 name = "{{ project_owner_name }}"
-{% if project_email %}email = "{{ project_email }}"{% endif -%}
+{% if project_email %}email = "{{ project_email }}"{% endif %}
 [project.urls]
 Changes = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/changelog.html"
 Docs = "https://github.com/{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
