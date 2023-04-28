@@ -131,10 +131,14 @@
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", "sphinx-autobuild docs _site"],
+      "args": [
+        "-Command",
+        "sphinx-autobuild docs _site --watch README.md --watch CHANGELOG.md"
+      ],
       "icon": { "id": "book" },
       "problemMatcher": []
     },
+
     {
       "label": "task: profile this file",
       "type": "process",
