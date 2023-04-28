@@ -22,7 +22,7 @@ jobs:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "{{ python_version }}"
-      - run: "{% if docs_engine == 'Jupyter Book' %}jupyter-book build docs --path-output _site{% endif %}{% if docs_engine == 'MyST' %}python -m sphinx -T -E docs _site{% endif %}"
+      - run: "python -m sphinx -T -E docs _site"
       - uses: "actions/upload-pages-artifact@v1.0.8"
   deploy:
     if: "{% raw %}${{ !(github.event_name == 'pull_request') }}{% endraw %}"
