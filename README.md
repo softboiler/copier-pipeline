@@ -5,9 +5,8 @@ Copier template for Python projects.
 ## Overview
 
 - Create a new folder, for instance `example`
-- Open that folder in VSCode with `File: Open Folder` or equivalent
-- Initialize the repository: Run `git init` at the terminal, `Git: Initialize Repository` in VSCode, or click the associated "Initialize Repository" action button in the Source Control sidebar tab
-- Ensure the project folder has been initialized with `git init`
+- Open the folder in VSCode with `File: Open Folder`
+- Click "Initialize Repository" in the Source Control tab in the sidebar
 - Run `copier gh:blakeNaccarato/copier-python-init .` and answer the questions
 - Run `./first_time_setup.ps1`
 - Make the first commit, e.g `git commit -m 'Generate project from template'`

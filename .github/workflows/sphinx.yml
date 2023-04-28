@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.11"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.0.12"
         with:
           python-version: "3.11"
       - run: "python -m sphinx -T -E docs _site"
