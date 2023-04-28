@@ -14,9 +14,7 @@ html_theme_options = {
     "path_to_docs": "docs",
     "repository_url": "https://github.com/blakeNaccarato/copier-python",
     "repository_branch": "main",
-    "use_issues_button": True,
     "use_download_button": True,
     "use_fullscreen_button": True,
     "use_repository_button": True,
-    "home_page_in_toc": True,
 }
