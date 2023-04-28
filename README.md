@@ -2,18 +2,20 @@
 
 Copier template for Python projects.
 
-## Installing
+## Overview
 
-This Copier template contains all the tooling for my projects. Use `pipx` to be able to access Copier from the command line.
+- Create a new folder, for instance `example`
+- Open that folder in VSCode with `File: Open Folder` or equivalent
+- Initialize the repository: Run `git init` at the terminal, `Git: Initialize Repository` in VSCode, or click the associated "Initialize Repository" action button in the Source Control sidebar tab
+- Ensure the project folder has been initialized with `git init`
+- Run `copier gh:blakeNaccarato/copier-python-init .` and answer the questions
+- Run `./first_time_setup.ps1`
+- Make the first commit, e.g `git commit -m 'Generate project from template'`
+- Publish to GitHub, either
 
-```Shell
-py -m pip install pipx
-py -m pipx ensurepath
-py -m pipx install copier
-```
+## Usage
 
-Once you have `copier` available at the command line, run the following in a clean (no unstaged changes) git-tracked folder to copy this template over to your project. You will be asked a brief series of questions, then the templated files will be copied over.
-
-```Shell
-copier gh:blakeNaccarato/copier-python .
-```
+It is still heavily tuned for my use-case, but the principles in practice there
+See my example/sandbox repository copier-python-test, which has been created from my template. See boilercv for this template applied to an actual project of mine (there are more examples besides this one).
+I encourage a philosophy of "one size does not fit all", or "many sizes fit most". You may find my template doesn't meet your lab's needs exactly, but by forking and modifying parts of it, you can roll your own template with modifications from my own.
+Requirements for my template as-is:Cross-platform PowerShell: The template features scripted setup/installation/update of a virtual environment, as well as scripted management of `pyproject.toml` in various `*.ps1` scripts. This is cross-platform, scripts should run on Windows and Linux (`setup.ps1` attempts to detect flavor of OS by looking at the venv file structure, for instance).VSCode: The template has a `.vscode` folder with useful settings, debug configurations, and most importantly, recommended extensions, and most importantly, tasks. Consider binding the command "Tasks: Run task" as lots of user automation is handled this way. Alternatives: grunt, gulp, jake, etc.

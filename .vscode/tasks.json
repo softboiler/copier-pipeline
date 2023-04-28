@@ -14,34 +14,10 @@
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
-      "label": "setup: Re-answer template questions",
-      "type": "process",
-      "command": "pwsh",
-      "args": [".tools/scripts/Update-Template.ps1"],
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Re-answer template questions",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Setup project",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["setup.ps1"],
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
       "label": "setup: Bump template",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
+      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Force"],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
