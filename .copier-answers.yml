@@ -1,11 +1,9 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 443b496
+_commit: e3d69fd
 _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-latest
-advanced: false
-docs_engine: MyST
 github_repo_name: copier-python
-include_funding: true
+project_description: Copier template for Python projects
 project_email: blake.naccarato+copier-python@gmail.com
 project_name: copier-python
 project_owner_github_username: blakeNaccarato

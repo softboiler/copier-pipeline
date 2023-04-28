@@ -1,30 +1,54 @@
 {
+  // * ----------------------------------------------------------------------------- * #
+  // * Changes below should persist in significant template updates.
+
+  // * ----------------------------------------------------------------------------- * #
+  // * Changes below may be lost in significant template updates.
+
   // Paths
-  "include": ["."],
+  "include": ["src"],
   "extraPaths": ["tests"],
 
   // Type inference helps with untyped upstream, but can be unpredictable
   "useLibraryCodeForTypes": true,
 
-  // Sets most checks to "error". Every possible non-default check is below.
+  // Sets most checks to "error". See overrides below
   "typeCheckingMode": "strict",
 
-  // Explicitly enabled checks
-  "reportCallInDefaultInitializer": "error",
-  "reportPropertyTypeMismatch": "error",
-  "reportUninitializedInstanceVariable": "error",
-  "reportUnnecessaryTypeIgnoreComment": "error",
+  // These flags are "true" by default in strict mode
+  "strictListInference": true,
+  "strictDictionaryInference": true,
+  "strictSetInference": true,
+  "analyzeUnannotatedFunctions": true,
+  "strictParameterNoneValue": true,
+  "enableTypeIgnoreComments": true,
 
-  // Disabled checks
-  "reportImplicitStringConcatenation": "none",
+  // Override these errors
+  "reportConstantRedefinition": "none",
   "reportMissingParameterType": "none",
-  "reportMissingSuperCall": "none",
   "reportMissingTypeStubs": "none",
   "reportUnknownArgumentType": "none",
   "reportUnknownLambdaType": "none",
   "reportUnknownMemberType": "none",
   "reportUnknownParameterType": "none",
   "reportUnknownVariableType": "none",
+  "reportUnusedClass": "none",
+  "reportUnusedCoroutine": "none",
+  "reportUnusedExpression": "none",
+  "reportUnusedFunction": "none",
+  "reportUnusedImport": "none",
+  "reportUnusedVariable": "none",
   "reportUntypedBaseClass": "none",
+
+  // Override these disabled diagnostics
+  "reportShadowedImports": "error",
+  "reportCallInDefaultInitializer": "error",
+  "reportPropertyTypeMismatch": "error",
+  "reportUninitializedInstanceVariable": "error",
+
+  // These diagnostics are "none" by default in strict mode
+  "reportImplicitStringConcatenation": "none",
+  "reportMissingSuperCall": "none",
+  "reportUnnecessaryTypeIgnoreComment": "none",
   "reportUnusedCallResult": "none"
 }

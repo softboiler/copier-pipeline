@@ -22,10 +22,8 @@
     "source.unusedImports"
   ],
   "python.analysis.completeFunctionParens": false, // Buggy
-  "python.analysis.refactoring.allowMovingSymbols": true,
   //? Auto imports
   "python.analysis.importFormat": "absolute",
-  "python.analysis.autoImportUserSymbols": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.extraCommitChars": true,
   "python.analysis.addImport.exactMatchOnly": false,
@@ -36,9 +34,6 @@
   "python.analysis.inlayHints.pytestParameters": true,
   //? See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.autoSearchPaths": false,
-  //? See "useLibraryCodeForTypes" in pyrightconfig.json
-  "python.analysis.typeCheckingMode": "off",
-  "python.analysis.completeFunctionParens": false, // Buggy for now
 
   //! Lint, test, format
   //* pytest

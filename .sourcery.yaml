@@ -1,20 +1,20 @@
 version: "1"
 
 ignore:
+  # The defaults
+  - ".git"
+  - "venv"
+  - ".venv"
+  - "env"
+  - ".env"
+  - ".tox"
+  - "node_modules"
+  - "vendor"
+  # Extras
   - ".*"
 
 rule_settings:
-  python_version: "3.10"
-  enable:
-    - "default"
-    - "gpsg"
+  python_version: "3.11"
+  enable: ["default"]
   disable:
-    - "avoid-global-variables"
-    - "avoid-single-character-names-variables"
-    - "do-not-use-staticmethod"
-    - "docstrings-for-classes"
-    - "docstrings-for-functions"
-    - "docstrings-for-modules"
-    - "lambdas-should-be-short"
-    - "require-parameter-annotation"
-    - "require-return-annotation"
+    - "remove-redundant-constructor-in-dict-union" # Explicit dict(zip(...)) is better

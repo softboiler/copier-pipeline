@@ -1,0 +1,36 @@
+name: "sphinx"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths: ["docs/**"]
+
+permissions:
+  contents: "read"
+  pages: "write"
+  id-token: "write"
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "blakeNaccarato/copier-python-workflow-setup"
+        with:
+          python-version: "3.11"
+      - run: "python -m sphinx -T -E docs _site"
+      - uses: "actions/upload-pages-artifact"
+  deploy:
+    if: "${{ !(github.event_name == 'pull_request') }}"
+    environment:
+      name: "github-pages"
+      url: "${{ steps.deployment.outputs.page_url }}"
+    runs-on: "ubuntu-latest"
+    needs: "build"
+    steps:
+      - id: "deployment"
+        uses: "actions/deploy-pages"

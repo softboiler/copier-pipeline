@@ -19,6 +19,7 @@
       "request": "launch",
       "program": "${file}",
       "justMyCode": false,
+      // "purpose": ["debug-test"], // Uncomment to debug tests more deeply.
       "console": "internalConsole"
     }
   ]
