@@ -9,22 +9,22 @@ jupyter==1.0.0
 ipympl==0.9.3
 
 # Debug
-debugpy==1.6.6
+debugpy==1.6.7
 
 # For `python` via `pythonrc.py`
-rich==13.3.3
+rich==13.3.5
 
 # Terminal experiments
-ipython==8.12.0
+ipython==8.13.1
 
 # Format
 black==23.3.0
-ruff==0.0.260
-sourcery-cli==1.1.0
+ruff==0.0.263
+sourcery-cli==1.2.0
 nbqa==1.7.0
 
 # Profiling
-snakeviz==2.1.1
+snakeviz==2.2.0
 
 # Pre-commit
 pre-commit==3.2.2
