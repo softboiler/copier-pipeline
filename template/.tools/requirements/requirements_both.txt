@@ -18,7 +18,7 @@ pyright==1.1.296
 ruff==0.0.260
 
 # Test
-pytest==7.2.2
+pytest==7.3.1
 pytest-cov==4.0.0
 
 # Document

@@ -7,4 +7,4 @@
 myst-parser==1.0.0
 sphinx-autobuild==2021.03.14
 sphinx-book-theme==1.0.1
-sphinx-design==0.3.0
+sphinx-design==0.4.1
