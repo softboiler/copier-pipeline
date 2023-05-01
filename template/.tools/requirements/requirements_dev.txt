@@ -19,7 +19,7 @@ ipython==8.13.1
 
 # Format
 black==23.3.0
-ruff==0.0.260
+ruff==0.0.263
 sourcery-cli==1.2.0
 nbqa==1.7.0
 
