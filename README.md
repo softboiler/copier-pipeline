@@ -35,6 +35,8 @@ Set-Env
 
 ## Generate a project from this template
 
+Generating a project from this template involves creating a local folder, initializing the project, and publishing the repository on GitHub.
+
 - Create a new project folder, for instance `example`.
 - Open that folder in VSCode with `File: Open Folder`.
 - Click "Initialize Repository" in the Source Control tab in the sidebar, or run `git init`.
@@ -48,7 +50,15 @@ Set-Env
 - There should be only one button in the "Source Control" sidebar now, indicating "Publish Branch". Press that button.
 - When prompted, select the option "Publish to GitHub public repository". The repository will adopt the same name as the folder. Some features of this template require the repository to be public, which will not work in case of "private" publishing.
 - VSCode will also prompt you to install recommended extensions at some point (usually on startup). Accept this prompt.
-- Navigate to your newly-published project on GitHub. In "Settings", then "Pages", select "GitHub Actions" as the "Source" for "Build and deployment". This template should automatically publish a project documentation website for you when you change `docs`, `README.md`, and `CHANGELOG.md`.
+
+The templated project is now published on GitHub. The project owner will have to set a few more options in the GitHub repository settings to enable documentation and GitHub Actions workflows to work.
+
+## Final GitHub repository setup
+
+Visit the newly-published GitHub repository, navigate to repository "Settings", and configure the following:
+
+- In "Actions > General" settings, set "Workflow permissions" (the last set of options) to "Read and write permissions". This will be necessary when using this template until the workflows have their permissions explicitly scoped in a future update.
+- In "Pages" settings, select "GitHub Actions" as the "Source" for "Build and deployment". This template should automatically publish a project documentation website for you when you change `docs`, `README.md`, and `CHANGELOG.md`.
 - Navigate back to your GitHub project, click the cog next to "About", and tick the box for "Use your GitHub Pages website" to direct users to your generated documentation. The page will be broken until the first time the `sphinx.yml` action runs on detected changes to documentation files. Also manually enter a "Description" and other info here if you like.
 
 ## Template features
@@ -86,6 +96,7 @@ I am going to set up a meta-template solution to automate this, facilitating the
 Other notable to-dos:
 
 - Detailed documentation
+- Explicitly set permissions across workflows to account for [the newly read-only by default GITHUB_TOKEN](https://github.blog/changelog/2023-02-02-github-actions-updating-the-default-github_token-permissions-to-read-only/) since February 2, 2023.
 - Ground-up script to handle "one-time setup" across platforms
 - Facilitate propagation of individual project changes back to the shared template through scheduled PRs
 
