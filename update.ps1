@@ -16,7 +16,7 @@ throw [System.Management.Automation.ItemNotFoundException] 'Could not find a vir
 
 # Install dev requirements
 python -m pip install --upgrade pip # Instructed to do this by pip
-pip install --upgrade setuptools wheel # Must be done separately from above
+pip install --upgrade setuptools wheel copier # Must be done separately from above
 pip install --upgrade --requirement '.tools/requirements/requirements_dev.txt'
 # Need `toml` in dev requirements prior to bumping `pyproject.toml`
 python '.tools/scripts/compose_pyproject.py'
