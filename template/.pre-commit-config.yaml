@@ -1,16 +1,3 @@
-# Note: Can't use anything in `.venv` for local hooks when commiting from VSCode GUI.
-# This is because VSCode Source Control doesn't activate `.venv` before running `git
-# commit`.
-#
-# Example script to run via "target: pwsh script.ps1"
-#
-#     & ./.venv/Scripts/Activate.ps1
-#     foreach ($arg in $args) {
-#         autoflake -i --remove-all-unused-imports --ignore-init-module-imports $arg
-#     }
-#
-# (https://github.com/microsoft/vscode-python/issues/10165)
-
 ci:
   skip:
     - "pytest"
