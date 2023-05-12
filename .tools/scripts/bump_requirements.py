@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 pre_commit = Path("template/.pre-commit-config.yaml")
-requirements = Path("template/.tools/requirements/requirements_dev.txt")
+requirements = Path("template/.tools/requirements/requirements_both.txt")
 
 patterns = {
     "black": r"""
