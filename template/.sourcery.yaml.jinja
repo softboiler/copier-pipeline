@@ -18,3 +18,4 @@ rule_settings:
   enable: ["default"]
   disable:
     - "remove-redundant-constructor-in-dict-union" # Explicit dict(zip(...)) is better
+    - "move-assign" # False positives

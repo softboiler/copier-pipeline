@@ -12,6 +12,9 @@
 # (https://github.com/microsoft/vscode-python/issues/10165)
 
 ci:
+  skip:
+    - "pytest"
+    - "pyright"
   autoupdate_schedule: "quarterly"
 
 repos:
@@ -20,6 +23,21 @@ repos:
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below may be lost in significant template updates.
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        language: system
+        entry: pwsh -Command pytest
+        pass_filenames: false
+        files: '^((tests\/)|(src\/)).*$'
+      - id: pyright
+        name: pyright
+        language: system
+        entry: pwsh -Command pyright
+        pass_filenames: false
+        files: '^((tests\/)|(src\/)).*$'
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.4.0"

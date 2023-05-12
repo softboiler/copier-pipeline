@@ -25,3 +25,5 @@ jobs:
         uses: "github/codeql-action/autobuild@v2.3.2"
       - name: "Perform CodeQL Analysis"
         uses: "github/codeql-action/analyze@v2.3.2"
+        with:
+          category: "{% raw %}/language:${{matrix.language}}{% endraw %}"

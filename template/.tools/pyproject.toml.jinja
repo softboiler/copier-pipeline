@@ -60,6 +60,7 @@ ignore = [
     "PD011",   # Allow use of `.values`. False positives.
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
     "PLR0913", # Allow more than five function arguments
+    "PLR2004", # Allow magic values. This check is too sensitive
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
     "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
