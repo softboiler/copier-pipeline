@@ -159,7 +159,6 @@
       "icon": { "id": "book" },
       "problemMatcher": []
     },
-
     {
       "label": "task: profile this file",
       "type": "process",
