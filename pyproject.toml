@@ -4,7 +4,7 @@ select = [ "ALL",]
 src = [ "src", "tests",]
 target-version = "py311"
 extend-exclude = [ "template", "typings", ".github", ".tools", ".venv",]
-ignore = [ "ANN", "ARG005", "C408", "COM", "D10", "D20", "D213", "D402", "DTZ", "E501", "EM", "ERA", "FBT", "F841", "G0", "INP001", "ISC", "PD013", "PD901", "PD011", "PGH003", "PLR0913", "PLW2901", "RET", "S301", "TCH", "TRY003", "W2", "B018", "F821", "S101", "T201",]
+ignore = [ "ANN", "ARG005", "C408", "COM", "D10", "D20", "D213", "D402", "DTZ", "E501", "EM", "ERA", "FBT", "F841", "G0", "INP001", "ISC", "PD013", "PD901", "PD011", "PGH003", "PLR0913", "PLR2004", "PLW2901", "RET", "S301", "TCH", "TRY003", "W2", "B018", "F821", "S101", "T201",]
 unfixable = [ "F601",]
 
 [tool.ruff.pydocstyle]

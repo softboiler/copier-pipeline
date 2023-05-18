@@ -14,7 +14,8 @@ flit
 # Type checking
 pyright
 
-# Lint
+# Pre-commit common requirements
+black
 ruff
 
 # Test

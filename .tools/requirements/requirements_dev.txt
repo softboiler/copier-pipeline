@@ -18,8 +18,6 @@ rich
 ipython
 
 # Format
-black
-ruff
 sourcery-cli
 nbqa
 

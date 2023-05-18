@@ -1,19 +1,9 @@
 exclude: template/.pre-commit-config.yaml.jinja|template/{{ _copier_conf.answers_file }}.jinja
 
-# Note: Can't use anything in `.venv` for local hooks when commiting from VSCode GUI.
-# This is because VSCode Source Control doesn't activate `.venv` before running `git
-# commit`.
-#
-# Example script to run via "target: pwsh script.ps1"
-#
-#     & ./.venv/Scripts/Activate.ps1
-#     foreach ($arg in $args) {
-#         autoflake -i --remove-all-unused-imports --ignore-init-module-imports $arg
-#     }
-#
-# (https://github.com/microsoft/vscode-python/issues/10165)
-
 ci:
+  skip:
+    - "pytest"
+    - "pyright"
   autoupdate_schedule: "quarterly"
 
 repos:
@@ -22,6 +12,21 @@ repos:
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below may be lost in significant template updates.
+
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        language: system
+        entry: pwsh -Command pytest
+        pass_filenames: false
+        files: '^((tests\/)|(src\/)).*$'
+      - id: pyright
+        name: pyright
+        language: system
+        entry: pwsh -Command pyright
+        pass_filenames: false
+        files: '^((tests\/)|(src\/)).*$'
 
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.4.0"
@@ -62,4 +67,4 @@ repos:
       - id: "nbqa-black"
         additional_dependencies: ["black==23.3.0"]
       - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.260"]
+        additional_dependencies: ["ruff==0.0.263"]
