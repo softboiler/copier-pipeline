@@ -1,6 +1,8 @@
 ci:
   skip:
-    - "pytest"
+    - "compose-pyproject"
+    - "pytest-fast-only"
+    - "pytest-slow-only"
     - "pyright"
   autoupdate_schedule: "quarterly"
 
@@ -11,21 +13,70 @@ repos:
   # * ------------------------------------------------------------------------------ * #
   # * Changes below may be lost in significant template updates.
 
-  - repo: local
+  - repo: "meta"
     hooks:
-      - id: pytest
-        name: pytest
-        language: system
-        entry: pwsh -Command pytest
+      - id: "check-hooks-apply"
+      - id: "check-useless-excludes"
+  - repo: "local"
+    hooks:
+      - id: "compose-pyproject"
+        name: "compose-pyproject"
+        fail_fast: true
         pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-      - id: pyright
-        name: pyright
-        language: system
-        entry: pwsh -Command pyright
+        language: "system"
+        entry: "pwsh -Command python .tools/scripts/compose_pyproject.py"
+        files: |
+          (?x)^(
+            pyproject.toml
+            |requirements.txt
+            |.tools/pyproject.toml
+          )$
+      - id: "pyright"
+        name: "pyright"
+        fail_fast: true
         pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-
+        language: "system"
+        entry: "pwsh .tools/scripts/Invoke-Pyright.ps1"
+        files: |
+          (?x)^(
+            src/.*
+            |tests/.*
+            |pyproject.toml
+            |requirements.txt
+            |.tools/(
+              pyproject.toml
+              |requirements/.*
+            )
+          )$
+      - id: "pytest-fast-only"
+        name: "pytest-fast-only"
+        fail_fast: true
+        verbose: true
+        pass_filenames: false
+        language: "system"
+        entry: |
+          pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
+        files: |
+          (?x)^(
+            pyproject.toml
+            |requirements.txt
+            |.tools/(
+              pyproject.toml
+              |requirements/.*
+            )
+          )$
+      - id: "pytest-slow-only"
+        name: "pytest-slow-only"
+        fail_fast: true
+        verbose: true
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -Command pytest -m slow"
+        files: |
+          (?x)^(
+            src/.*
+            |tests/.*
+          )$
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.4.0"
     hooks:

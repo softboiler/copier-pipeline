@@ -6,8 +6,8 @@ Synchronize `black` and `ruff` in pre-commit and `requirements.txt`.
 import re
 from pathlib import Path
 
-pre_commit = Path("template/.pre-commit-config.yaml")
-requirements = Path("template/.tools/requirements/requirements_both.txt")
+PRE_COMMIT = Path("template/.pre-commit-config.yaml")
+REQUIREMENTS = Path("template/.tools/requirements/requirements_both.txt")
 
 patterns = {
     "black": r"""
@@ -21,7 +21,7 @@ patterns = {
 }
 
 # Bump pre-commit
-pre_commit_text = pre_commit.read_text(encoding="utf-8")
+pre_commit_text = PRE_COMMIT.read_text(encoding="utf-8")
 versions = {
     package: re.search(pattern, pre_commit_text)["version"]  # pyright: ignore
     for package, pattern in patterns.items()
@@ -40,13 +40,13 @@ for line_number, line in enumerate(pre_commit_lines):
         pre_commit_lines[line_number] = black_repl
     elif line.startswith(ruff_find):
         pre_commit_lines[line_number] = ruff_repl
-pre_commit.write_text(encoding="utf-8", data="\n".join(pre_commit_lines))
+PRE_COMMIT.write_text(encoding="utf-8", data="\n".join(pre_commit_lines))
 
 # Bump requirements
-requirements_lines = requirements.read_text(encoding="utf-8").split("\n")
+requirements_lines = REQUIREMENTS.read_text(encoding="utf-8").split("\n")
 for line_number, line in enumerate(requirements_lines):
     if line.startswith("black"):
         requirements_lines[line_number] = f"black=={versions['black']}"
     if line.startswith("ruff"):
         requirements_lines[line_number] = f"ruff=={versions['ruff']}"
-requirements.write_text(encoding="utf-8", data="\n".join(requirements_lines))
+REQUIREMENTS.write_text(encoding="utf-8", data="\n".join(requirements_lines))
