@@ -9,7 +9,8 @@ ci:
 repos:
   - repo: "meta"
     hooks:
-      - id: "check-hooks-apply"
+      # # ? Enable this to ensure each hook runs against at least one file
+      # - id: "check-hooks-apply"
       - id: "check-useless-excludes"
   - repo: "local"
     hooks:
