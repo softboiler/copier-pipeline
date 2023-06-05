@@ -11,7 +11,7 @@ $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
 if ( Test-Path $VENV_ACTIVATE_WINDOWS ) { . $VENV_ACTIVATE_WINDOWS }
 elseif ( Test-Path $VENV_ACTIVATE_UNIX ) { . $VENV_ACTIVATE_UNIX }
 else {
-throw [System.Management.Automation.ItemNotFoundException] 'Could not find a virtual environment.'
+    throw [System.Management.Automation.ItemNotFoundException] 'Could not find a virtual environment.'
 }
 
 # Install dev requirements
@@ -27,6 +27,9 @@ pip install --upgrade --requirement 'requirements.txt'
 
 # Ensure pre-commit hooks are applied and updated
 pre-commit install --install-hooks
+
+# Ensure type stubs are synchronized
+git submodule update --init --merge typings
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.

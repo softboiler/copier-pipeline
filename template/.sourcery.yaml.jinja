@@ -17,5 +17,5 @@ rule_settings:
   python_version: "{{ python_version }}"
   enable: ["default"]
   disable:
-    - "remove-redundant-constructor-in-dict-union" # Explicit dict(zip(...)) is better
     - "move-assign" # False positives
+    - "remove-redundant-constructor-in-dict-union" # Explicit dict(zip(...)) is better

@@ -4,6 +4,9 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
+# Introspection
+fawltydeps==0.11.0
+
 # Experiment
 jupyter==1.0.0
 ipympl==0.9.3
@@ -19,7 +22,6 @@ ipython==8.13.1
 
 # Format
 sourcery-cli==1.2.0
-nbqa==1.7.0
 
 # Profiling
 snakeviz==2.2.0

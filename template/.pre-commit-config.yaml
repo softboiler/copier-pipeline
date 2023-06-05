@@ -18,6 +18,7 @@ repos:
 
       # * -------------------------------------------------------------------------- * #
       # * Changes below may be lost in significant template updates.
+
       - id: "compose-pyproject"
         name: "compose-pyproject"
         fail_fast: true

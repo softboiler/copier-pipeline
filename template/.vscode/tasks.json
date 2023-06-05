@@ -71,7 +71,7 @@
       "problemMatcher": []
     },
     {
-      "label": "task: Remove *.rej",
+      "label": "setup: Remove *.rej",
       "type": "process",
       "command": "pwsh",
       "args": [
@@ -125,6 +125,27 @@
       "problemMatcher": []
     },
     {
+      "label": "git: Push with tags",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "git push; git push --tags"],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
+      "label": "git: Prepare to release new version",
+      "dependsOrder": "sequence",
+      "dependsOn": ["setup: Compose pyproject.toml", "git: Stage all files"],
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        "git commit -m 'Release ${input:version}'; git tag ${input:version}"
+      ],
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
       "label": "git: Rebase back to fork",
       "type": "process",
       "command": "pwsh",
@@ -144,7 +165,7 @@
     // * -------------------------------------------------------------------------- * //
     // * BLACK * //
     {
-      "label": "task: black: Ignore magic comma in this file",
+      "label": "black: Ignore magic comma in this file",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C ${file}"],
@@ -152,7 +173,7 @@
       "problemMatcher": []
     },
     {
-      "label": "task: black: Ignore magic comma in all project files",
+      "label": "black: Ignore magic comma in all project files",
       "type": "process",
       "command": "pwsh",
       "args": ["-Command", "black -C src tests"],
@@ -162,6 +183,44 @@
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
+    {
+      "label": "task: format notebook, clear outputs",
+      "dependsOrder": "sequence",
+      "dependsOn": ["task: format notebook"],
+      "type": "shell",
+      "options": {
+        "shell": { "executable": "pwsh", "args": ["-Command"] }
+      },
+      "command": "nb-clean clean --remove-empty-cells --preserve-cell-metadata tags slideshow special -- ${file}",
+      "icon": { "id": "notebook" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: format notebook",
+      "type": "shell",
+      "options": {
+        "shell": { "executable": "pwsh", "args": ["-Command"] }
+      },
+      "command": "nbqa black ${file}; nbqa ruff --fix-only ${file}; nb-clean clean --remove-empty-cells --preserve-cell-outputs --preserve-cell-metadata tags slideshow special -- ${file}",
+      "icon": { "id": "notebook" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Run pytest with coverage",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["-Command", "pytest --cov --cov-report xml"],
+      "icon": { "id": "type-hierarchy-sub" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Invoke pyright",
+      "type": "process",
+      "command": "pwsh",
+      "args": [".tools/scripts/Invoke-Pyright.ps1"],
+      "icon": { "id": "type-hierarchy-sub" },
+      "problemMatcher": []
+    },
     {
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "process",
@@ -198,14 +257,6 @@
         "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}"
       ],
       "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: pytest-cov: Generate coverage",
-      "type": "process",
-      "command": "pwsh",
-      "args": ["-Command", "pytest --cov --cov-report xml"],
-      "icon": { "id": "beaker" },
       "problemMatcher": []
     }
   ]
