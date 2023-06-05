@@ -22,18 +22,32 @@
       "problemMatcher": []
     },
     {
-      "label": "setup: Re-answer template questions",
+      "label": "setup: Update from template, prompt for responses",
       "type": "process",
       "command": "pwsh",
-      "args": [".tools/scripts/Update-Template.ps1"],
+      "args": ["-Command", ".tools/scripts/Copy-Template.ps1 -Update"],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
-      "label": "setup: Bump template",
+      "label": "setup: Recopy from template",
       "type": "process",
       "command": "pwsh",
-      "args": ["-Command", ".tools/scripts/Update-Template.ps1 -Remote -Force"],
+      "args": [
+        "-Command",
+        ".tools/scripts/Copy-Template.ps1 -Recopy -Defaults"
+      ],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Update from template",
+      "type": "process",
+      "command": "pwsh",
+      "args": [
+        "-Command",
+        ".tools/scripts/Copy-Template.ps1 -Update -Defaults"
+      ],
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
