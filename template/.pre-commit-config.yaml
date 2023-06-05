@@ -7,18 +7,17 @@ ci:
   autoupdate_schedule: "quarterly"
 
 repos:
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below should persist in significant template updates.
-
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below may be lost in significant template updates.
-
   - repo: "meta"
     hooks:
       - id: "check-hooks-apply"
       - id: "check-useless-excludes"
   - repo: "local"
     hooks:
+      # * -------------------------------------------------------------------------- * #
+      # * Changes below should persist in significant template updates.
+
+      # * -------------------------------------------------------------------------- * #
+      # * Changes below may be lost in significant template updates.
       - id: "compose-pyproject"
         name: "compose-pyproject"
         fail_fast: true
@@ -77,6 +76,13 @@ repos:
             src/.*
             |tests/.*
           )$
+
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below should persist in significant template updates.
+
+  # * ------------------------------------------------------------------------------ * #
+  # * Changes below may be lost in significant template updates.
+
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.4.0"
     hooks:
