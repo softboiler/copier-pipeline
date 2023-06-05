@@ -8,10 +8,9 @@ from pathlib import Path
 import toml
 
 # Bump `pyproject.toml` based on changes in `requirements.txt`
-requirements = Path("requirements.txt").read_text(encoding="utf-8").splitlines()
 dependencies = [
     line.rstrip().replace("==", ">=")
-    for line in requirements
+    for line in Path("requirements.txt").read_text(encoding="utf-8").splitlines()
     if line != "\n" and not line.startswith("#")
 ]
 source = toml.loads((".tools" / Path("pyproject.toml")).read_text(encoding="utf-8"))
