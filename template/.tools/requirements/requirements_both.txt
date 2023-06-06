@@ -16,7 +16,7 @@ pyright
 
 # Pre-commit common requirements
 black==23.3.0
-ruff==0.0.263
+ruff==0.0.270
 
 # Testing
 pytest==7.3.1
