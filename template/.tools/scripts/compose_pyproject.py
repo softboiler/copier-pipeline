@@ -11,7 +11,7 @@ import toml
 dependencies = [
     line.rstrip().replace("==", ">=")
     for line in Path("requirements.txt").read_text(encoding="utf-8").splitlines()
-    if line != "\n" and not line.startswith("#")
+    if line and not line.startswith("#")
 ]
 source = toml.loads((".tools" / Path("pyproject.toml")).read_text(encoding="utf-8"))
 source["project"]["dependencies"] = dependencies
