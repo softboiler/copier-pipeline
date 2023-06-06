@@ -99,7 +99,7 @@ repos:
     hooks:
       - id: "black"
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.0.263"
+    rev: "v0.0.270"
     hooks:
       - id: "ruff"
   - repo: "https://github.com/srstevenson/nb-clean"
@@ -124,4 +124,4 @@ repos:
       - id: "nbqa-black"
         additional_dependencies: ["black==23.3.0"]
       - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.263"]
+        additional_dependencies: ["ruff==0.0.270"]

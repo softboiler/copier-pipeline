@@ -15,19 +15,19 @@ ipympl==0.9.3
 debugpy==1.6.7
 
 # For `python` via `pythonrc.py`
-rich==13.3.5
+rich==13.4.1
 
 # Terminal experiments
-ipython==8.13.1
+ipython==8.14.0
 
 # Format
-sourcery-cli==1.2.0
+sourcery-cli==1.3.0
 
 # Profiling
 snakeviz==2.2.0
 
 # Pre-commit
-pre-commit==3.2.2
+pre-commit==3.3.2
 
 # For local publishing to PyPi with flit
 keyring==23.13.1
