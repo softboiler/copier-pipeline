@@ -1,9 +1,18 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Establish base config, schedule, and manager defaults.",
-  "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
-  "schedule": ["on the 16th day of the month"],
-  "git-submodules": { "enabled": true },
+  "extends": [
+    "config:base",
+    ":enablePreCommit",
+    ":disableRateLimiting"
+  ],
+  "dependencyDashboardApproval": {% if active %}false{% else %}true{% endif %},
+  "schedule": [
+    "{% if active %}on the 16th day of the month{% else %}never{% endif %}"
+  ],
+  "git-submodules": {
+    "enabled": true
+  },
   "enabledManagers": [
     "git-submodules",
     "github-actions",
@@ -12,26 +21,45 @@
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files.",
-    "fileMatch": ["^\\.tools/requirements/*"],
-    "ignorePaths": ["frozen_requirements.txt"]
+    "fileMatch": [
+      "^\\.tools/requirements/*"
+    ],
+    "ignorePaths": [
+      "frozen_requirements.txt"
+    ]
   },
   "packageRules": [
     {
       "groupName": "pyright and type stubs",
       "groupSlug": "pyright-and-type-stubs",
-      "matchManagers": ["pip_requirements", "git-submodules"],
-      "matchPackageNames": ["pyright", "typings"]
+      "matchManagers": [
+        "pip_requirements",
+        "git-submodules"
+      ],
+      "matchPackageNames": [
+        "pyright",
+        "typings"
+      ]
     },
     {
       "groupName": "all non-major dependencies except pyright",
       "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "excludeDepNames": ["pyright"]
+      "matchPackagePatterns": [
+        "*"
+      ],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "excludeDepNames": [
+        "pyright"
+      ]
     },
     {
       "description": "Ignore github-actions dependencies managed by the template.",
-      "matchManagers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "ignoreDeps": [
         "dropseed/changerelease",
         "actions/checkout",
@@ -45,7 +73,9 @@
     },
     {
       "description": "Ignore pre-commit dependencies managed by the template.",
-      "matchManagers": ["pre-commit"],
+      "matchManagers": [
+        "pre-commit"
+      ],
       "ignoreDeps": [
         "pre-commit/pre-commit-hooks",
         "psf/black",
@@ -58,8 +88,12 @@
     },
     {
       "description": "Ignore dependencies managed by the template. Do manage pyright.",
-      "matchManagers": ["pip_requirements"],
-      "matchPaths": [".tools/requirements/*"],
+      "matchManagers": [
+        "pip_requirements"
+      ],
+      "matchPaths": [
+        ".tools/requirements/*"
+      ],
       "ignoreDeps": [
         "jupyter-book",
         "watch-files",

@@ -7,51 +7,65 @@ _envops:
 
 project_owner_github_username:
   type: "str"
-  help: "The GitHub username or organization that will host this project"
+  help: "The GitHub username or organization that will host this project."
   validator: "{% if not project_owner_github_username %}Invalid input{% endif %}"
 
 github_repo_name:
   type: "str"
-  help: "The name of the GitHub repository that will host this project"
+  help: "The name of the GitHub repository that will host this project."
   validator: "{% if not github_repo_name %}Invalid input{% endif %}"
 
 project_name:
   type: "str"
-  help: "The name of this project, if different from the repository name"
+  help: "The name of this project, if different from the repository name."
   default: "{{ github_repo_name }}"
   validator: "{% if not project_name %}Invalid input{% endif %}"
 
 project_owner_name:
   type: "str"
-  help: "The name (or names) for the MIT license, if different from the host user"
+  help: "The name (or names) for the MIT license, if different from the host user."
   default: "{{ project_owner_github_username }}"
   validator: "{% if not project_owner_name %}Invalid input{% endif %}"
 
 year_of_project_creation:
   type: "int"
-  help: "The year of project creation for the MIT license"
+  help: "The year of project creation for the MIT license."
   default: 2023
+  validator: "{% if not year_of_project_creation %}Invalid input{% endif %}"
 
 project_description:
   type: "str"
-  help: "A brief description for your project. Required, but can easily be changed manually later"
+  help: "A brief description for your project. Required, but can easily be changed manually later."
   validator: "{% if not project_description %}Invalid input{% endif %}"
 
 project_email:
   type: "str"
-  help: "If given, associate this email address with this project in `pyproject.toml`"
+  help: "If given, associate this email address with this project in `pyproject.toml`."
+
+project_version:
+  type: "str"
+  help: "The package version for this project. Start with 0.0.0. Project may stay at 0.0.0 indefinitely if it is not meant to be versioned in this way."
+  default: "0.0.0"
+  validator: "{% if not '.' in project_version %}Invalid input{% endif %}"
 
 python_version:
   type: "str"
-  help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`"
+  help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`."
   default: "3.11"
   validator: "{% if not '.' in python_version %}Invalid input{% endif %}"
 
 actions_runner:
   type: "str"
-  help: "The GitHub Actions runner to use"
+  help: "The GitHub Actions runner to use."
   choices:
     - "ubuntu-latest"
     - "windows-latest"
     - "macos-latest"
   default: "ubuntu-latest"
+  validator: "{% if not actions_runner %}Invalid input{% endif %}"
+
+active:
+  type: "bool"
+  help: "Whether this project is active. Controls whether bots will generate dependency PRs and the like."
+  default: true
+  validator: "{% if active == '' %}Invalid input{% endif %}"

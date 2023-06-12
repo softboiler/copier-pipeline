@@ -3,7 +3,7 @@ from datetime import date
 project = ""
 html_title = "{{ project_name }}"
 copyright = f"{date.today().year}, {{ project_owner_name }}"  # noqa: A001
-version = "0.0.0"
+version = "{{ project_version }}"
 master_doc = "index"
 language = "en"
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
