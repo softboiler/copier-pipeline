@@ -40,8 +40,8 @@ Generating a project from this template involves creating a local folder, initia
 - Create a new project folder, for instance `example`.
 - Open that folder in VSCode with `File: Open Folder`.
 - Click "Initialize Repository" in the Source Control tab in the sidebar, or run `git init`.
-- Run `copier gh:blakeNaccarato/copier-python-init .` and answer the questions. This will automatically perform the following:
-  - First time setup will run. Inspect the setup script at [blakeNaccarato/copier-python-init](https://github.com/blakeNaccarato/copier-python-init/blob/main/template/first_time_setup.ps1).
+- Run `copier gh:blakeNaccarato/copier-python .` and answer the questions.
+- Run `first_time_setup.ps1`. You can inspect the [setup script](https://github.com/blakeNaccarato/copier-python/blob/main/template/first_time_setup.ps1) if you like. It does the following:
   - Adds a `template` submodule for later updating.
   - Adds a `typings` submodule to synchronize `pyright` in GitHub Actions with Pylance.
   - Bootstraps the initial template here at `blakeNaccarato/copier-python`.

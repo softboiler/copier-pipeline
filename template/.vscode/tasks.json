@@ -71,6 +71,14 @@
       "problemMatcher": []
     },
     {
+      "label": "setup: Perform first-time setup",
+      "type": "process",
+      "command": "pwsh",
+      "args": ["first_time_setup.ps1"],
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
       "label": "setup: Remove *.rej",
       "type": "process",
       "command": "pwsh",
