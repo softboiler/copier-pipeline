@@ -65,6 +65,7 @@ ignore = [
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
     "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
     "TCH",     # Type checking linter doesn't play nicely with pydantic
+    "TD",      # Disable to-do validation. Too pedantic for now.
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
     # * ---------------------------------------------------------------------------- * #
