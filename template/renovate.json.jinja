@@ -3,7 +3,7 @@
   "description": "Establish base config, schedule, and manager defaults.",
   "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
   "dependencyDashboardApproval": {% if active %}false{% else %}true{% endif %},
-  "schedule": ["{% if active %}on the 16th day of the month{% else %}never{% endif %}"],
+  "schedule": ["on the 16th day of the month"],
   "git-submodules": {
     "enabled": true
   },
