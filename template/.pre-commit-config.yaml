@@ -9,7 +9,7 @@ ci:
 repos:
   - repo: "meta"
     hooks:
-      # # ? Enable this to ensure each hook runs against at least one file
+      # ? Enable this to ensure each hook runs against at least one file
       # - id: "check-hooks-apply"
       - id: "check-useless-excludes"
   - repo: "local"
@@ -106,10 +106,27 @@ repos:
         args:
           - "--remove-empty-cells"
           - "--preserve-cell-metadata"
-          - "tags"
-          - "slideshow"
           - "special"
+          - "tags"
           - "--"
+        files: |
+          (?x)^(
+            src/.*
+            |tests/.*
+          )$
+      - id: "nb-clean"
+        name: "nb-clean (keep docs outputs)"
+        args:
+          - "--remove-empty-cells"
+          - "--preserve-cell-outputs"
+          - "--preserve-cell-metadata"
+          - "special"
+          - "tags"
+          - "--"
+        files: |
+          (?x)^(
+            docs/.*
+          )$
   - repo: "https://github.com/asottile/blacken-docs"
     rev: "1.13.0"
     hooks:

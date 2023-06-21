@@ -59,6 +59,7 @@ ignore = [
     "PD901",   # Allow `df` variable name. We are all consenting adults here.
     "PD011",   # Allow use of `.values`. False positives.
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
+    "PIE804",  # Allow dict unpack even if unnecessary, consisent for df.assign{**...}
     "PLR0913", # Allow more than five function arguments
     "PLR2004", # Allow magic values. This check is too sensitive
     "PLW2901", # For loop variable
@@ -98,6 +99,9 @@ convention = "google"
 split-on-trailing-comma = false
 
 [tool.ruff.per-file-ignores]
+"docs/**" = [
+    "E402", # Need to allow imports below patches in docs notebooks
+]
 "tests/**" = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.

@@ -168,25 +168,22 @@
   //! Filetype specifics
   //* .ENV
   "[dotenv]": {
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "bounded",
     "rewrap.autoWrap.enabled": false
   },
   //* MD
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.wordWrap": "wordWrapColumn",
-    //? Roughly matches the width of GitHub Markdown
-    "editor.wordWrapColumn": 124,
-    "editor.rulers": [124],
+    "editor.wordWrap": "bounded",
     "rewrap.autoWrap.enabled": false
   },
   //* JSON
   "[json]": {
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   //* PYTHON
@@ -199,12 +196,12 @@
   },
   //* TXT
   "[plaintext]": {
-    "editor.wordWrap": "wordWrapColumn"
+    "editor.wordWrap": "bounded"
   },
   //* TOML
   "evenBetterToml.formatter.columnWidth": 88,
   "[toml]": {
-    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
   //* TSV
@@ -216,7 +213,7 @@
   "yaml.format.printWidth": 88,
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.wordWrap": "wordWrapColumn"
+    "editor.wordWrap": "bounded"
   },
 
   //! Extension: Jupyter Notebooks

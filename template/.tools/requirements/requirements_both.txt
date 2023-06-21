@@ -24,6 +24,7 @@ pytest==7.3.1
 pytest-cov==4.1.0
 pytest-custom-exit-code==0.3.0
 # Format AND test notebooks
+nb-clean==2.4.0
 nbqa==1.7.0
 
 # Document
