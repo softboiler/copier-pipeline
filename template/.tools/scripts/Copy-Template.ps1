@@ -11,7 +11,7 @@ Param(
 )
 
 if ( $Recopy ) {
-    copier recopy $(if ($Defaults) { '--defaults' })
+    copier recopy --force $(if ($Defaults) { '--defaults' })
 }
 else {
     git submodule update --init --remote --merge template
