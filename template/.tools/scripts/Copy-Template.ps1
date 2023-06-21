@@ -3,9 +3,6 @@ Update the project from the project template.
 #>
 
 Param(
-    # Whether to update to the latest remote template version
-    [switch]$Update,
-
     # Whether to recopy the template, ignoring prior diffs, or update in a smart manner.
     [switch]$Recopy,
 
@@ -13,6 +10,14 @@ Param(
     [switch]$Defaults
 )
 
-$(if ($Update) { & '.tools/scripts/template_common.ps1' })
-copier $(if ($Recopy) { 'recopy' } else { 'update' }) $(if ($Defaults) { '--defaults' }) --vcs-ref "$(git rev-parse HEAD:template)"
+if ( $Recopy ) {
+    copier recopy $(if ($Defaults) { '--defaults' })
+}
+else {
+    git submodule update --init --remote --merge template
+    git add --all
+    git commit -m "Update template digest to $(git rev-parse --short HEAD:template)"
+    git submodule deinit template
+    copier update $(if ($Defaults) { '--defaults' })
+}
 python '.tools/scripts/compose_pyproject.py'
