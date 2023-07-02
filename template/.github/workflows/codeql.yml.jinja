@@ -16,14 +16,14 @@ jobs:
 
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v3.5.2"
+        uses: "actions/checkout@v3.5.3"
       - name: "Initialize CodeQL"
-        uses: "github/codeql-action/init@v2.3.6"
+        uses: "github/codeql-action/init@v2.20.1"
         with:
           languages: "{% raw %}${{ matrix.language }}{% endraw %}"
       - name: "Autobuild"
-        uses: "github/codeql-action/autobuild@v2.3.6"
+        uses: "github/codeql-action/autobuild@v2.20.1"
       - name: "Perform CodeQL Analysis"
-        uses: "github/codeql-action/analyze@v2.3.6"
+        uses: "github/codeql-action/analyze@v2.20.1"
         with:
           category: "{% raw %}/language:${{matrix.language}}{% endraw %}"
