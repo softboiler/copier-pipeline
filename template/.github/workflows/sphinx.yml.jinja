@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: "python -m sphinx -T -E docs _site"
-      - uses: "actions/upload-pages-artifact@v1.0.8"
+      - uses: "actions/upload-pages-artifact@v1.0.9"
   deploy:
     if: "{% raw %}${{ !(github.event_name == 'pull_request') }}{% endraw %}"
     environment:
@@ -33,4 +33,4 @@ jobs:
     needs: "build"
     steps:
       - id: "deployment"
-        uses: "actions/deploy-pages@v2.0.1"
+        uses: "actions/deploy-pages@v2.0.2"

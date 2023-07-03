@@ -16,10 +16,10 @@ pyright
 
 # Pre-commit common requirements
 black==23.3.0
-ruff==0.0.270
+ruff==0.0.275
 
 # Testing
-pytest==7.3.1
+pytest==7.4.0
 # Testing plugins
 pytest-cov==4.1.0
 pytest-custom-exit-code==0.3.0
