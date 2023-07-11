@@ -13,7 +13,7 @@ catch [System.Management.Automation.CommandNotFoundException] {
     $GLOBAL_PYTHON = 'python3.11'
 }
 Invoke-Expression "$GLOBAL_PYTHON -m venv '.venv' --upgrade-deps"
-. './update.ps1'
+& './update.ps1'
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
