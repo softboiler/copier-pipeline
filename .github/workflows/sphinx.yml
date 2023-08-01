@@ -32,7 +32,7 @@ jobs:
           pip install --upgrade setuptools wheel
           pip install --requirement .tools/requirements/requirements_ci.txt
       - run: "python -m sphinx -T -E docs _site"
-      - uses: "actions/upload-pages-artifact@v1"
+      - uses: "actions/upload-pages-artifact@v2"
   deploy:
     if: "${{ !(github.event_name == 'pull_request') }}"
     environment:
