@@ -5,7 +5,7 @@
 # * Changes below may be lost in significant template updates.
 
 # Bump
-copier==8.0.0
+copier==8.1.0
 toml==0.10.2
 
 # Build
