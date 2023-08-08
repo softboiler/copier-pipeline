@@ -15,7 +15,6 @@ flit==3.9.0
 pyright
 
 # Pre-commit common requirements
-black==23.7.0
 ruff==0.0.282
 
 # Testing

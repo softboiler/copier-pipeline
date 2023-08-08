@@ -21,6 +21,7 @@ rich==13.5.2
 ipython==8.14.0
 
 # Format
+black[jupyter]==23.7.0
 sourcery-cli==1.6.0
 
 # Profiling
