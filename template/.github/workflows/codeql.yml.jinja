@@ -18,12 +18,12 @@ jobs:
       - name: "Checkout repository"
         uses: "actions/checkout@v3.5.3"
       - name: "Initialize CodeQL"
-        uses: "github/codeql-action/init@v2.21.2"
+        uses: "github/codeql-action/init@v2.21.4"
         with:
           languages: "{% raw %}${{ matrix.language }}{% endraw %}"
       - name: "Autobuild"
-        uses: "github/codeql-action/autobuild@v2.21.2"
+        uses: "github/codeql-action/autobuild@v2.21.4"
       - name: "Perform CodeQL Analysis"
-        uses: "github/codeql-action/analyze@v2.21.2"
+        uses: "github/codeql-action/analyze@v2.21.4"
         with:
           category: "{% raw %}/language:${{matrix.language}}{% endraw %}"
