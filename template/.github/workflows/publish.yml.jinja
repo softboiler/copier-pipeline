@@ -10,7 +10,7 @@ jobs:
   publish:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.1.0"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.0"
         with:
           python-version: "{{ python_version }}"
       - run: "flit publish"

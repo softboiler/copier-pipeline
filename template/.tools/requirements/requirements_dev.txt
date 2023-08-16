@@ -12,7 +12,7 @@ jupyter==1.0.0
 ipympl==0.9.3
 
 # Debug
-debugpy==1.6.7
+debugpy==1.6.7.post1
 
 # For `python` via `pythonrc.py`
 rich==13.5.2
@@ -22,7 +22,7 @@ ipython==8.14.0
 
 # Format
 black[jupyter]==23.7.0
-sourcery-cli==1.6.0
+sourcery-cli==1.7.0
 
 # Profiling
 snakeviz==2.2.0
