@@ -137,4 +137,4 @@ repos:
     rev: "1.7.0"
     hooks:
       - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.282"]
+        additional_dependencies: ["ruff==0.0.284"]
