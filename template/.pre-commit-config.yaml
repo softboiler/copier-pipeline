@@ -48,6 +48,7 @@ repos:
           )$
       - id: "fawltydeps"
         name: "fawltydeps"
+        verbose: true
         pass_filenames: false
         language: "system"
         entry: "pwsh -Command fawltydeps"
