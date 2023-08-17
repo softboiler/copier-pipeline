@@ -1,3 +1,5 @@
+# Requirements for documentation.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 

@@ -4,10 +4,7 @@ from contextlib import closing
 from dataclasses import dataclass
 from pathlib import Path
 from re import MULTILINE, VERBOSE, Pattern, compile
-from subprocess import run
-from sys import executable
 
-from copier.subproject import Subproject
 from dulwich.porcelain import submodule_list
 from dulwich.repo import Repo
 

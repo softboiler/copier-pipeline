@@ -93,72 +93,10 @@
     // * -------------------------------------------------------------------------- * //
     // * GIT * //
     {
-      "label": "git: Push with tags",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git push; git push --tags",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Prepare to release new version",
-      "dependsOrder": "sequence",
-      "dependsOn": ["setup: Compose pyproject.toml", "git: Stage all files"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git commit -m 'Release ${input:version}'; git tag ${input:version}",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Push with tags",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git push; git push --tags",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Prepare to release new version",
-      "dependsOrder": "sequence",
-      "dependsOn": ["setup: Compose pyproject.toml", "git: Stage all files"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git commit -m 'Release ${input:version}'; git tag ${input:version}",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Push with tags",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git push; git push --tags",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Prepare to release new version",
-      "dependsOrder": "sequence",
-      "dependsOn": ["setup: Compose pyproject.toml", "git: Stage all files"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git commit -m 'Release ${input:version}'; git tag ${input:version}",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
       "label": "git: Rebase back to fork",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "git rebase -i --fork-point main",
-      "icon": { "id": "git-branch" },
-      "problemMatcher": []
-    },
-    {
-      "label": "git: Stage all files",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "git add --all",
       "icon": { "id": "git-branch" },
       "problemMatcher": []
     },

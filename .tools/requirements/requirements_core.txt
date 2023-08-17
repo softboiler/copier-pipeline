@@ -1,11 +1,13 @@
-[pytest]
+# Core requirements for template updates, bootstrapping, etc.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-addopts = -p no:legacypaths -r a
-testpaths = tests
-markers = slow
-filterwarnings = error
+copier<8.2
+dulwich
+flit_core
+pip
+wheel

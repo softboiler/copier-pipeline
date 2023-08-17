@@ -19,5 +19,4 @@ pytest-custom-exit-code==0.3.0
 nb-clean==2.4.0
 nbqa==1.7.0
 
--r requirements_core.txt
 -r requirements_docs.txt

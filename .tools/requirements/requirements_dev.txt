@@ -1,32 +1,26 @@
+# Requirements for both the dev environment.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
+# Introspection
+fawltydeps
 # Experiment
-jupyter
-ipympl
-
+ipykernel
 # Debug
 debugpy
-
-# For `python` via `pythonrc.py`
+# For `pythonstartup.py`
 rich
-
-# Terminal experiments
-ipython
-
 # Format
+black[jupyter]
 sourcery-cli
-nbqa
-
 # Profiling
 snakeviz
-
 # Pre-commit
 pre-commit
-
 # For local publishing to PyPi with flit
 keyring
 

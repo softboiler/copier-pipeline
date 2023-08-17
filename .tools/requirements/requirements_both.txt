@@ -1,26 +1,22 @@
+# Requirements for both CI and dev environments.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-# Bump
-copier
-toml
-
-# Build
-flit
-
 # Type checking
 pyright
-
 # Pre-commit common requirements
-black
 ruff
-
-# Test
+# Testing
 pytest
+# Testing plugins
 pytest-cov
+pytest-custom-exit-code
+# Format AND test notebooks
+nb-clean
+nbqa
 
-# Document
 -r requirements_docs.txt

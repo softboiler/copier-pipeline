@@ -1,11 +1,7 @@
-[pytest]
+# Requirements for which transitive dependencies will not be installed.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
-
-addopts = -p no:legacypaths -r a
-testpaths = tests
-markers = slow
-filterwarnings = error

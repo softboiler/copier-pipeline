@@ -8,14 +8,14 @@
     // * Changes below may be lost in significant template updates.
     {
       "name": "Python: Current file",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "internalConsole"
     },
     {
       "name": "Python: Current file, not just my code",
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "justMyCode": false,

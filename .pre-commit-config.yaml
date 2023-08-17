@@ -2,49 +2,93 @@ exclude: template/.pre-commit-config.yaml.jinja|template/{{ _copier_conf.answers
 
 ci:
   skip:
-    - "pytest"
-    - "pyright"
+    - "update-warning-filters"
+    - "pytest-fast-only"
+    - "fawltydeps"
   autoupdate_schedule: "quarterly"
 
 repos:
+  - repo: "meta"
+    hooks:
+      # ? Enable this to ensure each hook runs against at least one file
+      # - id: "check-hooks-apply"
+      - id: "check-useless-excludes"
+  - repo: "local"
+    hooks:
+      # * -------------------------------------------------------------------------- * #
+      # * Changes below should persist in significant template updates.
+
+      # * -------------------------------------------------------------------------- * #
+      # * Changes below may be lost in significant template updates.
+
+      - id: "update-warning-filters"
+        name: "update-warning-filters"
+        verbose: true
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -Command python warning_filters.py"
+        files: |
+          (?x)^(
+            warning_filters.py
+          )$
+      - id: "pytest-fast-only"
+        name: "pytest-fast-only"
+        verbose: true
+        pass_filenames: false
+        language: "system"
+        entry: |
+          pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
+        files: |
+          (?x)^(
+            pyproject.toml
+            src/.*
+            |tests/.*
+            |.tools/(
+              pyproject.toml
+              |requirements/.*
+            )
+          )$
+      - id: "fawltydeps"
+        name: "fawltydeps"
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -Command fawltydeps"
+        files: |
+          .*
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below may be lost in significant template updates.
 
-  - repo: local
-    hooks:
-      - id: pytest
-        name: pytest
-        language: system
-        entry: pwsh -Command pytest
-        pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-      - id: pyright
-        name: pyright
-        language: system
-        entry: pwsh -Command pyright
-        pass_filenames: false
-        files: '^((tests\/)|(src\/)).*$'
-
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.4.0"
     hooks:
       - id: "end-of-file-fixer"
       - id: "trailing-whitespace"
-  - repo: "https://github.com/DavidAnson/markdownlint-cli2"
-    rev: "v0.8.1"
+  - repo: "https://github.com/asottile/blacken-docs"
+    rev: "1.16.0"
     hooks:
-      - id: "markdownlint-cli2-fix"
-  - repo: "https://github.com/psf/black"
-    rev: "23.7.0"
-    hooks:
-      - id: "black"
+      - id: "blacken-docs"
+        additional_dependencies: ["black==23.7.0"]
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
     rev: "v0.0.284"
     hooks:
       - id: "ruff"
+  - repo: "https://github.com/DavidAnson/markdownlint-cli2"
+    rev: "v0.8.1"
+    hooks:
+      - id: "markdownlint-cli2-fix"
+  - repo: "https://github.com/nbQA-dev/nbQA"
+    rev: "1.7.0"
+    hooks:
+      - id: "nbqa-ruff"
+        additional_dependencies: ["ruff==0.0.284"]
+  - repo: "https://github.com/psf/black"
+    rev: "23.7.0"
+    hooks:
+      - id: "black"
+      - id: "black-jupyter"
   - repo: "https://github.com/srstevenson/nb-clean"
     rev: "2.4.0"
     hooks:
@@ -52,19 +96,12 @@ repos:
         args:
           - "--remove-empty-cells"
           - "--preserve-cell-metadata"
-          - "tags"
-          - "slideshow"
           - "special"
+          - "tags"
           - "--"
-  - repo: "https://github.com/asottile/blacken-docs"
-    rev: "1.16.0"
-    hooks:
-      - id: "blacken-docs"
-        additional_dependencies: ["black==23.3.0"]
-  - repo: "https://github.com/nbQA-dev/nbQA"
-    rev: "1.7.0"
-    hooks:
-      - id: "nbqa-black"
-        additional_dependencies: ["black==23.3.0"]
-      - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.275"]
+        files: |
+          (?x)^(
+            src/.*
+            |docs/.*
+            |tests/.*
+          )$

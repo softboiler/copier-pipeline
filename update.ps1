@@ -11,18 +11,30 @@ $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
 if ( Test-Path $VENV_ACTIVATE_WINDOWS ) { . $VENV_ACTIVATE_WINDOWS }
 elseif ( Test-Path $VENV_ACTIVATE_UNIX ) { . $VENV_ACTIVATE_UNIX }
 else {
-throw [System.Management.Automation.ItemNotFoundException] 'Could not find a virtual environment.'
+    throw [System.Management.Automation.ItemNotFoundException] 'Could not find a virtual environment.'
 }
 
-# Install dev requirements
-python -m pip install --upgrade pip # Instructed to do this by pip
-pip install --upgrade setuptools wheel copier # Must be done separately from above
-pip install --upgrade --requirement '.tools/requirements/requirements_dev.txt'
-# Need `toml` in dev requirements prior to bumping `pyproject.toml`
-python '.tools/scripts/compose_pyproject.py'
+# Install dev requirements.
+python -m pip install --requirement '.tools/requirements/requirements_core.txt'
+python .tools/scripts/warning_filters.py
+python -m pip install --upgrade --requirement '.tools/requirements/requirements_dev.txt' --requirement '.tools/requirements/requirements.txt'
+python -m pip install --no-deps --requirement '.tools/requirements/requirements_nodeps.txt' --editable '.'
 
-# Ensure pre-commit hooks are applied and updated
-pre-commit install --install-hooks
+# Install all types of pre-commit hooks
+$h = '--hook-type'
+$AllHookTypes = @(
+    $h, 'commit-msg'
+    $h, 'post-checkout'
+    $h, 'post-commit'
+    $h, 'post-merge'
+    $h, 'post-rewrite'
+    $h, 'pre-commit'
+    $h, 'pre-merge-commit'
+    $h, 'pre-push'
+    $h, 'pre-push'
+    $h, 'prepare-commit-msg'
+)
+pre-commit install --install-hooks @AllHookTypes
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
