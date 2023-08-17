@@ -13,3 +13,4 @@ $NbqaPyrightExitCode = $LastExitCode
 if (($PyrightExitCode -ne 0) -or ($NbqaPyrightExitCode -ne 0)) {
     Exit $PyrightExitCode -or $NbqaPyrightExitCode
 }
+git submodule deinit typings

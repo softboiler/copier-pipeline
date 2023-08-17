@@ -1,9 +1,8 @@
 ci:
   skip:
-    - "compose-pyproject"
+    - "update-warning-filters"
     - "pytest-fast-only"
-    - "pytest-slow-only"
-    - "pyright"
+    - "fawltydeps"
   autoupdate_schedule: "quarterly"
 
 repos:
@@ -20,32 +19,15 @@ repos:
       # * -------------------------------------------------------------------------- * #
       # * Changes below may be lost in significant template updates.
 
-      - id: "compose-pyproject"
-        name: "compose-pyproject"
+      - id: "update-warning-filters"
+        name: "update-warning-filters"
+        verbose: true
         pass_filenames: false
         language: "system"
-        entry: "pwsh -Command python .tools/scripts/compose_pyproject.py"
+        entry: "pwsh -Command python warning_filters.py"
         files: |
           (?x)^(
-            pyproject.toml
-            |requirements.txt
-            |.tools/pyproject.toml
-          )$
-      - id: "pyright"
-        name: "pyright"
-        pass_filenames: false
-        language: "system"
-        entry: "pwsh .tools/scripts/Invoke-Pyright.ps1"
-        files: |
-          (?x)^(
-            src/.*
-            |tests/.*
-            |pyproject.toml
-            |requirements.txt
-            |.tools/(
-              pyproject.toml
-              |requirements/.*
-            )
+            warning_filters.py
           )$
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
@@ -57,25 +39,20 @@ repos:
         files: |
           (?x)^(
             pyproject.toml
-            |requirements.txt
+            src/.*
+            |tests/.*
             |.tools/(
               pyproject.toml
               |requirements/.*
             )
           )$
-      - id: "pytest-slow-only"
-        name: "pytest-slow-only"
-        verbose: true
+      - id: "fawltydeps"
+        name: "fawltydeps"
         pass_filenames: false
         language: "system"
-        entry: |
-          pwsh -Command "pytest -m 'slow' --suppress-no-test-exit-code"
+        entry: "pwsh -Command fawltydeps"
         files: |
-          (?x)^(
-            src/.*
-            |tests/.*
-          )$
-
+          .*
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
 
@@ -87,19 +64,29 @@ repos:
     hooks:
       - id: "end-of-file-fixer"
       - id: "trailing-whitespace"
+  - repo: "https://github.com/asottile/blacken-docs"
+    rev: "1.16.0"
+    hooks:
+      - id: "blacken-docs"
+        additional_dependencies: ["black==23.7.0"]
+  - repo: "https://github.com/charliermarsh/ruff-pre-commit"
+    rev: "v0.0.284"
+    hooks:
+      - id: "ruff"
   - repo: "https://github.com/DavidAnson/markdownlint-cli2"
     rev: "v0.8.1"
     hooks:
       - id: "markdownlint-cli2-fix"
+  - repo: "https://github.com/nbQA-dev/nbQA"
+    rev: "1.7.0"
+    hooks:
+      - id: "nbqa-ruff"
+        additional_dependencies: ["ruff==0.0.284"]
   - repo: "https://github.com/psf/black"
     rev: "23.7.0"
     hooks:
       - id: "black"
       - id: "black-jupyter"
-  - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.0.284"
-    hooks:
-      - id: "ruff"
   - repo: "https://github.com/srstevenson/nb-clean"
     rev: "2.4.0"
     hooks:
@@ -113,16 +100,6 @@ repos:
         files: |
           (?x)^(
             src/.*
-            |tests/.*
             |docs/.*
+            |tests/.*
           )$
-  - repo: "https://github.com/asottile/blacken-docs"
-    rev: "1.16.0"
-    hooks:
-      - id: "blacken-docs"
-        additional_dependencies: ["black==23.7.0"]
-  - repo: "https://github.com/nbQA-dev/nbQA"
-    rev: "1.7.0"
-    hooks:
-      - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.284"]

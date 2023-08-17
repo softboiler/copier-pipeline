@@ -1,3 +1,5 @@
+# Core requirements for template updates, bootstrapping, etc.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
@@ -6,3 +8,6 @@
 
 copier==8.1.0
 dulwich==0.21.5
+flit_core==3.9.0
+pip==23.2.1
+wheel==0.41.1

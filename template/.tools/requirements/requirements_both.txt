@@ -1,3 +1,5 @@
+# Requirements for both CI and dev environments.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
@@ -6,10 +8,8 @@
 
 # Type checking
 pyright
-
 # Pre-commit common requirements
 ruff==0.0.284
-
 # Testing
 pytest==7.4.0
 # Testing plugins
@@ -19,5 +19,5 @@ pytest-custom-exit-code==0.3.0
 nb-clean==2.4.0
 nbqa==1.7.0
 
-# Document
+-r requirements_core.txt
 -r requirements_docs.txt

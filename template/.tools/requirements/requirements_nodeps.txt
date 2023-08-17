@@ -1,12 +1,7 @@
-# Requirements for documentation.
+# Requirements for which transitive dependencies will not be installed.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
-
-myst-parser==2.0.0
-sphinx-autobuild==2021.03.14
-sphinx-book-theme==1.0.1
-sphinx-design==0.5.0

@@ -11,7 +11,7 @@
 
   //! Pylance
   "python.languageServer": "Pylance",
-  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.indexing": true,
   //? These are safer defaults which are overridden in `pyrightconfig.json`.
   "python.analysis.typeCheckingMode": "off",
@@ -43,19 +43,11 @@
   //* pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  //* markdownlint
-  "markdownlint.config": {
-    "first-line-heading": false
-  },
   //* black
   "black-formatter.importStrategy": "fromEnvironment",
-  //? Ensure user setting args are cleared
-  "black-formatter.logLevel": "warn",
   "black-formatter.args": [],
   //* ruff
   "ruff.importStrategy": "fromEnvironment",
-  //? Ensure user setting args are cleared
-  "ruff.logLevel": "warn",
   "ruff.args": [],
 
   //! GitHub Actions
@@ -90,7 +82,7 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
-    ".nest_tools_config": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, .gitattributes, .gitmodules, .markdownlint.yaml, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyproject.toml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
+    ".nest_tools_config": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, first_time_setup.ps1, .gitattributes, .gitignore, .gitmodules, .markdownlint.yaml, *.lock, *.log, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyproject.toml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
     ".nest_md": "*.md, CITATION.cff, LICENSE"
   },
   //* File associations
@@ -133,7 +125,6 @@
   //* Editor format on save and more. Can run "File: Save without formatting" to skip.
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
-  "python.formatting.provider": "black",
   //* Enforce whitespace and newlines.
   "files.insertFinalNewline": true,
   "files.trimTrailingWhitespace": true,

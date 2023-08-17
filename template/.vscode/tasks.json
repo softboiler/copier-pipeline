@@ -28,14 +28,6 @@
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
     {
-      "label": "setup: Compose pyproject.toml",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python .tools/scripts/compose_pyproject.py",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
       "label": "setup: Copy template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
@@ -193,20 +185,12 @@
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
     {
-      "label": "task: format notebook, clear outputs",
+      "label": "task: format and clear notebook",
       "dependsOrder": "sequence",
       "dependsOn": ["task: format notebook"],
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "nb-clean clean --remove-empty-cells --preserve-cell-metadata special tags -- ${file}",
-      "icon": { "id": "notebook" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: format notebook",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "nbqa black ${file}; nbqa ruff --fix-only ${file}; nb-clean clean --remove-empty-cells --preserve-cell-outputs --preserve-cell-metadata tags special -- ${file}",
+      "command": "nbqa ruff --fix-only ${file}; nb-clean clean --remove-empty-cells --preserve-cell-metadata special tags -- ${file}; black ${file}",
       "icon": { "id": "notebook" },
       "problemMatcher": []
     },
@@ -230,7 +214,7 @@
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "sphinx-autobuild -n docs _site --watch README.md --watch CHANGELOG.md",
+      "command": "sphinx-build -Ean docs _site; sphinx-autobuild -n docs _site --watch **/*.md",
       "icon": { "id": "book" },
       "problemMatcher": []
     },

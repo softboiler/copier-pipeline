@@ -1,3 +1,5 @@
+# Requirements for both the dev environment.
+
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.
 
@@ -6,30 +8,19 @@
 
 # Introspection
 fawltydeps==0.12.1
-
 # Experiment
-jupyter==1.0.0
-ipympl==0.9.3
-
+ipykernel==6.25.1
 # Debug
 debugpy==1.6.7.post1
-
-# For `python` via `pythonrc.py`
+# For `pythonstartup.py`
 rich==13.5.2
-
-# Terminal experiments
-ipython==8.14.0
-
 # Format
 black[jupyter]==23.7.0
 sourcery-cli==1.7.0
-
 # Profiling
 snakeviz==2.2.0
-
 # Pre-commit
 pre-commit==3.3.3
-
 # For local publishing to PyPi with flit
 keyring==24.2.0
 
