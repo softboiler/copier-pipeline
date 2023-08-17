@@ -11,13 +11,12 @@ Param(
 )
 
 if ( $Recopy ) {
-    copier recopy --force $(if ($Defaults) { '--defaults' })
+    copier recopy --overwrite $(if ($Defaults) { '--defaults' })
 }
 else {
     git submodule update --init --remote --merge template
     git add --all
     git commit -m "Update template digest to $(git rev-parse --short HEAD:template)"
     git submodule deinit template
-    copier update $(if ($Defaults) { '--defaults' })
+    copier update --overwrite --vcs-ref $(git rev-parse HEAD:template) $(if ($Defaults) { '--defaults' })
 }
-python '.tools/scripts/compose_pyproject.py'
