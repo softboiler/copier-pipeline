@@ -4,6 +4,7 @@ Avoid activating Rich features that break functionality outside of the REPL.
 """
 
 from warnings import resetwarnings
+
 from warning_filters import filter_warnings_and_update_dotenv
 
 
