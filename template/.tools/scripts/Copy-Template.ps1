@@ -18,5 +18,5 @@ else {
     git add --all
     git commit -m "Update template digest to $(git rev-parse --short HEAD:template)"
     git submodule deinit template
-    copier update --overwrite --vcs-ref $(git rev-parse HEAD:template) $(if ($Defaults) { '--defaults' })
+    copier update --vcs-ref $(git rev-parse HEAD:template) $(if ($Defaults) { '--defaults' })
 }
