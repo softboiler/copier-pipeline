@@ -5,7 +5,7 @@
 # * Changes below may be lost in significant template updates.
 
 [build-system]
-requires = ["flit_core >=3.3,<4"]
+requires = ["flit_core==3.9.0"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -16,21 +16,36 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">={{ python_version }}"
 classifiers = ["License :: OSI Approved :: MIT License"]
+
 [[project.authors]]
 name = "{{ project_owner_name }}"
 {% if project_email %}email = "{{ project_email }}"{% endif %}
+
 [project.urls]
 Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
 Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
 Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
 Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 
+[tool.fawltydeps]
+ignore_undeclared = ["rich"]
+ignore_unused = []
+
+[tool.fawltydeps.custom_mapping]
+ipykernel = ["IPython"]
+
 [tool.ruff]
 fix = true
 select = ["ALL"]
 src = ["src", "tests"]
 target-version = "py311"
-extend-exclude = ["template", "typings", ".github", ".tools", ".venv"]
+extend-exclude = [
+    "template",
+    "typings",
+    ".github",
+    ".tools",
+    "C:/Users/Blake/AppData/Local/Programs/Python/Python311/Lib/**",
+]
 ignore = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.
@@ -51,11 +66,14 @@ ignore = [
     "EM",      # Don't check for exception message issues
     "ERA",     # False positives. Don't get rid of commented out code.
     "FBT",     # Allow boolean "traps"
+    "FIX002",  # Allow TODOs
     "F841",    # Don't check for or fix unused variables
+    "FLY002",  # Allow different string representations
     "G0",      # Allow f-strings, etc. in Loguru logging
     "INP001",  # False positives. Checks for packages missing `__init__.py`
     "ISC",     # False positives. Implicit string concatenation is fine.
     "PD013",   # Allow `stack` instead of `melt`. They're not a direct swap.
+    "PD101",   # Allow use of nunique(). False positives
     "PD901",   # Allow `df` variable name. We are all consenting adults here.
     "PD011",   # Allow use of `.values`. False positives.
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
@@ -105,6 +123,8 @@ split-on-trailing-comma = false
 "tests/**" = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.
+
+    "N815", # Allow camelCase in cine metadata models, which map to C structures
 
     # * ---------------------------------------------------------------------------- * #
     # * Changes below may be lost in significant template updates.

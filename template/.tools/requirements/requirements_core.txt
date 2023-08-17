@@ -4,20 +4,5 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-# Type checking
-pyright
-
-# Pre-commit common requirements
-ruff==0.0.284
-
-# Testing
-pytest==7.4.0
-# Testing plugins
-pytest-cov==4.1.0
-pytest-custom-exit-code==0.3.0
-# Format AND test notebooks
-nb-clean==2.4.0
-nbqa==1.7.0
-
-# Document
--r requirements_docs.txt
+copier==8.1.0
+dulwich==0.21.5
