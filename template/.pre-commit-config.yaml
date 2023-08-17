@@ -53,6 +53,7 @@ repos:
         entry: "pwsh -Command fawltydeps"
         files: |
           .*
+
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
 
