@@ -4,6 +4,8 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
+# To allow for local variation in type checking without overriding CI
+pyrightconfig.json
 # To avoid committing profiler results
 *.prof
 # To avoid committing rejected changes upon bumping template
