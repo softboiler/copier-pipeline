@@ -4,15 +4,7 @@
   "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
   "dependencyDashboardApproval": false,
   "schedule": ["on the first day of the month"],
-  "git-submodules": {
-    "enabled": true
-  },
-  "enabledManagers": [
-    "git-submodules",
-    "github-actions",
-    "pip_requirements",
-    "pre-commit"
-  ],
+  "enabledManagers": ["github-actions", "pip_requirements", "pre-commit"],
   "pip_requirements": {
     "description": "Additionally monitor these files.",
     "fileMatch": ["^\\.tools/requirements/*"]
