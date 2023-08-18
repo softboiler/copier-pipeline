@@ -24,10 +24,10 @@ repos:
         verbose: true
         pass_filenames: false
         language: "system"
-        entry: "pwsh -Command python warning_filters.py"
+        entry: "pwsh -Command python .tools/scripts/warning_filters.py"
         files: |
           (?x)^(
-            warning_filters.py
+            .tools/scripts/warning_filters.py
           )$
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
