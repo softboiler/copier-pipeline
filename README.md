@@ -13,7 +13,7 @@ Also, make sure you set up a [GitHub](https://github.com/) account. Parts of thi
 - [Copier](https://copier.readthedocs.io/en/stable/#installation): This allows the template to evolve alongside your project(s), and be updated periodically. This is necessary for generating new projects from the template, but will come along with the virtual environment of existing projects using this template.
 - [Cross-platform PowerShell](https://github.com/PowerShell/PowerShell#get-powershell): PowerShell is no longer Windows-only. Automations in this template are written for PowerShell, and should run on any platform.
 - Python
-  - Windows: Install Python from <https://www.python.org/downloads/> rather than the Windows Store! This gives you the Python launcher, invoked with `py`,  to manage multiple versions of Python, and is required for use of this template.
+  - Windows: Install Python from <https://www.python.org/downloads/> rather than the Windows Store! This gives you the Python launcher, invoked with `py`, and facilitates multiple Python versions being installed.
   - MacOS: Install Python from <https://www.python.org/downloads/>. If you encounter issues using this template on Mac, consider filing an [issue](https://github.com/blakeNaccarato/copier-python/issues) and I will update the scripts.
   - Other UNIX-like systems: I recommend you install Python from the [deadsnakes](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa) team. This allows you to install a later Python with all of its extras, e.g. `sudo apt install python3.11 python3.11-dev python3.11-venv python3.11-distutils python3.11-tk`. Make sure you at least install `python#.##-venv` for your chosen Python.
 - [Set-PsEnv](https://www.powershellgallery.com/packages/Set-PsEnv/0.0.5): This allows environment variables specified in `.env` files to be loaded into the PowerShell session. This is necessary in this template for various tasks, since VSCode [doesn't handle environment variables very well](https://github.com/microsoft/vscode-python/issues/944).
@@ -44,7 +44,6 @@ Generating a project from this template involves creating a local folder, initia
 - Run `first_time_setup.ps1`. You can inspect the [setup script](https://github.com/blakeNaccarato/copier-python/blob/main/first_time_setup.ps1) if you like. It does the following:
   - Adds a `template` submodule for later updating.
   - Adds a `typings` submodule to synchronize `pyright` in GitHub Actions with Pylance.
-  - Bootstraps the initial template here at `blakeNaccarato/copier-python`.
   - Sets up a Python virtual environment specific to this project. This may take a little while.
 - Restart VSCode to refresh the "Source Control" sidebar, removing duplicate buttons/submodules which have already been deinitialized. This can be done easily with the "Developer: Reload Window" command.
 - There should be only one button in the "Source Control" sidebar now, indicating "Publish Branch". Press that button.
@@ -79,17 +78,17 @@ Projects generated from this template require certain accounts or GitHub apps to
 
 Static analysis (e.g. linting, type checking) "moves errors to the left". Linting and code checks run as you write to catch problems before you run/publish/package your code.
 
-- Black: Automatically format your code when you save the file. Enforces consistent whitespace and line length so you don't have to think about it.
-- Pylance/pyright: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
-- Ruff: Enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
-- Sourcery: Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
-- Pre-commit: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
-- Pytest: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.
-- MyST: Documentation in Markdown instead of rST. Having a docs website ready to go is
+- black: Automatically format your code when you save the file. Enforces consistent whitespace and line length so you don't have to think about it.
+- pylance/pyright: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
+- ruff: Enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
+- sourcery: Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
+- pre-commit: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
+- pytest: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.
+- MyST: Documentation in Markdown instead of rST. Having a docs page at project inception should encourage documentation as you go. Don't be afraid to publish incomplete pages, early adopters will appreciate the breadcrumbs. Use docs to help explain the "why" of things.
 
 ## To-do
 
-There is a lot still to do in this template, but the big one is the concept of "meta-templating". The saying that "one size fits all" is untrue. Rather, "many sizes fit most". I encourage you to fork this template, and the associated projects ([blakeNaccarato/copier-python-init](https://github.com/blakeNaccarato/copier-python-init) and [blakeNaccarato/copier-python-workflow-setup](https://github.com/blakeNaccarato/copier-python-workflow-setup)), and change the relevant links in your fork to take ownership of the template and modify it for your own needs.
+There is a lot still to do in this template, but the big one is the concept of "meta-templating". The saying that "one size fits all" doesn't hold in project templating. Rather, "many sizes fit most". I encourage you to fork this template, and the associated setup workflow [blakeNaccarato/copier-python-workflow-setup](https://github.com/blakeNaccarato/copier-python-workflow-setup)), and change the relevant links in your fork to take ownership of the template and modify it for your own needs.
 
 I am going to set up a meta-template solution to automate this, facilitating the forking of templates from templates, to allow anyone to maintain their own template, periodically updating from whatever parent template they chose. This pattern allows individuals or teams to benefit from the templates of others, without being constrained by the opinionated choices of that template.
 
