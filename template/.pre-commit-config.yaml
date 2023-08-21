@@ -53,7 +53,9 @@ repos:
         language: "system"
         entry: "pwsh -Command fawltydeps"
         files: |
-          .*
+          (?x)^(
+            .*
+          )$
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
