@@ -1,5 +1,6 @@
 ci:
   skip:
+    - "core-update"
     - "update-warning-filters"
     - "pytest-fast-only"
     - "fawltydeps"
@@ -19,6 +20,16 @@ repos:
       # * -------------------------------------------------------------------------- * #
       # * Changes below may be lost in significant template updates.
 
+      - id: "core-update"
+        name: "core-update"
+        verbose: true
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -Command python .tools/scripts/core_update.py"
+        files: |
+          (?x)^(
+            .*
+          )$
       - id: "update-warning-filters"
         name: "update-warning-filters"
         verbose: true
