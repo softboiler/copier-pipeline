@@ -17,6 +17,6 @@ else {
     git submodule update --init --remote --merge template
     git add --all
     git commit -m "Update template digest to $(git rev-parse --short HEAD:template)"
-    git submodule deinit template --force
+    git submodule deinit --force template
     copier update --vcs-ref $(git rev-parse HEAD:template) $(if ($Defaults) { '--defaults' })
 }
