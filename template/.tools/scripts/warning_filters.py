@@ -1,13 +1,28 @@
 """Warning filters and `.env` updater."""
 
+from collections.abc import Sequence
+from contextlib import contextmanager
 from pathlib import Path
-from warnings import filterwarnings
+from typing import Literal, NamedTuple
+from warnings import catch_warnings, filterwarnings
+
+
+class WarningFilter(NamedTuple):
+    """A warning filter, e.g. to be unpacked into `warnings.filterwarnings`."""
+
+    action: Literal["default", "error", "ignore", "always", "module", "once"] = "ignore"
+    message: str = ""
+    category: type[Warning] = Warning
+    module: str = ""
+    lineno: int = 0
+    append: bool = False
 
 
 def filter_warnings_and_update_dotenv():
     """Filter warnings and update PYTHONWARNINGS in `.env` file."""
+    filterwarnings("default")
     filters: list[str] = []
-    for filt in FILTERS:
+    for filt in ALL_WARNINGS:
         # Filter warnings before modifying for writing to `.env`
         filterwarnings(*filt)  # type: ignore  # pyright 1.1.317
         # Since `.env` files don't support regex matching, un-escape slashes and
@@ -16,7 +31,7 @@ def filter_warnings_and_update_dotenv():
             msg = filt[msg_pos].replace("\\", "")  # type: ignore  # pyright 1.1.317
             for splittable in [",", ".*", "=", "'", '"']:
                 msg = msg.split(splittable)[0]
-            filt[msg_pos] = msg
+            filt[msg_pos] = msg  # type: ignore  # pyright 1.1.323
         # Convert classes to string representations of their names
         if len(filt) > (warn_pos := 2):
             filt[warn_pos] = filt[warn_pos].__name__  # type: ignore  # pyright 1.1.317
@@ -32,16 +47,45 @@ def filter_warnings_and_update_dotenv():
     dotenv.write_text(encoding="utf-8", data=content)
 
 
-FILTERS = (
-    # Warn for all warnings, even `DeprecationWarning`
-    ["default"],
+ENCODING_WARNINGS = [
     *(
-        ["ignore", *w]
-        for w in (
+        WarningFilter(
+            message=r"'encoding' argument not specified",
+            category=(category := EncodingWarning),
+            module=module,
+        )
+        for module in (
+            "dill._dill",
+            "matplotlib.font_manager",
+            "ploomber_core.config",
+            "ruamel.yaml.main",
+        )
+    ),
+    *(
+        WarningFilter(
+            message=r"UTF-8 Mode affects locale\.getpreferredencoding\(\)\. Consider locale\.getencoding\(\) instead\.",
+            category=category,
+            module=module,
+        )
+        for module in ("dill.logger",)
+    ),
+]
+"""Encoding warnings."""
+
+OTHER_WARNINGS = (
+    # Warn for all warnings, even `DeprecationWarning`
+    *(
+        WarningFilter(
+            message=message,
+            category=category,
+            module=module,
+        )
+        for message, category, module in (
             # pkg_resources: https://github.com/blakeNaccarato/copier-python/issues/319#issue-1609228740
             (
                 "Deprecated call to `pkg_resources.declare_namespace",
                 DeprecationWarning,
+                "",
             ),
             # Creating a LegacyVersion: https://github.com/blakeNaccarato/copier-python/issues/319#issuecomment-1454209165
             (
@@ -111,6 +155,7 @@ FILTERS = (
             (
                 "pkg_resources is deprecated as an API",
                 DeprecationWarning,
+                "",
             ),
             (
                 "unclosed file",
@@ -145,20 +190,24 @@ FILTERS = (
             (
                 "lib2to3 package is deprecated and may not be able to parse Python",
                 PendingDeprecationWarning,
+                "",
             ),
             (
                 "lib2to3 package is deprecated and may not be able to parse Python",
                 DeprecationWarning,
+                "",
             ),
             # ImportDenier:ImportWarning: https://github.com/blakeNaccarato/copier-python/issues/319#issuecomment-1546359005
             (
                 "ImportDenier",
                 ImportWarning,
+                "",
             ),
             # numpy.ndarray size changed:RuntimeWarning: https://github.com/blakeNaccarato/copier-python/issues/319#issuecomment-1546360423
             (
                 r"numpy.ndarray size changed",
                 RuntimeWarning,
+                "",
             ),
             # :DeprecationWarning:sphinx.util.images...sphinx_book_theme: https://github.com/blakeNaccarato/copier-python/issues/319#issuecomment-1591786172
             (
@@ -217,10 +266,12 @@ FILTERS = (
             (
                 r"distutils Version classes are deprecated\. Use packaging\.version instead\.",
                 DeprecationWarning,
+                "",
             ),
             (
                 r"unclosed file <_io\.BufferedReader name='.*'>",
                 ResourceWarning,
+                "",
             ),
             # ! NOT LINKED
             (
@@ -230,6 +281,7 @@ FILTERS = (
                     "So, you probably shouldn't use subpackages with this lazy feature."
                 ),
                 RuntimeWarning,
+                "",
             ),
             (
                 "invalid escape sequence",
@@ -239,6 +291,23 @@ FILTERS = (
         )
     ),
 )
+
+ALL_WARNINGS = [*ENCODING_WARNINGS, *OTHER_WARNINGS]
+
+
+@contextmanager
+def catch_certain_warnings(warnings: Sequence[WarningFilter] = ALL_WARNINGS):
+    """Catch certain warnings."""
+    with catch_warnings() as context:
+        filter_certain_warnings(warnings)
+        yield context
+
+
+def filter_certain_warnings(warnings: Sequence[WarningFilter] = ALL_WARNINGS):
+    """Filter certain warnings."""
+    for filt in warnings:
+        filterwarnings(*filt)
+
 
 if __name__ == "__main__":
     filter_warnings_and_update_dotenv()
