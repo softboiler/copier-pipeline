@@ -3,6 +3,7 @@
 from collections.abc import Sequence
 from contextlib import contextmanager
 from pathlib import Path
+from string import punctuation
 from typing import Literal, NamedTuple
 from warnings import catch_warnings, filterwarnings
 
@@ -27,14 +28,15 @@ def filter_warnings_and_update_dotenv():
         filterwarnings(*filt)  # type: ignore  # pyright 1.1.317
         # Since `.env` files don't support regex matching, un-escape slashes and
         # truncate after the first `.*`.
-        if len(filt) > (msg_pos := 1):
-            msg = filt[msg_pos].replace("\\", "")  # type: ignore  # pyright 1.1.317
-            for splittable in [",", ".*", "=", "'", '"']:
-                msg = msg.split(splittable)[0]
-            filt[msg_pos] = msg  # type: ignore  # pyright 1.1.323
+        filt = list(filt[:4])
+        msg_pos = 1
+        msg = filt[msg_pos].replace("\\", "")  # type: ignore  # pyright 1.1.317
+        for splittable in punctuation:
+            msg = msg.split(splittable)[0]
+        filt[msg_pos] = msg
         # Convert classes to string representations of their names
-        if len(filt) > (warn_pos := 2):
-            filt[warn_pos] = filt[warn_pos].__name__  # type: ignore  # pyright 1.1.317
+        warn_pos = 2
+        filt[warn_pos] = filt[warn_pos].__name__  # type: ignore  # pyright 1.1.317
         # Join filter parts with colons, as expected in `.env` files
         filters.append(":".join(str(f) for f in filt))
     # ! Truncate `.env` after notice and insert filters
@@ -56,9 +58,13 @@ ENCODING_WARNINGS = [
         )
         for module in (
             "dill._dill",
+            "dvc_objects.fs.local",
+            "fsspec.spec",
             "matplotlib.font_manager",
             "ploomber_core.config",
             "ruamel.yaml.main",
+            "sqltrie.sqlite.sqlite",
+            "zc.lockfile",
         )
     ),
     *(
