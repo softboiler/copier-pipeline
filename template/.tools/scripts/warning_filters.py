@@ -57,6 +57,8 @@ ENCODING_WARNINGS = [
             module=module,
         )
         for module in (
+            "cv2.load_config_py3",
+            "dask.config",
             "dill._dill",
             "dvc_objects.fs.local",
             "fsspec.spec",
@@ -73,7 +75,7 @@ ENCODING_WARNINGS = [
             category=category,
             module=module,
         )
-        for module in ("dill.logger",)
+        for module in ("dill.logger", "scmrepo.git.backend.pygit2")
     ),
 ]
 """Encoding warnings."""
