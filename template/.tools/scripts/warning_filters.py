@@ -68,6 +68,7 @@ ENCODING_WARNINGS = [
             "dask.config",
             "dill._dill",
             "dvc_objects.fs.local",
+            "fawltydeps.extract_imports",
             "fsspec.spec",
             "matplotlib.font_manager",
             "ploomber_core.config",
