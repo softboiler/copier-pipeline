@@ -1,7 +1,6 @@
 ci:
   skip:
     - "core-update"
-    - "update-warning-filters"
     - "pytest-fast-only"
     - "fawltydeps"
   autoupdate_schedule: "quarterly"
@@ -51,10 +50,7 @@ repos:
         pass_filenames: false
         language: "system"
         entry: "pwsh -Command fawltydeps"
-        files: |
-          (?x)^(
-            .*
-          )$
+        files: "^.*$"
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
