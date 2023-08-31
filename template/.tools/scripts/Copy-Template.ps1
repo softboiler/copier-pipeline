@@ -7,7 +7,10 @@ Param(
     [switch]$Recopy,
 
     # Whether to use default values for unanswered questions.
-    [switch]$Defaults
+    [switch]$Defaults.
+
+    # Whether to skip verifification when committing.
+    [switch]$NoVerify,
 )
 
 if ( $Recopy ) {
@@ -16,7 +19,7 @@ if ( $Recopy ) {
 else {
     git submodule update --init --remote --merge template
     git add --all
-    git commit -m "Update template digest to $(git rev-parse --short HEAD:template)"
+    git commit $(if ($NoVerify) { '--no-verify' }) -m "Update template digest to $(git rev-parse --short HEAD:template)"
     git submodule deinit --force template
     copier update --vcs-ref $(git rev-parse HEAD:template) $(if ($Defaults) { '--defaults' })
 }
