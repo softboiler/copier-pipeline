@@ -5,7 +5,7 @@ Avoid activating Rich features that break functionality outside of the REPL.
 
 from warnings import resetwarnings
 
-from warning_filters import filter_warnings_and_update_dotenv
+import warning_filters
 
 
 def init():
@@ -13,7 +13,7 @@ def init():
 
     # Reset warnings coming from `.env` since those in `warning_filters.py` are smarter
     resetwarnings()
-    filter_warnings_and_update_dotenv()
+    warning_filters.main()
 
     traceback.install()
 

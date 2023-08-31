@@ -8,6 +8,12 @@ from typing import Literal, NamedTuple
 from warnings import catch_warnings, filterwarnings
 
 
+def main():
+    filter_warnings_and_update_dotenv(
+        sorted(ALL_WARNINGS, key=lambda w: f"{w.category}{w.message}")
+    )
+
+
 class WarningFilter(NamedTuple):
     """A warning filter, e.g. to be unpacked into `warnings.filterwarnings`."""
 
@@ -17,36 +23,6 @@ class WarningFilter(NamedTuple):
     module: str = ""
     lineno: int = 0
     append: bool = False
-
-
-def filter_warnings_and_update_dotenv():
-    """Filter warnings and update PYTHONWARNINGS in `.env` file."""
-    filterwarnings("default")
-    filters: list[str] = []
-    for filt in ALL_WARNINGS:
-        # Filter warnings before modifying for writing to `.env`
-        filterwarnings(*filt)  # type: ignore  # pyright 1.1.317
-        # Since `.env` files don't support regex matching, un-escape slashes and
-        # truncate after the first `.*`.
-        filt = list(filt[:4])
-        msg_pos = 1
-        msg = filt[msg_pos].replace("\\", "")  # type: ignore  # pyright 1.1.317
-        for splittable in punctuation:
-            msg = msg.split(splittable)[0]
-        filt[msg_pos] = msg
-        # Convert classes to string representations of their names
-        warn_pos = 2
-        filt[warn_pos] = filt[warn_pos].__name__  # type: ignore  # pyright 1.1.317
-        # Join filter parts with colons, as expected in `.env` files
-        filters.append(":".join(str(f) for f in filt))
-    # ! Truncate `.env` after notice and insert filters
-    dotenv = Path(".env")
-    content = dotenv.read_text(encoding="utf-8")
-    notice = "# ! Don't edit below. `warning_filters.py` may trash any changes."
-    loc = content.find(notice)  # Returns -1 if not found
-    insert_point = len(content) if loc == -1 else loc
-    content = f"{content[:insert_point]}{notice}\nPYTHONWARNINGS={','.join(filters)}\n"
-    dotenv.write_text(encoding="utf-8", data=content)
 
 
 ENCODING_WARNINGS = [
@@ -72,6 +48,7 @@ ENCODING_WARNINGS = [
             "fsspec.spec",
             "matplotlib.font_manager",
             "ploomber_core.config",
+            "pyvisa.util",
             "ruamel.yaml.main",
             "sqltrie.sqlite.sqlite",
             "zc.lockfile",
@@ -311,6 +288,36 @@ OTHER_WARNINGS = (
 ALL_WARNINGS = [*ENCODING_WARNINGS, *OTHER_WARNINGS]
 
 
+def filter_warnings_and_update_dotenv(warnings: Sequence[WarningFilter] = ALL_WARNINGS):
+    """Filter warnings and update PYTHONWARNINGS in `.env` file."""
+    filterwarnings("default")
+    filters: list[str] = []
+    for filt in warnings:
+        # Filter warnings before modifying for writing to `.env`
+        filterwarnings(*filt)  # type: ignore  # pyright 1.1.317
+        # Since `.env` files don't support regex matching, un-escape slashes and
+        # truncate after the first `.*`.
+        filt = list(filt[:4])
+        msg_pos = 1
+        msg = filt[msg_pos].replace("\\", "")  # type: ignore  # pyright 1.1.317
+        for splittable in punctuation:
+            msg = msg.split(splittable)[0]
+        filt[msg_pos] = msg
+        # Convert classes to string representations of their names
+        warn_pos = 2
+        filt[warn_pos] = filt[warn_pos].__name__  # type: ignore  # pyright 1.1.317
+        # Join filter parts with colons, as expected in `.env` files
+        filters.append(":".join(str(f) for f in filt))
+    # ! Truncate `.env` after notice and insert filters
+    dotenv = Path(".env")
+    content = dotenv.read_text(encoding="utf-8")
+    notice = "# ! Don't edit below. `warning_filters.py` may trash any changes."
+    loc = content.find(notice)  # Returns -1 if not found
+    insert_point = len(content) if loc == -1 else loc
+    content = f"{content[:insert_point]}{notice}\nPYTHONWARNINGS={','.join(filters)}\n"
+    dotenv.write_text(encoding="utf-8", data=content)
+
+
 @contextmanager
 def catch_certain_warnings(warnings: Sequence[WarningFilter] = ALL_WARNINGS):
     """Catch certain warnings."""
@@ -326,4 +333,4 @@ def filter_certain_warnings(warnings: Sequence[WarningFilter] = ALL_WARNINGS):
 
 
 if __name__ == "__main__":
-    filter_warnings_and_update_dotenv()
+    main()
