@@ -28,16 +28,6 @@ repos:
         pass_filenames: false
         language: "system"
         entry: "pwsh -Command python .tools/scripts/core_update.py"
-      - id: "update-warning-filters"
-        name: "update-warning-filters"
-        verbose: true
-        pass_filenames: false
-        language: "system"
-        entry: "pwsh -Command python .tools/scripts/warning_filters.py"
-        files: |
-          (?x)^(
-            .tools/scripts/warning_filters.py
-          )$
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         verbose: true
