@@ -6,7 +6,7 @@
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
-copier<8.2
+copier<8.3
 dulwich
 flit_core
 pip
