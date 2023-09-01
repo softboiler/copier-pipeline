@@ -9,7 +9,7 @@
 # Type checking
 pyright
 # Pre-commit common requirements
-ruff==0.0.284
+ruff==0.0.286
 # Testing
 pytest==7.4.0
 # Testing plugins
