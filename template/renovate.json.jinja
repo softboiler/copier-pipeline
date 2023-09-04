@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Establish base config, schedule, and manager defaults.",
+  "description": "Establish base config, schedule, and manager defaults",
   "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
   "dependencyDashboardApproval": {% if active %}false{% else %}true{% endif %},
   "schedule": ["on the 16th day of the month"],
@@ -14,40 +14,34 @@
     "pre-commit"
   ],
   "pip_requirements": {
-    "description": "Additionally monitor these files.",
+    "description": "Additionally monitor these files",
     "fileMatch": ["^\\.tools/requirements/*"]
   },
   "packageRules": [
     {
-      "description": "Core dependencies, unmmatched by the rules below.",
+      "description": "Core dependencies, unmmatched by the rules below",
       "groupName": "core",
       "matchPackagePatterns": ["*"],
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "description": "Type checking dependencies.",
+      "description": "Type checking dependencies",
       "groupName": "type checking",
       "matchManagers": ["pip_requirements", "git-submodules"],
-      "matchPackageNames": ["pyright", "typings"]
+      "matchPackageNames": ["pyright", "submodules/typings"]
     },
     {
-      "groupName": "numpy",
-      "description": "Numba needs numpy<1.25. Pandas needs numpy>1.25 via stubs. https://github.com/numba/numba/issues/8698",
-      "matchManagers": ["pip_requirements"],
-      "matchPackageNames": ["numpy", "numba", "pandas"]
-    },
-    {
-      "description": "Ignore changerelease.yml workflow deps managed by the template.",
+      "description": "Ignore changerelease.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
       "ignoreDeps": ["dropseed/changerelease"]
     },
     {
-      "description": "Ignore codeql.yml workflow deps managed by the template.",
+      "description": "Ignore codeql.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
       "ignoreDeps": ["actions/checkout", "github/codeql-action"]
     },
     {
-      "description": "Ignore main.yml workflow deps managed by the template.",
+      "description": "Ignore main.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
       "ignoreDeps": [
         "blakeNaccarato/copier-python-workflow-setup",
@@ -56,12 +50,12 @@
       ]
     },
     {
-      "description": "Ignore publish.yml workflow deps managed by the template.",
+      "description": "Ignore publish.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
       "ignoreDeps": ["actions/upload-pages-artifact", "actions/deploy-pages"]
     },
     {
-      "description": "Ignore sphinx.yml workflow deps managed by the template.",
+      "description": "Ignore sphinx.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
       "ignoreDeps": [
         "dropseed/changerelease",
@@ -75,7 +69,7 @@
       ]
     },
     {
-      "description": "Ignore pre-commit dependencies managed by the template.",
+      "description": "Ignore pre-commit dependencies managed by the template",
       "matchManagers": ["pre-commit"],
       "ignoreDeps": [
         "pre-commit/pre-commit-hooks",
@@ -88,7 +82,7 @@
       ]
     },
     {
-      "description": "Ignore requirements_both.txt deps managed by this template.",
+      "description": "Ignore requirements_both.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": [
@@ -101,13 +95,13 @@
       ]
     },
     {
-      "description": "Ignore requirements_core.txt deps managed by this template.",
+      "description": "Ignore requirements_core.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": ["copier", "dulwich", "flit_core", "pip", "wheel"]
     },
     {
-      "description": "Ignore requirements_dev.txt deps managed by this template.",
+      "description": "Ignore requirements_dev.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": [
@@ -123,7 +117,7 @@
       ]
     },
     {
-      "description": "Ignore requirements_docs.txt deps managed by this template.",
+      "description": "Ignore requirements_docs.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
       "matchPaths": [".tools/requirements/*"],
       "ignoreDeps": [
