@@ -7,10 +7,10 @@ Param(
     [switch]$Recopy,
 
     # Whether to use default values for unanswered questions.
-    [switch]$Defaults.
+    [switch]$Defaults,
 
     # Whether to skip verifification when committing.
-    [switch]$NoVerify,
+    [switch]$NoVerify
 )
 
 if ( $Recopy ) {
