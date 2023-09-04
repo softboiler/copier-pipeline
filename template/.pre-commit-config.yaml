@@ -39,10 +39,7 @@ repos:
             pyproject.toml
             src/.*
             |tests/.*
-            |.tools/(
-              pyproject.toml
-              |requirements/.*
-            )
+            |.tools/requirements/.*
           )$
       - id: "fawltydeps"
         name: "fawltydeps"
@@ -50,7 +47,13 @@ repos:
         pass_filenames: false
         language: "system"
         entry: "pwsh -Command fawltydeps"
-        files: "^.*$"
+        files: |
+          (?x)^(
+            src/.*
+            |pyproject.toml
+            |requirements.txt
+            |.tools/requirements/.*
+          )$
 
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
