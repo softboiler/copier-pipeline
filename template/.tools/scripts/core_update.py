@@ -28,16 +28,22 @@ def main():
 class Submodule:
     """Represents a git submodule."""
 
-    name: str
-    """The submodule name."""
+    _path: str | bytes
+    """Submodule path as reported by the submodule source."""
     commit: str
-    """The commit hash currently tracked by the submodule."""
+    """Commit hash currently tracked by the submodule."""
+    path: Path = Path()
+    """Submodule path."""
+    name: str = ""
+    """Submodule name."""
 
     def __post_init__(self):
         """Handle byte strings reported by some submodule sources, like dulwich."""
         # dulwich.porcelain.submodule_list returns bytes
-        if isinstance(self.name, bytes):
-            self.name = self.name.decode("utf-8")
+        self.path = Path(
+            self._path.decode("utf-8") if isinstance(self._path, bytes) else self._path
+        )
+        self.name = self.path.name
 
 
 def get_submodules() -> tuple[Submodule, Submodule, list[Submodule]]:
