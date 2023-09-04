@@ -19,6 +19,12 @@
   },
   "packageRules": [
     {
+      "description": "Core dependencies, unmmatched by the rules below",
+      "groupName": "core",
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"]
+    },
+    {
       "description": "Pre-commit manages black and ruff. Projects manage pyright.",
       "matchManagers": ["pip_requirements"],
       "matchPaths": ["template/.tools/requirements/*"],
