@@ -36,10 +36,10 @@ repos:
           pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
         files: |
           (?x)^(
-            pyproject.toml
+            pyproject\.toml
             src/.*
             |tests/.*
-            |.tools/requirements/.*
+            |\.tools/requirements/.*
           )$
       - id: "fawltydeps"
         name: "fawltydeps"
@@ -50,9 +50,9 @@ repos:
         files: |
           (?x)^(
             src/.*
-            |pyproject.toml
-            |requirements.txt
-            |.tools/requirements/.*
+            |pyproject\.toml
+            |requirements\.txt
+            |\.tools/requirements/.*
           )$
 
   # * ------------------------------------------------------------------------------ * #
