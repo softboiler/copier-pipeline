@@ -64,6 +64,7 @@
 
 # Binary files
 *.db binary
+*.dillpickle binary
 *.p binary
 *.pkl binary
 *.pickle binary
