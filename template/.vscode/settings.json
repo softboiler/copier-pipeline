@@ -82,8 +82,7 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
-    ".nest_tools_config": "coverage.xml, setup.ps1, update.ps1, *.code-workspace, *.prof, .copier-answers.yml, .coverage, .coveragerc, .env, first_time_setup.ps1, .gitattributes, .*ignore, .gitmodules, .markdownlint-cli2.yaml, *.lock, *.log, .pre-commit-config.yaml, .pytest_cache, .sourcery.yaml, codecov.yml, pyproject.toml, pyrightconfig.json, pytest.ini, pythonrc.py, renovate.json",
-    ".nest_md": "*.md, CITATION.cff, LICENSE"
+    ".root": "*"
   },
   //* File associations
   "files.associations": {
@@ -92,8 +91,7 @@
     ".pylintrc": "ini",
     "pyrightconfig.json": "jsonc",
     "*requirements*.txt": "pip-requirements",
-    ".nest_md": "markdown",
-    ".nest_tools_config": "plaintext",
+    ".root": "plaintext",
     ".sourcery.yaml": "yaml"
   },
   //* Exclude problematic files in Problems panel filter and elsewhere
@@ -112,8 +110,7 @@
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
   "vsicons.associations.files": [
-    { "icon": "ini", "extensions": ["nest_tools_config"], "format": "svg" },
-    { "icon": "markdown", "extensions": ["nest_md"], "format": "svg" }
+    { "icon": "ini", "extensions": ["root"], "format": "svg" }
   ],
 
   //! Built-in
