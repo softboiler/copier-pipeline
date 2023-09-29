@@ -51,12 +51,7 @@ def filter_certain_warnings():
     filterwarnings("default")
     for filt in chain.from_iterable(
         get_default_warnings_for_src(category)
-        for category in [
-            DeprecationWarning,
-            EncodingWarning,
-            PendingDeprecationWarning,
-            ResourceWarning,
-        ]
+        for category in [DeprecationWarning, PendingDeprecationWarning, EncodingWarning]
     ):
         filterwarnings(*filt)
 
