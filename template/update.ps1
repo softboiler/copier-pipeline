@@ -5,6 +5,9 @@ Update the local virtual environment to the latest tracked dependencies.
 # * -------------------------------------------------------------------------------- * #
 # * Changes below may be lost in significant template updates.
 
+# Deinit submodules to avoid issues with git pull
+git submodule --quiet deinit --all --force
+
 # Activate environment
 $VENV_ACTIVATE_WINDOWS = '.venv/Scripts/activate'
 $VENV_ACTIVATE_UNIX = '.venv/bin/Activate.ps1'
