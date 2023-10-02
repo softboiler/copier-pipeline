@@ -15,15 +15,15 @@
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["^template/\\.tools/requirements/*$"]
+    "fileMatch": ["(^|/)template/\\.tools/requirements/.*$"]
   },
   "github-actions": {
     "description": "Additionally monitor template GitHub actions.",
-    "fileMatch": ["^template/\\.github/workflows/*$"]
+    "fileMatch": ["(^|/)template/\\.github/workflows/.*$"]
   },
   "pre-commit": {
     "description": "Additionally monitor pre-commit config.",
-    "fileMatch": ["^template/\\.pre-commit-config\\.yaml$"]
+    "fileMatch": ["(^|/)template/\\.pre-commit-config\\.yaml$"]
   },
   "packageRules": [
     {
