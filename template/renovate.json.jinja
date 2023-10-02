@@ -33,16 +33,19 @@
     {
       "description": "Ignore changerelease.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
+      "matchFilenames": [".github/workflows/*"],
       "ignoreDeps": ["dropseed/changerelease"]
     },
     {
       "description": "Ignore codeql.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
+      "matchFilenames": [".github/workflows/*"],
       "ignoreDeps": ["actions/checkout", "github/codeql-action"]
     },
     {
       "description": "Ignore main.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
+      "matchFilenames": [".github/workflows/*"],
       "ignoreDeps": [
         "blakeNaccarato/copier-python-workflow-setup",
         "codecov/codecov-action",
@@ -52,11 +55,13 @@
     {
       "description": "Ignore publish.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
+      "matchFilenames": [".github/workflows/*"],
       "ignoreDeps": ["actions/upload-pages-artifact", "actions/deploy-pages"]
     },
     {
       "description": "Ignore sphinx.yml workflow deps managed by the template",
       "matchManagers": ["github-actions"],
+      "matchFilenames": [".github/workflows/*"],
       "ignoreDeps": [
         "dropseed/changerelease",
         "actions/checkout",
@@ -71,6 +76,7 @@
     {
       "description": "Ignore pre-commit dependencies managed by the template",
       "matchManagers": ["pre-commit"],
+      "matchFilenames": [".pre-commit-config.yaml"],
       "ignoreDeps": [
         "pre-commit/pre-commit-hooks",
         "psf/black",

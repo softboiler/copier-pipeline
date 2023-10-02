@@ -9,14 +9,14 @@
 # Type checking
 pyright
 # Pre-commit common requirements
-ruff
+ruff==0.0.292
 # Testing
-pytest
+pytest==7.4.0
 # Testing plugins
-pytest-cov
-pytest-custom-exit-code
+pytest-cov==4.1.0
+pytest-custom-exit-code==0.3.0
 # Format AND test notebooks
-nb-clean
-nbqa
+nb-clean==2.4.0
+nbqa==1.7.0
 
 -r requirements_docs.txt
