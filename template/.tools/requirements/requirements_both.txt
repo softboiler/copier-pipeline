@@ -16,7 +16,7 @@ pytest==7.4.0
 pytest-cov==4.1.0
 pytest-custom-exit-code==0.3.0
 # Format AND test notebooks
-nb-clean==2.4.0
+nb-clean==3.0.1
 nbqa==1.7.0
 
 -r requirements_docs.txt
