@@ -2,7 +2,7 @@ exclude: template/.pre-commit-config.yaml.jinja|template/{{ _copier_conf.answers
 
 ci:
   skip:
-    - "update-warning-filters"
+    - "core-update"
     - "pytest-fast-only"
     - "fawltydeps"
   autoupdate_schedule: "quarterly"
@@ -21,16 +21,14 @@ repos:
       # * -------------------------------------------------------------------------- * #
       # * Changes below may be lost in significant template updates.
 
-      - id: "update-warning-filters"
-        name: "update-warning-filters"
+      - id: "core-update"
+        name: "core-update"
+        stages: ["post-commit"]
+        always_run: true
         verbose: true
         pass_filenames: false
         language: "system"
-        entry: "pwsh -Command python warning_filters.py"
-        files: |
-          (?x)^(
-            warning_filters.py
-          )$
+        entry: "pwsh -Command python .tools/scripts/core_update.py"
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         verbose: true
@@ -40,21 +38,25 @@ repos:
           pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
         files: |
           (?x)^(
-            pyproject.toml
+            pyproject\.toml
             src/.*
             |tests/.*
-            |.tools/(
-              pyproject.toml
-              |requirements/.*
-            )
+            |\.tools/requirements/.*
           )$
       - id: "fawltydeps"
         name: "fawltydeps"
+        verbose: true
         pass_filenames: false
         language: "system"
         entry: "pwsh -Command fawltydeps"
         files: |
-          .*
+          (?x)^(
+            src/.*
+            |pyproject\.toml
+            |requirements\.txt
+            |\.tools/requirements/.*
+          )$
+
   # * ------------------------------------------------------------------------------ * #
   # * Changes below should persist in significant template updates.
 
@@ -83,7 +85,7 @@ repos:
     rev: "1.7.0"
     hooks:
       - id: "nbqa-ruff"
-        additional_dependencies: ["ruff==0.0.284"]
+        additional_dependencies: ["ruff==0.0.287"]
   - repo: "https://github.com/psf/black"
     rev: "23.7.0"
     hooks:

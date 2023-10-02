@@ -1,4 +1,4 @@
-# Requirements for both the dev environment.
+# Requirements for the dev environment.
 
 # * -------------------------------------------------------------------------------- * #
 # * Changes below should persist in significant template updates.

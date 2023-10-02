@@ -29,18 +29,69 @@ Home = "https://github.com/blakeNaccarato/copier-python"
 Tracker = "https://github.com/blakeNaccarato/copier-python/issues"
 
 [tool.fawltydeps]
-ignore_undeclared = ["rich"]
-ignore_unused = []
-
+output_format = "human_detailed"
+code = ["src"]
+deps = ["pyproject.toml"]
 [tool.fawltydeps.custom_mapping]
 ipykernel = ["IPython"]
 
+[tool.pyright]
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below should persist in significant template updates.
+
+# * -------------------------------------------------------------------------------- * #
+# * Changes below may be lost in significant template updates.
+
+# Paths
+include = ["src", "tests", "docs"]
+# Stubs
+stubPath = "submodules/typings"
+# Type inference helps with untyped upstream but can be unpredictable
+useLibraryCodeForTypes = true
+# Sets most checks to "error". See overrides below
+typeCheckingMode = "strict"
+# These flags are "true" by default in strict mode
+strictListInference = true
+strictDictionaryInference = true
+strictSetInference = true
+analyzeUnannotatedFunctions = true
+strictParameterNoneValue = true
+enableTypeIgnoreComments = true
+# Override these errors
+reportConstantRedefinition = "none"
+reportMissingParameterType = "none"
+reportMissingTypeStubs = "none"
+reportUnknownArgumentType = "none"
+reportUnknownLambdaType = "none"
+reportUnknownMemberType = "none"
+reportUnknownParameterType = "none"
+reportUnknownVariableType = "none"
+reportUnusedClass = "none"
+reportUnusedCoroutine = "none"
+reportUnusedExpression = "none"
+reportUnusedFunction = "none"
+reportUnusedImport = "none"
+reportUnusedVariable = "none"
+reportUntypedBaseClass = "none"
+# Override these disabled diagnostics
+reportShadowedImports = "error"
+reportCallInDefaultInitializer = "error"
+reportPropertyTypeMismatch = "error"
+reportUninitializedInstanceVariable = "error"
+# These diagnostics are "none" by default in strict mode
+reportImplicitStringConcatenation = "none"
+reportMissingSuperCall = "none"
+reportUnnecessaryTypeIgnoreComment = "none"
+reportUnusedCallResult = "none"
+
 [tool.ruff]
 fix = true
+cache-dir = ".cache/.ruff_cache"
 select = ["ALL"]
 src = ["src", "tests"]
 target-version = "py311"
-extend-exclude = ["typings", ".github"]
+extend-exclude = ["template", "submodules", ".github"]
 ignore = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.

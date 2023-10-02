@@ -1,12 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Establish base config, schedule, and manager defaults.",
+  "description": "Establish base config, schedule, and manager defaults",
   "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
   "dependencyDashboardApproval": false,
   "schedule": ["on the first day of the month"],
   "enabledManagers": ["github-actions", "pip_requirements", "pre-commit"],
   "pip_requirements": {
-    "description": "Additionally monitor these files.",
+    "description": "Additionally monitor these files",
     "fileMatch": ["^\\.tools/requirements/*"]
   },
   "github-actions": {
