@@ -7,7 +7,7 @@
 # * Changes below may be lost in significant template updates.
 
 copier==8.1.0
-dulwich==0.21.5
+dulwich==0.21.6
 flit_core==3.9.0
 pip==23.2.1
-wheel==0.41.1
+wheel==0.41.2
