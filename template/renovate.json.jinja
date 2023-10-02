@@ -84,7 +84,7 @@
     {
       "description": "Ignore requirements_both.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
-      "matchPaths": [".tools/requirements/*"],
+      "matchFilenames": [".tools/requirements/*"],
       "ignoreDeps": [
         "ruff",
         "pytest",
@@ -97,13 +97,13 @@
     {
       "description": "Ignore requirements_core.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
-      "matchPaths": [".tools/requirements/*"],
+      "matchFilenames": [".tools/requirements/*"],
       "ignoreDeps": ["copier", "dulwich", "flit_core", "pip", "wheel"]
     },
     {
       "description": "Ignore requirements_dev.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
-      "matchPaths": [".tools/requirements/*"],
+      "matchFilenames": [".tools/requirements/*"],
       "ignoreDeps": [
         "fawltydeps",
         "ipykernel",
@@ -119,7 +119,7 @@
     {
       "description": "Ignore requirements_docs.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
-      "matchPaths": [".tools/requirements/*"],
+      "matchFilenames": [".tools/requirements/*"],
       "ignoreDeps": [
         "myst-parser",
         "sphinx-autobuild",

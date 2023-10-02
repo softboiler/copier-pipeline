@@ -15,11 +15,11 @@
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["^\\.tools/requirements/*"]
+    "fileMatch": ["^template/\\.tools/requirements/*$"]
   },
   "github-actions": {
     "description": "Additionally monitor template GitHub actions.",
-    "fileMatch": ["^template/\\.github/workflows/*"]
+    "fileMatch": ["^template/\\.github/workflows/*$"]
   },
   "pre-commit": {
     "description": "Additionally monitor pre-commit config.",
@@ -45,7 +45,7 @@
     {
       "description": "Pre-commit manages black and ruff, projects manage pyright",
       "matchManagers": ["pip_requirements"],
-      "matchPaths": ["template/.tools/requirements/*"],
+      "matchFilenames": ["template/.tools/requirements/*"],
       "ignoreDeps": ["black", "ruff", "pyright"]
     }
   ]
