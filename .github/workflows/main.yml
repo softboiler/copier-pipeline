@@ -6,8 +6,8 @@ jobs:
   test_installable:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4"
-      - uses: "actions/setup-python@v4"
+      - uses: "actions/checkout@v4.1.0"
+      - uses: "actions/setup-python@v4.7.1"
       - run: "python .tools/scripts/bump_requirements.py"
       - name: "Test installation of template dev tools."
         run: |-
@@ -17,11 +17,11 @@ jobs:
     needs: ["test_installable"]
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4"
-      - uses: "actions/setup-python@v4"
+      - uses: "actions/checkout@v4.1.0"
+      - uses: "actions/setup-python@v4.7.1"
         with:
           python-version: "3.11"
       - run: "python .tools/scripts/bump_requirements.py"
-      - uses: "stefanzweifel/git-auto-commit-action@v4"
+      - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
         with:
           commit_message: "Bump pre-commit configuration and related dependencies"

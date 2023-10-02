@@ -19,8 +19,8 @@ jobs:
   build:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4"
-      - uses: "actions/setup-python@v4"
+      - uses: "actions/checkout@v4.1.0"
+      - uses: "actions/setup-python@v4.7.1"
         with:
           python-version: "3.11"
           cache: "pip"
@@ -31,7 +31,7 @@ jobs:
           python -m pip install --requirement '.tools/requirements/requirements_core.txt'
           python -m pip install --requirement '.tools/requirements/requirements_ci.txt'
       - run: "python -m sphinx -T -E docs _site"
-      - uses: "actions/upload-pages-artifact@v2"
+      - uses: "actions/upload-pages-artifact@v2.0.0"
   deploy:
     if: "${{ !(github.event_name == 'pull_request') }}"
     environment:
@@ -41,4 +41,4 @@ jobs:
     needs: "build"
     steps:
       - id: "deployment"
-        uses: "actions/deploy-pages@v2"
+        uses: "actions/deploy-pages@v2.0.4"
