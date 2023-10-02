@@ -39,8 +39,8 @@
     },
     {
       "description": "Don't update copier until it is fully isolated from main venv",
-      "matchManagers": ["git-submodules"],
-      "ignoreDeps": ["submodules/template"]
+      "matchManagers": ["pip_requirements"],
+      "ignoreDeps": ["copier"]
     },
     {
       "description": "Pre-commit manages black and ruff, projects manage pyright",
