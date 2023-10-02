@@ -7,20 +7,20 @@
 # * Changes below may be lost in significant template updates.
 
 # Introspection
-fawltydeps==0.12.1
+fawltydeps==0.13.1
 # Experiment
-ipykernel==6.25.1
+ipykernel==6.25.2
 # Debug
-debugpy==1.6.7.post1
+debugpy==1.8.0
 # For `pythonstartup.py`
-rich==13.5.2
+rich==13.6.0
 # Format
 black[jupyter]==23.7.0
-sourcery-cli==1.7.0
+sourcery-cli==1.10.0
 # Profiling
 snakeviz==2.2.0
 # Pre-commit
-pre-commit==3.3.3
+pre-commit==3.4.0
 # For local publishing to PyPi with flit
 keyring==24.2.0
 
