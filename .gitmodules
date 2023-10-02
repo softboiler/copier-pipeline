@@ -1,0 +1,6 @@
+[submodule "template"]
+	path = submodules/template
+	url = https://github.com/blakeNaccarato/copier-python.git
+[submodule "typings"]
+	path = submodules/typings
+	url = https://github.com/blakeNaccarato/pylance-stubs-unofficial.git
