@@ -7,7 +7,7 @@
 # * Changes below may be lost in significant template updates.
 
 # Install tests package so modules can be run in debugging
-tests/.
+-e tests/.
 # Introspection
 fawltydeps==0.13.1
 # Experiment
