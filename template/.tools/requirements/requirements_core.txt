@@ -9,5 +9,5 @@
 copier==8.1.0
 dulwich==0.21.6
 flit_core==3.9.0
-pip==23.2.1
+pip==23.3.1
 wheel==0.41.2
