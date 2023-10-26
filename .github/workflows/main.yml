@@ -6,7 +6,7 @@ jobs:
   test_installable:
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4.1.0"
+      - uses: "actions/checkout@v4.1.1"
       - uses: "actions/setup-python@v4.7.1"
       - run: "python .tools/scripts/bump_requirements.py"
       - name: "Test installation of template dev tools."
@@ -17,7 +17,7 @@ jobs:
     needs: ["test_installable"]
     runs-on: "ubuntu-latest"
     steps:
-      - uses: "actions/checkout@v4.1.0"
+      - uses: "actions/checkout@v4.1.1"
       - uses: "actions/setup-python@v4.7.1"
         with:
           python-version: "3.11"
