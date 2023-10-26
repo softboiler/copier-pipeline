@@ -86,6 +86,7 @@ reportUnnecessaryTypeIgnoreComment = "none"
 reportUnusedCallResult = "none"
 
 [tool.ruff]
+include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
 fix = true
 cache-dir = ".cache/.ruff_cache"
 select = ["ALL"]
@@ -150,6 +151,10 @@ unfixable = [
 
     "F601", # Don't fix duplicate mapping keys
 ]
+
+[tool.ruff.format]
+preview = true
+skip-magic-trailing-comma = true
 
 [tool.ruff.pydocstyle]
 convention = "google"

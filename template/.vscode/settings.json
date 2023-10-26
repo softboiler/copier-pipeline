@@ -22,8 +22,12 @@
     "source.unusedImports"
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll": false,
-    "source.organizeImports": false
+    "source.organizeImports.ruff": "always",
+    "source.fixAll": "always"
+  },
+  "notebook.codeActionsOnSave": {
+    "source.organizeImports.isort": "explicit",
+    "source.fixAll": "explicit"
   },
   "python.analysis.completeFunctionParens": false, // Buggy
   //? Auto imports
@@ -43,12 +47,10 @@
   //* pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  //* black
-  "black-formatter.importStrategy": "fromEnvironment",
-  "black-formatter.args": [],
   //* ruff
   "ruff.importStrategy": "fromEnvironment",
-  "ruff.args": [],
+  "ruff.format.args": [],
+  "ruff.lint.args": [],
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -176,11 +178,11 @@
   },
   //* PYTHON
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   //* IPYNB
   "[ipynb]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   //* TXT
   "[plaintext]": {
