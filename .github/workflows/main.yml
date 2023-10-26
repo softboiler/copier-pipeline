@@ -22,6 +22,6 @@ jobs:
         with:
           python-version: "3.11"
       - run: "python .tools/scripts/bump_requirements.py"
-      - uses: "stefanzweifel/git-auto-commit-action@v4.16.0"
+      - uses: "stefanzweifel/git-auto-commit-action@v5.0.0"
         with:
           commit_message: "Bump pre-commit configuration and related dependencies"
