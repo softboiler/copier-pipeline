@@ -9,7 +9,7 @@ jobs:
   pyright:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.2"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
       - run: ".tools/scripts/Invoke-Pyright.ps1"
@@ -17,14 +17,14 @@ jobs:
   ruff:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.2"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
       - run: "ruff --no-fix --format github ."
   pytest:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.2"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
       - run: "pytest --cov"
@@ -33,7 +33,7 @@ jobs:
     needs: ["pyright", "ruff", "pytest"]
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.2"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
           install-project: false
