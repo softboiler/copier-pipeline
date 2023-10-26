@@ -19,7 +19,7 @@ jobs:
   build:
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.2"
+      - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
       - run: "python -m sphinx -T -E docs _site"
