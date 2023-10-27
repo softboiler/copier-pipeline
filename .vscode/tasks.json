@@ -11,20 +11,6 @@
     // * -------------------------------------------------------------------------- * //
     // * Changes below may be lost in significant template updates.
 
-    {
-      "id": "templateOptions",
-      "description": "Template options.",
-      "type": "pickString",
-      "options": [
-        "",
-        "-Defaults",
-        "-Recopy",
-        "-Recopy -Defaults",
-        "-Defaults -NoVerify",
-        "-Recopy -NoVerify",
-        "-Recopy -Defaults -NoVerify"
-      ]
-    }
   ],
   "tasks": [
     // * -------------------------------------------------------------------------- * //
@@ -40,7 +26,7 @@
       "label": "setup: Copy template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": ".tools/scripts/Copy-Template.ps1 ${input:templateOptions}",
+      "command": ".tools/scripts/Copy-Template.ps1",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
