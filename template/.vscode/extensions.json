@@ -8,25 +8,20 @@
 
     "aaron-bond.better-comments",
     "bierner.markdown-preview-github-styles",
-    "blackmist.linkcheckmd",
     "charliermarsh.ruff",
     "davidanson.vscode-markdownlint",
     "donjayamanne.githistory",
-    "dotjoshjohnson.xml",
     "eamodio.gitlens",
     "esbenp.prettier-vscode",
     "executablebookproject.myst-highlight",
     "github.codespaces",
     "github.vscode-github-actions",
     "github.vscode-pull-request-github",
-    "ms-python.black-formatter",
     "redhat.vscode-yaml",
-    "reverbc.vscode-pytest",
     "ryanluker.vscode-coverage-gutters",
     "sourcery.sourcery",
     "stkb.rewrap",
     "tamasfe.even-better-toml",
-    "tyriar.shell-launcher",
     "yzhang.markdown-all-in-one"
   ]
 }
