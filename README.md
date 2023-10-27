@@ -78,9 +78,8 @@ Projects generated from this template require certain accounts or GitHub apps to
 
 Static analysis (e.g. linting, type checking) "moves errors to the left". Linting and code checks run as you write to catch problems before you run/publish/package your code.
 
-- black: Automatically format your code when you save the file. Enforces consistent whitespace and line length so you don't have to think about it.
 - pylance/pyright: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
-- ruff: Enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
+- ruff: Formats code, enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
 - sourcery: Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
 - pre-commit: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
 - pytest: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.

@@ -113,26 +113,6 @@
     },
 
     // * -------------------------------------------------------------------------- * //
-    // * BLACK * //
-
-    {
-      "label": "black: Ignore magic comma in this file",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "black -C ${file}",
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-    {
-      "label": "black: Ignore magic comma in all project files",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "black -C src tests",
-      "icon": { "id": "code" },
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
 
     {

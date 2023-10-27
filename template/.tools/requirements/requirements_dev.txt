@@ -17,7 +17,6 @@ debugpy==1.8.0
 # For `pythonstartup.py`
 rich==13.6.0
 # Format
-black[jupyter]==23.7.0
 sourcery-cli==1.11.0
 # Profiling
 snakeviz==2.2.0
