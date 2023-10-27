@@ -25,6 +25,9 @@
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
   //? Related autoformatting of whitespace conventions
+  //? Note that notebook cells gain new lines and it can't be stopped for now.
+  //? https://github.com/microsoft/vscode/issues/195223
+  //? https://github.com/microsoft/vscode/issues/195011
   "files.eol": "\n",
   "files.refactoring.autoSave": true,
   "files.insertFinalNewline": true,
@@ -37,11 +40,11 @@
     "source.unusedImports"
   ],
   "editor.codeActionsOnSave": {
-    "source.organizeImports.ruff": "always",
+    "source.organizeImports": "always",
     "source.fixAll": "always"
   },
   "notebook.codeActionsOnSave": {
-    "source.organizeImports.isort": "explicit",
+    "source.organizeImports": "explicit",
     "source.fixAll": "explicit"
   },
   //? Auto imports
