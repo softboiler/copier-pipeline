@@ -29,21 +29,42 @@
 
   //! Pylance
   "python.languageServer": "Pylance",
-  "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.indexing": true,
-  //? These are safer defaults which are overridden in `pyrightconfig.json`.
-  "python.analysis.typeCheckingMode": "off",
-  "python.analysis.useLibraryCodeForTypes": false,
+  "python.analysis.persistAllIndices": true,
+  //? See "include" and "extrapaths" in pyrightconfig.json
+  "python.analysis.autoSearchPaths": false,
+  //? Helpers
+  "python.analysis.autoFormatStrings": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.gotoDefinitionInStringLiteral": true,
+  //? Related autoformatting and format on save settings
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "notebook.formatOnCellExecution": true,
+  "notebook.formatOnSave.enabled": true,
+  //? Related autoformatting of whitespace conventions
+  //? Note that notebook cells gain new lines and it can't be stopped for now.
+  //? https://github.com/microsoft/vscode/issues/195223
+  //? https://github.com/microsoft/vscode/issues/195011
+  "files.eol": "\n",
+  "files.refactoring.autoSave": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
   //? Refactoring
+  //? https://code.visualstudio.com/updates/v1_83#_code-actions-on-save-and-auto-save
   "python.analysis.fixAll": [
     "source.convertImportFormat",
     "source.unusedImports"
   ],
   "editor.codeActionsOnSave": {
-    "source.fixAll": false,
-    "source.organizeImports": false
+    "source.organizeImports": "always",
+    "source.fixAll": "always"
   },
-  "python.analysis.completeFunctionParens": false, // Buggy
+  "notebook.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll": "explicit"
+  },
   //? Auto imports
   "python.analysis.importFormat": "absolute",
   "python.analysis.autoImportCompletions": true,
@@ -51,42 +72,22 @@
   "python.analysis.addImport.exactMatchOnly": false,
   //? Inlay hints
   "editor.inlayHints.enabled": "offUnlessPressed",
+  "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.variableTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
-  //? See "include" and "extrapaths" in pyrightconfig.json
-  "python.analysis.autoSearchPaths": false,
 
   //! Lint, test, format
   //* pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
-  //* black
-  "black-formatter.importStrategy": "fromEnvironment",
-  "black-formatter.args": [],
   //* ruff
   "ruff.importStrategy": "fromEnvironment",
-  "ruff.args": [],
+  "ruff.format.args": [],
+  "ruff.lint.args": [],
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
-
-  //! Shell Launcher
-  "shellLauncher.shells.windows": [
-    {
-      //* Launches IPython in the virtual environment. Lets you try things out in without having to fire up an entire Jupyter notebook.
-      //*
-      //* Use alongside the following keybind in your "keybindings.json".
-      //*
-      //? {
-      //?   "key": "ctrl+alt+1",
-      //?   "command": "shellLauncher.launch"
-      //? },
-      "label": "IPython (.venv)",
-      "shell": "pwsh.exe",
-      "args": ["-NoExit", "-Command", "python", "-m", "IPython"]
-    }
-  ],
 
   //! Files
   //* Experimental file nesting
@@ -94,12 +95,6 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "*.ts": "${capture}.js",
-    "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",
-    "*.jsx": "${capture}.js",
-    "*.tsx": "${capture}.ts",
-    "tsconfig.json": "tsconfig.*.json",
-    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml",
     "*.root": ".*, a*, b*, c*, d*, e*, f*, g*, h*, i*, j*, k*, l*, m*, n*, o*, p*, q*, r*, s*, t*, u*, v*, w*, x*, y*, z*, 0*, 1*, 2*, 3*, 4*, 5*, 6*, 7*, 8*, 9*, _*, -*, {*"
   },
   //* File associations
@@ -114,50 +109,20 @@
   },
   //* Exclude problematic files in Problems panel filter and elsewhere
   "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    //? Pylance notebook cell temp files that get picked up in Problems pane before deletion
+    //? Pylance temp files get picked up in Problems pane before deletion
     "**/*pylance-notebook-cell*": true
   },
   //* File icon associations
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
-  "vsicons.associations.files": [
-    { "icon": "ini", "extensions": ["root"], "format": "svg" }
-  ],
 
   //! Built-in
-  //* Allow auto-running tasks
-  "task.allowAutomaticTasks": "on",
-  //* Enable native bracket pair colorization
-  "editor.bracketPairColorization.enabled": true,
-  "editor.guides.bracketPairs": true,
-  //* Editor format on save and more. Can run "File: Save without formatting" to skip.
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-  //* Enforce whitespace and newlines.
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "files.trimFinalNewlines": true,
-  //* Periodically fetch changes to tracked repo. Don't confirm on push/pull.
-  "git.autofetch": true,
-  "git.commandsToLog": ["commit", "push"],
-  "git.confirmSync": false,
-  "git.ignoredRepositories": ["template", "typings"],
   //* Markdown editor moves jarringly when this is "true"
   "markdown.preview.scrollEditorWithPreview": false,
   //* Exclude
   "search.exclude": {
-    "**/node_modules": true,
-    "**/bower_components": true,
-    "**/*.code-search": true,
-    "typings": true,
-    "template": true
+    "submodules": true
   },
 
   //! Line-width
@@ -194,11 +159,11 @@
   },
   //* PYTHON
   "[python]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   //* IPYNB
   "[ipynb]": {
-    "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   //* TXT
   "[plaintext]": {

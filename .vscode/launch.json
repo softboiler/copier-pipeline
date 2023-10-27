@@ -12,15 +12,6 @@
       "request": "launch",
       "program": "${file}",
       "console": "internalConsole"
-    },
-    {
-      "name": "Python: Current file, not just my code",
-      "type": "debugpy",
-      "request": "launch",
-      "program": "${file}",
-      "justMyCode": false,
-      // "purpose": ["debug-test"], // Uncomment to debug tests more deeply.
-      "console": "internalConsole"
     }
   ]
 }
