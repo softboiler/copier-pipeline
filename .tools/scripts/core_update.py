@@ -46,22 +46,20 @@ class Submodule:
         self.name = self.path.name
 
 
-def get_submodules() -> tuple[Submodule, Submodule, list[Submodule]]:
-    """Get the special template and typings submodules, as well as the rest."""
+def get_submodules() -> tuple[Submodule, list[Submodule]]:
+    """Get the special typings submodule, as well as the rest."""
     with closing(repo := Repo(str(Path.cwd()))):
         all_submodules = [Submodule(*item) for item in list(submodule_list(repo))]
     submodules: list[Submodule] = []
-    template = typings = None
+    typings = None
     for submodule in all_submodules:
-        if submodule.name == "template":
-            template = submodule
-        elif submodule.name == "typings":
+        if submodule.name == "typings":
             typings = submodule
         else:
             submodules.append(submodule)
-    if not template or not typings:
-        raise ValueError("Could not find one of the template or typings submodules.")
-    return template, typings, submodules
+    if not typings:
+        raise ValueError("Could not find one of the typings submodule.")
+    return typings, submodules
 
 
 def sync_paired_dependency(content: str, src_name: str, dst_name: str) -> str:
