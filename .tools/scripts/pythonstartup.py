@@ -57,7 +57,7 @@ def filter_certain_warnings():
 
 
 def get_default_warnings_for_src(
-    category: type[Warning],
+    category: type[Warning]
 ) -> tuple[WarningFilter, WarningFilter]:
     """Get filter which sets default warning behavior only for the package in `src`."""
     package = next(path for path in Path("src").iterdir() if path.is_dir()).name
