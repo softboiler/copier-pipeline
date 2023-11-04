@@ -84,8 +84,8 @@
   "python.testing.pytestEnabled": true,
   //* ruff
   "ruff.importStrategy": "fromEnvironment",
-  // "ruff.format.args": [],
-  // "ruff.lint.args": [],
+  "ruff.format.args": [],
+  "ruff.lint.args": [],
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -95,6 +95,7 @@
   "files.exclude": {
     "**/__pycache__": true,
     "**/.cache": true,
+    "**/.jupyter_cache": true,
     "**/.pytest_cache/": true,
     //? Pylance temp files get picked up in Problems pane before deletion
     "**/*pylance-notebook-cell*": true
@@ -102,7 +103,7 @@
   "search.exclude": {
     "submodules": true
   },
-  //* Experimental file nesting
+  //* File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
