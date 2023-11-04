@@ -72,7 +72,19 @@
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
 
   //! Files
-  //* Experimental file nesting
+  //* Excludes
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.cache": true,
+    "**/.jupyter_cache": true,
+    "**/.pytest_cache/": true,
+    //? Pylance temp files get picked up in Problems pane before deletion
+    "**/*pylance-notebook-cell*": true
+  },
+  "search.exclude": {
+    "submodules": true
+  },
+  //* File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
@@ -89,11 +101,6 @@
     ".root": "plaintext",
     ".sourcery.yaml": "yaml"
   },
-  //* Exclude problematic files in Problems panel filter and elsewhere
-  "files.exclude": {
-    //? Pylance temp files get picked up in Problems pane before deletion
-    "**/*pylance-notebook-cell*": true
-  },
   //* File icon associations
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
@@ -102,10 +109,6 @@
   //! Built-in
   //* Markdown editor moves jarringly when this is "true"
   "markdown.preview.scrollEditorWithPreview": false,
-  //* Exclude
-  "search.exclude": {
-    "submodules": true
-  },
 
   //! Line-width
   //* Formatting

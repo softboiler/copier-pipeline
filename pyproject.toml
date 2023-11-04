@@ -92,7 +92,7 @@ cache-dir = ".cache/.ruff_cache"
 select = ["ALL"]
 src = ["src", "tests"]
 target-version = "py311"
-extend-exclude = ["template", "submodules", ".github"]
+extend-exclude = ["submodules", ".github"]
 ignore = [
     # * ---------------------------------------------------------------------------- * #
     # * Changes below should persist in significant template updates.
