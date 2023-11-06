@@ -1,9 +1,3 @@
-# * -------------------------------------------------------------------------------- * #
-# * Changes below should persist in significant template updates.
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below may be lost in significant template updates.
-
 [build-system]
 requires = ["flit_core==3.9.0"]
 build-backend = "flit_core.buildapi"
@@ -36,13 +30,6 @@ deps = ["pyproject.toml"]
 ipykernel = ["IPython"]
 
 [tool.pyright]
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below should persist in significant template updates.
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below may be lost in significant template updates.
-
 # Paths
 include = ["src", "tests", "docs"]
 # Stubs
@@ -94,12 +81,6 @@ src = ["src", "tests"]
 target-version = "py311"
 extend-exclude = ["submodules", ".github"]
 ignore = [
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below should persist in significant template updates.
-
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below may be lost in significant template updates.
-
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
     "C408",    # Allow dict calls
@@ -134,23 +115,11 @@ ignore = [
     "TD",      # Disable to-do validation. Too pedantic for now.
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
-    # * ---------------------------------------------------------------------------- * #
-    # * These Jupyter-specific ignores can't be per-file-ignores
-    # * https://nbqa.readthedocs.io/en/latest/known-limitations.html
-    "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
-    "F821", # Allow undefined names, such as `display`
-    "S101", # Allow assert
-    "T201", # Allow print in notebooks
 ]
 unfixable = [
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below should persist in significant template updates.
-
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below may be lost in significant template updates.
-
     "F601", # Don't fix duplicate mapping keys
 ]
+
 
 [tool.ruff.format]
 preview = true
@@ -162,19 +131,19 @@ split-on-trailing-comma = false
 [tool.ruff.pydocstyle]
 convention = "google"
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.extend-per-file-ignores]
 "docs/**" = [
     "E402", # Need to allow imports below patches in docs notebooks
 ]
 "tests/**" = [
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below should persist in significant template updates.
-
-    # * ---------------------------------------------------------------------------- * #
-    # * Changes below may be lost in significant template updates.
-
     "ARG001", # Allow unused arguments in tests
     "S101",   # Allow assert in tests
+]
+"**/*.ipynb" = [
+    "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
+    "F821", # Allow undefined names, such as `display`
+    "S101", # Allow assert
+    "T201", # Allow print in notebooks
 ]
 
 [tool.ruff.flake8-bugbear]

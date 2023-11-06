@@ -13,12 +13,6 @@ repos:
       - id: "check-useless-excludes"
   - repo: "local"
     hooks:
-      # * -------------------------------------------------------------------------- * #
-      # * Changes below should persist in significant template updates.
-
-      # * -------------------------------------------------------------------------- * #
-      # * Changes below may be lost in significant template updates.
-
       - id: "core-update"
         name: "core-update"
         stages: ["post-commit"]
@@ -54,13 +48,6 @@ repos:
             |requirements\.txt
             |\.tools/requirements/.*
           )$
-
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below should persist in significant template updates.
-
-  # * ------------------------------------------------------------------------------ * #
-  # * Changes below may be lost in significant template updates.
-
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
     rev: "v4.5.0"
     hooks:
