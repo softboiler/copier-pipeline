@@ -116,10 +116,6 @@ ignore = [
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
 ]
-unfixable = [
-    "F601", # Don't fix duplicate mapping keys
-]
-
 
 [tool.ruff.format]
 preview = true
@@ -132,6 +128,12 @@ split-on-trailing-comma = false
 convention = "google"
 
 [tool.ruff.extend-per-file-ignores]
+"**/*.ipynb" = [
+    "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
+    "F821", # Allow undefined names, such as `display`
+    "S101", # Allow assert
+    "T201", # Allow print in notebooks
+]
 "docs/**" = [
     "E402", # Need to allow imports below patches in docs notebooks
 ]
@@ -139,11 +141,8 @@ convention = "google"
     "ARG001", # Allow unused arguments in tests
     "S101",   # Allow assert in tests
 ]
-"**/*.ipynb" = [
-    "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
-    "F821", # Allow undefined names, such as `display`
-    "S101", # Allow assert
-    "T201", # Allow print in notebooks
+"template/tests/{{ project_name }}_tests/__init__.py" = [
+    "N999", # Invalid module name is okay, this is templated
 ]
 
 [tool.ruff.flake8-bugbear]
