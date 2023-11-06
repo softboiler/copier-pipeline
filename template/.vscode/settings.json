@@ -5,6 +5,7 @@
 
   //! Pylance
   "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "strict",
   "python.analysis.indexing": true,
   "python.analysis.persistAllIndices": true,
   //? See "include" and "extrapaths" in pyrightconfig.json
