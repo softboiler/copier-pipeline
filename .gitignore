@@ -1,8 +1,5 @@
 # * -------------------------------------------------------------------------------- * #
-# * Changes below should persist in significant template updates.
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below may be lost in significant template updates.
+# * Template gitignore
 
 # To allow for local variation in type checking without overriding CI
 pyrightconfig.json
@@ -22,35 +19,20 @@ _site
 gha-creds-*.json
 
 # * -------------------------------------------------------------------------------- * #
-# * Partial Node.gitignore
-# *
+# * Node (partial)
 # * https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 
 # NPM/Node.JS because of Pyright CI/CD dependency
 node_modules/
 
 # * -------------------------------------------------------------------------------- * #
-# * Gitignore for MyST-NB
+# * MyST-NB
 
 jupyter_execute
 .jupyter_cache
 
 # * -------------------------------------------------------------------------------- * #
-# * Modifications to the below Python.gitignore
-# *
-# * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
-
-
-# IPython
-.ipython/profile_default/*
-!.ipython/profile_default/startup/
-.ipython/profile_default/startup/README
-ipython_config.py
-
-
-# * -------------------------------------------------------------------------------- * #
-# * Modified Python.gitignore
-# *
+# * Python
 # * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
 
 # Byte-compiled / optimized / DLL files

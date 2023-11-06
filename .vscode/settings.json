@@ -1,7 +1,4 @@
 {
-  // * ---------------------------------------------------------------------------- * //
-  // * Changes below should persist in significant template updates.
-
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": ["*.yml.jinja"]
   },
@@ -19,9 +16,6 @@
   "[jinja-toml]": {
     "editor.wordWrap": "wordWrapColumn"
   },
-
-  // * ---------------------------------------------------------------------------- * //
-  // * Changes below may be lost in significant template updates.
 
   // Environment variables don't load properly otherwise
   // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207

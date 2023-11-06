@@ -4,21 +4,7 @@
 
 {
   "version": "2.0.0",
-  "inputs": [
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below should persist in significant template updates.
-
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below may be lost in significant template updates.
-
-  ],
   "tasks": [
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below should persist in significant template updates.
-
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below may be lost in significant template updates.
-
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
 

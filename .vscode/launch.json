@@ -1,11 +1,6 @@
 {
   "version": "0.2.0",
   "configurations": [
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below should persist in significant template updates.
-
-    // * -------------------------------------------------------------------------- * //
-    // * Changes below may be lost in significant template updates.
     {
       "name": "Python: Current file",
       "type": "debugpy",

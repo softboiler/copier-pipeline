@@ -2,9 +2,6 @@
 Update the local virtual environment to the latest tracked dependencies.
 #>
 
-# * -------------------------------------------------------------------------------- * #
-# * Changes below may be lost in significant template updates.
-
 # Deinit submodules to avoid issues with git pull
 git submodule --quiet deinit --all --force
 
@@ -38,6 +35,3 @@ $AllHookTypes = @(
     $h, 'prepare-commit-msg'
 )
 pre-commit install --install-hooks @AllHookTypes
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below should persist in significant template updates.

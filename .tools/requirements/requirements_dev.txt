@@ -1,15 +1,9 @@
 # Requirements for the dev environment.
 
-# * -------------------------------------------------------------------------------- * #
-# * Changes below should persist in significant template updates.
-
-# * -------------------------------------------------------------------------------- * #
-# * Changes below may be lost in significant template updates.
-
 # Install tests package so modules can be run in debugging
 -e tests/.
 # Introspection
-fawltydeps==0.13.1
+fawltydeps==0.13.2
 # Experiment
 ipykernel==6.26.0
 # Debug
@@ -17,7 +11,7 @@ debugpy==1.8.0
 # For `pythonstartup.py`
 rich==13.6.0
 # Format
-sourcery-cli==1.11.0
+sourcery-cli==1.13.0
 # Profiling
 snakeviz==2.2.0
 # Pre-commit
