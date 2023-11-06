@@ -141,8 +141,8 @@ convention = "google"
     "ARG001", # Allow unused arguments in tests
     "S101",   # Allow assert in tests
 ]
-"template/tests/{{ project_name }}_tests/__init__.py" = [
-    "N999", # Invalid module name is okay, this is templated
+"template/*.py" = [
+    "N999", # Invalid module names are okay, as some filenames are templated
 ]
 
 [tool.ruff.flake8-bugbear]
