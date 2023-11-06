@@ -1,5 +1,4 @@
 # Core requirements for template updates, bootstrapping, etc.
-
 copier==8.1.0
 dulwich==0.21.6
 flit_core==3.9.0
