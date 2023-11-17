@@ -21,6 +21,24 @@
       "request": "launch",
       "program": "${file} ${input:input}",
       "console": "internalConsole"
+    },
+    {
+      //? Needs to be "pytest" adapter for now.
+      //? "debugpy" adapter isn't seen, to toggle "justMyCode" in test configuration
+      //? https://github.com/microsoft/vscode-python-debugger/issues/112
+      //? https://github.com/microsoft/vscode-python-debugger/issues/94
+      "name": "pytest",
+      //! Uncomment below to disable "justMyCode" when debugging. Comment out after.
+      // "purpose": ["debug-test"],
+      //!
+      "presentation": {
+        "hidden": true
+      },
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "console": "internalConsole",
+      "justMyCode": false
     }
   ]
 }
