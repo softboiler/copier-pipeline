@@ -7,5 +7,4 @@ Get-Content .tools/requirements/requirements_both.txt |
     Select-String pyright |
     ForEach-Object { pip install $_ }
 pyright
-nbqa pyright src tests
 git submodule deinit submodules/typings
