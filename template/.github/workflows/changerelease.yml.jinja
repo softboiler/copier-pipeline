@@ -1,0 +1,16 @@
+name: "changerelease"
+on:
+  workflow_dispatch: {}
+  push:
+    paths: ["CHANGELOG.md"]
+    branches: ["main"]
+    tags: ["*"]
+
+jobs:
+  sync:
+    runs-on: "{{ actions_runner }}"
+    steps:
+      - uses: "dropseed/changerelease@v1.6.0"
+        with:
+          github_token: "{% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}"
+          tag_prefix: ""
