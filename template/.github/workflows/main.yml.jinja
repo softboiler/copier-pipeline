@@ -9,8 +9,7 @@ jobs:
       - uses: "blakeNaccarato/copier-python-workflow-setup@v0.2.3"
         with:
           python-version: "{{ python_version }}"
-      - run: ".tools/scripts/Invoke-Pyright.ps1"
-        shell: "pwsh"
+      - run: pyright
   ruff:
     runs-on: "{{ actions_runner }}"
     steps:
