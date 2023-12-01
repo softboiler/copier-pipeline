@@ -99,6 +99,12 @@
       ]
     },
     {
+      "description": "Ignore requirements_ci.txt deps managed by this template",
+      "matchManagers": ["pip_requirements"],
+      "matchFileNames": [".tools/requirements/*"],
+      "ignoreDeps": ["flit"]
+    },
+    {
       "description": "Ignore requirements_core.txt deps managed by this template",
       "matchManagers": ["pip_requirements"],
       "matchFileNames": [".tools/requirements/*"],
