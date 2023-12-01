@@ -3,20 +3,20 @@
 # Install tests package so modules can be run in debugging
 -e tests/.
 # Introspection
-fawltydeps==0.13.2
+fawltydeps==0.13.3
 # Experiment
-ipykernel==6.26.0
+ipykernel==6.27.1
 # Debug
 debugpy==1.8.0
 # For `pythonstartup.py`
-rich==13.6.0
+rich==13.7.0
 # Format
-sourcery-cli==1.13.0
+sourcery-cli==1.14.0
 # Profiling
 snakeviz==2.2.0
 # Pre-commit
 pre-commit==3.5.0
 # For local publishing to PyPi with flit
-keyring==24.2.0
+keyring==24.3.0
 
 -r requirements_both.txt
