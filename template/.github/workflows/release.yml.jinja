@@ -1,12 +1,19 @@
-name: "publish"
+name: "release"
 on:
   workflow_dispatch: {}
-  release:
-    types:
-      - "published"
-      - "released"
+  push:
+    paths: ["CHANGELOG.md"]
+    branches: ["main"]
+    tags: ["*"]
 
 jobs:
+  sync:
+    runs-on: "{{ actions_runner }}"
+    steps:
+      - uses: "dropseed/changerelease@v1.6.0"
+        with:
+          github_token: "{% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}"
+          tag_prefix: ""
   publish:
     runs-on: "{{ actions_runner }}"
     steps:

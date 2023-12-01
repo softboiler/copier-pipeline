@@ -1,3 +1,6 @@
 # Requirements for dev environments.
 
+# Publishing
+flit==3.9.0
+
 -r requirements_both.txt
