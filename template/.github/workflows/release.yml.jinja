@@ -1,10 +1,6 @@
 name: "release"
 on:
   workflow_dispatch: {}
-  push:
-    paths: ["CHANGELOG.md"]
-    branches: ["main"]
-    tags: ["*"]
 
 jobs:
   sync:
