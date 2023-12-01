@@ -38,11 +38,6 @@
       "ignoreDeps": ["submodules/template"]
     },
     {
-      "description": "Don't update copier until it is fully isolated from main venv",
-      "matchManagers": ["pip_requirements"],
-      "ignoreDeps": ["copier"]
-    },
-    {
       "description": "Pre-commit manages black and ruff, projects manage pyright",
       "matchManagers": ["pip_requirements"],
       "matchFileNames": ["template/.tools/requirements/*"],

@@ -23,9 +23,9 @@
 
   //! Pylance
   "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "strict",
   "python.analysis.indexing": true,
   "python.analysis.persistAllIndices": true,
-  "python.analysis.typeCheckingMode": "strict",
   //? See "include" and "extrapaths" in pyrightconfig.json
   "python.analysis.autoSearchPaths": false,
   //? Helpers
@@ -109,10 +109,11 @@
     ".coveragerc": "ini",
     ".env": "dotenv",
     ".pylintrc": "ini",
-    "pyrightconfig.json": "jsonc",
-    "*requirements*.txt": "pip-requirements",
     ".root": "plaintext",
-    ".sourcery.yaml": "yaml"
+    ".sourcery.yaml": "yaml",
+    "*requirements*.txt": "pip-requirements",
+    "*ipython-input*": "python",
+    "pyrightconfig.json": "jsonc"
   },
   //* File icon associations
   "workbench.iconTheme": "vscode-icons",
