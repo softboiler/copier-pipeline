@@ -9,7 +9,7 @@ pytest==7.4.3
 # Testing plugins
 pytest-cov==4.1.0
 pytest-custom-exit-code==0.3.0
-# Format AND test notebooks
+# Format notebooks
 nb-clean==3.1.0
 
 -r requirements_docs.txt
