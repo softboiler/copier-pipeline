@@ -7,7 +7,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v4.1.1"
-      - uses: "actions/setup-python@v4.7.1"
+      - uses: "actions/setup-python@v4.8.0"
       - name: "Test installation of template dev tools."
         run: |-
           python -m pip install --requirement 'template/.tools/requirements/requirements_core.txt'
@@ -17,7 +17,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - uses: "actions/checkout@v4.1.1"
-      - uses: "actions/setup-python@v4.7.1"
+      - uses: "actions/setup-python@v4.8.0"
         with:
           python-version: "3.11"
       - uses: "stefanzweifel/git-auto-commit-action@v5.0.0"
