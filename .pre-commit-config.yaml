@@ -62,7 +62,6 @@ repos:
         args:
           - "--remove-empty-cells"
           - "--preserve-cell-metadata"
-          - "special"
           - "tags"
           - "--"
         files: |
@@ -76,7 +75,7 @@ repos:
     hooks:
       - id: "markdownlint-cli2-fix"
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.1.6"
+    rev: "v0.1.7"
     hooks:
       - id: "ruff"
         types_or: ["python", "pyi", "jupyter"]
