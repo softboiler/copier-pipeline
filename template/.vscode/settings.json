@@ -4,49 +4,15 @@
   "terminal.integrated.defaultProfile.linux": "pwsh",
 
   //! Pylance
-  "python.languageServer": "Pylance",
   "python.analysis.typeCheckingMode": "strict",
-  "python.analysis.indexing": true,
-  "python.analysis.persistAllIndices": true,
-  //? See "include" and "extrapaths" in pyrightconfig.json
-  "python.analysis.autoSearchPaths": false,
+  "python.languageServer": "Pylance",
   //? Helpers
   "python.analysis.autoFormatStrings": true,
   "python.analysis.completeFunctionParens": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
-  //? Related autoformatting and format on save settings
-  "editor.formatOnType": true,
-  "editor.formatOnSave": true,
-  "notebook.formatOnCellExecution": true,
-  "notebook.formatOnSave.enabled": true,
-  //? Related autoformatting of whitespace conventions
-  //? Note that notebook cells gain new lines and it can't be stopped for now.
-  //? https://github.com/microsoft/vscode/issues/195223
-  //? https://github.com/microsoft/vscode/issues/195011
-  "files.eol": "\n",
-  "files.refactoring.autoSave": true,
-  "files.insertFinalNewline": true,
-  "files.trimTrailingWhitespace": true,
-  "files.trimFinalNewlines": true,
-  //? Refactoring
-  //? https://code.visualstudio.com/updates/v1_83#_code-actions-on-save-and-auto-save
-  "python.analysis.fixAll": [
-    "source.convertImportFormat",
-    "source.unusedImports"
-  ],
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "always",
-    "source.fixAll": "always"
-  },
-  "notebook.codeActionsOnSave": {
-    "source.organizeImports": "explicit",
-    "source.fixAll": "explicit"
-  },
   //? Auto imports
   "python.analysis.importFormat": "absolute",
   "python.analysis.autoImportCompletions": true,
-  "python.analysis.extraCommitChars": true,
-  "python.analysis.addImport.exactMatchOnly": false,
   //? Inlay hints
   "editor.inlayHints.enabled": "offUnlessPressed",
   "python.analysis.inlayHints.callArgumentNames": "all",
@@ -62,6 +28,38 @@
   "ruff.importStrategy": "fromEnvironment",
   "ruff.format.args": [],
   "ruff.lint.args": [],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[ipynb]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  //* Formatting
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
+  "editor.formatOnType": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.ruff": "always",
+    "source.organizeImports.ruff": "always"
+  },
+  //* Files
+  //? Related autoformatting of whitespace conventions
+  //? Note that notebook cells gain new lines and it can't be stopped for now.
+  //? https://github.com/microsoft/vscode/issues/195223
+  //? https://github.com/microsoft/vscode/issues/195011
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.refactoring.autoSave": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  //* Notebook
+  //? https://github.com/microsoft/vscode/issues/195223#issuecomment-1800137313
+  "notebook.insertFinalNewline": false,
+  //? Avoid code actions on notebook save for now, Ruff misbehaves in certain cases
+  //? https://github.com/astral-sh/ruff-lsp/issues/320
+  "notebook.formatOnCellExecution": true,
+  "notebook.formatOnSave.enabled": true,
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
@@ -137,14 +135,6 @@
   "[jsonc]": {
     "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  //* PYTHON
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
-  //* IPYNB
-  "[ipynb]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   //* TXT
   "[plaintext]": {

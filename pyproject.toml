@@ -29,6 +29,19 @@ deps = ["pyproject.toml"]
 [tool.fawltydeps.custom_mapping]
 ipykernel = ["IPython"]
 
+[tool.pytest.ini_options]
+addopts = """\
+    --strict-config \
+    --strict-markers \
+    --color yes \
+    -p no:legacypaths \
+    -r a \
+    """
+cache_dir = ".cache/.pytest_cache"
+markers = "slow"
+testpaths = "tests"
+xfail_strict = true
+
 [tool.pyright]
 # Paths
 include = ["src", "tests", "docs"]

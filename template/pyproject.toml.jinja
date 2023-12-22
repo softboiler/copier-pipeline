@@ -29,73 +29,136 @@ deps = ["pyproject.toml"]
 [tool.fawltydeps.custom_mapping]
 ipykernel = ["IPython"]
 
+[tool.pytest.ini_options]
+addopts = """\
+    --strict-config \
+    --strict-markers \
+    --color yes \
+    -p no:legacypaths \
+    -r a \
+    """
+cache_dir = ".cache/.pytest_cache"
+markers = "slow"
+testpaths = "tests"
+xfail_strict = true
+
 [tool.pyright]
-# Paths
 include = ["src", "tests", "docs"]
-# Stubs
-stubPath = "submodules/typings"
-# Type inference helps with untyped upstream but can be unpredictable
 useLibraryCodeForTypes = true
-# Sets most checks to "error". See overrides below
 typeCheckingMode = "strict"
-# These flags are "true" by default in strict mode
-strictListInference = true
-strictDictionaryInference = true
-strictSetInference = true
+# Default "true" in strict
 analyzeUnannotatedFunctions = true
 strictParameterNoneValue = true
 enableTypeIgnoreComments = true
-# Override these errors
-reportConstantRedefinition = "none"
-reportMissingParameterType = "none"
+disableBytesTypePromotions = true
+strictListInference = true
+strictDictionaryInference = true
+strictSetInference = true
+# Default "false" in strict
+deprecateTypingAliases = false
+enableExperimentalFeatures = false
+# Default "error" in strict
+reportMissingModuleSource = "warning"
+reportMissingImports = "warning"
+reportUndefinedVariable = "warning"
+reportAssertAlwaysTrue = "warning"
+reportInvalidStringEscapeSequence = "warning"
+reportInvalidTypeVarUse = "warning"
+# Default "warning" in strict
 reportMissingTypeStubs = "none"
+# Default "error" in strict
+reportSelfClsParameterName = "warning"
+reportUnsupportedDunderAll = "warning"
+reportUnusedExpression = "none"
+reportWildcardImportFromLibrary = "warning"
+reportGeneralTypeIssues = "warning"
+reportOptionalSubscript = "warning"
+reportOptionalMemberAccess = "warning"
+reportOptionalCall = "warning"
+reportOptionalIterable = "warning"
+reportOptionalContextManager = "warning"
+reportOptionalOperand = "warning"
+reportTypedDictNotRequiredAccess = "warning"
+reportPrivateImportUsage = "warning"
+reportUnboundVariable = "warning"
+reportUnusedCoroutine = "none"
+reportFunctionMemberAccess = "warning"
+reportIncompatibleMethodOverride = "warning"
+reportIncompatibleVariableOverride = "warning"
+reportOverlappingOverload = "warning"
+reportConstantRedefinition = "none"
+reportDeprecated = "warning"
+reportDuplicateImport = "warning"
+reportIncompleteStub = "warning"
+reportInconsistentConstructor = "warning"
+reportInvalidStubStatement = "warning"
+reportMatchNotExhaustive = "warning"
+reportMissingParameterType = "none"
+reportMissingTypeArgument = "warning"
+reportPrivateUsage = "warning"
+reportTypeCommentUsage = "warning"
 reportUnknownArgumentType = "none"
 reportUnknownLambdaType = "none"
 reportUnknownMemberType = "none"
 reportUnknownParameterType = "none"
 reportUnknownVariableType = "none"
+reportUnnecessaryCast = "warning"
+reportUnnecessaryComparison = "warning"
+reportUnnecessaryContains = "warning"
+reportUnnecessaryIsInstance = "warning"
 reportUnusedClass = "none"
-reportUnusedCoroutine = "none"
-reportUnusedExpression = "none"
-reportUnusedFunction = "none"
 reportUnusedImport = "none"
+reportUnusedFunction = "none"
 reportUnusedVariable = "none"
 reportUntypedBaseClass = "none"
-# Override these disabled diagnostics
-reportShadowedImports = "error"
-reportCallInDefaultInitializer = "error"
-reportPropertyTypeMismatch = "error"
-reportUninitializedInstanceVariable = "error"
-# These diagnostics are "none" by default in strict mode
+reportUntypedClassDecorator = "warning"
+reportUntypedFunctionDecorator = "warning"
+reportUntypedNamedTuple = "warning"
+# Defualt "none" in strict
+reportCallInDefaultInitializer = "none"
+reportImplicitOverride = "none"
 reportImplicitStringConcatenation = "none"
+reportImportCycles = "none"
 reportMissingSuperCall = "none"
+reportPropertyTypeMismatch = "none"
+reportShadowedImports = "warning"
+reportUninitializedInstanceVariable = "warning"
 reportUnnecessaryTypeIgnoreComment = "none"
 reportUnusedCallResult = "none"
 
 [tool.ruff]
-include = ["*.py", "*.pyi", "**/pyproject.toml", "*.ipynb"]
 fix = true
+force-exclude = true
+show-fixes = true
+show-source = true
+preview = false
+unsafe-fixes = false
 cache-dir = ".cache/.ruff_cache"
+fixable = ["ALL"]
+extend-include = ["*.ipynb"]
 select = ["ALL"]
 src = ["src", "tests"]
 target-version = "py311"
-extend-exclude = ["submodules", ".github"]
-ignore = [
+extend-unfixable = [
+    "F841", # Unused variables
+]
+extend-ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
     "C408",    # Allow dict calls
     "COM",     # Allow magic commas and magic missing commas
+    "CPY001",  # Don't check for copyright
     "D10",     # Missing docstrings
     "D20",     # Don't reformat docstrings in these ways
     "D213",    # Multi-line docstring summary should start at the second line
     "D402",    # False positives for parens in first line
+    "D412",    # Allow blanks below headers in Google-style docstrings
     "DTZ",     # Timezones are important, but only contextually necessary.
     "E501",    # Don't check line length. Black handles this.
     "EM",      # Don't check for exception message issues
     "ERA",     # False positives. Don't get rid of commented out code.
     "FBT",     # Allow boolean "traps"
     "FIX002",  # Allow TODOs
-    "F841",    # Don't check for or fix unused variables
     "FLY002",  # Allow different string representations
     "G0",      # Allow f-strings, etc. in Loguru logging
     "INP001",  # False positives. Checks for packages missing `__init__.py`
@@ -140,6 +203,7 @@ convention = "google"
 "tests/**" = [
     "ARG001", # Allow unused arguments in tests
     "S101",   # Allow assert in tests
+    "SIM300", # Allow constants (expectations) on the RHS in tests
 ]
 
 [tool.ruff.flake8-bugbear]
