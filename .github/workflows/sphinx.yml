@@ -31,7 +31,7 @@ jobs:
           python -m pip install --requirement '.tools/requirements/requirements_core.txt'
           python -m pip install --requirement '.tools/requirements/requirements_ci.txt'
       - run: "python -m sphinx -T -E docs _site"
-      - uses: "actions/upload-pages-artifact@v2.0.0"
+      - uses: "actions/upload-pages-artifact@v3.0.0"
   deploy:
     if: "${{ !(github.event_name == 'pull_request') }}"
     environment:
