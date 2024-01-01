@@ -41,4 +41,4 @@ jobs:
     needs: "build"
     steps:
       - id: "deployment"
-        uses: "actions/deploy-pages@v2.0.5"
+        uses: "actions/deploy-pages@v4.0.2"
