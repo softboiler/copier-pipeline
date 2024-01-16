@@ -112,7 +112,7 @@ reportUnusedFunction = "none"
 reportUnusedVariable = "none"
 reportUntypedBaseClass = "none"
 reportUntypedClassDecorator = "warning"
-reportUntypedFunctionDecorator = "warning"
+reportUntypedFunctionDecorator = "none"        # Often out of our control
 reportUntypedNamedTuple = "warning"
 # Defualt "none" in strict
 reportCallInDefaultInitializer = "none"
@@ -208,6 +208,3 @@ convention = "google"
 
 [tool.ruff.flake8-bugbear]
 extend-immutable-calls = ["typer.Argument", "typer.Option"]
-
-[tool.ruff.pep8-naming]
-classmethod-decorators = ["pydantic.validator"]
