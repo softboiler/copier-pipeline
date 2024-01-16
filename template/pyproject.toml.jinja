@@ -30,13 +30,13 @@ deps = ["pyproject.toml"]
 ipykernel = ["IPython"]
 
 [tool.pytest.ini_options]
-addopts = """\
-    --strict-config \
-    --strict-markers \
-    --color yes \
-    -p no:legacypaths \
-    -r a \
-    """
+addopts = '''
+    --strict-config
+    --strict-markers
+    --color yes
+    -p no:legacypaths
+    -r a
+'''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
 testpaths = "tests"
@@ -135,13 +135,10 @@ preview = false
 unsafe-fixes = false
 cache-dir = ".cache/.ruff_cache"
 fixable = ["ALL"]
+extend-exclude = ["submodules"]
 extend-include = ["*.ipynb"]
 select = ["ALL"]
-src = ["src", "tests"]
 target-version = "py311"
-extend-unfixable = [
-    "F841", # Unused variables
-]
 extend-ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
