@@ -1,7 +1,8 @@
-# Requirements for both CI and dev environments.
-
+# Requirements for both CI and dev environments
+# * ---------------------------------------------------------------------------------- *
 # Type checking
 pyright
+# * ---------------------------------------------------------------------------------- *
 # Pre-commit common requirements
 ruff==0.1.11
 # Testing

@@ -1,13 +1,10 @@
-# Requirements for the dev environment.
-
+# Requirements for the dev environment
 # Install tests package so modules can be run in debugging
 -e tests/.
 # Introspection
 fawltydeps==0.13.3
 # Experiment
-ipykernel==6.28.0
-# ? https://github.com/ipython/ipython/issues/14255
-ipython==8.17.2
+ipykernel==6.29.0
 # Debug
 debugpy==1.8.0
 # For `pythonstartup.py`
