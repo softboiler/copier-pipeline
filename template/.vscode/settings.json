@@ -40,8 +40,8 @@
   "editor.formatOnSaveMode": "file",
   "editor.formatOnType": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.ruff": "always",
-    "source.organizeImports.ruff": "always"
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
   },
   //* Files
   //? Related autoformatting of whitespace conventions
@@ -56,10 +56,15 @@
   //* Notebook
   //? https://github.com/microsoft/vscode/issues/195223#issuecomment-1800137313
   "notebook.insertFinalNewline": false,
-  //? Avoid code actions on notebook save for now, Ruff misbehaves in certain cases
+  //? Code actions on notebook save partially work now
+  //? Need to raise an issue about `notebook.source.organizeImports` not behaving
   //? https://github.com/astral-sh/ruff-lsp/issues/320
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
 
   //! GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
