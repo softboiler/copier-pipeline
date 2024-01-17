@@ -16,7 +16,3 @@ ignore:
 rule_settings:
   python_version: "3.11"
   enable: ["default"]
-  disable:
-    - "move-assign" # False positives
-    - "remove-redundant-constructor-in-dict-union" # Explicit dict(zip(...)) is better
-    - "no-conditionals-in-tests" # Not a great heuristic

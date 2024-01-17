@@ -55,12 +55,17 @@ repos:
     hooks:
       - id: "end-of-file-fixer"
       - id: "trailing-whitespace"
+  - repo: "https://github.com/DavidAnson/markdownlint-cli2"
+    rev: "v0.11.0"
+    hooks:
+      - id: "markdownlint-cli2-fix"
   - repo: "https://github.com/srstevenson/nb-clean"
-    rev: "3.1.0"
+    rev: "3.2.0"
     hooks:
       - id: "nb-clean"
         args:
           - "--remove-empty-cells"
+          - "--preserve-notebook-metadata"
           - "--preserve-cell-metadata"
           - "tags"
           - "--"
@@ -70,12 +75,8 @@ repos:
             |docs/.*
             |tests/.*
           )$
-  - repo: "https://github.com/DavidAnson/markdownlint-cli2"
-    rev: "v0.11.0"
-    hooks:
-      - id: "markdownlint-cli2-fix"
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.1.7"
+    rev: "v0.1.11"
     hooks:
       - id: "ruff"
         types_or: ["python", "pyi", "jupyter"]
