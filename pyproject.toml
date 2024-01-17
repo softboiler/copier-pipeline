@@ -44,7 +44,7 @@ xfail_strict = true
 
 [tool.coverage.run]
 branch = true
-source = "copier_python"
+source = ["copier_python"]
 [tool.coverage.report]
 ignore_errors = true
 

@@ -30,9 +30,6 @@
       "options": { "shell": { "executable": "pwsh" } },
       "command": "update.ps1",
       "icon": { "id": "file-symlink-directory" },
-      // "runOptions": {
-      //   "runOn": "folderOpen"
-      // },
       "problemMatcher": []
     },
     {
@@ -100,7 +97,7 @@
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "pytest --cov --cov-report xml",
-      "icon": { "id": "type-hierarchy-sub" },
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
@@ -108,15 +105,23 @@
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "python .tools/scripts/core_update.py",
-      "icon": { "id": "graph" },
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
-      "label": "task: Invoke pyright",
+      "label": "task: Run pyright",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
       "command": ".tools/scripts/Invoke-Pyright.ps1",
-      "icon": { "id": "type-hierarchy-sub" },
+      "icon": { "id": "check" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Run ruff",
+      "type": "shell",
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
+      "command": "ruff .",
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
@@ -141,14 +146,6 @@
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "snakeviz .prof",
       "icon": { "id": "graph-line" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: autoflake current file",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "autoflake -i --remove-all-unused-imports --ignore-init-module-imports ${file}",
-      "icon": { "id": "code" },
       "problemMatcher": []
     }
   ]
