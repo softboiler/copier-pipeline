@@ -42,10 +42,15 @@ markers = "slow"
 testpaths = "tests"
 xfail_strict = true
 
+[tool.coverage.run]
+branch = true
+source = "{{ project_name }}"
+[tool.coverage.report]
+ignore_errors = true
+
 [tool.pyright]
-include = ["src", "tests", "docs"]
+exclude = ["**/node_modules", "**/__pycache__", "**/.*", "submodules"]
 stubPath = "submodules/typings"
-useLibraryCodeForTypes = true
 typeCheckingMode = "strict"
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
@@ -58,19 +63,18 @@ strictSetInference = true
 # Default "false" in strict
 deprecateTypingAliases = false
 enableExperimentalFeatures = false
-# Default "error" in strict
+# Default "warning" in strict
 reportMissingModuleSource = "warning"
+# Default "error" in strict
 reportMissingImports = "warning"
 reportUndefinedVariable = "warning"
 reportAssertAlwaysTrue = "warning"
 reportInvalidStringEscapeSequence = "warning"
 reportInvalidTypeVarUse = "warning"
-# Default "warning" in strict
-reportMissingTypeStubs = "none"
-# Default "error" in strict
+reportMissingTypeStubs = "none" # Overeager
 reportSelfClsParameterName = "warning"
 reportUnsupportedDunderAll = "warning"
-reportUnusedExpression = "none"
+reportUnusedExpression = "none"                # Handled by Ruff
 reportWildcardImportFromLibrary = "warning"
 reportGeneralTypeIssues = "warning"
 reportOptionalSubscript = "warning"
@@ -82,7 +86,7 @@ reportOptionalOperand = "warning"
 reportTypedDictNotRequiredAccess = "warning"
 reportPrivateImportUsage = "warning"
 reportUnboundVariable = "warning"
-reportUnusedCoroutine = "none"
+reportUnusedCoroutine = "none"                 # Handled by Ruff
 reportFunctionMemberAccess = "warning"
 reportIncompatibleMethodOverride = "warning"
 reportIncompatibleVariableOverride = "warning"
@@ -107,39 +111,38 @@ reportUnnecessaryCast = "warning"
 reportUnnecessaryComparison = "warning"
 reportUnnecessaryContains = "warning"
 reportUnnecessaryIsInstance = "warning"
-reportUnusedClass = "none"
-reportUnusedImport = "none"
-reportUnusedFunction = "none"
-reportUnusedVariable = "none"
+reportUnusedClass = "none"                     # Handled by Ruff
+reportUnusedImport = "none"                    # Handled by Ruff
+reportUnusedFunction = "none"                  # Handled by Ruff
+reportUnusedVariable = "none"                  # Handled by Ruff
 reportUntypedBaseClass = "none"
 reportUntypedClassDecorator = "warning"
 reportUntypedFunctionDecorator = "none"        # Often out of our control
 reportUntypedNamedTuple = "warning"
-# Defualt "none" in strict
+# Default "none" in strict
 reportCallInDefaultInitializer = "none"
 reportImplicitOverride = "none"
 reportImplicitStringConcatenation = "none"
 reportImportCycles = "none"
 reportMissingSuperCall = "none"
 reportPropertyTypeMismatch = "none"
-reportShadowedImports = "warning"
-reportUninitializedInstanceVariable = "warning"
+reportShadowedImports = "none"
+reportUninitializedInstanceVariable = "warning" # Ensure we define instance vars
 reportUnnecessaryTypeIgnoreComment = "none"
 reportUnusedCallResult = "none"
 
 [tool.ruff]
+cache-dir = ".cache/.ruff_cache"
+extend-exclude = ["submodules"]
+extend-include = ["*.ipynb"]
 fix = true
 force-exclude = true
 show-fixes = true
 show-source = true
 preview = false
 unsafe-fixes = false
-cache-dir = ".cache/.ruff_cache"
 fixable = ["ALL"]
-extend-exclude = ["submodules/**"]
-extend-include = ["*.ipynb"]
 select = ["ALL"]
-target-version = "py311"
 extend-ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
@@ -179,11 +182,7 @@ extend-ignore = [
 ]
 
 [tool.ruff.format]
-preview = true
 skip-magic-trailing-comma = true
-
-[tool.ruff.isort]
-split-on-trailing-comma = false
 
 [tool.ruff.pydocstyle]
 convention = "google"
@@ -199,9 +198,9 @@ convention = "google"
     "E402", # Need to allow imports below patches in docs notebooks
 ]
 "tests/**" = [
-    "ARG001", # Allow unused arguments in tests
-    "S101",   # Allow assert in tests
-    "SIM300", # Allow constants (expectations) on the RHS in tests
+    "ARG001", # Allow unused arguments
+    "S101",   # Allow assert
+    "SIM300", # Allow constants (expectations) on the RHS
 ]
 
 [tool.ruff.flake8-bugbear]

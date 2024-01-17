@@ -1,95 +1,33 @@
 {
-  // Environment variables don't load properly otherwise
-  // See: https://github.com/microsoft/vscode-python/issues/944#issuecomment-808516207
-  "terminal.integrated.defaultProfile.linux": "pwsh",
-
-  //! Pylance
-  "python.analysis.typeCheckingMode": "strict",
-  "python.languageServer": "Pylance",
-  //? Helpers
-  "python.analysis.autoFormatStrings": true,
-  "python.analysis.completeFunctionParens": true,
-  "python.analysis.gotoDefinitionInStringLiteral": true,
-  //? Auto imports
-  "python.analysis.importFormat": "absolute",
-  "python.analysis.autoImportCompletions": true,
-  //? Inlay hints
-  "editor.inlayHints.enabled": "offUnlessPressed",
-  "python.analysis.inlayHints.callArgumentNames": "all",
-  "python.analysis.inlayHints.functionReturnTypes": true,
-  "python.analysis.inlayHints.variableTypes": true,
-  "python.analysis.inlayHints.pytestParameters": true,
-
-  //! Lint, test, format
-  //* pytest
-  "python.testing.unittestEnabled": false,
-  "python.testing.pytestEnabled": true,
-  //* ruff
-  "ruff.importStrategy": "fromEnvironment",
-  "ruff.format.args": [],
-  "ruff.lint.args": [],
-  "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
-  "[ipynb]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
-  },
-  //* Formatting
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "editor.formatOnSaveMode": "file",
-  "editor.formatOnType": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always"
-  },
-  //* Files
-  //? Related autoformatting of whitespace conventions
-  //? Note that notebook cells gain new lines and it can't be stopped for now.
-  //? https://github.com/microsoft/vscode/issues/195223
-  //? https://github.com/microsoft/vscode/issues/195011
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "files.refactoring.autoSave": true,
-  "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true,
-  //* Notebook
-  //? https://github.com/microsoft/vscode/issues/195223#issuecomment-1800137313
-  "notebook.insertFinalNewline": false,
-  //? Code actions on notebook save partially work now
-  //? Need to raise an issue about `notebook.source.organizeImports` not behaving
-  //? https://github.com/astral-sh/ruff-lsp/issues/320
-  "notebook.formatOnCellExecution": true,
-  "notebook.formatOnSave.enabled": true,
-  "notebook.codeActionsOnSave": {
-    "notebook.source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
-  },
-
-  //! GitHub Actions
-  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
-
-  //! Files
-  //* Excludes
+  //! Terminal
+  //? Use PowerShell on all platforms, facilitates running template scripts
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.linux": "PowerShell",
+  "terminal.integrated.defaultProfile.osx": "PowerShell",
+  //! File excludes
   "files.exclude": {
-    "**/__pycache__": true,
+    //? Cache directory set in `pyproject.toml`
     "**/.cache": true,
+    //? Python
+    "**/__pycache__": true,
     "**/.jupyter_cache": true,
     "**/.pytest_cache/": true,
-    //? Pylance temp files get picked up in Problems pane before deletion
+    //? Attempt to prevent picking up temporary Pylance files in Problems pane
     "**/*pylance-notebook-cell*": true
   },
   "search.exclude": {
+    //? Don't clutter search with submodule contents
     "submodules": true
   },
-  //* File nesting
+  //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
+    //? Prevents file nesting from hijacking brand new files before setting filename
     "*.root": ".*, a*, b*, c*, d*, e*, f*, g*, h*, i*, j*, k*, l*, m*, n*, o*, p*, q*, r*, s*, t*, u*, v*, w*, x*, y*, z*, 0*, 1*, 2*, 3*, 4*, 5*, 6*, 7*, 8*, 9*, _*, -*, {*"
   },
-  //* File associations
+  //! File associations
   "files.associations": {
     ".coveragerc": "ini",
     ".env": "dotenv",
@@ -100,70 +38,97 @@
     "*ipython-input*": "python",
     "pyrightconfig.json": "jsonc"
   },
-  //* File icon associations
+  //! Git
+  "git.allowNoVerifyCommit": true,
+  "git.confirmNoVerifyCommit": false,
+  "git.commandsToLog": ["commit", "push"],
+  //! Line-width
+  "git.inputValidationSubjectLength": 88,
+  "git.inputValidationLength": 1e100,
+  "editor.wordWrapColumn": 88,
+  "editor.rulers": [88],
+  //! pytest
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true,
+  //! Formatting
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "bounded",
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.refactoring.autoSave": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "notebook.insertFinalNewline": false,
+  "notebook.formatOnCellExecution": true,
+  "notebook.formatOnSave.enabled": true,
+  //! Code Actions
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always",
+    "source.organizeImports": "always"
+  },
+  "notebook.codeActionsOnSave": {
+    "notebook.source.fixAll": "explicit",
+    "notebook.source.organizeImports": "explicit"
+  },
+  //! Extensions
+  //* GitHub Actions
+  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+  //* Jupyter Notebooks
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "jupyter.showVariableViewWhenDebugging": true,
+  //* Pylance
+  "python.languageServer": "Pylance",
+  "python.analysis.autoFormatStrings": true,
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.gotoDefinitionInStringLiteral": true,
+  "python.analysis.importFormat": "absolute",
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "python.analysis.inlayHints.callArgumentNames": "all",
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "python.analysis.inlayHints.variableTypes": true,
+  //* Rewrap
+  "rewrap.wrappingColumn": 88,
+  "rewrap.wholeComment": false,
+  //* Sourcery
+  "sourcery.codeLens": false,
+  //* vscode-icons
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
-
-  //! Built-in
-  //* Markdown editor moves jarringly when this is "true"
-  "markdown.preview.scrollEditorWithPreview": false,
-
-  //! Line-width
-  //* Formatting
-  "rewrap.wrappingColumn": 88,
-  "rewrap.wholeComment": false,
-  //* Don't validate the body of a commit. Assume people can wrap it in their IDE.
-  "git.inputValidationSubjectLength": 88,
-  "git.inputValidationLength": 1e100,
-  //* Default wrapping
-  "editor.wordWrapColumn": 88,
-  "editor.rulers": [88],
-
-  //! Filetype specifics
-  //* .ENV
-  "[dotenv]": {
-    "editor.wordWrap": "bounded",
-    "rewrap.autoWrap.enabled": false
-  },
-  //* MD
+  //! Filetype extensions
+  //* Markdownlint (MD)
   "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.wordWrap": "bounded",
-    "rewrap.autoWrap.enabled": false
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
-  //* JSON
+  //* Prettier (JSON, JSONC, YAML)
   "[json]": {
-    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
-    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  //* TXT
-  "[plaintext]": {
-    "editor.wordWrap": "bounded"
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  //* TOML
-  "evenBetterToml.formatter.columnWidth": 88,
+  "yaml.format.printWidth": 88,
+  //* ruff (PY, IPYNB)
+  "ruff.importStrategy": "fromEnvironment",
+  "ruff.format.args": [],
+  "ruff.lint.args": [],
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  "[ipynb]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  },
+  //* Even Better TOML (TOML)
   "[toml]": {
-    "editor.wordWrap": "bounded",
     "editor.defaultFormatter": "tamasfe.even-better-toml"
   },
-  //* TSV
-  "[tsv]": {
-    //? Indent with tabs
-    "editor.insertSpaces": false
-  },
-  //* YAML
-  "yaml.format.printWidth": 88,
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.wordWrap": "bounded"
-  },
-
-  //! Extension: Jupyter Notebooks
-  "jupyter.notebookFileRoot": "${workspaceFolder}",
-  "jupyter.showVariableViewWhenDebugging": true
+  "evenBetterToml.formatter.columnWidth": 88,
+  //! Other
+  "": "" // Other settings automatically added below this line
 }
