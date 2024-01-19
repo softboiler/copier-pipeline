@@ -119,10 +119,12 @@
   "ruff.format.args": [],
   "ruff.lint.args": [],
   "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.wordWrap": "off"
   },
   "[ipynb]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.wordWrap": "off"
   },
   //* Even Better TOML (TOML)
   "[toml]": {
@@ -130,5 +132,6 @@
   },
   "evenBetterToml.formatter.columnWidth": 88,
   //! Other
-  "": "" // Other settings automatically added below this line
+  //? Other automatically added settings below
+  "": ""
 }
