@@ -4,7 +4,7 @@
 pyright
 # * ---------------------------------------------------------------------------------- *
 # Pre-commit common requirements
-ruff==0.1.11
+ruff==0.1.15
 # Testing
 pytest==7.4.4
 # Testing plugins
