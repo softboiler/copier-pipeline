@@ -69,7 +69,7 @@
   },
   "notebook.codeActionsOnSave": {
     "notebook.source.fixAll": "explicit",
-    "notebook.source.organizeImports": "explicit"
+    "source.organizeImports": "explicit"
   },
   //! Extensions
   //* GitHub Actions
