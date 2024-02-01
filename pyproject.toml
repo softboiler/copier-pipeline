@@ -71,7 +71,7 @@ reportUndefinedVariable = "warning"
 reportAssertAlwaysTrue = "warning"
 reportInvalidStringEscapeSequence = "warning"
 reportInvalidTypeVarUse = "warning"
-reportMissingTypeStubs = "none" # Overeager
+reportMissingTypeStubs = "none"                # Overeager
 reportSelfClsParameterName = "warning"
 reportUnsupportedDunderAll = "warning"
 reportUnusedExpression = "none"                # Handled by Ruff
@@ -205,6 +205,11 @@ convention = "google"
     "SIM300", # Allow constants (expectations) on the RHS
     "SLF001", # Allow private member access in tests
 ]
+# * -------------------------------------------------------------------------------- * #
+"*[{]*" = [
+    "N999", # Allow Jinja-style curly braces in Copier-templated paths
+]
+# * -------------------------------------------------------------------------------- * #
 
 [tool.ruff.flake8-bugbear]
 extend-immutable-calls = ["typer.Argument", "typer.Option"]
