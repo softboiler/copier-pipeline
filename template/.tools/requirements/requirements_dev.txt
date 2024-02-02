@@ -2,7 +2,7 @@
 # Install tests package so modules can be run in debugging
 -e tests/.
 # Introspection
-fawltydeps==0.13.3
+fawltydeps==0.15.0
 # Experiment
 ipykernel==6.29.0
 # Debug
