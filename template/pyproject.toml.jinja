@@ -138,9 +138,11 @@ extend-include = ["*.ipynb"]
 fix = true
 force-exclude = true
 show-fixes = true
-show-source = true
-preview = false
+output-format = "grouped"
+preview = true
 unsafe-fixes = false
+
+[tool.ruff.lint]
 fixable = ["ALL"]
 select = ["ALL"]
 extend-ignore = [
@@ -161,20 +163,32 @@ extend-ignore = [
     "FBT",     # Allow boolean "traps"
     "FIX002",  # Allow TODOs
     "FLY002",  # Allow different string representations
+    "FURB140", # Don't replace comprehensions with starmap
     "G0",      # Allow f-strings, etc. in Loguru logging
     "INP001",  # False positives. Checks for packages missing `__init__.py`
     "ISC",     # False positives. Implicit string concatenation is fine.
+    "PD009",   # Allow `df.iat`.
+    "PD011",   # Allow use of `.values`. False positives.
     "PD013",   # Allow `stack` instead of `melt`. They're not a direct swap.
     "PD101",   # Allow use of nunique(). False positives
     "PD901",   # Allow `df` variable name. We are all consenting adults here.
     "PD011",   # Allow use of `.values`. False positives.
+    "PLR6201", # Don't require set literal for membership checks
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
     "PIE804",  # Allow dict unpack even if unnecessary, consisent for df.assign{**...}
+    "PLC2701", # Allow private name imports
     "PLR0913", # Allow more than five function arguments
+    "PLR0914", # Allow lots of local variables
+    "PLR0917", # Allow more than five positional arguments
+    "PLR1704", # Allow redefining arguments, often for sanitization
     "PLR2004", # Allow magic values. This check is too sensitive
+    "PLR6201", # Don't require set literal for membership checks
+    "PLR6301", # Allow methods that don't reference self, may be overridden
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
-    "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
+    "S301",    # Don't warn about pickling.
+    "S403",    # Don't warn about pickle-like modules.
+    "S404",    # Don't warn about subprocess.
     "TCH",     # Type checking linter doesn't play nicely with pydantic
     "TD",      # Disable to-do validation. Too pedantic for now.
     "TRY003",  # Allow long exception messages
@@ -183,15 +197,16 @@ extend-ignore = [
 
 [tool.ruff.format]
 skip-magic-trailing-comma = true
-[tool.ruff.isort]
+[tool.ruff.lint.isort]
 split-on-trailing-comma = false
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "**/*.ipynb" = [
     "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
+    "E703", # Allow semicolons to suppress outputs in notebooks
     "F821", # Allow undefined names, such as `display`
     "S101", # Allow assert
     "T201", # Allow print in notebooks
@@ -206,5 +221,5 @@ convention = "google"
     "SLF001", # Allow private member access in tests
 ]
 
-[tool.ruff.flake8-bugbear]
+[tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["typer.Argument", "typer.Option"]
