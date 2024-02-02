@@ -6,7 +6,7 @@ pyright
 # Pre-commit common requirements
 ruff==0.1.15
 # Testing
-pytest==7.4.4
+pytest==8.0.0
 # Testing plugins
 pytest-cov==4.1.0
 pytest-custom-exit-code==0.3.0
