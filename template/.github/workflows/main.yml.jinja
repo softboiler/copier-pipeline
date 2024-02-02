@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: "pytest --cov"
-      - uses: "codecov/codecov-action@v3.1.6"
+      - uses: "codecov/codecov-action@v4.0.1"
   bump_project:
     needs: ["pyright", "ruff", "pytest"]
     runs-on: "{{ actions_runner }}"
