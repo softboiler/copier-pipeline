@@ -3,6 +3,8 @@
 # Type checking
 pyright
 # * ---------------------------------------------------------------------------------- *
+# Publishing
+flit==3.9.0
 # Pre-commit common requirements
 ruff==0.2.0
 # Testing
