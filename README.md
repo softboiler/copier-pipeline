@@ -15,7 +15,7 @@ This template should set up tooling that will help you as you code. Contributor 
 
 ## Account-enhanced features
 
-Projects generated from this template have some features that require certain GitHub apps to be set up. They are not strictly necessary, but bolster code style, Git operations, reproducibility and test coverage efforts: 
+Projects generated from this template have some features that require certain GitHub apps to be set up. They are not strictly necessary, but bolster code style, Git operations, reproducibility and test coverage efforts:
 
 - [Sourcery](https://sourcery.ai/): Sourcery does a great job of teaching valuable Python lessons as you code. It will suggest alternative wording for given code patterns, gently guiding you towards more "Pythonic" code.
 - [GitLens](https://www.gitkraken.com/gitlens): Installed along with recommended extensions. You may be prompted to create an account, which you can just link to your GitHub account if desired. This extension is indispensable for managing git-versioned projects.
