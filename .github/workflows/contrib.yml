@@ -6,19 +6,17 @@ on:
     paths:
       - ".github/workflows/contrib.yml"
       - "scripts/Sync-Py.ps1"
-      - "scripts/{{ project_name }}_tools/**"
+      - "scripts/copier_python_tools/**"
       - "scripts/pyproject.toml"
   push:
     branches: ["main"]
     paths:
       - ".github/workflows/contrib.yml"
       - "scripts/Sync-Py.ps1"
-      - "scripts/{{ project_name }}_tools/**"
+      - "scripts/copier_python_tools/**"
       - "scripts/pyproject.toml"
 jobs:
   contrib:
-    env:
-      SYNC_PY_DISABLE_CI: true
     strategy:
       matrix:
         runner:
@@ -28,13 +26,17 @@ jobs:
         lock:
           - ""
           - "-Lock"
-    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "3.11"
       - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile {% raw %}${{ matrix.lock }}{% endraw %}"
+        run: "scripts/Sync-Py.ps1 -Compile ${{ matrix.lock }}"
+      - shell: "pwsh"
+        env:
+          SYNC_PY_DISABLE_CI: true
+        run: "scripts/Sync-Py.ps1 -Compile ${{ matrix.lock }}"
