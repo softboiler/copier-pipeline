@@ -55,13 +55,13 @@ function Sync-Py {
     $install = "$uvPip install $System"
     $sync = "$uvPip sync $System"
 
-    'INSTALLING DEPENDENCIES FOR SYNCING' | Write-PyProgress
-    $first_install = (Test-Command $uv) ? $install : "$pip install"
-    Invoke-Expression "$first_install --requirement $PRE_SYNC_DEPENDENCIES"
+    'INSTALLING SYNC DEPENDENCIES' | Write-PyProgress
+    Invoke-Expression "$pip install --quiet --requirement $PRE_SYNC_DEPENDENCIES"
+    'SYNC DEPENDENCIES INSTALLED' | Write-PyProgress -Done
 
     'INSTALLING TOOLS' | Write-PyProgress
     # ? Install the `{{ project_name }}_tools` Python module
-    Invoke-Expression "$install --editable scripts/."
+    Invoke-Expression "$install --no-cache --editable scripts/."
 
     if (!$NoPreSync) {
         'RUNNING PRE-SYNC TASKS' | Write-PyProgress
@@ -94,6 +94,8 @@ function Sync-Py {
         'LOCAL DEV CONFIGS SYNCED' | Write-PyProgress -Done
         'INSTALLING PRE-COMMIT HOOKS' | Write-PyProgress
         Invoke-Expression "$pyScripts/pre-commit install"
+        'GITHUB ACTIONS WORKFLOWS IN USE IN THIS REPO:' | Write-PyProgress
+        Invoke-Expression "$tools get-actions"
         'POST-SYNC TASKS COMPLETE' | Write-PyProgress -Done
     }
 
