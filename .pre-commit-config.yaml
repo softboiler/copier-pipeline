@@ -2,7 +2,7 @@ exclude: |
   (?x)^(
     template/(
       .*answers_file.*
-      |docs/.*project_name.*
+      |.*project_name.*
     )
   $)
 ci:
