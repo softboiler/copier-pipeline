@@ -1,10 +1,10 @@
 # copier-python
 
-This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow the [one-time setup](#one-time-setup) before following the steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, PowerShell (with certain profile configurations), and Python installed before attempting to use this template.
+This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow [dev machine setup](#dev-machine-setup) before following steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, Python, and the cross-platform PowerShell (with profile configurations to activate `.env` variables), installed to get the most use out of this template.
 
 ## Features
 
-This template should set up tooling that will help you as you code. The template is tentatively cross-platform from testing on Windows, in WSL, and in CI. But I am looking for feedback. File an [issue](https://github.com/blakeNaccarato/copier-python/issues) if things are broken on other systems. Static analysis (e.g. linting, type checking) "moves errors to the left". Linting and code checks run as you write to catch problems before you run/publish/package your code.
+This template should set up tooling that will help you as you code. Contributor and CI workflows in this template are tested on Windows 2022, MacOS 13, and Ubuntu 22.04 runners. Static analysis "moves errors to the left", allowing you to catch issues as soon as possible. Linting and code checks run as you write to catch problems before you run/publish/package your code. Features include:
 
 - [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)/`pyright`: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
 - [Sourcery](https://sourcery.ai/): Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
@@ -15,7 +15,7 @@ This template should set up tooling that will help you as you code. The template
 
 ## Account-enhanced features
 
-Projects generated from this template have some features that require certain GitHub apps to be set up:
+Projects generated from this template have some features that require certain GitHub apps to be set up. They are not strictly necessary, but bolster code style, Git operations, reproducibility and test coverage efforts: 
 
 - [Sourcery](https://sourcery.ai/): Sourcery does a great job of teaching valuable Python lessons as you code. It will suggest alternative wording for given code patterns, gently guiding you towards more "Pythonic" code.
 - [GitLens](https://www.gitkraken.com/gitlens): Installed along with recommended extensions. You may be prompted to create an account, which you can just link to your GitHub account if desired. This extension is indispensable for managing git-versioned projects.
@@ -23,11 +23,9 @@ Projects generated from this template have some features that require certain Gi
 - [Codecov](https://about.codecov.io/): The GitHub organization/user hosting this project needs this app to check code coverage. A provider for determining test coverage in your CI. Tests are an important part of modern software. This template allows you to write tests when you are ready, but will not penalize you for not using tests early on, though you should configure Codecov for your GitHub user or organization so CI runs properly.
 - [Renovate](https://github.com/marketplace/renovate): This tool manages your dependencies automatically. When writing code, it is sensible to pin all of the packages you depend on to exact or minimum versions, and periodically bump those versions when you are certain it won't break your project. Using CI tools and tests, as well as local testing, will increase your confidence in being able to safely upgrade.
 
-## One-time setup
+## Dev machine setup
 
-These requirements should only need to be installed once on a given machine. I hope to eventually encode these requirements into a script that can be run on any system, but for now I will detail the manual installation steps needed to fully utilize this template.
-
-Also, make sure you set up a [GitHub](https://github.com/) account. Parts of this template assume you are hosting your project on GitHub. This template sets up GitHub Actions for you, a continuous integration (CI) tool that checks code for correctness, publishes documentation, and more.
+These requirements should only need to be installed once on a given machine. Until I unify the documentation, see this [in-depth setup guide](https://github.com/blakeNaccarato/gist-template#in-depth-setup-guide) for details, including an [`Initialize-WindowsDev.ps1`](https://github.com/blakeNaccarato/gist-template#initialize-windowsdevps1) script that magically does all of this for you on Windows (via [`winget`](https://learn.microsoft.com/en-us/windows/package-manager/winget/). Also, make sure you set up a [GitHub](https://github.com/) account. Parts of this template assume you are hosting your project on GitHub. This template sets up GitHub Actions for you, a continuous integration (CI) tool that checks code for correctness, publishes documentation, and more.
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-First-Time-Git-Setup): Git allows for version control of your code and is required for versioning your code with GitHub, and using this template.
 - [VSCode](https://code.visualstudio.com/docs/setup/setup-overview): This template focuses on custom configuration and extensions in VSCode to speed up the development process.
