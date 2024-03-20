@@ -1,5 +1,5 @@
 # Simulate local dev run of `Sync-Py.ps1`
-name: "contrib"
+name: "ci"
 on:
   workflow_dispatch:
   pull_request:
@@ -23,9 +23,6 @@ jobs:
           - "macos-13"
           - "ubuntu-22.04"
           - "windows-2022"
-        lock:
-          - ""
-          - "-Lock"
     env:
       SYNC_PY_DISABLE_CI: true
     runs-on: "${{ matrix.runner }}"
@@ -37,7 +34,7 @@ jobs:
         with:
           python-version: "3.11"
       - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile ${{ matrix.lock }}"
+        run: "scripts/Sync-Py.ps1 -Compile -Lock -Version '3.11'"
   ci:
     strategy:
       matrix:
@@ -57,4 +54,4 @@ jobs:
         with:
           python-version: "3.11"
       - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile ${{ matrix.lock }}"
+        run: "scripts/Sync-Py.ps1 -Compile -Lock -Version '3.11'"
