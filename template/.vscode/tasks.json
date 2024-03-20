@@ -21,37 +21,6 @@
     }
   ],
   "tasks": [
-    {
-      "label": "dvc: repro",
-      "dependsOrder": "sequence",
-      "dependsOn": ["dvc: synchronize params"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "dvc repro ${input:stage}",
-      "icon": { "id": "graph" },
-      "problemMatcher": []
-    },
-    {
-      "label": "dvc: repro force",
-      "dependsOrder": "sequence",
-      "dependsOn": ["dvc: synchronize params"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "dvc repro --force ${input:stage}",
-      "icon": { "id": "graph" },
-      "problemMatcher": []
-    },
-    {
-      "label": "dvc: dag",
-      "dependsOrder": "sequence",
-      "dependsOn": ["dvc: synchronize params"],
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "(dvc dag --md) -Replace 'mermaid', '{mermaid}' > docs/dag.md && . '~/.local/nodeenvs/markdownlint/Scripts/Activate.ps1' && markdownlint --fix docs/dag.md",
-      "icon": { "id": "graph" },
-      "problemMatcher": []
-    },
-
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
 
@@ -76,7 +45,7 @@
       "label": "setup: Perform first-time setup",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": "first_time_setup.ps1",
+      "command": "scripts/Initialize-Repo.ps1",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },

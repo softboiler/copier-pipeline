@@ -23,7 +23,7 @@ repos:
           - "post-checkout"
         pass_filenames: false
         language: "system"
-        entry: "pwsh scripts/Sync-Py.ps1 -NoInstallHooks"
+        entry: "pwsh scripts/Sync-Py.ps1"
         files: |
           (?x)^(
             .*/pyproject\.toml
@@ -31,7 +31,6 @@ repos:
             |params\.yaml
             |requirements/.*
             |scripts/.*
-            |src/boilercv/models/.*
           )$
       - id: "pytest-fast-only"
         name: "pytest-fast-only"

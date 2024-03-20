@@ -30,7 +30,7 @@ project_owner_name:
 year_of_project_creation:
   type: "int"
   help: "The year of project creation for the MIT license."
-  default: 2023
+  default: 2024
   validator: "{% if not year_of_project_creation %}Invalid input{% endif %}"
 
 project_description:
@@ -58,10 +58,10 @@ actions_runner:
   type: "str"
   help: "The GitHub Actions runner to use."
   choices:
-    - "ubuntu-latest"
-    - "windows-latest"
-    - "macos-latest"
-  default: "ubuntu-latest"
+    - "ubuntu-22.04"
+    - "windows-2022"
+    - "macos-13"
+  default: "ubuntu-22.04"
   validator: "{% if not actions_runner %}Invalid input{% endif %}"
 
 active:
