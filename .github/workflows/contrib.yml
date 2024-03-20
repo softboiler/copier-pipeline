@@ -42,9 +42,6 @@ jobs:
           - "macos-13"
           - "ubuntu-22.04"
           - "windows-2022"
-        lock:
-          - ""
-          - "-Lock"
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
