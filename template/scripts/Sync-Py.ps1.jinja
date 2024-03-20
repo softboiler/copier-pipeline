@@ -34,14 +34,14 @@ function Sync-Py {
     $Version = $Version ? $Version : (Get-PyDevVersion)
     if ($Env:CI) {
         $py = Get-PySystem $Version
-        "USING $(Resolve-Path $py)" | Write-PyProgress -Info
+        "Using $(Resolve-Path $py)" | Write-PyProgress -Info
     }
     else {
         $py = Get-Py $Version
-        "USING $(Resolve-Path $py -Relative)" | Write-PyProgress -Info
+        "Using $(Resolve-Path $py -Relative)" | Write-PyProgress -Info
     }
     $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally') | Write-PyProgress -Info
-    $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally') | Write-PyProgress -Info
+    $($NoPreSync ? "Won't run pre-sync tasks" : 'Will run pre-sync tasks') | Write-PyProgress -Info
     $($NoPostSync ? "Won't run post-sync tasks" : 'Will run post-sync tasks') | Write-PyProgress -Info
     # ? Python environment modules and scripts
     $pyScripts = Get-PyScripts $py
