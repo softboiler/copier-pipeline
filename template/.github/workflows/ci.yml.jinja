@@ -123,7 +123,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4.1.4
+      - uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427" # v4.1.4
         with:
           path: ".comps"
           merge-multiple: True
@@ -165,7 +165,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        uses: actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427 # v4.1.4
+        uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427" # v4.1.4
         with:
           path: ".comps"
           merge-multiple: True
