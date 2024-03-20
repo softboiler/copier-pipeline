@@ -231,5 +231,4 @@ def disable_concurrent_tests(addopts: str) -> str:
     return sub(pattern=r"-n\s*[^\s]+", repl="-n 0", string=join(split(addopts)))
 
 
-if __name__ == "__main__":
-    main()
+main()

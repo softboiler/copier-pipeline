@@ -173,5 +173,5 @@ tippy_tip_selector = """
     p,
     table
     """
-# ? Other
+tippy_skip_urls = []
 tippy_rtd_urls = []
