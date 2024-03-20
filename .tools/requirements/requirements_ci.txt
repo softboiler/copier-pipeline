@@ -1,7 +1,0 @@
-# Requirements for dev environments
-# Publishing
-flit==3.9.0
-# Annotate test failures in PRs
-pytest-github-actions-annotate-failures==0.2.0
-
--r requirements_both.txt

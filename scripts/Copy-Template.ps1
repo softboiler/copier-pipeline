@@ -1,23 +1,6 @@
 <#.SYNOPSIS
-Update the project from the project template.#>
+Update the project from the project template.
+#>
 
-Param(
-    # Whether to recopy the template, ignoring prior diffs, or update in a smart manner.
-    [switch]$Recopy,
-    # Whether to use default values for unanswered questions.
-    [switch]$Defaults,
-    # Whether to skip verifification when committing.
-    [switch]$NoVerify
-)
-
-. 'scripts/Set-StrictErrors.ps1'
-
-if ( $Recopy ) {
-    copier recopy --overwrite $(if ($Defaults) { '--defaults' })
-}
-else {
-    git submodule update --init --remote --merge submodules/template
-    git add --all
-    git commit $(if ($NoVerify) { '--no-verify' }) -m "Update template digest to $(git rev-parse --short HEAD:submodules/template)"
-    copier update --vcs-ref $(git rev-parse HEAD:submodules/template) $(if ($Defaults) { '--defaults' })
-}
+git push
+copier update --defaults
