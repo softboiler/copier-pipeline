@@ -1,0 +1,58 @@
+# Build and publish documentation
+name: "docs"
+permissions:
+  contents: "read"
+  pages: "write"
+  id-token: "write"
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/docs.yml"
+      - "**/pyproject.toml"
+      - "requirements/**"
+      - "scripts/Sync-Py.ps1"
+      - "src/**"
+      - "docs/**"
+      - "scripts/copier_python_tools/**"
+      - "submodules/**"
+      - "params.yaml"
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/docs.yml"
+      - "**/pyproject.toml"
+      - "requirements/**"
+      - "scripts/Sync-Py.ps1"
+      - "src/**"
+      - "docs/**"
+      - "scripts/copier_python_tools/**"
+      - "submodules/**"
+      - "params.yaml"
+jobs:
+  build:
+    runs-on: "ubuntu-22.04"
+    steps:
+      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
+        with:
+          submodules: True
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "3.11"
+      - shell: "pwsh"
+        run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "sphinx-build -EaT docs _site"
+      - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
+  deploy:
+    if: github.event_name != 'pull_request'
+    environment:
+      name: "github-pages"
+      url: "${{ steps.deployment.outputs.page_url }}"
+    runs-on: "ubuntu-22.04"
+    needs: "build"
+    steps:
+      - id: "deployment"
+        uses: "actions/deploy-pages@decdde0ac072f6dcbe43649d82d9c635fff5b4e4" # v4.0.4
