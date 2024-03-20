@@ -18,12 +18,6 @@ CSS = STATIC / "local.css"
 BIB = DOCS / "refs.bib"
 """Bibliography file."""
 
-# ! URLs for autodoc, intersphinx, and tippy
-OPENCV = "https://docs.opencv.org/2.4"
-NBFORMAT = "https://nbformat.readthedocs.io/en/stable"
-NUMPY = "https://numpy.org/doc/stable"
-PYQTGRAPH = "https://pyqtgraph.readthedocs.io/en/latest"
-
 # ! Setup
 
 
@@ -154,15 +148,7 @@ autodoc2_render_plugin = "myst"
 # ? https://github.com/sphinx-extensions2/sphinx-autodoc2/issues/58
 maximum_signature_line_length = 88
 # ! Intersphinx
-intersphinx_mapping = {
-    "cv2": (OPENCV, None),
-    "nbformat": (NBFORMAT, None),
-    "numpy": (NUMPY, None),
-    "pyqtgraph": (PYQTGRAPH, None),
-    "matplotlib": ("https://matplotlib.org/stable", None),
-    "pandas": ("https://pandas.pydata.org/docs", None),
-    "python": ("https://docs.python.org/3", None),
-}
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 nitpick_ignore = []
 nitpick_ignore_regex = []
 # ! Tippy
@@ -182,7 +168,5 @@ tippy_tip_selector = """
     p,
     table
     """
-# ? Skip Zenodo DOIs as the hover hint doesn't work properly
-tippy_skip_urls = [r"https://doi\.org/10\.5281/zenodo\..+"]
 # ? Other
-tippy_rtd_urls = [OPENCV, NBFORMAT, NUMPY, PYQTGRAPH]
+tippy_rtd_urls = []

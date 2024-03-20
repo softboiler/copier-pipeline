@@ -10,20 +10,13 @@
   "enabledManagers": [
     "git-submodules",
     "github-actions",
+    "pep621",
     "pip_requirements",
     "pre-commit"
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["^template/\\.tools/requirements/.*$"]
-  },
-  "github-actions": {
-    "description": "Additionally monitor template GitHub actions.",
-    "fileMatch": ["^template/\\.github/workflows/.*$"]
-  },
-  "pre-commit": {
-    "description": "Additionally monitor pre-commit config.",
-    "fileMatch": ["^template/\\.pre-commit-config\\.yaml$"]
+    "fileMatch": ["(^|/)requirements/.+$"]
   },
   "packageRules": [
     {
@@ -33,85 +26,10 @@
       "matchUpdateTypes": ["minor", "patch"]
     },
     {
-      "description": "Issue with prompt-toolkit. See <https://github.com/ipython/ipython/issues/14255>.",
-      "matchManagers": ["pip_requirements"],
-      "ignoreDeps": ["ipython"]
-    },
-    {
-      "description": "Pre-commit manages black and ruff, projects manage pyright",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": ["template/.tools/requirements/*"],
-      "ignoreDeps": ["black", "ruff", "pyright"]
-    },
-    {
       "description": "Type checking dependencies",
       "groupName": "type checking",
-      "matchManagers": ["pip_requirements", "git-submodules"],
+      "matchManagers": ["pep621", "pip_requirements", "git-submodules"],
       "matchPackageNames": ["pyright", "submodules/typings"]
-    },
-    {
-      "description": "Ignore pre-commit dependencies managed by the template",
-      "matchManagers": ["pre-commit"],
-      "matchFileNames": [".pre-commit-config.yaml"],
-      "ignoreDeps": [
-        "pre-commit/pre-commit-hooks",
-        "psf/black",
-        "charliermarsh/ruff-pre-commit",
-        "srstevenson/nb-clean",
-        "asottile/blacken-docs",
-        "DavidAnson/markdownlint-cli2"
-      ]
-    },
-    {
-      "description": "Ignore requirements_both.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "ruff",
-        "pytest",
-        "pytest-cov",
-        "pytest-custom-exit-code",
-        "nb-clean"
-      ]
-    },
-    {
-      "description": "Ignore requirements_ci.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": ["flit"]
-    },
-    {
-      "description": "Ignore requirements_core.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": ["copier", "dulwich", "flit_core", "pip", "wheel"]
-    },
-    {
-      "description": "Ignore requirements_dev.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "fawltydeps",
-        "ipykernel",
-        "debugpy",
-        "rich",
-        "black",
-        "sourcery-cli",
-        "snakeviz",
-        "pre-commit",
-        "keyring"
-      ]
-    },
-    {
-      "description": "Ignore requirements_docs.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "myst-parser",
-        "sphinx-autobuild",
-        "sphinx-book-theme",
-        "sphinx-design"
-      ]
     }
   ]
 }

@@ -21,8 +21,10 @@
     "**/*pylance-notebook-cell*": true
   },
   "search.exclude": {
-    //? Don't clutter search with submodule contents
-    "submodules": true
+    //? Type stubs clutter quick-open
+    "submodules/typings": true,
+    //? Locks clutter searches
+    "tools/lock.json": true
   },
   //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
@@ -39,8 +41,8 @@
     ".pylintrc": "ini",
     ".root": "plaintext",
     ".sourcery.yaml": "yaml",
-    "*requirements*.txt": "pip-requirements",
     "*ipython-input*": "python",
+    "*requirements*.in": "pip-requirements",
     "pyrightconfig.json": "jsonc"
   },
   //! Git
@@ -52,6 +54,11 @@
   "git.inputValidationLength": 1e100,
   "editor.wordWrapColumn": 88,
   "editor.rulers": [88],
+  "scm.inputMaxLineCount": 50,
+  "scm.inputMinLineCount": 3,
+  "[scminput]": {
+    "editor.rulers": [88]
+  },
   //! pytest
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
@@ -82,8 +89,11 @@
   //* Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
+  //* MyST
+  "myst.preview.extensions": ["colon_fence", "dollarmath"],
   //* Pylance
   "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "strict",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.completeFunctionParens": true,
@@ -115,14 +125,23 @@
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell",
+    "editor.wordWrap": "off"
+  },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "off"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "off"
   },
   "yaml.format.printWidth": 88,
   //* ruff (PY, IPYNB)
   "ruff.importStrategy": "fromEnvironment",
-  "ruff.format.args": [],
-  "ruff.lint.args": [],
+  "ruff.lint.args": ["--config", "pyproject.toml"],
+  "ruff.format.args": ["--config", "pyproject.toml"],
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.wordWrap": "off"

@@ -11,23 +11,18 @@ license = { file = "LICENSE" }
 requires-python = ">=3.11"
 classifiers = ["License :: OSI Approved :: MIT License"]
 dependencies = []
-
-[[project.authors]]
-name = "Blake Naccarato"
-email = "blake.naccarato@gmail.com"
-
 [project.urls]
 Changes = "https://blakeNaccarato.github.io/copier-python/changelog.html"
 Docs = "https://blakeNaccarato.github.io/copier-python"
 Home = "https://github.com/blakeNaccarato/copier-python"
 Tracker = "https://github.com/blakeNaccarato/copier-python/issues"
+[[project.authors]]
+name = "Blake Naccarato"
+email = "blake.naccarato@gmail.com"
 
 [tool.fawltydeps]
-output_format = "human_detailed"
-code = ["src"]
 deps = ["pyproject.toml"]
-[tool.fawltydeps.custom_mapping]
-ipykernel = ["IPython"]
+code = ["src"]
 
 [tool.pytest.ini_options]
 addopts = '''
@@ -67,6 +62,7 @@ enableExperimentalFeatures = false
 reportMissingModuleSource = "warning"
 # Default "error" in strict
 reportMissingImports = "warning"
+reportInvalidTypeForm = "warning"
 reportUndefinedVariable = "warning"
 reportAssertAlwaysTrue = "warning"
 reportInvalidStringEscapeSequence = "warning"
@@ -76,21 +72,36 @@ reportSelfClsParameterName = "warning"
 reportUnsupportedDunderAll = "warning"
 reportUnusedExpression = "none"                # Handled by Ruff
 reportWildcardImportFromLibrary = "warning"
+reportAbstractUsage = "warning"
+reportArgumentType = "warning"
+reportAssertTypeFailure = "warning"
+reportAssignmentType = "warning"
+reportAttributeAccessIssue = "warning"
+reportCallIssue = "warning"
 reportGeneralTypeIssues = "warning"
+reportInconsistentOverload = "warning"
+reportIndexIssue = "warning"
+reportInvalidTypeArguments = "warning"
+reportNoOverloadImplementation = "warning"
+reportOperatorIssue = "warning"
 reportOptionalSubscript = "warning"
 reportOptionalMemberAccess = "warning"
 reportOptionalCall = "warning"
 reportOptionalIterable = "warning"
 reportOptionalContextManager = "warning"
 reportOptionalOperand = "warning"
+reportRedeclaration = "warning"
+reportReturnType = "warning"
 reportTypedDictNotRequiredAccess = "warning"
 reportPrivateImportUsage = "none"              # Flaky regarding "not exported"
 reportUnboundVariable = "warning"
 reportUnusedCoroutine = "none"                 # Handled by Ruff
+reportUnusedExcept = "warning"
 reportFunctionMemberAccess = "warning"
 reportIncompatibleMethodOverride = "warning"
 reportIncompatibleVariableOverride = "warning"
 reportOverlappingOverload = "warning"
+reportPossiblyUnboundVariable = "warning"
 reportConstantRedefinition = "none"
 reportDeprecated = "warning"
 reportDuplicateImport = "warning"
@@ -135,14 +146,18 @@ reportUnusedCallResult = "none"
 cache-dir = ".cache/.ruff_cache"
 extend-exclude = ["submodules"]
 extend-include = ["*.ipynb"]
+src = ["src"]
+output-format = "grouped"
 fix = true
-force-exclude = true
+preview = true
 show-fixes = true
-show-source = true
-preview = false
-unsafe-fixes = false
+
+[tool.ruff.lint]
 fixable = ["ALL"]
 select = ["ALL"]
+unfixable = [
+    "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
+]
 extend-ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
@@ -153,6 +168,7 @@ extend-ignore = [
     "D20",     # Don't reformat docstrings in these ways
     "D213",    # Multi-line docstring summary should start at the second line
     "D402",    # False positives for parens in first line
+    "D415",    # Don't check docstring punctuation, can be flaky for autodoc
     "D412",    # Allow blanks below headers in Google-style docstrings
     "DTZ",     # Timezones are important, but only contextually necessary.
     "E501",    # Don't check line length. Black handles this.
@@ -161,37 +177,51 @@ extend-ignore = [
     "FBT",     # Allow boolean "traps"
     "FIX002",  # Allow TODOs
     "FLY002",  # Allow different string representations
+    "FURB140", # Don't replace comprehensions with starmap
     "G0",      # Allow f-strings, etc. in Loguru logging
     "INP001",  # False positives. Checks for packages missing `__init__.py`
     "ISC",     # False positives. Implicit string concatenation is fine.
+    "PD009",   # Allow `df.iat`.
+    "PD011",   # Allow use of `.values`. False positives.
     "PD013",   # Allow `stack` instead of `melt`. They're not a direct swap.
     "PD101",   # Allow use of nunique(). False positives
     "PD901",   # Allow `df` variable name. We are all consenting adults here.
     "PD011",   # Allow use of `.values`. False positives.
+    "PLR6201", # Don't require set literal for membership checks
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
     "PIE804",  # Allow dict unpack even if unnecessary, consisent for df.assign{**...}
+    "PLC2701", # Allow private name imports
     "PLR0913", # Allow more than five function arguments
+    "PLR0914", # Allow lots of local variables
+    "PLR0917", # Allow more than five positional arguments
+    "PLR1704", # Allow redefining arguments, often for sanitization
     "PLR2004", # Allow magic values. This check is too sensitive
+    "PLR6201", # Don't require set literal for membership checks
+    "PLR6301", # Allow methods that don't reference self, may be overridden
+    "PLW0108", # Don't warn about unnecessary lambda. Often needed in pandas chains
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
-    "S301",    # Don't warn about pickling. Allow me to shoot myself in the foot.
+    "S301",    # Don't warn about pickling.
+    "S403",    # Don't warn about pickle-like modules.
+    "S404",    # Don't warn about subprocess.
     "TCH",     # Type checking linter doesn't play nicely with pydantic
     "TD",      # Disable to-do validation. Too pedantic for now.
     "TRY003",  # Allow long exception messages
     "W2",      # Allow whitespace issues. Fixed automatically by black.
 ]
 
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
 [tool.ruff.format]
 skip-magic-trailing-comma = true
-[tool.ruff.isort]
-split-on-trailing-comma = false
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "**/*.ipynb" = [
     "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
+    "E703", # Allow semicolons to suppress outputs in notebooks
     "F821", # Allow undefined names, such as `display`
     "S101", # Allow assert
     "T201", # Allow print in notebooks
@@ -205,11 +235,6 @@ convention = "google"
     "SIM300", # Allow constants (expectations) on the RHS
     "SLF001", # Allow private member access in tests
 ]
-# * -------------------------------------------------------------------------------- * #
-"*[{]*" = [
-    "N999", # Allow Jinja-style curly braces in Copier-templated paths
-]
-# * -------------------------------------------------------------------------------- * #
 
-[tool.ruff.flake8-bugbear]
+[tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["typer.Argument", "typer.Option"]
