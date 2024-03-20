@@ -1,0 +1,14 @@
+[build-system]
+requires = ["flit_core==3.9.0"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "{{ project_name }}_tools"
+version = "0.0.0"
+description = "Tools."
+dependencies = ["cyclopts==2.4.2"]
+[project.scripts]
+{{ project_name }}_tools = "{{ project_name }}_tools.__main__:main"
+
+[tool.fawltydeps]
+actions = ["check_undeclared"]

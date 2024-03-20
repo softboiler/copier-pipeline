@@ -1,0 +1,2 @@
+# Prettier disregards VSCode settings and clobbers Myst-specific syntax in notebooks
+*.ipynb

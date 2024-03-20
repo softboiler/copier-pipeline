@@ -1,29 +1,18 @@
-name: "CodeQL"
-
+# Check for security vulnerabilities
+name: "codeql"
 on:
+  workflow_dispatch:
   schedule:
     - cron: "38 16 * * 4"
-
 jobs:
   analyze:
-    name: "Analyze"
     runs-on: "{{ actions_runner }}"
-
-    strategy:
-      fail-fast: false
-      matrix:
-        language: ["python"]
-
     steps:
-      - name: "Checkout repository"
-        uses: "actions/checkout@v4.1.1"
-      - name: "Initialize CodeQL"
-        uses: "github/codeql-action/init@v3.23.2"
+      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
+      - uses: "github/codeql-action/init@3ab4101902695724f9365a384f86c1074d94e18c" # v3.24.7
         with:
-          languages: "{% raw %}${{ matrix.language }}{% endraw %}"
-      - name: "Autobuild"
-        uses: "github/codeql-action/autobuild@v3.23.2"
-      - name: "Perform CodeQL Analysis"
-        uses: "github/codeql-action/analyze@v3.23.2"
+          languages: "python"
+      - uses: "github/codeql-action/autobuild@3ab4101902695724f9365a384f86c1074d94e18c" # v3.24.7
+      - uses: "github/codeql-action/analyze@3ab4101902695724f9365a384f86c1074d94e18c" # v3.24.7
         with:
-          category: "{% raw %}/language:${{matrix.language}}{% endraw %}"
+          category: "/language:python"

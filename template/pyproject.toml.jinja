@@ -11,21 +11,18 @@ license = { file = "LICENSE" }
 requires-python = ">={{ python_version }}"
 classifiers = ["License :: OSI Approved :: MIT License"]
 dependencies = []
-
-[[project.authors]]
-name = "{{ project_owner_name }}"
-{% if project_email %}email = "{{ project_email }}"{% endif %}
-
 [project.urls]
 Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
 Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
 Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
 Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
+[[project.authors]]
+name = "{{ project_owner_name }}"
+{% if project_email %}email = "{{ project_email }}"{% endif %}
 
 [tool.fawltydeps]
-output_format = "human_detailed"
-code = ["src"]
 deps = ["pyproject.toml"]
+code = ["src"]
 [tool.fawltydeps.custom_mapping]
 ipykernel = ["IPython"]
 
@@ -67,30 +64,46 @@ enableExperimentalFeatures = false
 reportMissingModuleSource = "warning"
 # Default "error" in strict
 reportMissingImports = "warning"
+reportInvalidTypeForm = "warning"
 reportUndefinedVariable = "warning"
 reportAssertAlwaysTrue = "warning"
 reportInvalidStringEscapeSequence = "warning"
 reportInvalidTypeVarUse = "warning"
-reportMissingTypeStubs = "none" # Overeager
+reportMissingTypeStubs = "none"                # Overeager
 reportSelfClsParameterName = "warning"
 reportUnsupportedDunderAll = "warning"
 reportUnusedExpression = "none"                # Handled by Ruff
 reportWildcardImportFromLibrary = "warning"
+reportAbstractUsage = "warning"
+reportArgumentType = "warning"
+reportAssertTypeFailure = "warning"
+reportAssignmentType = "warning"
+reportAttributeAccessIssue = "warning"
+reportCallIssue = "warning"
 reportGeneralTypeIssues = "warning"
+reportInconsistentOverload = "warning"
+reportIndexIssue = "warning"
+reportInvalidTypeArguments = "warning"
+reportNoOverloadImplementation = "warning"
+reportOperatorIssue = "warning"
 reportOptionalSubscript = "warning"
 reportOptionalMemberAccess = "warning"
 reportOptionalCall = "warning"
 reportOptionalIterable = "warning"
 reportOptionalContextManager = "warning"
 reportOptionalOperand = "warning"
+reportRedeclaration = "warning"
+reportReturnType = "warning"
 reportTypedDictNotRequiredAccess = "warning"
 reportPrivateImportUsage = "none"              # Flaky regarding "not exported"
 reportUnboundVariable = "warning"
 reportUnusedCoroutine = "none"                 # Handled by Ruff
+reportUnusedExcept = "warning"
 reportFunctionMemberAccess = "warning"
 reportIncompatibleMethodOverride = "warning"
 reportIncompatibleVariableOverride = "warning"
 reportOverlappingOverload = "warning"
+reportPossiblyUnboundVariable = "warning"
 reportConstantRedefinition = "none"
 reportDeprecated = "warning"
 reportDuplicateImport = "warning"
@@ -135,16 +148,18 @@ reportUnusedCallResult = "none"
 cache-dir = ".cache/.ruff_cache"
 extend-exclude = ["submodules"]
 extend-include = ["*.ipynb"]
-fix = true
-force-exclude = true
-show-fixes = true
+src = ["src"]
 output-format = "grouped"
+fix = true
 preview = true
-unsafe-fixes = false
+show-fixes = true
 
 [tool.ruff.lint]
 fixable = ["ALL"]
 select = ["ALL"]
+unfixable = [
+    "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
+]
 extend-ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
@@ -155,6 +170,7 @@ extend-ignore = [
     "D20",     # Don't reformat docstrings in these ways
     "D213",    # Multi-line docstring summary should start at the second line
     "D402",    # False positives for parens in first line
+    "D415",    # Don't check docstring punctuation, can be flaky for autodoc
     "D412",    # Allow blanks below headers in Google-style docstrings
     "DTZ",     # Timezones are important, but only contextually necessary.
     "E501",    # Don't check line length. Black handles this.
@@ -184,6 +200,7 @@ extend-ignore = [
     "PLR2004", # Allow magic values. This check is too sensitive
     "PLR6201", # Don't require set literal for membership checks
     "PLR6301", # Allow methods that don't reference self, may be overridden
+    "PLW0108", # Don't warn about unnecessary lambda. Often needed in pandas chains
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
     "S301",    # Don't warn about pickling.
@@ -195,10 +212,10 @@ extend-ignore = [
     "W2",      # Allow whitespace issues. Fixed automatically by black.
 ]
 
-[tool.ruff.format]
-skip-magic-trailing-comma = true
 [tool.ruff.lint.isort]
 split-on-trailing-comma = false
+[tool.ruff.format]
+skip-magic-trailing-comma = true
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"

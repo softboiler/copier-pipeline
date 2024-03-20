@@ -1,16 +1,18 @@
+# Sync GitHub release notes with the changelog
 name: "changerelease"
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
   push:
-    paths: ["CHANGELOG.md"]
     branches: ["main"]
     tags: ["*"]
-
+    paths: ["CHANGELOG.md"]
 jobs:
-  sync:
+  changerelease:
+    permissions:
+      contents: "write"
     runs-on: "{{ actions_runner }}"
     steps:
-      - uses: "dropseed/changerelease@v1.6.0"
+      - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
         with:
           github_token: "{% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}"
           tag_prefix: ""

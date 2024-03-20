@@ -21,6 +21,37 @@
     }
   ],
   "tasks": [
+    {
+      "label": "dvc: repro",
+      "dependsOrder": "sequence",
+      "dependsOn": ["dvc: synchronize params"],
+      "type": "shell",
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
+      "command": "dvc repro ${input:stage}",
+      "icon": { "id": "graph" },
+      "problemMatcher": []
+    },
+    {
+      "label": "dvc: repro force",
+      "dependsOrder": "sequence",
+      "dependsOn": ["dvc: synchronize params"],
+      "type": "shell",
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
+      "command": "dvc repro --force ${input:stage}",
+      "icon": { "id": "graph" },
+      "problemMatcher": []
+    },
+    {
+      "label": "dvc: dag",
+      "dependsOrder": "sequence",
+      "dependsOn": ["dvc: synchronize params"],
+      "type": "shell",
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
+      "command": "(dvc dag --md) -Replace 'mermaid', '{mermaid}' > docs/dag.md && . '~/.local/nodeenvs/markdownlint/Scripts/Activate.ps1' && markdownlint --fix docs/dag.md",
+      "icon": { "id": "graph" },
+      "problemMatcher": []
+    },
+
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
 
@@ -28,25 +59,18 @@
       "label": "setup: Copy template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": ".tools/scripts/Copy-Template.ps1 ${input:templateOptions}",
+      "command": "scripts/Copy-Template.ps1 ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
-      "label": "setup: Setup project",
+      "label": "setup: Setup or sync virtual environment",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": "setup.ps1",
+      "command": "scripts/Sync-Py.ps1",
       "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Update project",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": "update.ps1",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "runOptions": { "runOn": "folderOpen" }
     },
     {
       "label": "setup: Perform first-time setup",
@@ -101,14 +125,6 @@
     // * OTHER TASKS * //
 
     {
-      "label": "task: format notebook",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "nb-clean clean --remove-empty-cells --preserve-cell-outputs --preserve-cell-metadata special tags -- ${file}; ruff --fix-only ${file}; ruff format ${file}",
-      "icon": { "id": "notebook" },
-      "problemMatcher": []
-    },
-    {
       "label": "task: Run pytest with coverage",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
@@ -120,15 +136,7 @@
       "label": "task: run core update",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python .tools/scripts/core_update.py",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Run pyright",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": ".tools/scripts/Invoke-Pyright.ps1",
+      "command": "python scripts/core_update.py",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
@@ -136,7 +144,7 @@
       "label": "task: Run ruff",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "ruff .",
+      "command": "ruff check .; ruff format .",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
@@ -144,7 +152,7 @@
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "sphinx-build -Ean docs _site; sphinx-autobuild -n docs _site --watch **/*.md",
+      "command": "sphinx-build -EaT docs _site; sphinx-autobuild -T docs _site --ignore *params.yaml --ignore *params_schema.json --ignore apidocs --ignore data",
       "icon": { "id": "book" },
       "problemMatcher": []
     },

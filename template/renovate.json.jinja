@@ -10,12 +10,13 @@
   "enabledManagers": [
     "git-submodules",
     "github-actions",
+    "pep621",
     "pip_requirements",
     "pre-commit"
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["^\\.tools/requirements/*"]
+    "fileMatch": ["(^|/)requirements/.+$"]
   },
   "packageRules": [
     {
@@ -27,115 +28,8 @@
     {
       "description": "Type checking dependencies",
       "groupName": "type checking",
-      "matchManagers": ["pip_requirements", "git-submodules"],
+      "matchManagers": ["pep621", "pip_requirements", "git-submodules"],
       "matchPackageNames": ["pyright", "submodules/typings"]
-    },
-    {
-      "description": "Ignore changerelease.yml workflow deps managed by the template",
-      "matchManagers": ["github-actions"],
-      "matchFileNames": [".github/workflows/*"],
-      "ignoreDeps": ["dropseed/changerelease"]
-    },
-    {
-      "description": "Ignore codeql.yml workflow deps managed by the template",
-      "matchManagers": ["github-actions"],
-      "matchFileNames": [".github/workflows/*"],
-      "ignoreDeps": ["actions/checkout", "github/codeql-action"]
-    },
-    {
-      "description": "Ignore main.yml workflow deps managed by the template",
-      "matchManagers": ["github-actions"],
-      "matchFileNames": [".github/workflows/*"],
-      "ignoreDeps": [
-        "blakeNaccarato/copier-python-workflow-setup",
-        "codecov/codecov-action",
-        "stefanzweifel/git-auto-commit-action"
-      ]
-    },
-    {
-      "description": "Ignore publish.yml workflow deps managed by the template",
-      "matchManagers": ["github-actions"],
-      "matchFileNames": [".github/workflows/*"],
-      "ignoreDeps": ["actions/upload-pages-artifact", "actions/deploy-pages"]
-    },
-    {
-      "description": "Ignore sphinx.yml workflow deps managed by the template",
-      "matchManagers": ["github-actions"],
-      "matchFileNames": [".github/workflows/*"],
-      "ignoreDeps": [
-        "dropseed/changerelease",
-        "actions/checkout",
-        "github/codeql-action",
-        "blakeNaccarato/copier-python-workflow-setup",
-        "codecov/codecov-action",
-        "stefanzweifel/git-auto-commit-action",
-        "actions/upload-pages-artifact",
-        "actions/deploy-pages"
-      ]
-    },
-    {
-      "description": "Ignore pre-commit dependencies managed by the template",
-      "matchManagers": ["pre-commit"],
-      "matchFileNames": [".pre-commit-config.yaml"],
-      "ignoreDeps": [
-        "pre-commit/pre-commit-hooks",
-        "psf/black",
-        "charliermarsh/ruff-pre-commit",
-        "srstevenson/nb-clean",
-        "asottile/blacken-docs",
-        "DavidAnson/markdownlint-cli2"
-      ]
-    },
-    {
-      "description": "Ignore requirements_both.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "ruff",
-        "pytest",
-        "pytest-cov",
-        "pytest-custom-exit-code",
-        "nb-clean"
-      ]
-    },
-    {
-      "description": "Ignore requirements_ci.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": ["flit"]
-    },
-    {
-      "description": "Ignore requirements_core.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": ["copier", "dulwich", "flit_core", "pip", "wheel"]
-    },
-    {
-      "description": "Ignore requirements_dev.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "fawltydeps",
-        "ipykernel",
-        "debugpy",
-        "rich",
-        "black",
-        "sourcery-cli",
-        "snakeviz",
-        "pre-commit",
-        "keyring"
-      ]
-    },
-    {
-      "description": "Ignore requirements_docs.txt deps managed by this template",
-      "matchManagers": ["pip_requirements"],
-      "matchFileNames": [".tools/requirements/*"],
-      "ignoreDeps": [
-        "myst-parser",
-        "sphinx-autobuild",
-        "sphinx-book-theme",
-        "sphinx-design"
-      ]
     }
   ]
 }
