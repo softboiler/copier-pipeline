@@ -19,12 +19,12 @@ Param(
 . 'scripts/Set-StrictErrors.ps1'
 # ? Allow disabling CI when in CI, in order to test local dev workflows
 $Env:CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
-Write-Host $($Env:CI ? "Will act as if in CI" : "Will act as if running locally")
+Write-Host $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally')
 # ? Don't pre-sync or post-sync in CI
 $NoPreSync = $NoPreSync ? $NoPreSync : [bool]$Env:CI
-Write-Host $($NoPreSync ? "Won't run pre-sync tasks" : "Will run pre-sync tasks")
+Write-Host $($NoPreSync ? "Won't run pre-sync tasks" : 'Will run pre-sync tasks')
 $NoPostSync = $NoPostSync ? $NoPostSync : [bool]$Env:CI
-Write-Host $($NoPostSync ? "Won't run post-sync tasks" : "Will run post-sync tasks")
+Write-Host $($NoPostSync ? "Won't run post-sync tasks" : 'Will run post-sync tasks')
 # ? Core dependencies needed for syncing
 $PRE_SYNC_DEPENDENCIES = 'requirements/sync.in'
 
