@@ -105,7 +105,7 @@
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "sphinx-build -EaT docs _site; sphinx-autobuild -T docs _site --ignore *params.yaml --ignore *params_schema.json --ignore apidocs --ignore data",
+      "command": "sphinx-build -EaT docs _site; sphinx-autobuild -T docs _site --ignore apidocs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },
