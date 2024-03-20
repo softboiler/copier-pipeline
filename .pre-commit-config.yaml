@@ -1,3 +1,10 @@
+exclude: |
+  (?x)^(
+    template/(
+      .*answers_file.*
+      |docs/.*project_name.*
+    )
+  $)
 ci:
   skip:
     - "sync"

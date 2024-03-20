@@ -3,4 +3,4 @@
 
 def test_import():
     """Trivial test that the package is importable."""
-    import copier_python  # noqa: F401
+    import copier_python  # noqa: F401, PLC0415
