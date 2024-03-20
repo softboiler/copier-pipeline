@@ -1,5 +1,5 @@
 # Simulate local dev run of `Sync-Py.ps1`
-name: "ci"
+name: "contrib"
 on:
   workflow_dispatch:
   pull_request:
