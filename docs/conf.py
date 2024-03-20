@@ -9,6 +9,8 @@ from sphinx.application import Sphinx
 
 PACKAGE = "copier_python"
 """Package name."""
+REPO = PACKAGE.replace("_", "-")
+"""Repo name."""
 DOCS = Path("docs")
 """Docs directory."""
 STATIC = DOCS / "_static"
@@ -77,7 +79,7 @@ def dpath(path: Path, rel: Path = DOCS) -> str:
 
 
 # ! Basics
-project = PACKAGE
+project = REPO
 copyright = f"{date.today().year}, Blake Naccarato"  # noqa: A001
 version = "0.0.0"
 master_doc = "index"
@@ -95,7 +97,7 @@ extensions = [
     "sphinxcontrib.mermaid",
 ]
 # ! Theme
-html_title = PACKAGE
+html_title = REPO
 html_favicon = "_static/favicon.ico"
 html_logo = "_static/favicon.ico"
 html_static_path = dpaths(STATIC)
@@ -106,7 +108,7 @@ html_context = {
     "default_mode": "light"
 }
 COMMON_OPTIONS = {
-    "repository_url": f"https://github.com/blakeNaccarato/{PACKAGE}",
+    "repository_url": f"https://github.com/blakeNaccarato/{REPO}",
     "path_to_docs": dpath(DOCS),
 }
 html_theme_options = {
@@ -120,11 +122,14 @@ html_theme_options = {
 }
 # ! MyST
 myst_enable_extensions = [
-    "colon_fence",
-    "dollarmath",
     "attrs_block",
+    "colon_fence",
+    "deflist",
+    "dollarmath",
     "linkify",
+    "strikethrough",
     "substitution",
+    "task_lists",
 ]
 myst_heading_anchors = 6
 myst_substitutions = {}
