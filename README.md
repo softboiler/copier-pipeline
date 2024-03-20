@@ -2,6 +2,27 @@
 
 This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow the [one-time setup](#one-time-setup) before following the steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, PowerShell (with certain profile configurations), and Python installed before attempting to use this template.
 
+## Features
+
+This template should set up tooling that will help you as you code. The template is tentatively cross-platform from testing on Windows, in WSL, and in CI. But I am looking for feedback. File an [issue](https://github.com/blakeNaccarato/copier-python/issues) if things are broken on other systems. Static analysis (e.g. linting, type checking) "moves errors to the left". Linting and code checks run as you write to catch problems before you run/publish/package your code.
+
+- [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)/`pyright`: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
+- [Sourcery](https://sourcery.ai/): Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
+- [MyST-NB](https://myst-nb.readthedocs.io/en/latest/): Documentation in Markdown, supporting Jupyter notebooks, instead of rST. Having a docs page at project inception should encourage documentation as you go. Don't be afraid to publish incomplete pages, early adopters will appreciate the breadcrumbs. Use docs to help explain the "why" of things.
+- `pytest`: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.
+- `pre-commit`: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
+- `ruff`: Formats code, enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
+
+## Account-enhanced features
+
+Projects generated from this template have some features that require certain GitHub apps to be set up:
+
+- [Sourcery](https://sourcery.ai/): Sourcery does a great job of teaching valuable Python lessons as you code. It will suggest alternative wording for given code patterns, gently guiding you towards more "Pythonic" code.
+- [GitLens](https://www.gitkraken.com/gitlens): Installed along with recommended extensions. You may be prompted to create an account, which you can just link to your GitHub account if desired. This extension is indispensable for managing git-versioned projects.
+- [pre-commit.ci](https://pre-commit.ci/): The GitHub organization/user hosting this project needs `pre-commit.ci` enabled to leverage automatic running of `pre-commit` hooks online. This is not strictly necessary, but encouraged as a way to help keep your code in good shape as you write it.
+- [Codecov](https://about.codecov.io/): The GitHub organization/user hosting this project needs this app to check code coverage. A provider for determining test coverage in your CI. Tests are an important part of modern software. This template allows you to write tests when you are ready, but will not penalize you for not using tests early on, though you should configure Codecov for your GitHub user or organization so CI runs properly.
+- [Renovate](https://github.com/marketplace/renovate): This tool manages your dependencies automatically. When writing code, it is sensible to pin all of the packages you depend on to exact or minimum versions, and periodically bump those versions when you are certain it won't break your project. Using CI tools and tests, as well as local testing, will increase your confidence in being able to safely upgrade.
+
 ## One-time setup
 
 These requirements should only need to be installed once on a given machine. I hope to eventually encode these requirements into a script that can be run on any system, but for now I will detail the manual installation steps needed to fully utilize this template.
@@ -60,43 +81,20 @@ Visit the newly-published GitHub repository, navigate to repository "Settings", 
 - In "Pages" settings, select "GitHub Actions" as the "Source" for "Build and deployment". This template should automatically publish a project documentation website for you when you change `docs`, `README.md`, and `CHANGELOG.md`.
 - Navigate back to your GitHub project, click the cog next to "About", and tick the box for "Use your GitHub Pages website" to direct users to your generated documentation. The page will be broken until the first time the `sphinx.yml` action runs on detected changes to documentation files. Also manually enter a "Description" and other info here if you like.
 
-## Template features
+## Roadmap
 
-This template should set up tooling that will help you as you code. The template is tentatively cross-platform from testing on Windows, in WSL, and in CI. But I am looking for feedback. File an [issue](https://github.com/blakeNaccarato/copier-python/issues) if things are broken on other systems.
+There is a lot still to do in this template, but the big one is the concept of "meta-templating". The saying that "one size fits all" doesn't hold in project templating. Rather, "many sizes fit most". I encourage you to fork this template and change the relevant links in your fork to take ownership of the template and modify it for your own needs.
 
-### Features requiring certain accounts
-
-Projects generated from this template require certain accounts or GitHub apps to be set up to fully utilize the template. These are organized in order of suggested importance:
-
-- [Sourcery](https://sourcery.ai/): Sourcery does a great job of teaching valuable Python lessons as you code. It will suggest alternative wording for given code patterns, gently guiding you towards more "Pythonic" code.
-- [GitLens](https://www.gitkraken.com/gitlens): Installed along with recommended extensions. You may be prompted to create an account, which you can just link to your GitHub account if desired. This extension is indispensable for managing git-versioned projects.
-- [pre-commit.ci](https://pre-commit.ci/): The GitHub organization/user hosting this project needs `pre-commit.ci` enabled to leverage automatic running of `pre-commit` hooks online. This is not strictly necessary, but encouraged as a way to help keep your code in good shape as you write it.
-- [Codecov](https://about.codecov.io/): The GitHub organization/user hosting this project needs this app to check code coverage. A provider for determining test coverage in your CI. Tests are an important part of modern software. This template allows you to write tests when you are ready, but will not penalize you for not using tests early on, though you should configure Codecov for your GitHub user or organization so CI runs properly.
-- [Renovate](https://github.com/marketplace/renovate): This tool manages your dependencies automatically. When writing code, it is sensible to pin all of the packages you depend on to exact or minimum versions, and periodically bump those versions when you are certain it won't break your project. Using CI tools and tests, as well as local testing, will increase your confidence in being able to safely upgrade.
-
-### Static analysis, tests, and documentation
-
-Static analysis (e.g. linting, type checking) "moves errors to the left". Linting and code checks run as you write to catch problems before you run/publish/package your code.
-
-- pylance/pyright: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
-- ruff: Formats code, enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
-- sourcery: Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
-- pre-commit: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
-- pytest: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.
-- MyST: Documentation in Markdown instead of rST. Having a docs page at project inception should encourage documentation as you go. Don't be afraid to publish incomplete pages, early adopters will appreciate the breadcrumbs. Use docs to help explain the "why" of things.
-
-## To-do
-
-There is a lot still to do in this template, but the big one is the concept of "meta-templating". The saying that "one size fits all" doesn't hold in project templating. Rather, "many sizes fit most". I encourage you to fork this template, and the associated setup workflow [blakeNaccarato/copier-python-workflow-setup](https://github.com/blakeNaccarato/copier-python-workflow-setup)), and change the relevant links in your fork to take ownership of the template and modify it for your own needs.
-
-I am going to set up a meta-template solution to automate this, facilitating the forking of templates from templates, to allow anyone to maintain their own template, periodically updating from whatever parent template they chose. This pattern allows individuals or teams to benefit from the templates of others, without being constrained by the opinionated choices of that template.
+I intend to set up a meta-templating solution over in [copyit](https://github.com/copyit-org) to automate this, facilitating the forking of templates from templates, to allow anyone to maintain their own template, periodically updating from whatever parent template they chose. This pattern allows individuals or teams to benefit from the templates of others, without being constrained by the opinionated choices of that template.
 
 Other notable to-dos:
 
-- Detailed documentation
-- Explicitly set permissions across workflows to account for [the newly read-only by default GITHUB_TOKEN](https://github.blog/changelog/2023-02-02-github-actions-updating-the-default-github_token-permissions-to-read-only/) since February 2, 2023.
-- Ground-up script to handle "one-time setup" across platforms
-- Facilitate propagation of individual project changes back to the shared template through scheduled PRs
+- [x] Ground-up script to handle "one-time setup" across platforms. (Implemented in `scripts/Sync-Py.ps1`)
+- [x] Detailed documentation
+- [ ] More detailed documentation
+- [x] Explicitly set permissions across workflows to account for [the newly read-only by default GITHUB_TOKEN](https://github.blog/changelog/2023-02-02-github-actions-updating-the-default-github_token-permissions-to-read-only/) since February 2, 2023.
+- [ ] Test this template with the strict `GITHUB_TOKEN` defaults
+- [ ] Facilitate propagation of individual project changes back to the shared template through scheduled PRs. Planned in [copyit](https://github.com/copyit-org).
 
 ## Alternatives
 
