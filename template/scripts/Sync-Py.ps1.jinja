@@ -30,7 +30,7 @@ function Sync-Py {
     Sync Python dependencies.#>
 
     # ? Print invocation details
-    '***SYNCING' | Write-PyProgress
+    '*** SYNCING' | Write-PyProgress
     $Version = $Version ? $Version : (Get-PyDevVersion)
     if ($Env:CI) {
         $py = Get-PySystem $Version
@@ -63,11 +63,14 @@ function Sync-Py {
     # ? Install the `{{ project_name }}_tools` Python module
     Invoke-Expression "$install --no-cache --editable scripts/."
 
+    # ? Pre-sync
     if (!$NoPreSync) {
-        'RUNNING PRE-SYNC TASKS' | Write-PyProgress
+        '*** RUNNING PRE-SYNC TASKS' | Write-PyProgress
         'SYNCING SUBMODULES' | Write-PyProgress
         git submodule update --init --merge
-        'PRE-SYNC DONE' | Write-PyProgress -Done
+        'SUBMODULES SYNCED' | Write-PyProgress -Done
+        Write-Host ''
+        '*** PRE-SYNC DONE ***' | Write-PyProgress -Done
     }
     if ($Env:CI) {
         'SYNCING PROJECT WITH TEMPLATE' | Write-PyProgress
@@ -76,19 +79,34 @@ function Sync-Py {
         'PROJECT SYNCED WITH TEMPLATE' | Write-PyProgress
     }
 
-    'SYNCING DEPENDENCIES' | Write-PyProgress
-    $High = $High ? '--high' : ''
     # ? Compile or retrieve compiled dependencies
-    if ($Compile) { $comp = Invoke-Expression "$tools compile $High" }
-    else { $comp = Invoke-Expression "$tools get-comp $High" }
+    $High = $High ? '--high' : ''
+    if ($Compile) {
+        'COMPILING' | Write-PyProgress
+        $comp = Invoke-Expression "$tools compile $High"
+        'COMPILED' | Write-PyProgress -Done
+    }
+    else {
+        'GETTING COMPILATION FROM LOCK, COMPILING IF MISSING' | Write-PyProgress
+        $comp = Invoke-Expression "$tools get-comp $High"
+        'COMPILATION FOUND OR COMPILED' | Write-PyProgress -Done
+    }
+
     # ? Lock
-    if ($Lock) { Invoke-Expression "$tools lock" }
+    if ($Lock) {
+        'LOCKING' | Write-PyProgress
+        Invoke-Expression "$tools lock"
+        'LOCKED' | Write-PyProgress -Done
+    }
+
     # ? Sync
+    'SYNCING DEPENDENCIES' | Write-PyProgress
     Invoke-Expression "$sync $comp"
     'DEPENDENCIES SYNCED' | Write-PyProgress -Done
 
+    # ? Post-sync
     if (!$NoPostSync) {
-        'RUNNING POST-SYNC TASKS' | Write-PyProgress
+        '*** RUNNING POST-SYNC TASKS' | Write-PyProgress
         'SYNCING LOCAL DEV CONFIGS' | Write-PyProgress
         Invoke-Expression "$tools sync-local-dev-configs"
         'LOCAL DEV CONFIGS SYNCED' | Write-PyProgress -Done
@@ -96,11 +114,12 @@ function Sync-Py {
         Invoke-Expression "$pyScripts/pre-commit install"
         'GITHUB ACTIONS WORKFLOWS IN USE IN THIS REPO:' | Write-PyProgress
         Invoke-Expression "$tools get-actions"
-        'POST-SYNC TASKS COMPLETE' | Write-PyProgress -Done
+        Write-Host ''
+        '*** POST-SYNC TASKS COMPLETE ***' | Write-PyProgress -Done
     }
 
     Write-Host ''
-    '...DONE ***' | Write-PyProgress -Done
+    '*** DONE ***' | Write-PyProgress -Done
 }
 
 function Get-PyDevVersion {
