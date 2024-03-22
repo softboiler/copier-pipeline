@@ -9,7 +9,7 @@
       "id": "templateOptions",
       "description": "Template options.",
       "type": "pickString",
-      "options": ["", "-Defaults", "-NoBump -Defaults", "-Recopy -Defaults"]
+      "options": ["", "-Latest", "-Recopy"]
     }
   ],
   "tasks": [
@@ -20,7 +20,7 @@
       "label": "setup: Copy template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": "scripts/Copy-Template.ps1 ${input:templateOptions}",
+      "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },

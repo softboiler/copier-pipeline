@@ -1,5 +1,5 @@
 <#.SYNOPSIS
-Sync project to template.#>
+Sync project with template.#>
 Param(
     # Prompt for new answers.
     [switch]$Prompt,
