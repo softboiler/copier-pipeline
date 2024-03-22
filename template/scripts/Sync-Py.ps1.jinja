@@ -70,8 +70,7 @@ if (!$NoPreSync) {
 }
 if ($Env:CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    $head = git rev-parse HEAD:submodules/template
-    copier update --defaults --vcs-ref=$head
+    scripts/Sync-Template.ps1
     'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
