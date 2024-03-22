@@ -1,22 +1,31 @@
 <#.SYNOPSIS
 Update the project from the project template.#>
 Param(
-    # Whether to recopy the template, ignoring prior diffs, or update in a smart manner.
+    # Recopy ignoring prior diffs instead of a smart update.
     [switch]$Recopy,
-    # Whether to use default values for unanswered questions.
+    # Use question defaults.
     [switch]$Defaults,
-    # Whether to skip verifification when committing.
+    # Don't bump the template digest.
+    [switch]$NoBump,
+    # Skip verifification when committing.
     [switch]$NoVerify
 )
+Import-Module ./scripts/Common.psm1
+$NoBump = [bool]$true
 if ( $Recopy ) {
-    copier recopy --overwrite --defaults=$Defaults
+    if ($Defaults) { copier recopy --overwrite --defaults }
+    else { copier recopy --overwrite }
+
 }
 else {
-    git submodule update --init --remote --merge submodules/template
-    git add --all
     $head = git rev-parse HEAD:submodules/template
-    $msg = "Update template digest to $head"
-    if ($NoVerify) {git commit --no-verify -m $msg}
-    else {git commit -m $msg}
-    copier update --vcs-ref=$head --defaults=$Defaults
+    if (!$NoBump) {
+        git submodule update --init --remote --merge submodules/template
+        git add --all
+        $msg = "Update template digest to $head"
+        if ($NoVerify) { git commit --no-verify -m $msg }
+        else { git commit -m $msg }
+    }
+    if ($Defaults) { copier update --vcs-ref=$head --defaults }
+    else { copier update --vcs-ref=$head }
 }

@@ -9,15 +9,7 @@
       "id": "templateOptions",
       "description": "Template options.",
       "type": "pickString",
-      "options": [
-        "",
-        "-Defaults",
-        "-Recopy",
-        "-Recopy -Defaults",
-        "-Defaults -NoVerify",
-        "-Recopy -NoVerify",
-        "-Recopy -Defaults -NoVerify"
-      ]
+      "options": ["", "-Defaults", "-NoBump -Defaults", "-Recopy -Defaults"]
     }
   ],
   "tasks": [
