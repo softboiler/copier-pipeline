@@ -70,7 +70,7 @@ if (!$NoPreSync) {
 }
 if ($Env:CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    scripts/Sync-Template.ps1
+    scripts/Sync-Template.ps1 -Stay
     'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
