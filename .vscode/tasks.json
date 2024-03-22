@@ -4,6 +4,14 @@
 
 {
   "version": "2.0.0",
+  "inputs": [
+    {
+      "id": "templateOptions",
+      "description": "Template options.",
+      "type": "pickString",
+      "options": ["", "-Latest", "-Recopy"]
+    }
+  ],
   "tasks": [
     // * -------------------------------------------------------------------------- * //
     // * PROJECT SETUP * //
@@ -12,7 +20,7 @@
       "label": "setup: Copy template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
-      "command": "scripts/Copy-Template.ps1",
+      "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },

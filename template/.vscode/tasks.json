@@ -9,7 +9,7 @@
       "id": "templateOptions",
       "description": "Template options.",
       "type": "pickString",
-      "options": ["", "-Latest", "-Recopy"]
+      "options": ["", "-Stay", "-Stay -Prompt", "-Recopy -Prompt"]
     }
   ],
   "tasks": [

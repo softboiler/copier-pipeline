@@ -70,15 +70,16 @@ if (!$NoPreSync) {
 }
 if ($Env:CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    $head = git rev-parse HEAD:submodules/template
-    copier update --defaults --vcs-ref=$head
+    scripts/Sync-Template.ps1
     'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
 # ? Compile or retrieve compiled dependencies
 if ($Compile) {
     'COMPILING' | Write-Progress
-    $comp = copier_python_tools compile --high=$High
+    $comp_low = boilercv_tools compile
+    $comp_high = boilercv_tools compile --high
+    $comp = $High ? $comp_high : $comp_low
     'COMPILED' | Write-Progress -Done
 }
 else {

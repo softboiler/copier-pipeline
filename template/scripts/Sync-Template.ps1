@@ -5,22 +5,28 @@ Param(
     [switch]$Prompt,
     # Recopy, ignoring prior diffs instead of a smart update.
     [switch]$Recopy,
-    # Bump to the latest template.
-    [switch]$Latest,
+    # Stay on the current template version when updating.
+    [switch]$Stay,
     # Skip verifification when committing changes.
     [switch]$NoVerify
 )
-if ( $Recopy ) {
+$template = 'submodules/template'
+$template_exists = $template | Test-Path
+if ( $Recopy -or (!$template_exists -and $Stay) ) {
     if ($Prompt) { return copier recopy --overwrite }
     return copier recopy --overwrite --defaults
 }
-if ( $Latest ) {
-    git submodule update --init --remote --merge submodules/template
-    git add --all
-    $msg = "Update template digest to $head"
-    if ($NoVerify) { git commit --no-verify -m $msg }
-    else { git commit -m $msg }
+if ($template | Test-Path) {
+    $head = git rev-parse HEAD:submodules/template
+    if (!$Stay) {
+        git submodule update --init --remote --merge $template
+        git add --all
+        $msg = "Update template digest to $head"
+        if ($NoVerify) { git commit --no-verify -m $msg }
+        else { git commit -m $msg }
+    }
+    if ($Prompt) { return copier update --vcs-ref=$head }
+    return copier update --vcs-ref=$head --defaults
 }
-$head = git rev-parse HEAD:submodules/template
-if ($Prompt) { return copier update --vcs-ref=$head }
-copier update --vcs-ref=$head --defaults
+if ($Prompt) { return copier update }
+copier update --defaults
