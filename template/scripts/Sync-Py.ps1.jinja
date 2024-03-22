@@ -79,7 +79,7 @@ if ($Env:CI) {
 if ($Compile) {
     'COMPILING' | Write-Progress
     $comp_low = boilercv_tools compile
-    $comp_high = boilercv_tools compile -High
+    $comp_high = boilercv_tools compile --high
     $comp = $High ? $comp_high : $comp_low
     'COMPILED' | Write-Progress -Done
 }
