@@ -22,10 +22,6 @@ jobs:
           - "3.12"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
-      - if: startsWith(matrix.runner, 'ubuntu')
-        # ! https://askubuntu.com/questions/900285/libegl-so-1-is-not-a-symbolic-link
-        name: "Install PySide6 system dependencies"
-        run: "sudo apt update && sudo apt install libegl1"
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
