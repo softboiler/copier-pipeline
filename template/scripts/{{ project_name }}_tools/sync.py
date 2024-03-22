@@ -37,12 +37,6 @@ match PLATFORM.casefold().split("-")[0]:
 RUNNER = _runner
 """Runner associated with this platform."""
 match version_info[:2]:
-    case (3, 8):
-        _python_version = "3.8"
-    case (3, 9):
-        _python_version = "3.9"
-    case (3, 10):
-        _python_version = "3.10"
     case (3, 11):
         _python_version = "3.11"
     case (3, 12):
@@ -50,7 +44,8 @@ match version_info[:2]:
     case (3, 13):
         _python_version = "3.13"
     case _:
-        _python_version = "3.11"
+        _python_version = ".".join(str(v) for v in version_info[:2])
+        raise ValueError(f"Unsupported Python version: {_python_version}")
 VERSION = _python_version
 """Python version associated with this platform."""
 
