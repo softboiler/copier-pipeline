@@ -1,6 +1,9 @@
 name: "release"
 on:
   workflow_dispatch:
+defaults:
+  run:
+    shell: "pwsh"
 jobs:
   release:
     runs-on: "{{ actions_runner }}"
@@ -15,8 +18,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1"
+      - run: "scripts/Sync-Py.ps1"
       - run: "flit publish"
         env:
           FLIT_USERNAME: "__token__"

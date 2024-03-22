@@ -6,6 +6,9 @@ on:
     branches: ["main"]
     tags: ["*"]
     paths: ["CHANGELOG.md"]
+defaults:
+  run:
+    shell: "pwsh"
 jobs:
   changerelease:
     permissions:

@@ -1,6 +1,5 @@
 <#.SYNOPSIS
 Update the project from the project template.#>
-
 Param(
     # Whether to recopy the template, ignoring prior diffs, or update in a smart manner.
     [switch]$Recopy,
@@ -9,15 +8,18 @@ Param(
     # Whether to skip verifification when committing.
     [switch]$NoVerify
 )
-
-. 'scripts/Set-StrictErrors.ps1'
-
+# ? Stop on first error and enable native command error propagation.
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+$PSNativeCommandUseErrorActionPreference | Out-Null
 if ( $Recopy ) {
-    copier recopy --overwrite $(if ($Defaults) { '--defaults' })
+    copier recopy --overwrite --defaults=$Defaults
 }
 else {
     git submodule update --init --remote --merge submodules/template
     git add --all
-    git commit $(if ($NoVerify) { '--no-verify' }) -m "Update template digest to $(git rev-parse --short HEAD:submodules/template)"
-    copier update --vcs-ref $(git rev-parse HEAD:submodules/template) $(if ($Defaults) { '--defaults' })
+    $head = git rev-parse HEAD:submodules/template
+    $msg = "Update template digest to $head"
+    git commit --no-verify=$NoVerify -m "Update template digest to $msg"
+    copier update --vcs-ref=$head --defaults=$Defaults
 }

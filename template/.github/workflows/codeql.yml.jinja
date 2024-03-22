@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "38 16 * * 4"
+defaults:
+  run:
+    shell: "pwsh"
 jobs:
   analyze:
     runs-on: "{{ actions_runner }}"

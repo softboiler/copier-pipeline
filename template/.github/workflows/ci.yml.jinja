@@ -30,6 +30,9 @@ on:
       - "submodules/**"
       - "codecov.yml"
       - "params.yaml"
+defaults:
+  run:
+    shell: "pwsh"
 jobs:
   ruff:
     runs-on: "{{ actions_runner }}"
@@ -40,8 +43,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1 -Compile"
       - run: "ruff --no-fix --output-format github ."
   fawltydeps:
     runs-on: "{{ actions_runner }}"
@@ -52,8 +54,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1 -Compile"
       - run: "fawltydeps"
   pyright:
     runs-on: "{{ actions_runner }}"
@@ -64,21 +65,20 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1 -Compile"
       - run: pyright
   test:
     strategy:
       matrix:
         runner:
           - "macos-13"
-          # - "macos-14" # ? PyTables doesn't support macos-14
+          - "macos-14"
           - "ubuntu-22.04"
           - "windows-2022"
         python:
-          # - "3.10" # ? Using some 3.11 features (e.g. datetime.UTC)
+          - "3.10"
           - "3.11"
-          # - "3.12" # ? No support in my commit-pinned fork of cachier
+          - "3.12"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       # ! https://askubuntu.com/questions/900285/libegl-so-1-is-not-a-symbolic-link
@@ -91,11 +91,10 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
-      - shell: "pwsh"
-        run: "scripts/Sync-Py.ps1 -Compile -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
+      - run: "scripts/Sync-Py.ps1 -Compile -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - run: "pytest --cov --cov-config pyproject.toml"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
+      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab" # v4.1.0
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
@@ -128,10 +127,8 @@ jobs:
           path: ".comps"
           merge-multiple: True
       - if: github.actor == 'renovate[bot]'
-        shell: "pwsh"
         run: "scripts/Sync-Py.ps1 -Lock"
       - if: github.actor != 'renovate[bot]'
-        shell: "pwsh"
         run: "scripts/Sync-Py.ps1"
       - uses: "stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d" # v5.0.0
         with:
@@ -170,7 +167,6 @@ jobs:
           path: ".comps"
           merge-multiple: True
       - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        shell: "pwsh"
         run: "scripts/Sync-Py.ps1 -Lock"
       - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
         uses: "stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d" # v5.0.0

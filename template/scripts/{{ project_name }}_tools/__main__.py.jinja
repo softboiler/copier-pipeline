@@ -93,12 +93,10 @@ def compile(high: bool = False) -> Path:  # noqa: A001
         high: Highest dependencies.
     """
     sep = " "
-    # ? Define `uv` in one place so we can exclude it from its own compilation
-    uv = "uv"
     result = run(
         args=split(
             sep.join([
-                f"{Path(executable).as_posix()} -m {uv}",
+                f"{Path(executable).as_posix()} -m uv",
                 f"pip compile --python-version {VERSION}",
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
@@ -112,17 +110,18 @@ def compile(high: bool = False) -> Path:  # noqa: A001
     )
     if result.returncode:
         raise RuntimeError(result.stderr)
-    deps = [line.strip() for line in result.stdout.splitlines()]
-    commented_uv_dep = f"# {next(dep for dep in deps if dep.startswith(uv))}"
-    other_deps = [dep for dep in deps if not dep.startswith(uv)]
-    nodeps_deps = [
-        line.strip()
-        for line in NODEPS.read_text("utf-8").splitlines()
-        if not line.strip().startswith("#")
-    ]
-    all_deps = "\n".join([commented_uv_dep, *other_deps, *nodeps_deps]) + "\n"
+    deps = result.stdout
     comp = get_comp_path(high)
-    comp.write_text(encoding="utf-8", data=all_deps)
+    comp.write_text(
+        encoding="utf-8",
+        data=(
+            "\n".join([
+                *[line.strip() for line in deps.splitlines()],
+                *[line.strip() for line in NODEPS.read_text("utf-8").splitlines()],
+            ])
+            + "\n"
+        ),
+    )
     return log(comp)
 
 
@@ -172,4 +171,5 @@ def sync_local_dev_configs():
     )
 
 
-main()
+if __name__ == "__main__":
+    main()
