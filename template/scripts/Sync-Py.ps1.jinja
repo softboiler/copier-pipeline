@@ -78,7 +78,9 @@ if ($Env:CI) {
 # ? Compile or retrieve compiled dependencies
 if ($Compile) {
     'COMPILING' | Write-Progress
-    $comp = {{ project_name }}_tools compile --high=$High
+    $comp_low = boilercv_tools compile
+    $comp_high = boilercv_tools compile -High
+    $comp = $High ? $comp_high : $comp_low
     'COMPILED' | Write-Progress -Done
 }
 else {
