@@ -61,6 +61,7 @@ jobs:
         runner:
           - "macos-13"
           - "macos-14"
+          - "ubuntu-22.04"
           - "windows-2022"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
