@@ -42,7 +42,7 @@ match version_info[:2]:
     case (3, 12):
         _python_version = "3.12"
     case (3, 13):
-        _python_version = "3.13"
+        _python_version = "3.13.0-alpha.5"
     case _:
         _python_version = ".".join(str(v) for v in version_info[:2])
         raise ValueError(f"Unsupported Python version: {_python_version}")
