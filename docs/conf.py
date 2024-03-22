@@ -97,9 +97,9 @@ extensions = [
     "sphinxcontrib.mermaid",
 ]
 # ! Theme
-html_title = REPO
-html_favicon = "_static/favicon.ico"
-html_logo = "_static/favicon.ico"
+html_title = PACKAGE
+# html_favicon = "_static/favicon.ico"
+# html_logo = "_static/favicon.ico"
 html_static_path = dpaths(STATIC)
 html_css_files = dpaths(CSS, rel=STATIC)
 html_theme = "sphinx_book_theme"

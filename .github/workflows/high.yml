@@ -1,0 +1,36 @@
+# Test the upper-bound dependencies of the project
+name: "high"
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "38 16 * * 4"
+defaults:
+  run:
+    shell: "pwsh"
+jobs:
+  test:
+    strategy:
+      matrix:
+        runner:
+          - "macos-13"
+          - "macos-14"
+          - "ubuntu-22.04"
+          - "windows-2022"
+        python:
+          - "3.10"
+          - "3.11"
+          - "3.12"
+    runs-on: "${{ matrix.runner }}"
+    steps:
+      - if: startsWith(matrix.runner, 'ubuntu')
+        # ! https://askubuntu.com/questions/900285/libegl-so-1-is-not-a-symbolic-link
+        name: "Install PySide6 system dependencies"
+        run: "sudo apt update && sudo apt install libegl1"
+      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
+        with:
+          submodules: True
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
+      - run: "scripts/Sync-Py.ps1 -High -Version '${{ matrix.python }}'"
+      - run: "pytest"

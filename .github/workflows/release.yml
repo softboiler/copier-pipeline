@@ -1,0 +1,25 @@
+name: "release"
+on:
+  workflow_dispatch:
+defaults:
+  run:
+    shell: "pwsh"
+jobs:
+  release:
+    runs-on: "ubuntu-22.04"
+    steps:
+      - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_prefix: ""
+      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
+        with:
+          submodules: True
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "3.11"
+      - run: "scripts/Sync-Py.ps1"
+      - run: "flit publish"
+        env:
+          FLIT_USERNAME: "__token__"
+          FLIT_PASSWORD: "${{ secrets.PYPI_TOKEN }}"

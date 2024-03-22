@@ -108,10 +108,6 @@ if (!$NoPostSync) {
     'LOCAL DEV CONFIGS SYNCED' | Write-Progress -Done
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
-    'SYNCING {{ project_name }} PARAMS' | Write-Progress
-    & $py -m {{ project_name }}.models.params
-    '{{ project_name.upper() }} PARAMS SYNCED' | Write-Progress
-    '' | Write-Host
     '*** POST-SYNC TASKS COMPLETE ***' | Write-Progress -Done
 }
 

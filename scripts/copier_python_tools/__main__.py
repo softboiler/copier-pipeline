@@ -2,18 +2,29 @@
 
 import json
 import tomllib
-from collections.abc import Mapping, Sequence
-from datetime import UTC, date, datetime, time
+from collections.abc import Collection
+from datetime import UTC, datetime
 from json import dumps
 from pathlib import Path
-from platform import platform
-from re import sub
-from shlex import join, split
+from re import finditer
+from shlex import split
 from subprocess import run
-from sys import executable, stdout, version_info
-from typing import TypeAlias
+from sys import executable
 
 from cyclopts import App
+
+from copier_python_tools.sync import (
+    COMPS,
+    DEV,
+    LOCK,
+    NODEPS,
+    PYPROJECT,
+    PYRIGHTCONFIG,
+    PYTEST,
+    SYNC,
+    VERSION,
+    get_comp_path,
+)
 
 APP = App()
 """CLI."""
@@ -24,62 +35,38 @@ def main():
     APP()
 
 
-# ! For local dev config tooling
-PYRIGHTCONFIG = Path("pyrightconfig.json")
-"""Resulting pyright configuration file."""
-PYTEST = Path("pytest.ini")
-"""Resulting pytest configuration file."""
+def log(obj):
+    """Send an object to `stdout` and return it."""
+    match obj:
+        case Collection():
+            if len(obj):
+                print(*obj, sep="\n")  # noqa: T201
+        case _:
+            print(obj)  # noqa: T201
+    return obj
 
-# ! Dependencies
-PYPROJECT = Path("pyproject.toml")
-"""Path to `pyproject.toml`."""
-REQS = Path("requirements")
-"""Requirements."""
-SYNC = REQS / "sync.in"
-"""Core dependencies for syncing."""
-DEV = REQS / "dev.in"
-"""Other development tools and editable local dependencies."""
-NODEPS = REQS / "nodeps.in"
-"""Dependencies appended to locks without compiling their dependencies."""
 
-# ! Platform
-PLATFORM = platform(terse=True)
-"""Platform identifier."""
-match PLATFORM.casefold().split("-")[0]:
-    case "macos":
-        _runner = "macos-13"
-    case "windows":
-        _runner = "windows-2022"
-    case "linux":
-        _runner = "ubuntu-22.04"
-    case _:
-        raise ValueError(f"Unsupported platform: {PLATFORM}")
-RUNNER = _runner
-"""Runner associated with this platform."""
-match version_info[:2]:
-    case (3, 8):
-        _python_version = "3.8"
-    case (3, 9):
-        _python_version = "3.9"
-    case (3, 10):
-        _python_version = "3.10"
-    case (3, 11):
-        _python_version = "3.11"
-    case (3, 12):
-        _python_version = "3.12"
-    case (3, 13):
-        _python_version = "3.13"
-    case _:
-        _python_version = "3.11"
-VERSION = _python_version
-"""Python version associated with this platform."""
+@APP.command()
+def get_actions() -> list[str]:
+    """Get actions used by this repository.
 
-# ! Compilation and locking
-COMPS = Path(".comps")
-"""Platform-specific dependency compilations."""
-COMPS.mkdir(exist_ok=True, parents=True)
-LOCK = Path("lock.json")
-"""Locked set of dependency compilations for different runner/Python combinations."""
+    For additional security, select "Allow <user> and select non-<user>, actions and
+    reusable workflows" in the General section of your Actions repository settings, and
+    paste the output of this command into the "Allow specified actions and reusable
+    workflows" block.
+
+    Args:
+        high: Highest dependencies.
+    """
+    actions: list[str] = []
+    for contents in [
+        path.read_text("utf-8") for path in Path(".github/workflows").iterdir()
+    ]:
+        actions.extend([
+            f"{match['action']}@*,"
+            for match in finditer(r'uses:\s?"?(?P<action>.+)@', contents)
+        ])
+    return log(sorted(set(actions)))
 
 
 @APP.command()
@@ -122,17 +109,14 @@ def compile(high: bool = False) -> Path:  # noqa: A001
     )
     if result.returncode:
         raise RuntimeError(result.stderr)
+    deps = result.stdout
     comp = get_comp_path(high)
     comp.write_text(
         encoding="utf-8",
         data=(
             "\n".join([
-                *[r.strip() for r in [result.stdout]],
-                *[
-                    line.strip()
-                    for line in NODEPS.read_text("utf-8").splitlines()
-                    if not line.strip().startswith("#")
-                ],
+                *[line.strip() for line in deps.splitlines()],
+                *[line.strip() for line in NODEPS.read_text("utf-8").splitlines()],
             ])
             + "\n"
         ),
@@ -161,30 +145,6 @@ def lock() -> Path:
     return log(LOCK)
 
 
-def get_comp_path(high: bool) -> Path:
-    """Get a dependency compilation.
-
-    Args:
-        high: Highest dependencies.
-    """
-    return COMPS / f"{get_comp_name(high)}.txt"
-
-
-def get_comp_name(high: bool) -> str:
-    """Get name of a dependency compilation.
-
-    Args:
-        high: Highest dependencies.
-    """
-    return "_".join(["requirements", RUNNER, VERSION, *(["high"] if high else [])])
-
-
-def log(obj):
-    """Send an object to `stdout` and return it."""
-    print(obj, file=stdout)  # noqa: T201
-    return obj
-
-
 @APP.command()
 def sync_local_dev_configs():
     """Synchronize local dev configs to shadow `pyproject.toml`, with some changes.
@@ -204,31 +164,11 @@ def sync_local_dev_configs():
     PYRIGHTCONFIG.write_text(encoding="utf-8", data=f"{data}\n")
     # Write pytest.ini
     pytest = config["tool"]["pytest"]["ini_options"]
-    pytest["addopts"] = disable_concurrent_tests(pytest["addopts"])
     PYTEST.write_text(
         encoding="utf-8",
         data="\n".join(["[pytest]", *[f"{k} = {v}" for k, v in pytest.items()], ""]),
     )
 
 
-Leaf: TypeAlias = int | float | bool | date | time | str
-"""Leaf node."""
-Node: TypeAlias = Leaf | Sequence["Node"] | Mapping[str, "Node"]
-"""General node."""
-
-
-def disable_concurrent_tests(addopts: str) -> str:
-    """Normalize `addopts` string and disable concurrent pytest tests.
-
-    Normalizes `addopts` to a space-separated one-line string.
-
-    Args:
-        addopts: Pytest `addopts` value.
-
-    Returns:
-        Modified `addopts` value.
-    """
-    return sub(pattern=r"-n\s*[^\s]+", repl="-n 0", string=join(split(addopts)))
-
-
-main()
+if __name__ == "__main__":
+    main()

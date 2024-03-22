@@ -155,7 +155,6 @@ jobs:
             deps:
               - "**/pyproject.toml"
               - "requirements/**"
-              - "submodules/**"
             lock:
               - "lock.json"
       - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'

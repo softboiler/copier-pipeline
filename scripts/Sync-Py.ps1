@@ -15,175 +15,101 @@ Param(
     [switch]$NoPostSync
 )
 
-# ? Fail early
-. 'scripts/Set-StrictErrors.ps1'
-# ? Allow disabling CI when in CI, in order to test local dev workflows
+Import-Module ./scripts/Common.psm1, ./scripts/CrossPy.psm1
+
+# ? Stop on first error and enable native command error propagation.
+$ErrorActionPreference = 'Stop'
+$PSNativeCommandUseErrorActionPreference = $true
+$PSNativeCommandUseErrorActionPreference | Out-Null
+
+# ? Allow toggling CI in order to test local dev workflows
 $Env:CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
-Write-Host $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally')
+
+# ? Get Python interpreter, prepare to sync
+'*** SYNCING' | Write-Progress
+$re = Get-Content .copier-answers.yml |
+    Select-String -Pattern '^python_version:\s?["'']([^"'']+)["'']$'
+$pyDevVersion = $re.Matches.Groups[1].value
+$Version = $Version ? $Version : $pyDevVersion
+if ($Env:CI) {
+    $py = $Version | Get-PySystem
+    "Using $(Resolve-Path $py)" | Write-Progress -Info
+}
+else {
+    $py = $Version | Get-Py
+    "Using $(Resolve-Path $py -Relative)" | Write-Progress -Info
+}
+
 # ? Don't pre-sync or post-sync in CI
 $NoPreSync = $NoPreSync ? $NoPreSync : [bool]$Env:CI
-Write-Host $($NoPreSync ? "Won't run pre-sync tasks" : 'Will run pre-sync tasks')
 $NoPostSync = $NoPostSync ? $NoPostSync : [bool]$Env:CI
-Write-Host $($NoPostSync ? "Won't run post-sync tasks" : 'Will run post-sync tasks')
-# ? Core dependencies needed for syncing
-$PRE_SYNC_DEPENDENCIES = 'requirements/sync.in'
+(
+    $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally'),
+    $($NoPreSync ? "Won't run pre-sync tasks" : 'Will run pre-sync tasks'),
+    $($NoPostSync ? "Won't run post-sync tasks" : 'Will run post-sync tasks')
+) | Write-Progress -Info
 
-function Sync-Py {
-    <#.SYNOPSIS
-    Sync Python dependencies.#>
+# ? Install dependencies for pre-sync tasks and syncing
+'INSTALLING PRE-SYNC DEPENDENCIES' | Write-Progress
+pip install --quiet --requirement=requirements/sync.in
+'PRE-SYNC DEPENDENCIES INSTALLED' | Write-Progress -Done
 
-    $Version = $Version ? $Version : (Get-PyDevVersion)
-    $py = $Env:CI ? (Get-PySystem $Version) : (Get-Py $Version)
-    "***SYNCING '$py'" | Write-PyProgress
-    # ? Python environment scripts
-    $scripts = Get-PyScripts $py
-    $pip = "$scripts/pip"
-    $uv = "$scripts/uv"
-    $tools = "$scripts/copier_python_tools"
-    $uvPip = "$uv pip"
+'INSTALLING TOOLS' | Write-Progress
+# ? Install the `copier_python_tools` Python module
+if ($Env:CI) { uv pip install --system --break-system-packages --editable=scripts }
+else { uv pip install --editable=scripts }
 
-    # ? Install directly to system if in CI, breaking system packages if needed
-    $System = $Env:CI ? '--system --break-system-packages' : ''
-    $install = "$uvPip install $System"
-    $sync = "$uvPip sync $System"
-
-    'INSTALLING DEPENDENCIES FOR SYNCING' | Write-PyProgress
-    $first_install = (Test-Command $uv) ? $install : "$pip install"
-    Invoke-Expression "$first_install --requirement $PRE_SYNC_DEPENDENCIES"
-
-    'INSTALLING TOOLS' | Write-PyProgress
-    # ? Install the `copier_python_tools` Python module
-    Invoke-Expression "$install --editable scripts/."
-
-    if (!$NoPreSync) {
-        'RUNNING PRE-SYNC TASKS' | Write-PyProgress
-        'SYNCING SUBMODULES' | Write-PyProgress
-        git submodule update --init --merge
-        'SUBMODULES SYNCED' | Write-PyProgress -Done
-        if ($Env:CI) {
-            'SYNCING PROJECT WITH TEMPLATE' | Write-PyProgress
-            $head = git rev-parse HEAD:submodules/template
-            Invoke-Expression "$scripts/copier update --defaults --vcs-ref $head"
-        }
-        'PRE-SYNC DONE' | Write-PyProgress -Done
-    }
-
-    'SYNCING DEPENDENCIES' | Write-PyProgress
-    $High = $High ? '--high' : ''
-    # ? Compile or retrieve compiled dependencies
-    if ($Compile) { $comp = Invoke-Expression "$tools compile $High" }
-    else { $comp = Invoke-Expression "$tools get-comp $High" }
-    # ? Lock
-    if ($Lock) { Invoke-Expression "$tools lock" }
-    # ? Sync
-    Invoke-Expression "$sync $comp"
-    'DEPENDENCIES SYNCED' | Write-PyProgress -Done
-
-    if (!$NoPostSync) {
-        'RUNNING POST-SYNC TASKS' | Write-PyProgress
-        'SYNCING LOCAL DEV CONFIGS' | Write-PyProgress
-        Invoke-Expression "$tools sync-local-dev-configs"
-        'LOCAL DEV CONFIGS SYNCED' | Write-PyProgress -Done
-        'INSTALLING PRE-COMMIT HOOKS' | Write-PyProgress
-        Invoke-Expression "$scripts/pre-commit install"
-        'POST-SYNC TASKS COMPLETE' | Write-PyProgress -Done
-    }
-
-    Write-Host ''
-    '...DONE ***' | Write-PyProgress -Done
+# ? Pre-sync
+if (!$NoPreSync) {
+    '*** RUNNING PRE-SYNC TASKS' | Write-Progress
+    'SYNCING SUBMODULES' | Write-Progress
+    git submodule update --init --merge
+    'SUBMODULES SYNCED' | Write-Progress -Done
+    '' | Write-Host
+    '*** PRE-SYNC DONE ***' | Write-Progress -Done
+}
+if ($Env:CI) {
+    'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
+    $head = git rev-parse HEAD:submodules/template
+    copier update --defaults --vcs-ref=$head
+    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
-function Get-PyDevVersion {
-    <#.SYNOPSIS
-    Get the expected version of Python for development, from '.copier-answers.yml'.#>
-    $ver_pattern = '^python_version:\s?["'']([^"'']+)["'']$'
-    $re = Get-Content '.copier-answers.yml' | Select-String -Pattern $ver_pattern
-    return $re.Matches.Groups[1].value
+# ? Compile or retrieve compiled dependencies
+if ($Compile) {
+    'COMPILING' | Write-Progress
+    $comp = copier_python_tools compile --high=$High
+    'COMPILED' | Write-Progress -Done
+}
+else {
+    'GETTING COMPILATION FROM LOCK, COMPILING IF MISSING' | Write-Progress
+    $comp = copier_python_tools get-comp --high=$High
+    'COMPILATION FOUND OR COMPILED' | Write-Progress -Done
 }
 
-function Get-Py {
-    <#.SYNOPSIS
-    Get virtual environment Python interpreter, creating it if necessary.#>
-    Param([Parameter(Mandatory, ValueFromPipeline)][string]$Version)
-    begin { $venvPath = '.venv' }
-    process {
-        $SysPy = Get-PySystem $Version
-        if (!(Test-Path $venvPath)) {
-            "CREATING VIRTUAL ENVIRONMENT: $venvPath" | Write-PyProgress
-            Invoke-Expression "$SysPy -m venv $venvPath"
-        }
-        $VenvPy = Start-PyEnv $venvPath
-        $foundVersion = Invoke-Expression "$VenvPy --version"
-        if ($foundVersion |
-                Select-String -Pattern "^Python $([Regex]::Escape($Version))\.\d+$") {
-            "SYNCING VIRTUAL ENVIRONMENT: $(Resolve-Path $VenvPy -Relative)" |
-                Write-PyProgress
-            return $VenvPy
-        }
-        "REMOVING VIRTUAL ENVIRONMENT WITH INCORRECT PYTHON: $Env:VIRTUAL_ENV" |
-            Write-PyProgress -Done
-        Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
-        return Get-Py $Version
-    }
+# ? Lock
+if ($Lock) {
+    'LOCKING' | Write-Progress
+    copier_python_tools lock
+    'LOCKED' | Write-Progress -Done
 }
 
-function Get-PySystem {
-    <#.SYNOPSIS
-    Get system Python interpreter.#>
-    Param([Parameter(Mandatory, ValueFromPipeline)][string]$Version)
-    process {
-        if ((Test-Command 'py') -and (py '--list' | Select-String -Pattern "^\s?-V:$([Regex]::Escape($Version))")) {
-            $py = "py -$Version"
-        }
-        elseif (Test-Command ($py = "python$Version")) { }
-        elseif (Test-Command ($py = 'python')) { }
-        else { throw "Expected Python $Version, which does not appear to be installed. Ensure it is installed (e.g. from https://www.python.org/downloads/) and run this script again." }
-        return Invoke-Expression "$py -c 'from sys import executable; print(executable)'"
-    }
+# ? Sync
+'SYNCING DEPENDENCIES' | Write-Progress
+if ($Env:CI) { uv pip sync --system --break-system-packages $comp }
+else { uv pip sync $comp }
+'DEPENDENCIES SYNCED' | Write-Progress -Done
+
+# ? Post-sync
+if (!$NoPostSync) {
+    '*** RUNNING POST-SYNC TASKS' | Write-Progress
+    'SYNCING LOCAL DEV CONFIGS' | Write-Progress
+    copier_python_tools 'sync-local-dev-configs'
+    'LOCAL DEV CONFIGS SYNCED' | Write-Progress -Done
+    'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
+    pre-commit install
+    '*** POST-SYNC TASKS COMPLETE ***' | Write-Progress -Done
 }
 
-function Get-PyScripts {
-    <#.SYNOPSIS
-    Get the Python scripts directory.#>
-    Param([Parameter(Mandatory, ValueFromPipeline)][string]$Path)
-    process {
-        $pythonRoot = $(Split-Path $Path)
-        $bin = $IsWindows ? 'Scripts' : 'bin'
-        if (($pythonRoot | Get-Item | Select-Object -ExpandProperty Name) -eq $bin) {
-            return $pythonRoot
-        }
-        return "$pythonRoot/$bin"
-    }
-}
-
-function Start-PyEnv {
-    <#.SYNOPSIS
-    Activate and get the Python interpreter for the virtual environment.#>
-    Param([Parameter(Mandatory, ValueFromPipeline)][string]$venvPath)
-    process {
-        if ($IsWindows) { $bin = 'Scripts'; $py = 'python.exe' }
-        else { $bin = 'bin'; $py = 'python' }
-        Invoke-Expression "$venvPath/$bin/Activate.ps1"
-        return "$Env:VIRTUAL_ENV/$bin/$py"
-    }
-}
-
-function Test-Command {
-    <#.SYNOPSIS
-    Like `Get-Command` but errors are ignored.#>
-    return Get-Command @args -ErrorAction 'Ignore'
-}
-
-function Write-PyProgress {
-    <#.SYNOPSIS
-    Write progress and completion messages.#>
-    Param([Parameter(Mandatory, ValueFromPipeline)][string]$Message,
-        [switch]$Done)
-    begin { $Color = $Done ? 'Green' : 'Yellow' }
-    process {
-        if (!$Done) { Write-Host }
-        Write-Host "$Message$($Done ? '' : '...')" -ForegroundColor $Color
-    }
-}
-
-Sync-Py
+'' | Write-Host
+'*** DONE ***' | Write-Progress -Done

@@ -16,7 +16,6 @@ from cyclopts import App
 from {{ project_name }}_tools.sync import (
     COMPS,
     DEV,
-    DVC,
     LOCK,
     NODEPS,
     PYPROJECT,
@@ -101,7 +100,7 @@ def compile(high: bool = False) -> Path:  # noqa: A001
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
                 "--all-extras",
-                sep.join([p.as_posix() for p in [PYPROJECT, DEV, DVC, SYNC]]),
+                sep.join([p.as_posix() for p in [PYPROJECT, DEV, SYNC]]),
             ])
         ),
         capture_output=True,
