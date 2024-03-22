@@ -82,7 +82,7 @@
   },
   //! Extensions
   //* GitHub Actions
-  "github-actions.workflows.pinned.workflows": [".github/workflows/main.yml"],
+  "github-actions.workflows.pinned.workflows": [".github/workflows/ci.yml"],
   //* Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
