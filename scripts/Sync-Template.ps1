@@ -11,12 +11,13 @@ Param(
     [switch]$NoVerify
 )
 $template = 'submodules/template'
-$template_exists = $template | Test-Path
-if ( $Recopy -or (!$template_exists -and $Stay) ) {
+$templateExists = $template | Test-Path
+if (!$templateExists -and $Stay) { return }
+if ($Recopy) {
     if ($Prompt) { return copier recopy --overwrite }
     return copier recopy --overwrite --defaults
 }
-if ($template_exists) {
+if ($templateExists) {
     if (!$Stay) {
         git submodule update --init --remote --merge $template
         git add --all
