@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff check --no-fix --output-format github ."
+      - run: "ruff check --no-fix --config pyproject.toml --output-format github ."
   fawltydeps:
     runs-on: "ubuntu-22.04"
     steps:
