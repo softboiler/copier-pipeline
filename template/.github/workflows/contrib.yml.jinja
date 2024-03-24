@@ -1,4 +1,4 @@
-# Simulate local dev run of `Sync-Py.ps1`
+# Simulate local contributor workflow sync process
 name: "contrib"
 on:
   workflow_dispatch:
@@ -18,32 +18,14 @@ on:
 defaults:
   run:
     shell: "pwsh"
+env:
+  SYNC_PY_DISABLE_CI: true
 jobs:
-  contrib:
+  no-spaces-in-path:
     strategy:
       matrix:
         runner:
           - "macos-13"
-          - "macos-14"
-          - "ubuntu-22.04"
-          - "windows-2022"
-    env:
-      SYNC_PY_DISABLE_CI: true
-    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
-    steps:
-      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
-        with:
-          submodules: True
-      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
-        with:
-          python-version: "{{ python_version }}"
-      - run: "scripts/Sync-Py.ps1 -Compile -Lock -Version '{{ python_version }}'"
-  ci:
-    strategy:
-      matrix:
-        runner:
-          - "macos-13"
-          - "macos-14"
           - "ubuntu-22.04"
           - "windows-2022"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
@@ -54,17 +36,17 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - run: "scripts/Sync-Py.ps1 -Compile -Lock -Version '{{ python_version }}'"
-  spaces:
+      - run: "scripts/Sync-Py.ps1 -Lock -Version '{{ python_version }}'"
+  spaces-in-path:
     strategy:
       matrix:
         runner:
           - "macos-13"
-          - "macos-14"
           - "ubuntu-22.04"
           - "windows-2022"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
+      - run: "New-Item -ItemType Directory 'repo path with spaces'"
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
@@ -73,4 +55,4 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - working-directory: "repo path with spaces"
-        run: "scripts/Sync-Py.ps1 -Compile -Lock -Version '{{ python_version }}'"
+        run: "scripts/Sync-Py.ps1 -Lock -Version '{{ python_version }}'"

@@ -1,4 +1,4 @@
-# Lock dependencies if necessary, then test, lint, and update.comps
+# Run static analysis, tests, and sync
 name: "ci"
 concurrency:
   group: "{% raw %}${{ github.workflow }}{% endraw %}-{% raw %}${{ github.ref }}{% endraw %}"
@@ -6,30 +6,8 @@ concurrency:
 on:
   workflow_dispatch:
   pull_request:
-    paths:
-      - ".github/workflows/ci.yml"
-      - "**/pyproject.toml"
-      - "requirements/**"
-      - "scripts/Sync-Py.ps1"
-      - "src/**"
-      - "tests/**"
-      - "scripts/{{ project_name }}_tools/**"
-      - "submodules/**"
-      - "codecov.yml"
-      - "params.yaml"
   push:
     branches: ["main"]
-    paths:
-      - ".github/workflows/ci.yml"
-      - "**/pyproject.toml"
-      - "requirements/**"
-      - "scripts/Sync-Py.ps1"
-      - "src/**"
-      - "tests/**"
-      - "scripts/{{ project_name }}_tools/**"
-      - "submodules/**"
-      - "codecov.yml"
-      - "params.yaml"
 defaults:
   run:
     shell: "pwsh"
@@ -43,7 +21,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1"
       - run: "ruff --no-fix --output-format github ."
   fawltydeps:
     runs-on: "{{ actions_runner }}"
@@ -54,7 +32,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1"
       - run: "fawltydeps"
   pyright:
     runs-on: "{{ actions_runner }}"
@@ -65,7 +43,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{{ python_version }}"
-      - run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1"
       - run: pyright
   test:
     strategy:
@@ -88,10 +66,10 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
-      - run: "scripts/Sync-Py.ps1 -Compile -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
+      - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - run: "pytest --cov --cov-config pyproject.toml"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '{{ python_version }}'
+      - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab" # v4.1.0
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
@@ -99,8 +77,7 @@ jobs:
         with:
           path: ".comps"
           name: "requirements_{% raw %}${{ matrix.runner }}{% endraw %}_{% raw %}${{ matrix.python }}{% endraw %}"
-  bump:
-    if: github.event_name == 'pull_request'
+  sync:
     permissions:
       contents: "write"
     needs:
@@ -120,48 +97,7 @@ jobs:
         with:
           path: ".comps"
           merge-multiple: True
-      - if: github.actor == 'renovate[bot]'
-        run: "scripts/Sync-Py.ps1 -Lock"
-      - if: github.actor != 'renovate[bot]'
-        run: "scripts/Sync-Py.ps1"
+      - run: "scripts/Sync-Py.ps1 -Lock"
       - uses: "stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d" # v5.0.0
         with:
-          commit_message: "{% raw %}${{ github.actor == 'renovate[bot]' && 'Lock' || 'Sync project with template' }}{% endraw %}"
-  lock:
-    if: github.event_name != 'pull_request'
-    permissions:
-      contents: "write"
-    needs:
-      - "ruff"
-      - "fawltydeps"
-      - "pyright"
-      - "test"
-    runs-on: "{{ actions_runner }}"
-    steps:
-      - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
-        with:
-          submodules: True
-      - id: "changes"
-        uses: "dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36" # v3.0.2
-        with:
-          filters: |
-            deps:
-              - "**/pyproject.toml"
-              - "requirements/**"
-            lock:
-              - "lock.json"
-      - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
-        with:
-          python-version: "{{ python_version }}"
-      - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427" # v4.1.4
-        with:
-          path: ".comps"
-          merge-multiple: True
-      - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        run: "scripts/Sync-Py.ps1 -Lock"
-      - if: steps.changes.outputs.deps == 'true' && steps.changes.outputs.lock == 'false'
-        uses: "stefanzweifel/git-auto-commit-action@8756aa072ef5b4a080af5dc8fef36c5d586e521d" # v5.0.0
-        with:
-          commit_message: "Lock"
+          commit_message: "Sync and lock"
