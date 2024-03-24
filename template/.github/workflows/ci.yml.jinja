@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "{{ python_version }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff --no-fix --output-format github ."
+      - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
     runs-on: "{{ actions_runner }}"
     steps:
