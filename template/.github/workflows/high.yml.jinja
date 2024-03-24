@@ -29,5 +29,5 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
-      - run: "scripts/Sync-Py.ps1 -High -Version'{% raw %}${{ matrix.python }}{% endraw %}'"
+      - run: "scripts/Sync-Py.ps1 -High -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
       - run: "pytest"
