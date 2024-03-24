@@ -226,7 +226,7 @@ convention = "google"
     "S101", # Allow assert
     "T201", # Allow print in notebooks
 ]
-"template/*/*project_name*/__init__.py" = [
+"template/**" = [
     "N999", # Jinja-templated folder path
 ]
 "docs/**" = [
