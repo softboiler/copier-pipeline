@@ -17,14 +17,14 @@ if ( $Recopy -or (!$template_exists -and $Stay) ) {
     return copier recopy --overwrite --defaults
 }
 if ($template | Test-Path) {
-    $head = git rev-parse HEAD:submodules/template
     if (!$Stay) {
         git submodule update --init --remote --merge $template
         git add --all
-        $msg = "Update template digest to $head"
+        $msg = "Update template digest to $(git rev-parse HEAD:submodules/template)"
         if ($NoVerify) { git commit --no-verify -m $msg }
         else { git commit -m $msg }
     }
+    $head = git rev-parse HEAD:submodules/template
     if ($Prompt) { return copier update --vcs-ref=$head }
     return copier update --vcs-ref=$head --defaults
 }
