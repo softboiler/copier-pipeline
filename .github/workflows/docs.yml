@@ -10,28 +10,8 @@ concurrency:
 on:
   workflow_dispatch:
   pull_request:
-    paths:
-      - ".github/workflows/docs.yml"
-      - "**/pyproject.toml"
-      - "requirements/**"
-      - "scripts/Sync-Py.ps1"
-      - "src/**"
-      - "docs/**"
-      - "scripts/copier_python_tools/**"
-      - "submodules/**"
-      - "params.yaml"
   push:
     branches: ["main"]
-    paths:
-      - ".github/workflows/docs.yml"
-      - "**/pyproject.toml"
-      - "requirements/**"
-      - "scripts/Sync-Py.ps1"
-      - "src/**"
-      - "docs/**"
-      - "scripts/copier_python_tools/**"
-      - "submodules/**"
-      - "params.yaml"
 defaults:
   run:
     shell: "pwsh"
@@ -45,7 +25,7 @@ jobs:
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "3.11"
-      - run: "scripts/Sync-Py.ps1 -Compile"
+      - run: "scripts/Sync-Py.ps1"
       - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy:

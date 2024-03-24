@@ -1,32 +1,25 @@
 """CLI for tools."""
 
-import json
 import tomllib
 from collections.abc import Collection
-from datetime import UTC, datetime
 from json import dumps
 from pathlib import Path
 from re import finditer
-from shlex import split
-from subprocess import run
-from sys import executable
+from typing import NamedTuple
 
 from cyclopts import App
 
+from copier_python_tools import sync
 from copier_python_tools.sync import (
     COMPS,
-    DEV,
-    LOCK,
-    NODEPS,
     PYPROJECT,
     PYRIGHTCONFIG,
     PYTEST,
-    SYNC,
-    VERSION,
-    get_comp_path,
+    escape,
+    get_comp_names,
 )
 
-APP = App()
+APP = App(help_format="markdown")
 """CLI."""
 
 
@@ -35,19 +28,36 @@ def main():
     APP()
 
 
-def log(obj):
-    """Send an object to `stdout` and return it."""
-    match obj:
-        case Collection():
-            if len(obj):
-                print(*obj, sep="\n")  # noqa: T201
-        case _:
-            print(obj)  # noqa: T201
-    return obj
+class Comp(NamedTuple):
+    """Dependency compilation."""
+
+    low: Path
+    """Path to the lowest direct dependency compilation."""
+    high: Path
+    """Path to the highest dependency compilation."""
 
 
 @APP.command()
-def get_actions() -> list[str]:
+def lock():
+    log(sync.lock())
+
+
+@APP.command()
+def compile():  # noqa: A001
+    """Prepare a compilation.
+
+    Args:
+        get: Get the compilation rather than compile it.
+    """
+    comp_paths = Comp(*[COMPS / f"{name}.txt" for name in get_comp_names()])
+    COMPS.mkdir(exist_ok=True, parents=True)
+    for path, comp in zip(comp_paths, sync.compile(), strict=True):
+        path.write_text(encoding="utf-8", data=comp)
+    log(comp_paths)
+
+
+@APP.command()
+def get_actions():
     """Get actions used by this repository.
 
     For additional security, select "Allow <user> and select non-<user>, actions and
@@ -66,83 +76,7 @@ def get_actions() -> list[str]:
             f"{match['action']}@*,"
             for match in finditer(r'uses:\s?"?(?P<action>.+)@', contents)
         ])
-    return log(sorted(set(actions)))
-
-
-@APP.command()
-def get_comp(high: bool = False) -> Path:
-    """Compile dependencies for a system.
-
-    Args:
-        high: Highest dependencies.
-    """
-    if LOCK.exists():
-        comp = get_comp_path(high)
-        if existing_comp := json.loads(LOCK.read_text("utf-8")).get(comp.stem):
-            comp.write_text(encoding="utf-8", data=existing_comp)
-            return comp
-    return compile(high)
-
-
-@APP.command()
-def compile(high: bool = False) -> Path:  # noqa: A001
-    """Recompile dependencies for a system.
-
-    Args:
-        high: Highest dependencies.
-    """
-    sep = " "
-    result = run(
-        args=split(
-            sep.join([
-                f"{Path(executable).as_posix()} -m uv",
-                f"pip compile --python-version {VERSION}",
-                f"--resolution {'highest' if high else 'lowest-direct'}",
-                f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
-                "--all-extras",
-                sep.join([p.as_posix() for p in [PYPROJECT, DEV, SYNC]]),
-            ])
-        ),
-        capture_output=True,
-        check=False,
-        text=True,
-    )
-    if result.returncode:
-        raise RuntimeError(result.stderr)
-    deps = result.stdout
-    comp = get_comp_path(high)
-    comp.write_text(
-        encoding="utf-8",
-        data=(
-            "\n".join([
-                *[line.strip() for line in deps.splitlines()],
-                *[line.strip() for line in NODEPS.read_text("utf-8").splitlines()],
-            ])
-            + "\n"
-        ),
-    )
-    return log(comp)
-
-
-@APP.command()
-def lock() -> Path:
-    """Lock all local dependency compilations."""
-    LOCK.write_text(
-        encoding="utf-8",
-        data=json.dumps(
-            indent=2,
-            sort_keys=True,
-            obj={
-                **(json.loads(LOCK.read_text("utf-8")) if LOCK.exists() else {}),
-                **{
-                    comp.stem.removeprefix("requirements_"): comp.read_text("utf-8")
-                    for comp in COMPS.iterdir()
-                },
-            },
-        )
-        + "\n",
-    )
-    return log(LOCK)
+    log(sorted(set(actions)))
 
 
 @APP.command()
@@ -168,6 +102,20 @@ def sync_local_dev_configs():
         encoding="utf-8",
         data="\n".join(["[pytest]", *[f"{k} = {v}" for k, v in pytest.items()], ""]),
     )
+
+
+def log(obj):
+    """Send object to `stdout`."""
+    match obj:
+        case str():
+            print(obj)  # noqa: T201
+        case Collection():
+            for o in obj:
+                log(o)
+        case Path():
+            log(escape(obj))
+        case _:
+            print(obj)  # noqa: T201
 
 
 if __name__ == "__main__":

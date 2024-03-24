@@ -9,7 +9,7 @@
       "id": "templateOptions",
       "description": "Template options.",
       "type": "pickString",
-      "options": ["", "-Latest", "-Recopy"]
+      "options": ["", "-Stay", "-Stay -Prompt", "-Recopy -Prompt"]
     }
   ],
   "tasks": [
@@ -17,7 +17,7 @@
     // * PROJECT SETUP * //
 
     {
-      "label": "setup: Copy template",
+      "label": "setup: Sync project with template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh" } },
       "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",

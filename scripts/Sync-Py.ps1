@@ -5,8 +5,6 @@ Param(
     [string]$Version,
     # Sync to highest dependencies.
     [switch]$High,
-    # Recompile dependencies.
-    [switch]$Compile,
     # Add all local dependency compilations to the lock.
     [switch]$Lock,
     # Don't run pre-sync actions.
@@ -70,23 +68,15 @@ if (!$NoPreSync) {
 }
 if ($Env:CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    scripts/Sync-Template.ps1
+    scripts/Sync-Template.ps1 -Stay
     'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
-# ? Compile or retrieve compiled dependencies
-if ($Compile) {
-    'COMPILING' | Write-Progress
-    $comp_low = boilercv_tools compile
-    $comp_high = boilercv_tools compile --high
-    $comp = $High ? $comp_high : $comp_low
-    'COMPILED' | Write-Progress -Done
-}
-else {
-    'GETTING COMPILATION FROM LOCK, COMPILING IF MISSING' | Write-Progress
-    $comp = copier_python_tools get-comp --high=$High
-    'COMPILATION FOUND OR COMPILED' | Write-Progress -Done
-}
+# ? Compile
+'COMPILING' | Write-Progress
+$Comps = copier_python_tools compile
+$Comp = $High ? $Comps[1] : $Comps[0]
+'COMPILED' | Write-Progress -Done
 
 # ? Lock
 if ($Lock) {
@@ -97,8 +87,8 @@ if ($Lock) {
 
 # ? Sync
 'SYNCING DEPENDENCIES' | Write-Progress
-if ($Env:CI) { uv pip sync --system --break-system-packages $comp }
-else { uv pip sync $comp }
+if ($Env:CI) { uv pip sync --system --break-system-packages $Comp }
+else { uv pip sync $Comp }
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 # ? Post-sync
