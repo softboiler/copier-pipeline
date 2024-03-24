@@ -12,7 +12,8 @@ Param(
 )
 $template = 'submodules/template'
 $templateExists = $template | Test-Path
-if ( $Recopy -or (!$templateExists -and $Stay) ) {
+if (!$templateExists -and $Stay) { return }
+if ($Recopy) {
     if ($Prompt) { return copier recopy --overwrite }
     return copier recopy --overwrite --defaults
 }
