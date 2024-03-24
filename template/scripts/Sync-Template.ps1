@@ -16,7 +16,7 @@ if ( $Recopy -or (!$template_exists -and $Stay) ) {
     if ($Prompt) { return copier recopy --overwrite }
     return copier recopy --overwrite --defaults
 }
-if ($template | Test-Path) {
+if ($template_exists) {
     if (!$Stay) {
         git submodule update --init --remote --merge $template
         git add --all
