@@ -23,7 +23,8 @@ repos:
           - "post-checkout"
         pass_filenames: false
         language: "system"
-        entry: "pwsh scripts/Sync-Py.ps1"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
         files: |
           (?x)^(
             .*/pyproject\.toml
@@ -37,7 +38,7 @@ repos:
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command "pytest -m 'not slow' --suppress-no-test-exit-code"
+          pwsh -Command ". scripts/Initialize-Shell.ps1; pytest -m 'not slow' --suppress-no-test-exit-code"
         files: |
           (?x)^(
             .*/pyproject\.toml

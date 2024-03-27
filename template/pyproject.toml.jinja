@@ -44,7 +44,7 @@ source = ["{{ project_name }}"]
 ignore_errors = true
 
 [tool.pyright]
-exclude = ["**/node_modules", "**/__pycache__", "**/.*", "submodules"]
+exclude = ["**/node_modules", "**/__pycache__", "**/.*", "bin", "submodules"]
 stubPath = "submodules/typings"
 typeCheckingMode = "strict"
 # Default "true" in strict
@@ -144,7 +144,7 @@ reportUnusedCallResult = "none"
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"
-extend-exclude = ["submodules"]
+extend-exclude = ["bin", "submodules"]
 extend-include = ["*.ipynb"]
 src = ["src"]
 output-format = "grouped"

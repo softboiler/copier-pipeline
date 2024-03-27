@@ -5,6 +5,8 @@ on:
 defaults:
   run:
     shell: "pwsh"
+env:
+  UV_SYSTEM_PYTHON: "true"
 jobs:
   release:
     runs-on: "{{ actions_runner }}"

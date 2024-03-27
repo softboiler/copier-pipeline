@@ -6,7 +6,12 @@ build-backend = "flit_core.buildapi"
 name = "{{ project_name }}_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = ["cyclopts==2.4.2"]
+dependencies = [
+    "copier==9.1.1",
+    "cyclopts==2.4.2",
+    "pre-commit==3.6.2",
+    "zstandard==0.22.0",
+]
 [project.scripts]
 {{ project_name }}_tools = "{{ project_name }}_tools.__main__:main"
 

@@ -1,9 +1,6 @@
 <#.SYNOPSIS
 Initialize repository prior to first commit.#>
-# ? Stop on first error and enable native command error propagation.
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
-$PSNativeCommandUseErrorActionPreference | Out-Null
+. scripts/Initialize-Shell.ps1
 git add --all
 git commit --no-verify -m 'Prepare template using blakeNaccarato/copier-python'
 git submodule add --force --name template 'https://github.com/blakeNaccarato/copier-python.git' submodules/template

@@ -13,49 +13,61 @@ Param(
     [switch]$NoPostSync
 )
 
-Import-Module ./scripts/Common.psm1, ./scripts/CrossPy.psm1
+. scripts/Common.ps1
+. scripts/Initialize-Shell.ps1
 
-# ? Stop on first error and enable native command error propagation.
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
-$PSNativeCommandUseErrorActionPreference | Out-Null
+'*** SYNCING' | Write-Progress
 
 # ? Allow toggling CI in order to test local dev workflows
-$Env:CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
-
-# ? Get Python interpreter, prepare to sync
-'*** SYNCING' | Write-Progress
-$re = Get-Content .copier-answers.yml |
-    Select-String -Pattern '^python_version:\s?["'']([^"'']+)["'']$'
-$pyDevVersion = $re.Matches.Groups[1].value
-$Version = $Version ? $Version : $pyDevVersion
-if ($Env:CI) {
-    $py = $Version | Get-PySystem
-    "Using $(Resolve-Path $py)" | Write-Progress -Info
-}
-else {
-    $py = $Version | Get-Py
-    "Using $(Resolve-Path $py -Relative)" | Write-Progress -Info
-}
+$CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
+$Env:UV_SYSTEM_PYTHON = $CI ? 'true' : $null
 
 # ? Don't pre-sync or post-sync in CI
-$NoPreSync = $NoPreSync ? $NoPreSync : [bool]$Env:CI
-$NoPostSync = $NoPostSync ? $NoPostSync : [bool]$Env:CI
+$NoPreSync = $NoPreSync ? $NoPreSync : [bool]$CI
+$NoPostSync = $NoPostSync ? $NoPostSync : [bool]$CI
 (
-    $($Env:CI ? 'Will act as if in CI' : 'Will act as if running locally'),
+    $($CI ? 'Will run CI steps' : 'Will run local steps'),
     $($NoPreSync ? "Won't run pre-sync tasks" : 'Will run pre-sync tasks'),
     $($NoPostSync ? "Won't run post-sync tasks" : 'Will run post-sync tasks')
 ) | Write-Progress -Info
 
-# ? Install dependencies for pre-sync tasks and syncing
-'INSTALLING PRE-SYNC DEPENDENCIES' | Write-Progress
-pip install --quiet --requirement=requirements/sync.in
-'PRE-SYNC DEPENDENCIES INSTALLED' | Write-Progress -Done
+# ? Install uv
+$uvVersionRe = Get-Content 'requirements/uv.in' | Select-String -Pattern '^uv==(.+)$'
+$uvVersion = $uvVersionRe.Matches.Groups[1].value
+if (!(Test-Path 'bin/uv*') -or !(uv --version | Select-String $uvVersion)) {
+    $Env:CARGO_HOME = '.'
+    if ($IsWindows) {
+        'INSTALLING UV FOR WINDOWS' | Write-Progress
+        $uvInstaller = "$([System.IO.Path]::GetTempPath())$([System.Guid]::NewGuid()).ps1"
+        Invoke-RestMethod "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.ps1" |
+            Out-File $uvInstaller
+        powershell -Command "$uvInstaller -NoModifyPath"
+    }
+    else {
+        'INSTALLING UV' | Write-Progress
+        $Env:INSTALLER_NO_MODIFY_PATH = $true
+        curl --proto '=https' --tlsv1.2 -LsSf "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.sh" |
+            sh
+    }
+    'UV INSTALLED' | Write-Progress -Done
+}
 
+# ? Synchronize local environment and return if not in CI
 'INSTALLING TOOLS' | Write-Progress
+$pyDevVersionRe = Get-Content '.copier-answers.yml' |
+    Select-String -Pattern '^python_version:\s?["'']([^"'']+)["'']$'
+$Version = $Version ? $Version : $pyDevVersionRe.Matches.Groups[1].value
+if ($CI) {
+    $py = Get-PySystem $Version
+    "Using $(Resolve-Path $py)" | Write-Progress -Info
+}
+else {
+    $py = Get-Py $Version
+    "Using $(Resolve-Path $py -Relative)" | Write-Progress -Info
+}
 # ? Install the `{{ project_name }}_tools` Python module
-if ($Env:CI) { uv pip install --system --break-system-packages --editable=scripts }
-else { uv pip install --editable=scripts }
+uv pip install --editable=scripts
+'TOOLS INSTALLED' | Write-Progress -Done
 
 # ? Pre-sync
 if (!$NoPreSync) {
@@ -66,41 +78,60 @@ if (!$NoPreSync) {
     '' | Write-Host
     '*** PRE-SYNC DONE ***' | Write-Progress -Done
 }
-if ($Env:CI) {
-    'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    scripts/Sync-Template.ps1 -Stay
-    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
-}
 
 # ? Compile
 'COMPILING' | Write-Progress
-$Comps = {{ project_name }}_tools compile
+$Comps = & $py -m {{ project_name }}_tools compile
 $Comp = $High ? $Comps[1] : $Comps[0]
 'COMPILED' | Write-Progress -Done
 
-# ? Lock
-if ($Lock) {
-    'LOCKING' | Write-Progress
-    {{ project_name }}_tools lock
-    'LOCKED' | Write-Progress -Done
-}
-
 # ? Sync
-'SYNCING DEPENDENCIES' | Write-Progress
-if ($Env:CI) { uv pip sync --system --break-system-packages $Comp }
-else { uv pip sync $Comp }
-'DEPENDENCIES SYNCED' | Write-Progress -Done
+if ('dvc' | Test-CommandLock) {
+    'The DVC VSCode extension is locking `dvc.exe` (Disable the VSCode DVC extension or close VSCode and sync in an external terminal to perform a full sync)' |
+        Write-Progress -Info
+    'INSTALLING INSTEAD OF SYNCING' |
+        Write-Progress
+    $CompNoDvc = Get-Content $Comp | Select-String -Pattern '^(?!dvc[^-])'
+    $CompNoDvc | Set-Content $Comp
+    uv pip install --requirement=$Comp
+    'DEPENDENCIES INSTALLED' | Write-Progress -Done
+}
+else {
+    'SYNCING DEPENDENCIES' | Write-Progress
+    uv pip sync $Comp
+    'DEPENDENCIES SYNCED' | Write-Progress -Done
+}
 
 # ? Post-sync
 if (!$NoPostSync) {
     '*** RUNNING POST-SYNC TASKS' | Write-Progress
     'SYNCING LOCAL DEV CONFIGS' | Write-Progress
-    {{ project_name }}_tools 'sync-local-dev-configs'
+    & $py -m {{ project_name }}_tools 'sync-local-dev-configs'
     'LOCAL DEV CONFIGS SYNCED' | Write-Progress -Done
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
-    '*** POST-SYNC TASKS COMPLETE ***' | Write-Progress -Done
+    'SYNCING {{ project_name }} PARAMS' | Write-Progress
+    & $py -m {{ project_name }}.models.params
+    '{{ project_name }} PARAMS SYNCED' | Write-Progress
+    '' | Write-Host
+    '*** POST-SYNC DONE ***' | Write-Progress -Done
+}
+# ? Sync project with template in CI
+if ($CI) {
+    'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
+    scripts/Sync-Template.ps1 -Stay
+    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
+}
+
+# ? Lock
+if ($Lock) {
+    'LOCKING' | Write-Progress
+    & $py -m {{ project_name }}_tools lock
+    'LOCKED' | Write-Progress -Done
 }
 
 '' | Write-Host
 '*** DONE ***' | Write-Progress -Done
+
+# ? Stop PSScriptAnalyzer from complaining about these "unused" variables
+$PSNativeCommandUseErrorActionPreference, $NoModifyPath | Out-Null

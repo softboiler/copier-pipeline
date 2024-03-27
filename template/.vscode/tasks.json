@@ -1,6 +1,5 @@
-// Calling `pwsh` first leverages my personal $PROFILE to activate `.venv`.
-// Alternatively, we could use `.venv/Scripts/python.exe` and change the `args`, but
-// this is platform-specific anyways.
+// Run tasks like `pwsh -C ". scripts/Initialize-Shell.ps1; {task}` to run profile-like
+// commands without requiring users to modify global profile.
 
 {
   "version": "2.0.0",
@@ -19,7 +18,7 @@
     {
       "label": "setup: Sync project with template",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
@@ -27,16 +26,18 @@
     {
       "label": "setup: Setup or sync virtual environment",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
-      "command": "scripts/Sync-Py.ps1",
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
+      "command": "if (!$Env:DEVCONTAINER) {scripts/Sync-Py.ps1}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": [],
-      "runOptions": { "runOn": "folderOpen" }
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
     },
     {
       "label": "setup: Perform first-time setup",
       "type": "shell",
-      "options": { "shell": { "executable": "pwsh" } },
+      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "scripts/Initialize-Repo.ps1",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
@@ -57,7 +58,7 @@
       "label": "pre-commit",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pre-commit",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
@@ -65,7 +66,7 @@
       "label": "pre-commit: all",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pre-commit run --all-files",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit run --all-files",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
@@ -89,7 +90,7 @@
       "label": "task: Run pytest with coverage",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "pytest --cov --cov-report xml",
+      "command": ". scripts/Initialize-Shell.ps1; pytest --cov --cov-report xml",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
@@ -97,7 +98,7 @@
       "label": "task: run core update",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python scripts/core_update.py",
+      "command": ". scripts/Initialize-Shell.ps1; python scripts/core_update.py",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
@@ -105,7 +106,7 @@
       "label": "task: Run ruff",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "ruff check .; ruff format .",
+      "command": ". scripts/Initialize-Shell.ps1; ruff check .; ruff format .",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
@@ -113,7 +114,7 @@
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "sphinx-build -EaT docs _site; sphinx-autobuild -T docs _site --ignore apidocs",
+      "command": ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site; sphinx-autobuild -T docs _site --ignore apidocs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },
@@ -121,7 +122,7 @@
       "label": "task: profile this file",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "python -m cProfile -o .prof ${file}",
+      "command": ". scripts/Initialize-Shell.ps1; python -m cProfile -o .prof ${file}",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
@@ -129,7 +130,7 @@
       "label": "task: view profile results with snakeviz",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": "snakeviz .prof",
+      "command": ". scripts/Initialize-Shell.ps1; snakeviz .prof",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     }

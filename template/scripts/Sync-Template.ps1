@@ -10,6 +10,7 @@ Param(
     # Skip verifification when committing changes.
     [switch]$NoVerify
 )
+. scripts/Initialize-Shell.ps1
 $template = 'submodules/template'
 $templateExists = $template | Test-Path
 if (!$templateExists -and $Stay) { return }
