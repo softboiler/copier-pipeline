@@ -18,4 +18,4 @@ copier_python_tools = "copier_python_tools.__main__:main"
 [tool.fawltydeps]
 actions = ["check_undeclared"]
 deps = ["scripts/pyproject.toml", "pyproject.toml"]
-code = ["scripts/boilercv_tools"]
+code = ["scripts/copier_python_tools"]
