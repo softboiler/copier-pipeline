@@ -7,7 +7,7 @@ fawltydeps==0.15.0
 flit==3.9.0
 keyring==24.3.1
 packaging==24.0
-pyright==1.1.354
+pyright==1.1.356
 ruff==0.3.3
 snakeviz==2.2.0
 sourcery-cli==1.15.0
