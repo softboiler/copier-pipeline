@@ -86,21 +86,9 @@ $Comp = $High ? $Comps[1] : $Comps[0]
 'COMPILED' | Write-Progress -Done
 
 # ? Sync
-if ('dvc' | Test-CommandLock) {
-    'The DVC VSCode extension is locking `dvc.exe` (Disable the VSCode DVC extension or close VSCode and sync in an external terminal to perform a full sync)' |
-        Write-Progress -Info
-    'INSTALLING INSTEAD OF SYNCING' |
-        Write-Progress
-    $CompNoDvc = Get-Content $Comp | Select-String -Pattern '^(?!dvc[^-])'
-    $CompNoDvc | Set-Content $Comp
-    uv pip install --requirement=$Comp
-    'DEPENDENCIES INSTALLED' | Write-Progress -Done
-}
-else {
-    'SYNCING DEPENDENCIES' | Write-Progress
-    uv pip sync $Comp
-    'DEPENDENCIES SYNCED' | Write-Progress -Done
-}
+'SYNCING DEPENDENCIES' | Write-Progress
+uv pip sync $Comp
+'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 # ? Post-sync
 if (!$NoPostSync) {
@@ -110,10 +98,6 @@ if (!$NoPostSync) {
     'LOCAL DEV CONFIGS SYNCED' | Write-Progress -Done
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
-    'SYNCING {{ project_name.upper() }} PARAMS' | Write-Progress
-    & $py -m {{ project_name }}.models.params
-    '{{ project_name.upper() }} PARAMS SYNCED' | Write-Progress
-    '' | Write-Host
     '*** POST-SYNC DONE ***' | Write-Progress -Done
 }
 # ? Sync project with template in CI

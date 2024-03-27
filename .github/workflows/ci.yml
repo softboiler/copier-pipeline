@@ -11,6 +11,8 @@ on:
 defaults:
   run:
     shell: "pwsh"
+env:
+  UV_SYSTEM_PYTHON: "true"
 jobs:
   ruff:
     runs-on: "ubuntu-22.04"

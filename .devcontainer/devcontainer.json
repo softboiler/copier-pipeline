@@ -1,0 +1,57 @@
+{
+  "name": "devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/base:jammy",
+  "postCreateCommand": "pwsh scripts/Sync-Py.ps1",
+  "postAttachCommand": "pwsh scripts/Sync-Py.ps1",
+  "containerEnv": {
+    "DEVCONTAINER": "1",
+    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
+    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
+    "PYTHONIOENCODING": "utf-8:strict",
+    "PYTHONUTF8": "1",
+    "PYTHONWARNDEFAULTENCODING": "1",
+    "PYTHONWARNINGS": "ignore"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/powershell:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/python:1": {
+      "version": "3.11",
+      "installTools": false
+    }
+  },
+  "customizations": {
+    "codespaces": {},
+    "vscode": {
+      "settings": {
+        "notebook.experimental.remoteSave": true,
+        "python.experiments.enabled": true,
+        "python.experiments.optInto": [
+          "pythonDiscoveryUsingWorkers",
+          "pythonREPLSmartSend",
+          "pythonTestAdapter",
+          "pythonTerminalEnvVarActivation"
+        ]
+      },
+      "extensions": [
+        "aaron-bond.better-comments@3.0.2",
+        "bierner.markdown-preview-github-styles@2.0.4",
+        "charliermarsh.ruff@2024.16.0",
+        "davidanson.vscode-markdownlint@0.54.0",
+        "donjayamanne.githistory@0.6.20",
+        "eamodio.gitlens@14.9.0",
+        "esbenp.prettier-vscode@10.4.0",
+        "executablebookproject.myst-highlight@0.11.0",
+        "github.codespaces@1.16.17",
+        "github.vscode-github-actions@0.26.2",
+        "github.vscode-pull-request-github@0.80.1",
+        "redhat.vscode-yaml@1.14.0",
+        "sourcery.sourcery@1.16.0",
+        "stkb.rewrap@1.16.3",
+        "tamasfe.even-better-toml@0.19.2",
+        "yzhang.markdown-all-in-one@3.6.2"
+      ]
+    }
+  }
+}

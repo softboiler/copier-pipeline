@@ -7,7 +7,7 @@ from platform import platform
 from re import finditer, search
 from shlex import quote, split
 from subprocess import run
-from sys import executable, version_info
+from sys import version_info
 from typing import NamedTuple
 
 # ! For local dev config tooling
@@ -21,8 +21,6 @@ PYPROJECT = Path("pyproject.toml")
 """Path to `pyproject.toml`."""
 REQS = Path("requirements")
 """Requirements."""
-SYNC = REQS / "sync.in"
-"""Core dependencies for syncing."""
 DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
 NODEPS = REQS / "nodeps.in"
@@ -163,12 +161,11 @@ def comp(high: bool, no_deps: bool) -> str:
     result = run(
         args=split(
             sep.join([
-                f"{escape(executable)} -m uv",
-                f"pip compile --python-version {VERSION}",
+                f"uv pip compile --python-version {VERSION}",
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",
-                sep.join([escape(path) for path in [PYPROJECT, DEV, SYNC]]),
+                sep.join([escape(path) for path in [PYPROJECT, DEV]]),
             ])
         ),
         capture_output=True,
