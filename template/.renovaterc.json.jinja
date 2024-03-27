@@ -18,5 +18,13 @@
   "pip_requirements": {
     "description": "Additionally monitor these files",
     "fileMatch": ["(^|/)requirements/.+$"]
-  }
+  },
+  "packageRules": [
+    {
+      "description": "Sync with template",
+      "groupName": "template",
+      "matchManagers": ["git-submodules"],
+      "matchPackageNames": ["submodules/template"]
+    }
+  ]
 }
