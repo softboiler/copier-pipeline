@@ -2,9 +2,9 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Establish base config, schedule, and manager defaults",
   "addLabels": ["deps"],
-  "extends": ["config:base", ":enablePreCommit", ":disableRateLimiting"],
+  "extends": ["config:base", "group:all", ":enablePreCommit"],
   "dependencyDashboardApproval": false,
-  "schedule": ["on the first day of the month"],
+  "schedule": ["on the 16th day of the month"],
   "git-submodules": {
     "enabled": true
   },
@@ -21,16 +21,10 @@
   },
   "packageRules": [
     {
-      "description": "Core dependencies, unmmatched by the rules below",
-      "groupName": "core",
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor", "patch"]
-    },
-    {
-      "description": "Type checking dependencies",
-      "groupName": "type checking",
-      "matchManagers": ["pep621", "pip_requirements", "git-submodules"],
-      "matchPackageNames": ["pyright", "submodules/typings"]
+      "description": "Sync with template",
+      "groupName": "template",
+      "matchManagers": ["git-submodules"],
+      "matchPackageNames": ["submodules/template"]
     }
   ]
 }
