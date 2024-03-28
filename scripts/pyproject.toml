@@ -8,8 +8,8 @@ version = "0.0.0"
 description = "Tools."
 dependencies = [
     "copier==9.1.1",
-    "cyclopts==2.4.2",
-    "pre-commit==3.6.2",
+    "cyclopts==2.5.0",
+    "pre-commit==3.7.0",
     "zstandard==0.22.0",
 ]
 [project.scripts]
