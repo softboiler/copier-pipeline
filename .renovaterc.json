@@ -17,11 +17,11 @@
   ],
   "git-submodules": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["(^|/)\.github/workflows/.+\.ya?ml.jinja$"]
+    "fileMatch": ["(^|/)\\.github/workflows/.+\.ya?ml.jinja$"]
   },
   "pep621": {
     "description": "Additionally monitor these files",
-    "fileMatch": ["(^|/)pyproject\.toml\.jinja$"]
+    "fileMatch": ["(^|/)pyproject\\.toml\\.jinja$"]
   },
   "pip_requirements": {
     "description": "Additionally monitor these files",
