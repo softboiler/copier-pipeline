@@ -13,7 +13,7 @@ dependencies = [
     "zstandard==0.22.0",
 ]
 [project.scripts]
-copier_python_tools = "copier_python_tools.__main__:main"
+"copier_python_tools" = "copier_python_tools.__main__:main"
 
 [tool.fawltydeps]
 actions = ["check_undeclared"]
