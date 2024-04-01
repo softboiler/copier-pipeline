@@ -23,8 +23,11 @@ if ($templateExists) {
         git submodule update --init --remote --merge $template
         git add --all
         $msg = "Update template digest to $(git rev-parse HEAD:submodules/template)"
+        $origPreference = $ErrorActionPreference
         if ($NoVerify) { git commit --no-verify -m $msg }
         else { git commit -m $msg }
+        $ErrorActionPreference = 'SilentlyContinue'
+        $ErrorActionPreference = $origPreference
     }
     $head = git rev-parse HEAD:submodules/template
     if ($Prompt) { return copier update --vcs-ref=$head }
