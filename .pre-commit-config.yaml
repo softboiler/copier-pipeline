@@ -14,7 +14,7 @@ ci:
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
   - pre-commit
-  - post-checkout # sync-python
+  - post-checkout # sync
 repos:
   - repo: "meta"
     hooks:
