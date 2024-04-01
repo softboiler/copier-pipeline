@@ -6,16 +6,16 @@ build-backend = "flit_core.buildapi"
 name = "{{ project_name }}_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = [
-    "copier==9.1.1",
-    "cyclopts==2.5.0",
-    "pre-commit==3.7.0",
-    "zstandard==0.22.0",
-]
+dependencies = ["cyclopts==2.5.0"]
 [project.scripts]
 "{{ project_name }}_tools" = "{{ project_name }}_tools.__main__:main"
 
 [tool.fawltydeps]
-actions = ["check_undeclared"]
 deps = ["scripts/pyproject.toml", "pyproject.toml"]
 code = ["scripts/{{ project_name }}_tools"]
+ignore_undeclared = [
+    "{{ project_name }}",
+    "{{ project_name }}_docs",
+    "{{ project_name }}_scripts",
+    "{{ project_name }}_tests",
+]

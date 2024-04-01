@@ -1,6 +1,10 @@
 ci:
   skip:
     - "sync"
+    - "fawltydeps-src"
+    - "fawltydeps-docs"
+    - "fawltydeps-scripts"
+    - "fawltydeps-tests"
     - "pytest-fast-only"
     - "check-undeclared"
     - "check-unused"
@@ -21,18 +25,43 @@ repos:
         stages:
           - "pre-commit"
           - "post-checkout"
+        always_run: true
         pass_filenames: false
         language: "system"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
+      - id: "fawltydeps-src"
+        name: "fawltydeps-src"
+        pass_filenames: false
+        language: "system"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file pyproject.toml"
         files: |
           (?x)^(
-            .*/pyproject\.toml
-            |docs/.*\.ipynb
-            |params\.yaml
-            |requirements/.*
-            |scripts/.*
+            pyproject.toml
+            |src/.*$
           )$
+      - id: "fawltydeps-docs"
+        name: "fawltydeps-docs"
+        pass_filenames: false
+        language: "system"
+        files: ^docs/.*$
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file docs/pyproject.toml"
+      - id: "fawltydeps-scripts"
+        name: "fawltydeps-scripts"
+        pass_filenames: false
+        language: "system"
+        files: ^scripts/.*$
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file scripts/pyproject.toml"
+      - id: "fawltydeps-tests"
+        name: "fawltydeps-tests"
+        pass_filenames: false
+        language: "system"
+        files: ^tests/.*$
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file tests/pyproject.toml"
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
@@ -53,34 +82,6 @@ repos:
     hooks:
       - id: "end-of-file-fixer"
       - id: "trailing-whitespace"
-  - repo: "https://github.com/tweag/FawltyDeps"
-    rev: "v0.15.0"
-    hooks:
-      - id: "check-unused"
-        files: |
-          (?x)^(
-            pyproject\.toml
-          )$
-      - id: "check-undeclared"
-        name: "check-undeclared-src"
-        files: |
-          (?x)^(
-            src/.*
-          )$
-      - id: "check-undeclared"
-        name: "check-undeclared-docs"
-        args: ["--config-file", "docs/pyproject.toml", "--code"]
-        files: |
-          (?x)^(
-            docs/.*
-          )$
-      - id: "check-undeclared"
-        name: "check-undeclared-tests"
-        args: ["--config-file", "tests/pyproject.toml", "--code"]
-        files: |
-          (?x)^(
-            tests/.*
-          )$
   - repo: "https://github.com/DavidAnson/markdownlint-cli2"
     rev: "v0.12.1"
     hooks:

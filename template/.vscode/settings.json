@@ -88,16 +88,20 @@
   "jupyter.showVariableViewWhenDebugging": true,
   //* MyST
   "myst.preview.extensions": ["colon_fence", "dollarmath"],
-  //* Pylance
+  // * Python
   "python.terminal.activateEnvInCurrentTerminal": true,
+  //* Pylance
   "python.languageServer": "Pylance",
+  "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.typeCheckingMode": "strict",
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "python.analysis.addImport.heuristics": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.completeFunctionParens": true,
+  "python.analysis.extraCommitChars": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.importFormat": "absolute",
-  "editor.inlayHints.enabled": "offUnlessPressed",
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,

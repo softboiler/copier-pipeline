@@ -10,10 +10,14 @@ defaults:
   run:
     shell: "pwsh"
 jobs:
+  strategy:
+    matrix:
+      runner: ["{{ actions_runner }}"]
+      python: ["{{ python_version }}"]
   changerelease:
     permissions:
       contents: "write"
-    runs-on: "{{ actions_runner }}"
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
         with:

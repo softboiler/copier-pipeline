@@ -2,7 +2,7 @@
 name: "ci"
 concurrency:
   group: "{% raw %}${{ github.workflow }}{% endraw %}-{% raw %}${{ github.ref }}{% endraw %}"
-  cancel-in-progress: true
+  cancel-in-progress: True
 on:
   workflow_dispatch:
   pull_request:
@@ -12,39 +12,64 @@ defaults:
   run:
     shell: "pwsh"
 env:
+  UV_CACHE_DIR: ".cache/uv-cache"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   ruff:
-    runs-on: "{{ actions_runner }}"
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
       - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
-    runs-on: "{{ actions_runner }}"
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
       - run: "fawltydeps"
   pyright:
-    runs-on: "{{ actions_runner }}"
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
       - run: pyright
   test:
@@ -65,6 +90,10 @@ jobs:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
@@ -80,6 +109,10 @@ jobs:
           path: ".comps"
           name: "requirements_{% raw %}${{ matrix.runner }}{% endraw %}_{% raw %}${{ matrix.python }}{% endraw %}"
   sync:
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
     permissions:
       contents: "write"
     needs:
@@ -87,14 +120,18 @@ jobs:
       - "fawltydeps"
       - "pyright"
       - "test"
-    runs-on: "{{ actions_runner }}"
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427" # v4.1.4
         with:
           path: ".comps"

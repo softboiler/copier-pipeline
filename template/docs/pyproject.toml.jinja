@@ -23,6 +23,24 @@ dependencies = [
 ]
 
 [tool.fawltydeps]
-actions = ["check_undeclared"]
-deps = ["docs/pyproject.toml", "pyproject.toml"]
-code = ["docs/{{ project_name }}_docs"]
+deps = ["docs/pyproject.toml"]
+code = ["docs"]
+ignore_undeclared = [
+    "{{ project_name }}",
+    "{{ project_name }}_docs",
+    "{{ project_name }}_scripts",
+    "{{ project_name }}_tests",
+]
+ignore_unused = [
+    # ? Core docs tools or declared as extensions in `conf.py`
+    "linkify-it-py",
+    "sphinx-autobuild",
+    "sphinx-autodoc2",
+    "sphinx-book-theme",
+    "sphinx-design",
+    "sphinx-thebe",
+    "sphinx-tippy",
+    "sphinx-togglebutton",
+    "sphinxcontrib-bibtex",
+    "sphinxcontrib-mermaid",
+]

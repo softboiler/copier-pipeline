@@ -6,7 +6,7 @@ permissions:
   id-token: "write"
 concurrency:
   group: "{% raw %}${{ github.workflow }}{% endraw %}-{% raw %}${{ github.ref }}{% endraw %}"
-  cancel-in-progress: true
+  cancel-in-progress: True
 on:
   workflow_dispatch:
   pull_request:
@@ -16,17 +16,26 @@ defaults:
   run:
     shell: "pwsh"
 env:
+  UV_CACHE_DIR: ".cache/uv-cache"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   build:
-    runs-on: "{{ actions_runner }}"
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
-          python-version: "{{ python_version }}"
+          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
       - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
@@ -35,7 +44,7 @@ jobs:
     environment:
       name: "github-pages"
       url: "{% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}"
-    runs-on: "{{ actions_runner }}"
+    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     needs: "build"
     steps:
       - id: "deployment"
