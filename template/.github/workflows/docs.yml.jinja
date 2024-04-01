@@ -41,6 +41,10 @@ jobs:
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy:
     if: github.event_name != 'pull_request'
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
     environment:
       name: "github-pages"
       url: "{% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}"

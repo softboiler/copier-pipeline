@@ -6,12 +6,10 @@ ci:
     - "fawltydeps-scripts"
     - "fawltydeps-tests"
     - "pytest-fast-only"
-    - "check-undeclared"
-    - "check-unused"
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
   - pre-commit
-  - post-checkout # sync-python
+  - post-checkout # sync
 repos:
   - repo: "meta"
     hooks:

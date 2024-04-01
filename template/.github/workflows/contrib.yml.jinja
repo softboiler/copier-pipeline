@@ -57,10 +57,11 @@ jobs:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
+          path: "repo path with spaces"
       - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
-          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"          path: "repo path with spaces"
+          key: "uv-{% raw %}${{ matrix.runner }}{% endraw %}"
       - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
