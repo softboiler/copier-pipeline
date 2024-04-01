@@ -1,8 +1,38 @@
 {
   "name": "devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/base:jammy",
-  "postCreateCommand": "pwsh scripts/Sync-Py.ps1",
-  "postAttachCommand": "pwsh scripts/Sync-Py.ps1",
+  "image": "mcr.microsoft.com/devcontainers/base:1.0.22-ubuntu-22.04",
+  "features": {
+    "ghcr.io/devcontainers/features/powershell:1.3.4": {
+      "version": "7.4.1"
+    },
+    "ghcr.io/devcontainers/features/python:1.4.2": {
+      "version": "3.11"
+    },
+    "ghcr.io/devcontainers/features/desktop-lite:1.0.8": {
+      "noVncVersion": "1.4.0"
+    },
+    "ghcr.io/dhoeric/features/google-cloud-cli:1.0.1": {
+      "version": "470.0.0"
+    },
+    "ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1.0.3": {}
+  },
+  "onCreateCommand": {
+    "set-up-profile": [
+      "pwsh",
+      "-Command",
+      "New-Item -Force $PROFILE && Copy-Item scripts/Initialize-Shell.ps1 $PROFILE"
+    ]
+  },
+  "postCreateCommand": {
+    "sync-py-in-codespace": [
+      "pwsh",
+      "-Command",
+      "if (Test-Path /.codespaces) { scripts/Sync-Py.ps1 }"
+    ]
+  },
+  "postAttachCommand": {
+    "sync-py": ["pwsh", "scripts/Sync-Py.ps1"]
+  },
   "containerEnv": {
     "DEVCONTAINER": "1",
     "PIP_DISABLE_PIP_VERSION_CHECK": "1",
@@ -12,17 +42,7 @@
     "PYTHONWARNDEFAULTENCODING": "1",
     "PYTHONWARNINGS": "ignore"
   },
-  "features": {
-    "ghcr.io/devcontainers/features/powershell:1": {
-      "version": "latest"
-    },
-    "ghcr.io/devcontainers/features/python:1": {
-      "version": "3.11",
-      "installTools": false
-    }
-  },
   "customizations": {
-    "codespaces": {},
     "vscode": {
       "settings": {
         "notebook.experimental.remoteSave": true,
@@ -36,6 +56,7 @@
       },
       "extensions": [
         "aaron-bond.better-comments@3.0.2",
+        "bierner.markdown-mermaid@1.22.0",
         "bierner.markdown-preview-github-styles@2.0.4",
         "charliermarsh.ruff@2024.16.0",
         "davidanson.vscode-markdownlint@0.54.0",
@@ -44,12 +65,22 @@
         "esbenp.prettier-vscode@10.4.0",
         "executablebookproject.myst-highlight@0.11.0",
         "github.codespaces@1.16.17",
+        "GitHub.remotehub@0.62.0",
         "github.vscode-github-actions@0.26.2",
         "github.vscode-pull-request-github@0.80.1",
+        "ms-azuretools.vscode-docker@1.29.0",
+        "ms-python.debugpy@2024.2.0",
+        "ms-python.python@2024.2.1",
+        "ms-python.vscode-pylance@2024.3.2",
+        "ms-toolsai.jupyter@2024.1.1",
+        "ms-vscode-remote.remote-containers@0.353.0",
         "redhat.vscode-yaml@1.14.0",
+        "ryanluker.vscode-coverage-gutters@2.11.1",
         "sourcery.sourcery@1.16.0",
         "stkb.rewrap@1.16.3",
+        "TakumiI.markdowntable@0.11.0",
         "tamasfe.even-better-toml@0.19.2",
+        "yy0931.mplstyle@1.14.3",
         "yzhang.markdown-all-in-one@3.6.2"
       ]
     }

@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "aaron-bond.better-comments",
+    "bierner.markdown-mermaid",
     "bierner.markdown-preview-github-styles",
     "charliermarsh.ruff",
     "davidanson.vscode-markdownlint",
@@ -9,12 +10,22 @@
     "esbenp.prettier-vscode",
     "executablebookproject.myst-highlight",
     "github.codespaces",
+    "GitHub.remotehub",
     "github.vscode-github-actions",
     "github.vscode-pull-request-github",
+    "ms-azuretools.vscode-docker",
+    "ms-python.debugpy",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-toolsai.jupyter",
+    "ms-vscode-remote.remote-containers",
     "redhat.vscode-yaml",
+    "ryanluker.vscode-coverage-gutters",
     "sourcery.sourcery",
     "stkb.rewrap",
+    "TakumiI.markdowntable",
     "tamasfe.even-better-toml",
+    "yy0931.mplstyle",
     "yzhang.markdown-all-in-one"
   ]
 }
