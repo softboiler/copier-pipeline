@@ -90,7 +90,7 @@
       "label": "task: Run pytest with coverage",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": ". scripts/Initialize-Shell.ps1; pytest --cov --cov-report xml",
+      "command": ". scripts/Initialize-Shell.ps1; pytest --cov  --cov-config pyproject.toml --cov-report xml",
       "icon": { "id": "check" },
       "problemMatcher": []
     },

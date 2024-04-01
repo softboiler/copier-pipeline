@@ -10,12 +10,6 @@ from subprocess import run
 from sys import version_info
 from typing import NamedTuple
 
-# ! For local dev config tooling
-PYRIGHTCONFIG = Path("pyrightconfig.json")
-"""Resulting pyright configuration file."""
-PYTEST = Path("pytest.ini")
-"""Resulting pytest configuration file."""
-
 # ! Dependencies
 PYPROJECT = Path("pyproject.toml")
 """Path to `pyproject.toml`."""

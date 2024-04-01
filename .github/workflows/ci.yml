@@ -2,7 +2,7 @@
 name: "ci"
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
+  cancel-in-progress: True
 on:
   workflow_dispatch:
   pull_request:
@@ -12,39 +12,64 @@ defaults:
   run:
     shell: "pwsh"
 env:
+  UV_CACHE_DIR: ".cache/uv-cache"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   ruff:
-    runs-on: "ubuntu-22.04"
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
-          python-version: "3.11"
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff check --no-fix --extend-ignore N999 --output-format github ."
+      - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
-    runs-on: "ubuntu-22.04"
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
-          python-version: "3.11"
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
       - run: "fawltydeps"
   pyright:
-    runs-on: "ubuntu-22.04"
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
-          python-version: "3.11"
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
       - run: pyright
   test:
@@ -65,7 +90,11 @@ jobs:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+        with:
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
@@ -80,6 +109,10 @@ jobs:
           path: ".comps"
           name: "requirements_${{ matrix.runner }}_${{ matrix.python }}"
   sync:
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
     permissions:
       contents: "write"
     needs:
@@ -87,14 +120,18 @@ jobs:
       - "fawltydeps"
       - "pyright"
       - "test"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
-          python-version: "3.11"
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
       - uses: "actions/download-artifact@c850b930e6ba138125429b7e5c93fc707a7f8427" # v4.1.4
         with:
           path: ".comps"

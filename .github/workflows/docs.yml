@@ -6,7 +6,7 @@ permissions:
   id-token: "write"
 concurrency:
   group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: true
+  cancel-in-progress: True
 on:
   workflow_dispatch:
   pull_request:
@@ -16,17 +16,26 @@ defaults:
   run:
     shell: "pwsh"
 env:
+  UV_CACHE_DIR: ".cache/uv-cache"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   build:
-    runs-on: "ubuntu-22.04"
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
+    runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
+      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
         with:
-          python-version: "3.11"
+          path: "${{ env.UV_CACHE_DIR }}"
+          key: "uv-${{ matrix.runner }}"
+      - uses: "actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c" # v5.0.0
+        with:
+          python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
       - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
@@ -35,7 +44,7 @@ jobs:
     environment:
       name: "github-pages"
       url: "${{ steps.deployment.outputs.page_url }}"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ matrix.runner }}"
     needs: "build"
     steps:
       - id: "deployment"

@@ -7,8 +7,8 @@ from typing import NamedTuple
 
 from cyclopts import App
 
-from {{ project_name }} import sync
-from {{ project_name }}.sync import COMPS, escape, get_comp_names
+from {{ project_name }}_tools import sync
+from {{ project_name }}_tools.sync import COMPS, escape, get_comp_names
 
 APP = App(help_format="markdown")
 """CLI."""

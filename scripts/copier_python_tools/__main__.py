@@ -1,8 +1,6 @@
 """CLI for tools."""
 
-import tomllib
 from collections.abc import Collection
-from json import dumps
 from pathlib import Path
 from re import finditer
 from typing import NamedTuple
@@ -10,14 +8,7 @@ from typing import NamedTuple
 from cyclopts import App
 
 from copier_python_tools import sync
-from copier_python_tools.sync import (
-    COMPS,
-    PYPROJECT,
-    PYRIGHTCONFIG,
-    PYTEST,
-    escape,
-    get_comp_names,
-)
+from copier_python_tools.sync import COMPS, escape, get_comp_names
 
 APP = App(help_format="markdown")
 """CLI."""
@@ -77,31 +68,6 @@ def get_actions():
             for match in finditer(r'uses:\s?"?(?P<action>.+)@', contents)
         ])
     log(sorted(set(actions)))
-
-
-@APP.command()
-def sync_local_dev_configs():
-    """Synchronize local dev configs to shadow `pyproject.toml`, with some changes.
-
-    Duplicate pyright and pytest configuration from `pyproject.toml` to
-    `pyrightconfig.json` and `pytest.ini`, respectively. These files shadow the
-    configuration in `pyproject.toml`, which drives CI or if shadow configs are not
-    present. Shadow configs are in `.gitignore` to facilitate local-only shadowing.
-
-    Concurrent test runs are disabled in the local pytest configuration which slows down
-    the usual local, granular test workflow.
-    """
-    config = tomllib.loads(PYPROJECT.read_text("utf-8"))
-    # Write pyrightconfig.json
-    pyright = config["tool"]["pyright"]
-    data = dumps(pyright, indent=2)
-    PYRIGHTCONFIG.write_text(encoding="utf-8", data=f"{data}\n")
-    # Write pytest.ini
-    pytest = config["tool"]["pytest"]["ini_options"]
-    PYTEST.write_text(
-        encoding="utf-8",
-        data="\n".join(["[pytest]", *[f"{k} = {v}" for k, v in pytest.items()], ""]),
-    )
 
 
 def log(obj):

@@ -6,16 +6,16 @@ build-backend = "flit_core.buildapi"
 name = "copier_python_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = [
-    "copier==9.1.1",
-    "cyclopts==2.5.0",
-    "pre-commit==3.7.0",
-    "zstandard==0.22.0",
-]
+dependencies = ["cyclopts==2.5.0"]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"
 
 [tool.fawltydeps]
-actions = ["check_undeclared"]
 deps = ["scripts/pyproject.toml", "pyproject.toml"]
 code = ["scripts/copier_python_tools"]
+ignore_undeclared = [
+    "copier_python",
+    "copier_python_docs",
+    "copier_python_scripts",
+    "copier_python_tests",
+]

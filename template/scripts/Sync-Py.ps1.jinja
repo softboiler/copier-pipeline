@@ -101,9 +101,6 @@ uv pip sync $Comp
 # ? Post-sync
 if (!$NoPostSync) {
     '*** RUNNING POST-SYNC TASKS' | Write-Progress
-    'SYNCING LOCAL DEV CONFIGS' | Write-Progress
-    & $py -m {{ project_name }}_tools 'sync-local-dev-configs'
-    'LOCAL DEV CONFIGS SYNCED' | Write-Progress -Done
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
     '*** POST-SYNC DONE ***' | Write-Progress -Done

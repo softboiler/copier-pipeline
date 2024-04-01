@@ -10,11 +10,11 @@ defaults:
   run:
     shell: "pwsh"
 jobs:
-  strategy:
-    matrix:
-      runner: ["{{ actions_runner }}"]
-      python: ["{{ python_version }}"]
   changerelease:
+    strategy:
+      matrix:
+        runner: ["{{ actions_runner }}"]
+        python: ["{{ python_version }}"]
     permissions:
       contents: "write"
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
