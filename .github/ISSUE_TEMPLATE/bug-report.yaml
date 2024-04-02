@@ -1,6 +1,6 @@
 name: "Bug report"
 description: "Report a bug"
-labels: ["type: bug"]
+labels: ["bug"]
 body:
   - type: "checkboxes"
     id: "no-duplicate-issues"
@@ -8,7 +8,7 @@ body:
       label: "Please check that this bug hasn't been reported before."
       options:
         - required: True
-          label: "I searched previous bug reports [here](https://github.com/blakeNaccarato/copier-python/issues?q=label:bug+sort:comments-desc) or [here](https://github.com/search?q=repo:blakeNaccarato/copier-python+label:bug&type=issues) and didn't find any similar reports."
+          label: "I searched previous bug reports [here](https://github.com/blakeNaccarato/copier-python/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3AblakeNaccarato/copier-python+label%3Abug&type=issues) and didn't find any similar reports."
   - type: "checkboxes"
     id: "latest-version"
     attributes:
