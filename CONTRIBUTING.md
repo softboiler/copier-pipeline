@@ -1,8 +1,8 @@
 # Contributing
 
-See [project tooling and development aids ⬇](#project-tooling-and-development-aids) for detail on the tooling that is expected to be used in this project. If you're new to Python or VSCode, this template represents sensible configuration of a VSCode development environment for Python with dependency management, debugging, code checking, code formatting, refactoring, and type checking. Most tooling is configured in `pyproject.toml`, with Pylance/`pyright` modified to be relatively strict, but use warnings to reduce visual overwhelm, and `ruff` made similarly strict, but with certain rules suppressed.
+See [project tooling and development aids ⬇](#project-tooling-and-development-aids) for detail on the tooling that is expected to be used in this project. If you're entirely new to Python or contributing to Python projects, click the "(details⬇)" links in the sections below for more information.
 
-This project may be contributed to using IDEs other than VSCode, just ensure you are running the command-line tools detailed in [project tooling and development aids ⬇](#project-tooling-and-development-aids), or use the equivalent extensions in your own IDE. All expected tooling can be run in an IDE-agnostic way, for instance `pyright` can be run at the command line to get the same type-checking feedback that Pylance would give in VSCode.
+This project features some VSCode tooling and configuration, but it may be contributed to using IDEs other than VSCode. Just ensure you are running the command-line tools detailed in [project tooling and development aids ⬇](#project-tooling-and-development-aids), or use the equivalent extensions in your own IDE. All expected tooling can be run in an IDE-agnostic way, for instance `pyright` can be run at the command line to get the same type-checking feedback that Pylance would give in VSCode.
 
 > [!IMPORTANT]
 > If you clone and open this repository in VSCode, have previously allowed VSCode Tasks to run automatically, and have previously trusted this repository, then [`scripts/Sync-Py.ps1`](scripts/Sync-Py.ps1) will run on window open. It also runs as a pre-commit and post-checkout hook. Review [this section ⬇](#run-scriptssync-pyps1) for details on what the script does. If you are uncomfortable with this, this repository also supports development in a [dev container](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) with the `Dev Containers: Open Folder in Container` command, or as a [Codespace](https://docs.github.com/en/codespaces/getting-started/quickstart).
@@ -30,7 +30,7 @@ These steps detail contribution to this project in the case of VSCode, starting 
 
 ## Project tooling and development aids
 
-This project features certain tooling and development aids, which are checked at commit time and in CI.
+This project features certain tooling and development aids, which are checked at commit time and in CI. Tooling choices represent sensible configuration of a VSCode development environment for Python with dependency management, debugging, code checking, code formatting, refactoring, and type checking. Most tooling is configured in `pyproject.toml`, with Pylance/`pyright` modified to be relatively strict, but use warnings to reduce visual overwhelm, and `ruff` made similarly strict, but with certain rules suppressed.
 
 <!-- no toc -->
 - [⬇ `ruff`, `pyright`, `sourcery`, `markdownlint-cli2`: Learn gradually from immediate feedback](#ruff-pyright-sourcery-markdownlint-cli2-learn-gradually-from-immediate-feedback)
