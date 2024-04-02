@@ -5,7 +5,7 @@ body:
   - type: "checkboxes"
     id: "no-duplicate-issues"
     attributes:
-      label: "Please check that this documentation improvement hasn't been requested before."
+      label: "Please check that this documentation improvement hasn't been requested before"
       options:
         - required: True
           label: "I searched previous documentation improvement requests [here](https://github.com/blakeNaccarato/copier-python/issues?q=label%3Adocs+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3AblakeNaccarato/copier-python+label%3Adocs&type=issues) and didn't find any similar requests."
@@ -15,10 +15,9 @@ body:
       required: True
     attributes:
       label: "Documentation enhancement description"
-      description: "Please describe your requested documentation enhancement."
-      placeholder: "The documentation could benefit from..."
+      description: "Please describe your requested documentation enhancement"
   - type: "textarea"
     id: "possible-solution"
     attributes:
       label: "Possible solution"
-      description: "Please provide a few details as to how this documentation enhancement might be implemented."
+      description: "Please provide a few details as to how this documentation enhancement might be implemented"

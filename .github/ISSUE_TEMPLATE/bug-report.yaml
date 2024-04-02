@@ -5,14 +5,14 @@ body:
   - type: "checkboxes"
     id: "no-duplicate-issues"
     attributes:
-      label: "Please check that this bug hasn't been reported before."
+      label: "Please check that this bug hasn't been reported before"
       options:
         - required: True
           label: "I searched previous bug reports [here](https://github.com/blakeNaccarato/copier-python/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3AblakeNaccarato/copier-python+label%3Abug&type=issues) and didn't find any similar reports."
   - type: "checkboxes"
     id: "latest-version"
     attributes:
-      label: "Does this bug affect the latest version?"
+      label: "Please confirm that this bug affects the latest version"
       description: "Please verify the issue is present in the latest version by installing it with `pip install copier_python==0.0.0` and checking."
       options:
         - required: True
@@ -23,13 +23,13 @@ body:
       required: True
     attributes:
       label: "Version"
-      description: Which version of `copier_python` are you using? If you're not sure, try running `pip show copier_python`.
+      description: Please indicate which version of `copier_python` you are using. If you're not sure, try running `pip show copier_python`.
       placeholder: "0.0.0"
   - type: "checkboxes"
     id: "operating-systems"
     attributes:
-      label: "Which operating system(s) are you using?"
-      description: "You may select more than one."
+      label: "Please indicate which operating system(s) you are using"
+      description: "You may select more than one"
       options:
         - label: "Linux"
         - label: "macOS"
@@ -40,12 +40,12 @@ body:
       required: True
     attributes:
       label: "Expected Behavior"
-      description: "Please explain what **should** happen."
+      description: "Please explain what **should** happen"
   - type: "textarea"
     id: "what-happened"
     attributes:
       label: "Current behaviour"
-      description: "Please explain what happens instead of the expected behavior."
+      description: "Please explain what happens instead of the expected behavior"
     validations:
       required: True
   - type: "textarea"
@@ -54,9 +54,9 @@ body:
       required: True
     attributes:
       label: "Steps to reproduce"
-      description: "Which steps can a developer take to reproduce the issue? The more detail you provide, the easier it will be to narrow down and fix the bug."
+      description: "Please provide steps that would allow someone to reproduce the issue"
   - type: "textarea"
     id: "possible-solution"
     attributes:
       label: "Possible solution"
-      description: "Please suggest a fix or reason for the bug, if you have an idea."
+      description: "Please suggest a possible fix or any ideas you may have about the root cause"
