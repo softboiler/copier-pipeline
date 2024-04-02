@@ -13,18 +13,10 @@ body:
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking."
+      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking. If you have other issues or questions about earlier versions, please visit the [Q&A]("https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/discussions/new?category=q-a")."
       options:
         - required: True
           label: "This bug affects version `{{ project_version }}` of `{{ project_name }}`."
-  - type: "input"
-    id: "version"
-    validations:
-      required: True
-    attributes:
-      label: "Version"
-      description: Please indicate which version of `{{ project_name }}` you are using. If you're not sure, try running `pip show {{ project_name }}`.
-      placeholder: "0.0.0"
   - type: "checkboxes"
     id: "operating-systems"
     attributes:
