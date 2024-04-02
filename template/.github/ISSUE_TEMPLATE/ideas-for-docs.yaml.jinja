@@ -1,0 +1,24 @@
+name: "Documentation request"
+description: "Request documentation improvements"
+labels: ["type: docs"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicate-issues"
+    attributes:
+      label: "Please check that this documentation improvement hasn't been requested before."
+      options:
+        - required: True
+          label: "I searched previous documentation improvement requests [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label:docs+sort:comments-desc) or [here](https://github.com/search?q=repo:{{ project_owner_github_username }}/{{ github_repo_name }}+label:docs&type=issues) and didn't find any similar requests."
+  - type: "textarea"
+    id: "feature-description"
+    validations:
+      required: True
+    attributes:
+      label: "Documentation enhancement description"
+      description: "Please describe your requested documentation enhancement."
+      placeholder: "The documentation could benefit from..."
+  - type: "textarea"
+    id: "possible-solution"
+    attributes:
+      label: "Possible solution"
+      description: "Please provide a few details as to how this documentation enhancement might be implemented."

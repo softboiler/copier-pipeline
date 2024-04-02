@@ -1,0 +1,62 @@
+name: "Bug report"
+description: "Report a bug"
+labels: ["type: bug"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicate-issues"
+    attributes:
+      label: "Please check that this bug hasn't been reported before."
+      options:
+        - required: True
+          label: "I searched previous bug reports [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label:bug+sort:comments-desc) or [here](https://github.com/search?q=repo:{{ project_owner_github_username }}/{{ github_repo_name }}+label:bug&type=issues) and didn't find any similar reports."
+  - type: "checkboxes"
+    id: "latest-version"
+    attributes:
+      label: "Does this bug affect the latest version?"
+      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking."
+      options:
+        - required: True
+          label: "This bug affects version `{{ project_version }}` of `{{ project_name }}`."
+  - type: "input"
+    id: "version"
+    validations:
+      required: True
+    attributes:
+      label: "Version"
+      description: Which version of `{{ project_name }}` are you using? If you're not sure, try running `pip show {{ project_name }}`.
+      placeholder: "0.0.0"
+  - type: "checkboxes"
+    id: "operating-systems"
+    attributes:
+      label: "Which operating system(s) are you using?"
+      description: "You may select more than one."
+      options:
+        - label: "Linux"
+        - label: "macOS"
+        - label: "Windows"
+  - type: "textarea"
+    id: "expected"
+    validations:
+      required: True
+    attributes:
+      label: "Expected Behavior"
+      description: "Please explain what **should** happen."
+  - type: "textarea"
+    id: "what-happened"
+    attributes:
+      label: "Current behaviour"
+      description: "Please explain what happens instead of the expected behavior."
+    validations:
+      required: True
+  - type: "textarea"
+    id: "reproduce"
+    validations:
+      required: True
+    attributes:
+      label: "Steps to reproduce"
+      description: "Which steps can a developer take to reproduce the issue? The more detail you provide, the easier it will be to narrow down and fix the bug."
+  - type: "textarea"
+    id: "possible-solution"
+    attributes:
+      label: "Possible solution"
+      description: "Please suggest a fix or reason for the bug, if you have an idea."
