@@ -11,7 +11,7 @@ dependencies = ["cyclopts==2.5.0"]
 "copier_python_tools" = "copier_python_tools.__main__:main"
 
 [tool.fawltydeps]
-deps = ["scripts/pyproject.toml", "pyproject.toml"]
+deps = ["scripts/pyproject.toml"]
 code = ["scripts/copier_python_tools"]
 ignore_undeclared = [
     "copier_python",
