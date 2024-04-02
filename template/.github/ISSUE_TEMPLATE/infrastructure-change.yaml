@@ -1,6 +1,6 @@
 name: "Infrastructure change"
 description: "Report infrastructure or other development concerns"
-labels: ["type: infra"]
+labels: ["infra"]
 body:
   - type: "checkboxes"
     id: "usage"
