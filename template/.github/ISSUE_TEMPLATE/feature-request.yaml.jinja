@@ -5,7 +5,7 @@ body:
   - type: "checkboxes"
     id: "no-duplicate-issues"
     attributes:
-      label: "Please check that this feature hasn't been requested before."
+      label: "Please check that this feature hasn't been requested before"
       options:
         - required: True
           label: "I searched previous feature requests [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label%3Aenhancement+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3A{{ project_owner_github_username }}/{{ github_repo_name }}+label%3Aenhancement&type=issues) and didn't find any similar requests."
@@ -15,10 +15,9 @@ body:
       required: True
     attributes:
       label: "Feature description"
-      description: "Please describe your requested feature."
-      placeholder: "This feature should..."
+      description: "Please describe your requested feature"
   - type: "textarea"
     id: "possible-solution"
     attributes:
       label: "Possible implementation"
-      description: "Please provide a few details as to how this feature might be implemented, if you are able."
+      description: "Please provide a few details as to how this feature might be implemented"
