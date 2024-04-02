@@ -1,0 +1,23 @@
+name: "Infrastructure change"
+description: "Report infrastructure or other development concerns"
+labels: ["type: infra"]
+body:
+  - type: "checkboxes"
+    id: "usage"
+    attributes:
+      label: "Please only use this form for changes to tooling, non-feature refactoring, dependency updates, and other infrastructure concerns."
+      options:
+        - required: True
+          label: "This request is about infrastructure. It is not about a bug report, feature request, or documentation suggestion."
+  - type: "textarea"
+    id: "description"
+    validations:
+      required: True
+    attributes:
+      label: "Description"
+      description: "Please describe the change."
+  - type: "textarea"
+    id: "possible-solution"
+    attributes:
+      label: "Steps"
+      description: "Please describe the steps to making this change."

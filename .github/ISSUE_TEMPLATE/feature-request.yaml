@@ -1,0 +1,24 @@
+name: "Feature request"
+description: "Request a new feature"
+labels: ["type: enhancement"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicate-issues"
+    attributes:
+      label: "Please check that this feature hasn't been requested before."
+      options:
+        - required: True
+          label: "I searched previous feature requests [here](https://github.com/blakeNaccarato/copier-python/issues?q=label:enhancement+sort:comments-desc) or [here](https://github.com/search?q=repo:blakeNaccarato/copier-python+label:enhancement&type=issues) and didn't find any similar requests."
+  - type: "textarea"
+    id: "feature-description"
+    validations:
+      required: True
+    attributes:
+      label: "Feature description"
+      description: "Please describe your requested feature."
+      placeholder: "This feature should..."
+  - type: "textarea"
+    id: "possible-solution"
+    attributes:
+      label: "Possible implementation"
+      description: "Please provide a few details as to how this feature might be implemented, if you are able."
