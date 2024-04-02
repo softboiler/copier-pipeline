@@ -50,7 +50,7 @@ jobs:
           - "macos-13"
           - "ubuntu-22.04"
           - "windows-2022"
-      python: ["3.11"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - run: "New-Item -ItemType Directory 'repo path with spaces'"
