@@ -13,18 +13,10 @@ body:
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install copier_python==0.0.0` and checking."
+      description: "Please verify the issue is present in the latest version by installing it with `pip install copier_python==0.0.0` and checking. If you have other issues or questions about earlier versions, please visit the [Q&A](https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a)."
       options:
         - required: True
           label: "This bug affects version `0.0.0` of `copier_python`."
-  - type: "input"
-    id: "version"
-    validations:
-      required: True
-    attributes:
-      label: "Version"
-      description: Please indicate which version of `copier_python` you are using. If you're not sure, try running `pip show copier_python`.
-      placeholder: "0.0.0"
   - type: "checkboxes"
     id: "operating-systems"
     attributes:

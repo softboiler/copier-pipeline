@@ -13,7 +13,7 @@ body:
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking. If you have other issues or questions about earlier versions, please visit the [Q&A]("https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/discussions/new?category=q-a")."
+      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking. If you have other issues or questions about earlier versions, please visit the [Q&A](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/discussions/new?category=q-a)."
       options:
         - required: True
           label: "This bug affects version `{{ project_version }}` of `{{ project_name }}`."
