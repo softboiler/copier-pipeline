@@ -19,7 +19,7 @@ This project also supports development in a [dev container](https://marketplace.
 
 These steps detail contribution to this project in the case of VSCode, starting from scratch on a brand new machine, including the installation of Python and other tools.
 
-- Install Python {{ python_version }}, VSCode, cross-platform PowerShell, and Git. [(details⬇)](#first-time-setup)
+- Install Python 3.11, VSCode, cross-platform PowerShell, and Git. [(details⬇)](#first-time-setup)
 - Create a GitHub account and set the same username/email in your `~/.gitconfig`. [(details⬇)](#create-a-github-account-and-configure-git)
 - Fork this repository by clicking the "Fork" button near the top-right corner of this page.
 - Clone/open your fork. [(details⬇)](#clone-your-fork)
@@ -133,7 +133,7 @@ git config --global user.email 'yourGitHubAssociatedEmail@email.com'
 If you missed your chance on initial setup, you can still set the Python interpreter at any point. This will select the virtual environment for the workspace folder, and allow your Python scripts to leverage the packages we have installed from `requirements.txt`.
 
 - Open the main script in your Gist, e.g. `example.py`
-- Check for `venv` in the bottom-right corner of VSCode, e.g. `{{ python_version }}.# 64-bit (.venv: venv)`
+- Check for `venv` in the bottom-right corner of VSCode, e.g. `3.11.# 64-bit (.venv: venv)`
 - If you don't see `venv`, click the version number to select the option with `.venv` in it
 
 [⬆ back](#details)
@@ -184,7 +184,7 @@ One-time setup for Python dev tools on Windows. Installs Python, VSCode, Windows
 #>
 
 # Install Python
-winget install --id 'Python.Python.{{ python_version }}' --override '/quiet PrependPath=0'
+winget install --id 'Python.Python.3.11' --override '/quiet PrependPath=0'
 # Install VSCode
 winget install --id 'Microsoft.VisualStudioCode'
 # Install Windows Terminal
