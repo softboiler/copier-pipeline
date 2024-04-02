@@ -1,0 +1,226 @@
+# Contributing
+
+See [project tooling and development aids ⬇](#project-tooling-and-development-aids) for detail on the tooling that is expected to be used in this project. If you're new to Python or VSCode, this template represents sensible configuration of a VSCode development environment for Python with dependency management, debugging, code checking, code formatting, refactoring, and type checking. Most tooling is configured in `pyproject.toml`, with Pylance/`pyright` modified to be relatively strict, but use warnings to reduce visual overwhelm, and `ruff` made similarly strict, but with certain rules suppressed.
+
+This project may be contributed to using IDEs other than VSCode, just ensure you are running the command-line tools detailed in [project tooling and development aids](#project-tooling-and-development-aids), or use the equivalent extensions in your own IDE. All expected tooling can be run in an IDE-agnostic way, for instance `pyright` can be run at the command line to get the same type-checking feedback that Pylance would give in VSCode.
+
+> [!IMPORTANT]
+> If you clone and open this repository in VSCode, have previously allowed VSCode Tasks to run automatically, and have previously trusted this repository, then [`scripts/Sync-Py.ps1`](scripts/Sync-Py.ps1) will run on window open. It also runs as a pre-commit and post-checkout hook. Review [this section ⬇](#run-scriptssync-pyps1) for details on what the script does. If you are uncomfortable with this, this repository also supports development in a [dev container](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) with the `Dev Containers: Open Folder in Container` command, or as a [Codespace](https://docs.github.com/en/codespaces/getting-started/quickstart).
+
+## Overview
+
+Start by forking this repository, cloning it, creating and checking out a new branch, and running [scripts/Sync-Py.ps1 ⬇](#run-scriptssync-pyps1). This is automatic on folder open in VSCode, after allowing it when prompted on the first VSCode Task run. The script is written for [cross-platform PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell), and works on Windows, UNIX-like, and MacOS systems alike.
+
+Make changes associated with the Issue you are working on, commit often with descriptive commit messages, and push the changes to your branch in your fork. When you're ready, open a Pull Request targeting `main`.
+
+## Details
+
+These steps detail contribution to this project in the case of VSCode, starting from scratch on a brand new machine, including the installation of Python and other tools.
+
+- Install Python {{ python_version }}, VSCode, cross-platform PowerShell, and Git [(details⬇)](#first-time-setup)
+- Create a GitHub account and set the same username/email in your `~/.gitconfig` [(details⬇)](#create-a-github-account-and-configure-git)
+- Fork this repository by clicking the "Fork" button near the top-right corner of this page
+- Clone/open your fork [(details⬇)](#clone-your-fork)
+- Run `scripts/Sync-Py.ps1` [(details⬇)](#run-scriptssync-pyps1)
+- If prompted, respond `Yes` to the prompt to select the virtual environment for the workspace folder. You can fix this later on if you miss your chance here [(details⬇)](#set-your-python-interpreter).
+- Restart VSCode (or press `Ctrl+Shift+P` and run `Developer: Reload Window`) and click `Yes` when prompted to install recommended extensions from the bottom-right notification bell menu. Otherwise, navigate to the Extensions tab, search for `@recommended`, and click the cloud icon next to `Workspace Recommendations` to install.
+- Create a new branch from the GitLens extension user interface, or at the command line like `git checkout -b my-new-feature`.
+- Make changes, commit, and push them. See [project tooling ⬇](#project-tooling-and-development-aids) for details on the tools that enforce code style, type checking, and other development aids. [(details⬇)](#making-changes)
+- When ready, open a Pull Request from your branch, targeting `main`.
+
+## Project tooling and development aids
+
+This project features certain tooling and development aids, which are checked at commit time and in CI.
+
+<!-- no toc -->
+- [⬇ `ruff`, `pyright`, `sourcery`, `markdownlint-cli2`: Learn gradually from immediate feedback](#ruff-pyright-sourcery-markdownlint-cli2-learn-gradually-from-immediate-feedback)
+- [⬇ Keep track of expected data types](#keep-track-of-expected-data-types)
+- [⬇ Check and format Markdown documentation](#check-and-format-markdown-documentation)
+- [⬇ Automate tedium every time you save the file](#automate-tedium-every-time-you-save-the-file)
+- [⬇ Debug your code with VSCode debug configurations](#debug-your-code-with-vscode-debug-configurations)
+- [⬇ Reduce friction and typos with refactoring](#reduce-friction-and-typos-with-refactoring)
+
+### `ruff`, `pyright`, `sourcery`, `markdownlint-cli2`: Learn gradually from immediate feedback
+
+Tools like `ruff`, `pyright`, `sourcery`, and `markdownlint-cli2` gently nudge us towards writing better code by bringing up things we might not have even known to search for. In VSCode, we can press `Ctrl+.` (or click the floating lightbulb) and interact with such warnings. You may invoke `pyright` at the command line or use [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) in VSCode, which will run `pyright` checks for you.
+
+Consider using [`sourcery`](https://sourcery.ai/) ([VSCode extension](https://marketplace.visualstudio.com/items?itemName=sourcery.sourcery)) in local development, as `sourcery` checks will be run in CI. Since `sourcery` requires a (free) account, you may choose not to use `sourcery` locally. This suggests alternative rewritings of actual logic, not just formatting. Similarly to `ruff`, it helps you discover best practices and learn gradually as you go along.
+
+[⬆ back](#project-tooling-and-development-aids)
+
+### Keep track of expected data types
+
+Pylance uses `pyright` to look for issues with the "types" of variables passing through code. But how does Pylance know what "type" a certain variable should be? We can use "type annotations" to tell it what type we *want* a variable to have. For instance the first parameter in the `do_something_fancy` function signature is `an_argument: int`, where `an_argument` is the name of that first argument, and `int` is the type that we *want* it to be.
+
+Python won't *guarantee* that `an_argument` is an `int`, but Pylance will warn us if we try to pass something else in. Try passing a non-integer to `do_something_fancy`. This is useful for catching bugs early, and for documenting our code. We also see from the `-> float` annotation that `do_something_fancy` should return a `float`.
+
+We can even "reveal" the expected types of things by holding down the `Ctrl+Alt` keys. We can see a ghostly `: float` appear next to the `result` variable in the `main()` function body. This tells us that Pylance has inferred `result` to be a floating point number.
+
+You can interact with Pylance underlines much in the same way as you do with Ruff, the lightbulb or `Ctrl+.` will let you interact with them.
+
+[⬆ back](#project-tooling-and-development-aids)
+
+### Check and format Markdown documentation
+
+This template configures the [Markdownlint](https://marketplace.visualstudio.com/items?itemName=DavidAnson.vscode-markdownlint) and [Markdown All-in-One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) extensions to help you in writing [Markdown](https://www.markdownguide.org/) documentation. It's a simple text format that automatically renders to HTML in Gists and elsewhere. Click the preview icon in the tab bar when modifying a Markdown document to get a live preview, formatted to look like GitHub Markdown by [this extension](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-preview-github-styles).
+[⬆ back](#project-tooling-and-development-aids)
+
+### Automate tedium every time you save the file
+
+You may have noticed some spacing changes whenver you save the file. This is happening because we have enabled auto-formatting on save in `.vscode/settings.json`. This is also the case in notebooks. Whenever you save a Python file, `ruff` will automatically format it, check for stylistic issues, and fix some of them automatically. With auto-formatting, you'll find yourself writing longer bits of code that may run long, but a quick `Ctrl+S` will format it neatly. Still, try to avoid packing *too much* code into one statement.
+
+[⬆ back](#project-tooling-and-development-aids)
+
+### Debug your code with VSCode debug configurations
+
+The configurations in `.vscode/launch.json` enable you to run your code in debug mode, that is, to freeze in the middle of executing your code and analyze local state. See VSCode's [Python debugging guide](https://code.visualstudio.com/docs/python/debugging) for details, but in short, you can debug your code by clicking somewhere in the "gutter" (to the left of the line number) to place a breakpoint, then press `F5` or click the drop-down arrow next to the "play button" in the tab strip and click `Debug Python file`. The bundled debug configuration redirects output to the `Debug Console` pane, so all commands run there will receive input there, as opposed to the default configuration where output is echoed to the `Terminal` pane.
+[⬆ back](#project-tooling-and-development-aids)
+
+### Reduce friction and typos with refactoring
+
+It is easy to make mistakes whenever you copy/paste/modify. Best practices really do improve readability of your code, but if it's hard to do, that code is just as likely to stay right where you put it when you first wrote it. But we can use Pylance allows moving and renaming things across files, automatically taking care of the copy/pasting and renaming for us. This is called "refactoring", and in VSCode, all of these tools are accessible via a contextual floating lightbulb that appears in certain circumstances. We can also press `Ctrl+.` to trigger it. You can also rename a symbol with `F2` if your cursor is placed in the symbol name. Here "symbol" refers to any valid name in your Python code, be it a variable, function argument, or something else. Here are the most important refactoring tools available to you:
+
+- **Import symbols automatically, right when you need them:** If you wanted to use `pi` from Python's `math` module, you would need to type `from math import pi` at the top of your code, then use `pi` in your code. But we can actually just start typing `pi` whenver you first want to use it, and in the suggestion menu (`Ctrl+Space` to trigger it), we can select the `pi` entry with `math` displaying next to it, and Pylance will import it for us just in time. This "just works" for most symbols, but you may need to manually import some things still.
+- **Move code to other files:** Try moving `do_something_boring` over to `other.py`. Place your cursor somewhere in `do_something_boring`'s name, click the lightbulb, click `Move symbol to ...`, and move it to `other.py`.
+- **Rename symbols:** Try renaming `do_something_boring`. Place your cursor in `do_something_boring`, click the lightbulb or press `F2` to rename it to `do_something_cool`. You can do it wherever you see the symbol used, or where it's defined, and Pylance will rename it everywhere.
+- **Extract code into its own function:** Sometimes you have lots of related logic in line with the `main()` function. Try highlighting the three lines of code ending with `but_all_this_stuff_is_related` (press `Ctrl+L` repeatedly to select entire lines at a time), click the lightbulb, then click `Extract method...` and name it `do_related_things`.
+- **Extract constants:** You may find yourself hard-coding a "magic number", e.g. `65535`. It may have some special meaning to you, but the intent is not clear to others. Try renaming `65535`. Highlight it, click the lightbulb, click `Extract variable...`, and name it `MAX_16_BIT_INTEGER`. You may now move this to the top of the file (you'll have to manually cut/paste from here).
+
+[⬆ back](#project-tooling-and-development-aids)
+
+## First-time setup
+
+Some basics need installing on a new computer, or if you're new to Python coding altogether.
+
+### On Windows
+
+If on Windows, run [⬇`Initialize-WindowsDev.ps1`](#initialize-windowsdevps1) in a local Windows PowerShell terminal (right-click and select `Run as administrator`) which will install Windows Terminal as well. You may want to copy/paste this script into the terminal window to run it. Before running any code in this fashion, be sure you understand what it's doing. In this case, the script just runs a series of `winget` commands, which installs the software we need for developing Python code with this template.
+
+Once Windows Terminal (`wt`) is installed, open it from the start menu, click the drop-down arrow, then `Settings`. Here, select `PowerShell` (*not* `Windows PowerShell`) as your default profile, and also consider setting your "default terminal application" to Windows Terminal.
+
+[⬆ back](#details)
+
+### On other operating systems
+
+If you're on another operating system, review relevant sections of [this setup guide](https://blakenaccarato.github.io/copier-python/#one-time-setup) to install Python, VSCode, Python, cross-platform PowerShell, and Git. Also install the UNIX-like/MacOS-compatible [Python Launcher](https://python-launcher.app/), which unifies the `py` command functionality across operating systems.
+[⬆ back](#details)
+
+### Create a GitHub account and configure git
+
+Modify the following terminal commands with your GitHub username/email to populate `.gitconfig` in your user folder (e.g. `%USERPROFILE%/.gitconfig` on Windows, `~/.gitconfig` otherwise), so that you can commit changes in VSCode using your GitHub identity.
+
+```PowerShell
+git config --global user.name 'yourGitHubUsername'
+git config --global user.email 'yourGitHubAssociatedEmail@email.com'
+```
+
+- If done correctly, VSCode will prompt you to log in to your GitHub account before pushing changes (a later step in the overall process above).
+
+[⬆ back](#details)
+
+### Set your Python interpreter
+
+If you missed your chance on initial setup, you can still set the Python interpreter at any point. This will select the virtual environment for the workspace folder, and allow your Python scripts to leverage the packages we have installed from `requirements.txt`.
+
+- Open the main script in your Gist, e.g. `example.py`
+- Check for `venv` in the bottom-right corner of VSCode, e.g. `{{ python_version }}.6 64-bit (.venv: venv)`
+- If you don't see `venv`, click the version number to select the option with `.venv` in it
+
+[⬆ back](#details)
+
+### Clone your fork
+
+These steps outline the process for cloning your fork locally and opening it in VSCode. In the web UI of your fork, click the green button labelled "Code", select "Local" and "HTTPS". and click the copy icon to copy the resulting URL. Use it to clone your fork locally by clicking `Clone Repository` in a new VSCode window (in the Source Control view), running the `Git: Clone` task with `Ctrl+Shift+P` or at the command line. For example:
+
+```PowerShell
+git clone '<URL you copied>' '<destination>'
+```
+
+If done via the VSCode UI, click `Open` when prompted to open your newly-created Gist in VSCode, or navigate to it in your file explorer and open it in VSCode.
+
+[⬆ back](#details)
+
+## Making changes
+
+See [this segment](https://www.youtube.com/watch?v=i_23KUAEtUM&t=76s) for doing this in VSCode ([brief outline](https://code.visualstudio.com/docs/introvideos/versioncontrol#_video-outline), [more detail](https://code.visualstudio.com/docs/sourcecontrol/overview)).
+
+[⬆ back](#details)
+
+### Run `scripts/Sync-Py.ps1`
+
+Run `scripts/Sync-Py.ps1` in [cross-platform PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell). This can also be done by pressing `Ctrl+Shift+P` to open the VSCode command palette, select `Tasks: Run task`, and run the task `setup: Setup or sync virtual environment`. If on Windows, you may need to complete `Task 1` in [this guide](https://denisecase.github.io/windows-setup/) to allow scripts to run. The `scripts/Sync-Py.ps1` script essentially does the following:
+
+- Sets some environment variables and error handling
+- Installs [`uv`](https://github.com/astral-sh/uv)
+- Installs the correct Python version if it's missing from your system (from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone))
+- Syncs submodules
+- Syncs a Python virtual environment to platform-specific dependencies in `lock.json`
+- Installs pre-commit hooks
+- Conditionally runs CI/devcontainer-specific setup as well
+
+[⬆ back](#details)
+
+### `Initialize-WindowsDev.ps1`
+
+This script uses the [Windows Package Manager](https://apps.microsoft.com/store/detail/app-installer/9NBLGGH4NNS1) (`winget`) to install all the tools needed for Python development on Windows. Run this as administrator in a local Windows PowerShell (not ISE) terminal (right-click and select `Run as administrator`).
+
+You may want to copy/paste this script into the terminal window to run it. Before running any code in this fashion, be sure you understand what it's doing. In this case, the script just runs a series of `winget` commands, which installs the software we need for developing Python code with this template.
+
+[⬆ back](#first-time-setup)
+
+```PowerShell
+<#.SYNOPSIS
+One-time setup for Python dev tools on Windows. Installs Python, VSCode, Windows Terminal, PowerShell, and Git.
+#>
+
+# Install Python
+winget install --id 'Python.Python.{{ python_version }}' --override '/quiet PrependPath=0'
+# Install VSCode
+winget install --id 'Microsoft.VisualStudioCode'
+# Install Windows Terminal
+winget install --id 'Microsoft.WindowsTerminal'
+
+# Install cross-platform PowerShell
+$PowerShellOverrides = @(
+  '/quiet'
+  'ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1'
+  'ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1'
+  'ADD_PATH=1'
+  'ENABLE_MU=1'
+  'ENABLE_PSREMOTING=1'
+  'REGISTER_MANIFEST=1'
+  'USE_MU=1'
+)
+winget install --id 'Microsoft.PowerShell' --override $PowerShellOverrides
+
+# Install git
+@'
+[Setup]
+Lang=default
+Dir=C:/Program Files/Git
+Group=Git
+NoIcons=0
+SetupType=default
+Components=ext,ext\shellhere,ext\guihere,gitlfs,assoc,assoc_sh,autoupdate,windowsterminal,scalar
+Tasks=
+EditorOption=VisualStudioCode
+CustomEditorPath=
+DefaultBranchOption=main
+PathOption=Cmd
+SSHOption=OpenSSH
+TortoiseOption=false
+CURLOption=OpenSSL
+CRLFOption=CRLFAlways
+BashTerminalOption=MinTTY
+GitPullBehaviorOption=Merge
+UseCredentialManager=Enabled
+PerformanceTweaksFSCache=Enabled
+EnableSymlinks=Disabled
+EnablePseudoConsoleSupport=Disabled
+EnableFSMonitor=Enabled
+'@ | Out-File ($inf = New-TemporaryFile)
+winget install --id 'Git.Git' --override "/SILENT /LOADINF=$inf"
+
+```
+
+[⬆ back](#first-time-setup)
