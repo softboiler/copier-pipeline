@@ -43,21 +43,21 @@ repos:
         name: "fawltydeps-docs"
         pass_filenames: false
         language: "system"
-        files: ^docs/.*$
+        files: "^docs/.*$"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file docs/pyproject.toml"
       - id: "fawltydeps-scripts"
         name: "fawltydeps-scripts"
         pass_filenames: false
         language: "system"
-        files: ^scripts/.*$
+        files: "^scripts/.*$"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file scripts/pyproject.toml"
       - id: "fawltydeps-tests"
         name: "fawltydeps-tests"
         pass_filenames: false
         language: "system"
-        files: ^tests/.*$
+        files: "^tests/.*$"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file tests/pyproject.toml"
       - id: "pytest-fast-only"
