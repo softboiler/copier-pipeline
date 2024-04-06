@@ -158,7 +158,7 @@ select = ["ALL"]
 unfixable = [
     "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
 ]
-extend-ignore = [
+ignore = [
     "ANN",     # Don't require type annotations
     "ARG005",  # Allow unused lambda argument. For consistency across df pipelines.
     "C408",    # Allow dict calls

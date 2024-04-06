@@ -95,14 +95,6 @@
       "problemMatcher": []
     },
     {
-      "label": "task: run core update",
-      "type": "shell",
-      "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
-      "command": ". scripts/Initialize-Shell.ps1; python scripts/core_update.py",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
       "label": "task: Run ruff",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },

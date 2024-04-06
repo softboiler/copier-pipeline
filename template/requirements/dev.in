@@ -11,4 +11,4 @@ pre-commit==3.7.0
 pyright==1.1.356
 ruff==0.3.4
 snakeviz==2.2.0
-sourcery-cli==1.16.0
+sourcery==1.16.0
