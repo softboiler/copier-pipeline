@@ -24,13 +24,6 @@ $Env:PYTHONWARNDEFAULTENCODING = 1
 # Ignore warnings until explicitly re-enabled in tests
 $Env:PYTHONWARNINGS = 'ignore'
 
-# ? Environment setup
-function Start-Venv {
-    <#.SYNOPSIS
-    Activate a virtual environment in the current directory.#>
-    if (Test-Path '.venv/Scripts') { return .venv/Scripts/Activate.ps1 }
-    return .venv/bin/Activate.ps1
-}
 function Set-Env {
     <#.SYNOPSIS
     Load `.env`, activate a virtual environment found here or in parent directories.#>
@@ -38,16 +31,9 @@ function Set-Env {
     $sep = $IsWindows ? ';' : ':'
     $Env:PATH = "bin$sep$Env:PATH"
     # ? Activate virtual environment if one exists
-    if (Test-Path '.venv') { return Start-Venv }
-    $originalPwd = $PWD
-    Push-Location '..'
-    $iteration = 0
-    $limit = 5
-    while ( !(Test-Path '.venv') -and ($iteration -lt $limit) ) {
-        $iteration += 1
-        Push-Location '..'
+    if (Test-Path '.venv') {
+        if ($IsWindows) { return .venv/Scripts/Activate.ps1 }
+        return .venv/bin/Activate.ps1
     }
-    if (Test-Path '.venv') { Start-Venv }
-    Set-Location $originalPwd
 }
 Set-Env

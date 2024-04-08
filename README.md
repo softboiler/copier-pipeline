@@ -2,6 +2,14 @@
 
 This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow [dev machine setup](#dev-machine-setup) before following steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, Python, and the cross-platform PowerShell (with profile configurations to activate `.env` variables), installed to get the most use out of this template.
 
+## Contributing
+
+Thank you for considering contributing to `copier_python`! Please see the [contributing guide](CONTRIBUTING.md) for more details.
+
+> [!IMPORTANT]
+>
+> Opening this repository in VSCode may run an automatic task if you trust the workspace. Please see the detailed disclaimer in the [contributing guide](CONTRIBUTING.md) for more details, including how to disable the automatic task.
+
 ## Features
 
 This template should set up tooling that will help you as you code. Contributor and CI workflows in this template are tested on Windows 2022, MacOS 13, and Ubuntu 22.04 runners. Static analysis "moves errors to the left", allowing you to catch issues as soon as possible. Linting and code checks run as you write to catch problems before you run/publish/package your code. Features include:
