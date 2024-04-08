@@ -1,6 +1,5 @@
 {% raw %}## [{{ versiondata["version"] }}](https://github.com/{% endraw %}{{ project_owner_github_username }}/{{
-github_repo_name }}{% raw %}/tree/{{
-versiondata["version"] }})
+github_repo_name }}{% raw %}/tree/{{ versiondata["version"] }})
 
 {% for section, _ in sections.items() %}
 {% for category, val in definitions.items() if category in sections[section] %}

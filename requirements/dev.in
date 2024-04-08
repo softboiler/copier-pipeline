@@ -12,3 +12,4 @@ pyright==1.1.356
 ruff==0.3.4
 snakeviz==2.2.0
 sourcery==1.16.0
+towncrier==23.11.0
