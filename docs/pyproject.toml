@@ -46,7 +46,7 @@ ignore_unused = [
     "sphinx-togglebutton",
     "sphinxcontrib-bibtex",
     "sphinxcontrib-mermaid",
-    "sphinxcontrib-towncrier",
+    "sphinxcontrib-towncrier"
 ]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]

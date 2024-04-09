@@ -265,7 +265,7 @@ If you have trusted this folder in VSCode or have `security.workspace.trust.enab
 
 You may disable this behavior by pressing`Ctrl+Shift+P` typing to find the command `Tasks: Manage Automatic Tasks`, selecting it, and selecting `Disallow Automatic Tasks`.
 
-```JSONC
+```JSON
 "task.allowAutomaticTasks": "on"
 ```
 
@@ -275,9 +275,9 @@ It should only trigger if you have allowed VSCode Tasks to run automatically and
 
 PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell, which, among other things, [sources the appropriate Python version](#source-for-different-system-python-versions). Install PowerShell [like this](https://github.com/PowerShell/PowerShell#get-powershell).
 
-The contents of [`scripts/Initialize-Shell.ps1`](scripts/Initialize-Shell.ps1) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
+The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
 
-However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](scripts/Initialize-Shell.ps1) into a conditional statement that checks whether you are in this project's directory (e.g. `copier-python`), like so:
+However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Initialize-Shell.ps1>) into a conditional statement that checks whether you are in this project's directory (e.g. `copier-python`), like so:
 
 ```PowerShell
 if ((Get-Item '.' | Select-Object -ExpandProperty 'Name') -eq 'copier-python') {
@@ -316,7 +316,7 @@ In short, in Python dependency specifications, `<3` doesn't have the same heart-
 
 ### Source for different system Python versions
 
-This project looks for Python 3.11 on your system to generate the [virtual environment](#virtual-environment) used for development. See how to [install Python](#installing-python) if you don't have Python installed at all. If your system has any version of Python pre-installed other than Python 3.11 used for development, a temporary virtual environment with `zstandard` is installed and [`scripts/install.py`](scripts/install.py) used to source the necessary Python version from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone). This approach is derived from the one used by the [`uv`](https://github.com/astral-sh/uv) team to source Python binaries for their tooling!
+This project looks for Python 3.11 on your system to generate the [virtual environment](#virtual-environment) used for development. See how to [install Python](#installing-python) if you don't have Python installed at all. If your system has any version of Python pre-installed other than Python 3.11 used for development, a temporary virtual environment with `zstandard` is installed and [`scripts/install.py`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/install.py>) used to source the necessary Python version from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone). This approach is derived from the one used by the [`uv`](https://github.com/astral-sh/uv) team to source Python binaries for their tooling!
 
 looks for any system Python on your machine, and uses it directly to create a development [virtual environment](#virtual-environment) if it's the correct version, or sources the expected version of Python (in a project-local `bin`)
 
@@ -356,7 +356,7 @@ This project defines VSCode Tasks ([Palette: `Tasks: Run task`](#vscode-command-
 
 You may choose to bind `Tasks: Run task` command to a keyboard shortcut of your choice ([Palette: `Preferences: Open Keyboard Shortcuts`](#vscode-command-palette)) or modify `keybindings.json` directly with the similar `(JSON)`-suffixed command. For example, consider the following entries in `keybindings.json`:
 
-```JSONC
+```JSON
 {
   // ...
   // Bind `Ctrl+Shift+Z` to `Tasks: Run task`
