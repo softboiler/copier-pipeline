@@ -1,22 +1,59 @@
 """Docs config."""
 
+import os
 from datetime import date
 from hashlib import sha256
 from os import environ
 from pathlib import Path
 
+from ruamel.yaml import YAML
 from sphinx.application import Sphinx
 
-PACKAGE = "{{ project_name }}"
-"""Package name."""
-DOCS = Path("docs")
+
+def chdir_docs() -> Path:
+    """Ensure we are in the `docs` directory and return the root directory."""
+    path = Path().cwd()
+    if is_root(path.parent):
+        return path.parent
+    while not is_root(path):
+        if path == (path := path.parent):
+            raise RuntimeError("Either documentation or `pyproject.toml` is missing.")
+    os.chdir(path / "docs")
+    return path
+
+
+def is_root(path: Path) -> bool:
+    """Check if the path is the root of the project."""
+    return (path / "docs").exists() and (path / "pyproject.toml").exists()
+
+
+# ! Root
+ROOT = chdir_docs()
+"""Root directory of the project."""
+# ! Paths
+PYPROJECT = ROOT / "pyproject.toml"
+"""Path to `pyproject.toml`."""
+DOCS = ROOT / "docs"
 """Docs directory."""
 STATIC = DOCS / "_static"
 """Static assets folder, used in configs and setup."""
 CSS = STATIC / "local.css"
 """Local CSS file, used in configs and setup."""
+BIB_TEMPLATE = DOCS / "refs-template.bib"
+"""Project template bibliography file."""
 BIB = DOCS / "refs.bib"
 """Bibliography file."""
+COPIER_ANSWERS = ROOT / ".copier-answers.yml"
+"""Copier answers file."""
+# ! Template answers
+ANS = YAML().load((ROOT / ".copier-answers.yml").read_text(encoding="utf-8"))
+"""Project template answers."""
+USER = ANS["project_owner_github_username"]
+"""Host GitHub user or organization for this repository."""
+REPO = ANS["github_repo_name"]
+"""GitHub repository name."""
+PACKAGE = ANS["project_name"]
+"""Package name."""
 
 # ! Setup
 
@@ -93,6 +130,7 @@ extensions = [
     "sphinx.ext.mathjax",
     "sphinxcontrib.bibtex",
     "sphinxcontrib.mermaid",
+    "sphinxcontrib.towncrier",
 ]
 # ! Theme
 html_title = PACKAGE
@@ -132,7 +170,7 @@ myst_enable_extensions = [
 myst_heading_anchors = 6
 myst_substitutions = {}
 # ! BibTeX
-bibtex_bibfiles = dpaths(BIB)
+bibtex_bibfiles = dpaths(BIB_TEMPLATE, BIB)
 bibtex_reference_style = "label"
 bibtex_default_style = "unsrt"
 # ! NB
@@ -173,3 +211,8 @@ tippy_tip_selector = """
     """
 tippy_skip_urls = []
 tippy_rtd_urls = []
+# ! Towncrier
+towncrier_draft_autoversion_mode = "draft"
+towncrier_draft_include_empty = True
+towncrier_draft_working_directory = ROOT
+towncrier_draft_config_path = PYPROJECT

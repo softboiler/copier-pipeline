@@ -1,3 +1,11 @@
+{% raw %}{# Built documentation only #}{%- if versiondata["version"] == "main" -%}
+## Changes for the Upcoming Release
+:::{warning}
+These changes reflect the current [development progress](https://github.com/{% endraw %}{{ project_owner_github_username
+}}/{{ github_repo_name }}{% raw %}/tree/main) and have **not** been part of a PyPI release yet.
+:::
+{# CHANGELOG.md entries #}{% else -%}
+## [{{ versiondata["version"] }}](https://github.com/
 {% raw %}## [{{ versiondata["version"] }}](https://github.com/{% endraw %}{{ project_owner_github_username }}/{{
 github_repo_name }}{% raw %}/tree/{{ versiondata["version"] }})
 
