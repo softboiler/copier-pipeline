@@ -2,14 +2,6 @@
 
 This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow [dev machine setup](#dev-machine-setup) before following steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, Python, and the cross-platform PowerShell (with profile configurations to activate `.env` variables), installed to get the most use out of this template.
 
-## Contributing
-
-Thank you for considering contributing to `copier_python`! Please see the [contributing guide](CONTRIBUTING.md) for more details.
-
-> [!IMPORTANT]
->
-> Opening this repository in VSCode may run an automatic task if you trust the workspace. Please see the detailed disclaimer in the [contributing guide](CONTRIBUTING.md) for more details, including how to disable the automatic task.
-
 ## Features
 
 This template should set up tooling that will help you as you code. Contributor and CI workflows in this template are tested on Windows 2022, MacOS 13, and Ubuntu 22.04 runners. Static analysis "moves errors to the left", allowing you to catch issues as soon as possible. Linting and code checks run as you write to catch problems before you run/publish/package your code. Features include:
@@ -110,3 +102,9 @@ This template uses [Copier](https://readthedocs.org/projects/copier/) to do the 
 [Pawamoy's template](https://github.com/pawamoy/copier-uv) is a good choice for library development, where you are intentionally limiting your dependencies, and working on being a "branch" in the tree that is the Python ecosystem. There is no locking, but `uv` compiles and installs dependencies all the same. See their [copier-pdm](https://github.com/pawamoy/copier-pdm) also for some locking capabilities.
 
 See [this comparison of Copier to other project generators](https://copier.readthedocs.io/en/stable/comparisons/) to get an idea as to why you would use a Copier-based template over something like [Cookiecutter](https://github.com/cookiecutter/cookiecutter) or [Yeoman](https://yeoman.io/). See also, [PyScaffold](https://pyscaffold.org/en/stable/). In summary, Copier facilitates template evolution and periodic project updating from the template, rather than a one-time scaffold for your project. This encourages continual updating of the template to suit your project needs.
+
+## Project information
+
+- [Changes](<https://blakeNaccarato.github.io/copier-python/changelog.html>)
+- [Docs](<https://blakeNaccarato.github.io/copier-python>)
+- [Contributing](<https://blakeNaccarato.github.io/copier-python/contributing.html>)

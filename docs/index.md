@@ -5,6 +5,7 @@
 
 :::{toctree}
 :hidden:
+contributing
 examples/index
 changelog
 apidocs/index
