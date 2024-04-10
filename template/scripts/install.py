@@ -44,6 +44,7 @@ def main():
 
 
 def install(path: Path):
+    """Install Python distribution."""
     key = "-".join([
         "cpython",
         next(v for v in VERSIONS if v.startswith(VER)),
@@ -75,6 +76,7 @@ def install(path: Path):
 
 
 def decompress(decompressed: Path, output: Path):
+    """Decompress Python distribution."""
     if not str(decompressed).endswith(".tar.zst"):
         raise ValueError(f"Unknown archive type {decompressed.suffix}")
     decompressor = ZstdDecompressor()
@@ -87,6 +89,7 @@ def decompress(decompressed: Path, output: Path):
 
 
 def sha256_file(path: Path) -> str:
+    """SHA256 file."""
     h = sha256()
     with path.open("rb") as file:
         while True:

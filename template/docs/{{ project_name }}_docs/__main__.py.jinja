@@ -5,10 +5,24 @@ from textwrap import dedent
 
 from nbformat import NO_CONVERT, NotebookNode, read, write
 
+SRC = "source"
+CODE = "code"
+MD = "markdown"
 
-def main():
+
+def main():  # noqa: D103
     for path in Path("docs").rglob("*.ipynb"):
         nb: NotebookNode = read(path, NO_CONVERT)  # type: ignore  # pyright 1.1.348,  # nbformat: 5.9.2
+        # Patch the first code cell
+        i, first_code_cell = get_first(nb, CODE)
+        nb.cells[i][SRC] = patch(
+            first_code_cell.get(SRC, ""),
+            """
+            from {{project_name}}_docs.nbs import init
+
+            paths = init()
+            """,
+        )
         # Insert tags to all code cells
         for i, cell in enumerate(nb.cells):
             if cell.cell_type != "code":

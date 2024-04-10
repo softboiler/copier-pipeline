@@ -182,7 +182,10 @@ show-fixes = true
 
 [tool.ruff.lint]
 fixable = ["ALL"]
-select = ["ALL"]
+select = [
+    "ALL",  # Select all rules
+    "D417", # Explicitly enable parameter check even when using Numpy docstrings
+]
 unfixable = [
     "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
 ]
@@ -192,12 +195,7 @@ ignore = [
     "C408",    # Allow dict calls
     "COM",     # Allow magic commas and magic missing commas
     "CPY001",  # Don't check for copyright
-    "D10",     # Missing docstrings
-    "D20",     # Don't reformat docstrings in these ways
-    "D213",    # Multi-line docstring summary should start at the second line
-    "D402",    # False positives for parens in first line
-    "D415",    # Don't check docstring punctuation, can be flaky for autodoc
-    "D412",    # Allow blanks below headers in Google-style docstrings
+    "D105",    # Allow missing docstring for magic methods
     "DTZ",     # Timezones are important, but only contextually necessary.
     "E501",    # Don't check line length. Black handles this.
     "EM",      # Don't check for exception message issues
