@@ -39,7 +39,7 @@ VERSION = ANS["project_version"]
 """Package version."""
 # ! Intersphinx and related
 ISPX_MAPPING: dict[str, IspxMappingValue] = {
-    **{pkg: get_rtd(pkg) for pkg in ["myst_parser", "nbformat", "numpydoc"]},
+    **{pkg: get_rtd(pkg) for pkg in ["myst_parser", "numpydoc"]},
     "pytest": get_url("docs.pytest.org/en"),
     "python": get_ispx("docs.python.org/3"),
     "pandas": get_ispx("pandas.pydata.org/docs"),
