@@ -22,7 +22,12 @@ name = "{{ project_owner_name }}"
 
 [tool.coverage.run]
 branch = true
-source = ["{{ project_name }}"]
+source = [
+    "{{ project_name }}"
+    "{{ project_name }}_docs",
+    "{{ project_name }}_tests",
+    "{{ project_name }}_tools",
+    ]
 [tool.coverage.report]
 ignore_errors = true
 [tool.fawltydeps]
@@ -65,7 +70,14 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
-exclude = ["**/node_modules", "**/__pycache__", "**/.*", "bin", "submodules"]
+[
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    "bin",
+    "submodules/template",
+    "submodules/typings",
+]
 stubPath = "submodules/typings"
 typeCheckingMode = "strict"
 # Default "true" in strict
@@ -235,7 +247,7 @@ split-on-trailing-comma = false
 [tool.ruff.format]
 skip-magic-trailing-comma = true
 [tool.ruff.lint.pydocstyle]
-convention = "google"
+convention = "numpy"
 [tool.ruff.lint.extend-per-file-ignores]
 "**/*.ipynb" = [
     "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
@@ -253,5 +265,3 @@ convention = "google"
     "SIM300", # Allow constants (expectations) on the RHS
     "SLF001", # Allow private member access in tests
 ]
-[tool.ruff.lint.flake8-bugbear]
-extend-immutable-calls = ["typer.Argument", "typer.Option"]

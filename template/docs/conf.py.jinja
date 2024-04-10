@@ -6,6 +6,9 @@ from hashlib import sha256
 from os import environ
 from pathlib import Path
 
+from {{ project_name }}_docs.intersphinx import get_ispx, get_rtd, get_url
+from {{ project_name }}_docs.nbs import DOCS, init_nb_env
+from {{ project_name }}_docs.types import IspxMappingValue
 from ruamel.yaml import YAML
 from sphinx.application import Sphinx
 
@@ -48,12 +51,42 @@ COPIER_ANSWERS = ROOT / ".copier-answers.yml"
 # ! Template answers
 ANS = YAML().load((ROOT / ".copier-answers.yml").read_text(encoding="utf-8"))
 """Project template answers."""
+AUTHORS = ANS["project_owner_name"]
+"""Authors of the project."""
 USER = ANS["project_owner_github_username"]
 """Host GitHub user or organization for this repository."""
 REPO = ANS["github_repo_name"]
 """GitHub repository name."""
 PACKAGE = ANS["project_name"]
 """Package name."""
+VERSION = ANS["project_version"]
+"""Package version."""
+# ! Intersphinx and related
+ISPX_MAPPING: dict[str, IspxMappingValue] = {
+    **{pkg: get_rtd(pkg) for pkg in ["myst_parser", "nbformat", "numpydoc"]},
+    **{pkg: get_rtd(pkg, latest=True) for pkg in ["pyqtgraph"]},
+    "numpy": get_url("numpy.org/doc"),
+    "matplotlib": get_url("matplotlib.org"),
+    "pytest": get_url("docs.pytest.org/en"),
+    "cv2": get_ispx("docs.opencv.org/2.4"),
+    "python": get_ispx("docs.python.org/3"),
+    "pandas": get_ispx("pandas.pydata.org/docs"),
+}
+"""Intersphinx mapping."""
+TIPPY_RTD_URLS = [
+    ispx.url
+    for pkg, ispx in ISPX_MAPPING.items()
+    if pkg not in ["python", "pandas", "matplotlib"]
+]
+"""Tippy ReadTheDocs-compatible URLs."""
+REV = (
+    Path("../requirements.txt")
+    .read_text(encoding="utf-8")
+    .splitlines()[1]
+    .split("@")[-1]
+)
+"""Binder revision."""
+
 
 # ! Setup
 
@@ -115,8 +148,8 @@ def dpath(path: Path, rel: Path = DOCS) -> str:
 
 # ! Basics
 project = PACKAGE
-copyright = f"{date.today().year}, {{ project_owner_name }}"  # noqa: A001
-version = "{{ project_version }}"
+copyright = f"{date.today().year}, {AUTHORS}"  # noqa: A001
+version = VERSION
 master_doc = "index"
 language = "en"
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
@@ -144,7 +177,7 @@ html_context = {
     "default_mode": "light"
 }
 COMMON_OPTIONS = {
-    "repository_url": f"https://github.com/{{ project_owner_github_username }}/{PACKAGE}",
+    "repository_url": f"https://github.com/{USER}/{PACKAGE}",
     "path_to_docs": dpath(DOCS),
 }
 html_theme_options = {
@@ -209,8 +242,12 @@ tippy_tip_selector = """
     p,
     table
     """
-tippy_skip_urls = []
-tippy_rtd_urls = []
+# ? Skip Zenodo DOIs as the hover hint doesn't work properly
+tippy_rtd_urls = TIPPY_RTD_URLS
+tippy_skip_urls = [
+    # ? Skip Zenodo DOIs as the hover hint doesn't work properly
+    r"https://doi\.org/10\.5281/zenodo\..+"
+]
 # ! Towncrier
 towncrier_draft_autoversion_mode = "draft"
 towncrier_draft_include_empty = True
