@@ -11,8 +11,6 @@ from sys import version_info
 from typing import NamedTuple
 
 # ! Dependencies
-PYPROJECT = Path("pyproject.toml")
-"""Path to `pyproject.toml`."""
 REQS = Path("requirements")
 """Requirements."""
 DEV = REQS / "dev.in"
@@ -96,25 +94,27 @@ def compile() -> Comp:  # noqa: A001
     """Compile dependencies. Prefer the existing compilation if compatible."""
     old = get_comps()
     if not old.low:
-        return recomp()
+        return recomp()  # Old compilation missing
     directs = comp(high=False, no_deps=True)
     try:
         subs = dict(
             zip(finditer(SUB_PAT, old.low), finditer(SUB_PAT, directs), strict=False)
         )
     except ValueError:
-        return recomp()
+        return recomp()  # Submodule missing
     if any(old_sub.groups() != new_sub.groups() for old_sub, new_sub in subs.items()):
-        return recomp()
+        return recomp()  # Submodule pinned commit SHA mismatch
     old_directs: list[str] = []
     for direct in finditer(DEP_PAT, directs):
         pat = rf"(?mi)^(?P<name>{direct['name']})==(?P<ver>.+$)"
         if match := search(pat, old.low):
             old_directs.append(match.group())
             continue
-        return recomp()
-    new = recomp()
-    return old if all(direct in new.low for direct in old_directs) else new
+        return recomp()  # Direct dependency missing
+    low = comp(high=False, no_deps=False)
+    if any(d not in low for d in old_directs):
+        return Comp(low, comp(high=True, no_deps=False))  # Direct dep version mismatch
+    return old  # Existing compilation is compatible
 
 
 def recomp() -> Comp:
@@ -147,19 +147,34 @@ def get_comp_names() -> Comp:
 def comp(high: bool, no_deps: bool) -> str:
     """Compile system dependencies.
 
-    Args:
-        high: Highest dependencies.
-        no_deps: Without transitive dependencies.
+    Parameters
+    ----------
+    high
+        Highest dependencies.
+    no_deps
+        Without transitive dependencies.
     """
     sep = " "
     result = run(
         args=split(
             sep.join([
-                f"uv pip compile --python-version {VERSION}",
+                f"bin/uv pip compile --python-version {VERSION}",
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",
-                sep.join([escape(path) for path in [PYPROJECT, DEV]]),
+                sep.join([
+                    escape(path)
+                    for path in [
+                        DEV,
+                        *[
+                            Path(editable["path"]) / "pyproject.toml"
+                            for editable in finditer(
+                                r"(?m)^(?:-e|--editable)\s(?P<path>.+)$",
+                                DEV.read_text("utf-8"),
+                            )
+                        ],
+                    ]
+                ]),
             ])
         ),
         capture_output=True,

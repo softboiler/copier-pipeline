@@ -16,7 +16,7 @@
     // * PROJECT SETUP * //
 
     {
-      "label": "setup: Sync project with template",
+      "label": "setup: Sync with template",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
@@ -24,7 +24,7 @@
       "problemMatcher": []
     },
     {
-      "label": "setup: Setup or sync virtual environment",
+      "label": "setup: Sync contributor environment",
       "type": "shell",
       "options": { "shell": { "executable": "pwsh", "args": ["-Command"] } },
       "command": "if (!$Env:DEVCONTAINER) {scripts/Sync-Py.ps1}",

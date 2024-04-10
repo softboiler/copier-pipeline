@@ -14,8 +14,8 @@ dependencies = ["cyclopts==2.5.0"]
 deps = ["scripts/pyproject.toml"]
 code = ["scripts/copier_python_tools"]
 ignore_undeclared = [
-    "copier_python",
     "copier_python_docs",
-    "copier_python_scripts",
     "copier_python_tests",
+    "copier_python_tools",
+    "copier_python",
 ]

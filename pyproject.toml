@@ -22,7 +22,7 @@ email = "blake.naccarato@gmail.com"
 
 [tool.coverage.run]
 branch = true
-source = ["copier_python"]
+source = ["copier_python", "copier_python_docs", "copier_python_tests", "copier_python_tools"]
 [tool.coverage.report]
 ignore_errors = true
 [tool.fawltydeps]
@@ -65,7 +65,14 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
-exclude = ["**/node_modules", "**/__pycache__", "**/.*", "bin", "submodules"]
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    "bin",
+    "submodules/template",
+    "submodules/typings",
+]
 stubPath = "submodules/typings"
 typeCheckingMode = "strict"
 # Default "true" in strict
@@ -175,7 +182,10 @@ show-fixes = true
 
 [tool.ruff.lint]
 fixable = ["ALL"]
-select = ["ALL"]
+select = [
+    "ALL",  # Select all rules
+    "D417", # Explicitly enable parameter check even when using Numpy docstrings
+]
 unfixable = [
     "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
 ]
@@ -185,12 +195,7 @@ ignore = [
     "C408",    # Allow dict calls
     "COM",     # Allow magic commas and magic missing commas
     "CPY001",  # Don't check for copyright
-    "D10",     # Missing docstrings
-    "D20",     # Don't reformat docstrings in these ways
-    "D213",    # Multi-line docstring summary should start at the second line
-    "D402",    # False positives for parens in first line
-    "D415",    # Don't check docstring punctuation, can be flaky for autodoc
-    "D412",    # Allow blanks below headers in Google-style docstrings
+    "D105",    # Allow missing docstring for magic methods
     "DTZ",     # Timezones are important, but only contextually necessary.
     "E501",    # Don't check line length. Black handles this.
     "EM",      # Don't check for exception message issues
@@ -235,7 +240,7 @@ split-on-trailing-comma = false
 [tool.ruff.format]
 skip-magic-trailing-comma = true
 [tool.ruff.lint.pydocstyle]
-convention = "google"
+convention = "numpy"
 [tool.ruff.lint.extend-per-file-ignores]
 "**/*.ipynb" = [
     "B018", # Allow "useless" expressions, which do suppress outputs in notebooks
@@ -256,5 +261,3 @@ convention = "google"
     "SIM300", # Allow constants (expectations) on the RHS
     "SLF001", # Allow private member access in tests
 ]
-[tool.ruff.lint.flake8-bugbear]
-extend-immutable-calls = ["typer.Argument", "typer.Option"]

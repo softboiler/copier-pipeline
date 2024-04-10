@@ -259,7 +259,7 @@ If you missed your chance on initial setup, you can still set the Python interpr
 
 ### Conditions in which VSCode automatic tasks run
 
-If you have trusted this folder in VSCode or have `security.workspace.trust.enabled` set to `false` in your User `settings.json` and have `task.allowAutomaticTasks` set to `on` in your User `settings.json`, the VSCode Task `setup: Setup or sync virtual environment` automatically runs on folder open and invokes [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>).
+If you have trusted this folder in VSCode or have `security.workspace.trust.enabled` set to `false` in your User `settings.json` and have `task.allowAutomaticTasks` set to `on` in your User `settings.json`, the VSCode Task `setup: Sync contributor environment` automatically runs on folder open and invokes [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>).
 
 ### Disable automatic tasks in VSCode
 
@@ -330,7 +330,7 @@ Depending on my OS, I use "system Python environment" or just "system Python" to
 
 ### Contribution environment sync
 
-This repository features tooling that bootstraps the entire development environment with [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), to be run on [cross-platform PowerShell](#cross-platform-powershell), and the contribution workflow is tested on Windows, Ubuntu, and MacOS 13. If on Windows, you may need to complete `Task 1` in [this guide](https://denisecase.github.io/windows-setup/) to allow scripts to run. [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) ([Task: `setup: Setup or sync virtual environment`](#run-a-vscode-task)). The [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) script essentially does the following:
+This repository features tooling that bootstraps the entire development environment with [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), to be run on [cross-platform PowerShell](#cross-platform-powershell), and the contribution workflow is tested on Windows, Ubuntu, and MacOS 13. If on Windows, you may need to complete `Task 1` in [this guide](https://denisecase.github.io/windows-setup/) to allow scripts to run. [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) ([Task: `setup: Sync contributor environment`](#run-a-vscode-task)). The [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) script essentially does the following:
 
 - Sets some environment variables and error handling.
 - Installs [`uv`](https://github.com/astral-sh/uv).
@@ -346,7 +346,7 @@ This repository features tooling that bootstraps the entire development environm
 
 This project defines VSCode Tasks ([Palette: `Tasks: Run task`](#vscode-command-palette)) defined in `.vscode/tasks.json` that run some common actions:
 
-- `setup: Setup or sync virtual environment`: Run the [contribution environment sync](#contribution-environment-sync) script.
+- `setup: Sync contributor environment`: Run the [contribution environment sync](#contribution-environment-sync) script.
 - `pre-commit`: Trigger `pre-commit` on your staged changes.
 - `git: Rebase back to fork`: Trigger an interactive rebase of commits made to a feature branch
 - `task: Run pytest with coverage`: Generates a local coverage report for review with `coverage report` or for local gutter highlights with the [Coverage Gutters VSCode extension](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters).
@@ -379,7 +379,7 @@ The following tasks are less-commonly needed, used mostly by maintainers, or can
 
 - `pre-commit: all`: Trigger `pre-commit` on all tracked files. Run this if making rule changes in tooling or when tool behavior changes (e.g. `ruff`, `markdownlint-cli2`).
 - `task: Run ruff`: Check and format all files with `ruff`. Run this whenever an update to `ruff` or its rules causes a behavior change.
-- `setup: Sync project with template`: Sync the project with its template, generally only used by maintainers and when bumping versions.
+- `setup: Sync with template`: Sync the project with its template, generally only used by maintainers and when bumping versions.
 - `setup: Perform first-time setup`: Usually only run after the very first commits of a project.
 - `setup: Remove *.rej`: Clean up `.rej` files sometimes left behind by template sync.
 

@@ -86,6 +86,8 @@
     "source.organizeImports": "explicit"
   },
   //! Extensions
+  //* autoDocstring
+  "autoDocstring.docstringFormat": "numpy-notypes",
   //* GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/ci.yml"],
   //* Jupyter Notebooks

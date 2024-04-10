@@ -36,7 +36,7 @@ with urlopen(f"{_source}/scripts/bootstrap/versions.json") as response:  # noqa:
     META = loads(response.read().decode("utf-8"))
 
 
-def main():
+def main():  # noqa: D103
     path = BIN / f"python{VER}"
     if not path.exists():
         install(path)
