@@ -17,10 +17,10 @@ dependencies = [
 deps = ["tests/pyproject.toml"]
 code = ["tests/{{ project_name }}_tests"]
 ignore_undeclared = [
-    "{{ project_name }}",
     "{{ project_name }}_docs",
     "{{ project_name }}_tests",
     "{{ project_name }}_tools",
+    "{{ project_name }}",
 ]
 ignore_unused = [
     # ? Core testung tools or plugins
