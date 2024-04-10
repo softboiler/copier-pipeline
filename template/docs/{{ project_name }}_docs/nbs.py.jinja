@@ -123,7 +123,7 @@ def set_display_options(font_scale):
     # The triple curly braces in the f-string allows the format function to be
     # dynamically specified by a given float specification. The intent is clearer this
     # way, and may be extended in the future by making `float_spec` a parameter.
-    options.display.float_format = f"{{:{FLOAT_SPEC}}}".format
+    options.display.float_format = f"{% raw %}{{:{FLOAT_SPEC}}}{% endraw %}".format
     options.display.min_rows = options.display.max_rows = DISPLAY_ROWS
     set_printoptions(precision=PRECISION)
     set_theme(
