@@ -6,7 +6,6 @@ from pathlib import Path
 
 from {{ project_name }}_docs import DOCS, PYPROJECT, chdir_docs
 from {{ project_name }}_docs.intersphinx import get_ispx, get_rtd, get_url
-from {{ project_name }}_docs.nbs import init_nb_env
 from {{ project_name }}_docs.types import IspxMappingValue
 from ruamel.yaml import YAML
 from sphinx.application import Sphinx
@@ -26,7 +25,7 @@ BIB = DOCS / "refs.bib"
 COPIER_ANSWERS = ROOT / ".copier-answers.yml"
 """Copier answers file."""
 # ! Template answers
-ANS = YAML().load((ROOT / ".copier-answers.yml").read_text(encoding="utf-8"))
+ANS = YAML().load(COPIER_ANSWERS.read_text(encoding="utf-8"))
 """Project template answers."""
 AUTHORS = ANS["project_owner_name"]
 """Authors of the project."""
@@ -65,7 +64,6 @@ REV = (
 
 def setup(app: Sphinx):
     """Add functions to Sphinx setup."""
-    init_nb_env()
     app.connect("html-page-context", add_version_to_css)
 
 
