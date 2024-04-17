@@ -162,7 +162,7 @@ def comp(high: bool, no_deps: bool) -> str:
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",
-                sep.join([
+                *[
                     escape(path)
                     for path in [
                         DEV,
@@ -174,7 +174,7 @@ def comp(high: bool, no_deps: bool) -> str:
                             )
                         ],
                     ]
-                ]),
+                ],
             ])
         ),
         capture_output=True,
