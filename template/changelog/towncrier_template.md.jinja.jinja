@@ -5,14 +5,13 @@ These changes reflect the current [development progress](https://github.com/{% e
 :::
 {# CHANGELOG.md entries #}{% else -%}
 ## [{{ versiondata["version"] }}](https://github.com/{% endraw %}{{ project_owner_github_username }}/{{github_repo_name }}{% raw %}/tree/{{ versiondata["version"] }}){% endif %}
-
 {% for section, _ in sections.items() %}
+
 {% for category, val in definitions.items() if category in sections[section] %}
 ### {{ definitions[category]['name'] }}
 
 {% for text, values in sections[section][category].items() %}
-- {{ text }}
-{{ values|join(',\n ') }}
+- {{ text }} ({{ values|join(', ') }})
 
 {% endfor %}
 {% endfor %}

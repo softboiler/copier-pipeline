@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "{{ project_name }}_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = ["cyclopts==2.5.0", "pipx==1.5.0"]
+dependencies = ["cyclopts==2.5.0", "pipx==1.5.0", "ruamel-yaml==0.18.6"]
 [project.scripts]
 "{{ project_name }}_tools" = "{{ project_name }}_tools.__main__:main"
 
@@ -23,3 +23,5 @@ ignore_unused = [
     # ? Core script tools
     "pipx", # For `pipx run` of scripts with dependencies isolated by PEP 723
 ]
+[tool.fawltydeps.custom_mapping]
+ruamel-yaml = ["ruamel"]

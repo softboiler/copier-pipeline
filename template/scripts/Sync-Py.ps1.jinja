@@ -5,8 +5,6 @@ Param(
     [string]$Version,
     # Sync to highest dependencies.
     [switch]$High,
-    # Add all local dependency compilations to the lock.
-    [switch]$Lock,
     # Don't run pre-sync actions.
     [switch]$NoPreSync,
     # Don't run post-sync actions.
@@ -87,14 +85,10 @@ if (!$NoPreSync) {
     '*** PRE-SYNC DONE ***' | Write-Progress -Done
 }
 
-# ? Compile
-'COMPILING' | Write-Progress
-$Comps = {{ project_name }}_tools compile
-$Comp = $High ? $Comps[1] : $Comps[0]
-'COMPILED' | Write-Progress -Done
-
 # ? Sync
 'SYNCING DEPENDENCIES' | Write-Progress
+$Comps = {{ project_name }}_tools sync
+$Comp = $High ? $Comps[1] : $Comps[0]
 uv pip sync $Comp
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
@@ -110,13 +104,6 @@ if ($CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
     scripts/Sync-Template.ps1 -Stay
     'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
-}
-
-# ? Lock
-if ($Lock) {
-    'LOCKING' | Write-Progress
-    {{ project_name }}_tools lock
-    'LOCKED' | Write-Progress -Done
 }
 
 '' | Write-Host
