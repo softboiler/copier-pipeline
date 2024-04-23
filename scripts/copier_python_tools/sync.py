@@ -290,7 +290,7 @@ def get_uv_version() -> str:
     )
     if result.returncode:
         raise RuntimeError(result.stderr)
-    return result.stdout.split(" ")[1]
+    return result.stdout.strip().split(" ")[1]
 
 
 def escape(path: str | Path) -> str:
