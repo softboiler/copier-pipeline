@@ -1,6 +1,7 @@
 exclude: |
   (?x)^(
-    template/(
+    \.copier-answers\.yml
+    |template/(
       .*answers_file.*
       |.*project_name.*
     )

@@ -1,6 +1,6 @@
 exclude: |
   (?x)^(
-    .copier-answers.yml
+    \.copier-answers\.yml
   $)
 ci:
   skip:

@@ -20,6 +20,7 @@ ignore_undeclared = [
     "copier_python",
 ]
 ignore_unused = [
+    # ? Core script tools
     "pipx", # For `pipx run` of scripts with dependencies isolated by PEP 723
 ]
 [tool.fawltydeps.custom_mapping]
