@@ -27,13 +27,13 @@ class Comp(NamedTuple):
     """Path to the highest dependency compilation."""
 
 
-@APP.command()
+@APP.command
 def lock():
     """Lock dependencies."""
     log(sync.lock())
 
 
-@APP.command()
+@APP.command
 def compile():  # noqa: A001
     """Prepare a compilation.
 
@@ -47,7 +47,7 @@ def compile():  # noqa: A001
     log(comp_paths)
 
 
-@APP.command()
+@APP.command
 def get_actions():
     """Get actions used by this repository.
 

@@ -17,6 +17,8 @@ DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
 NODEPS = REQS / "nodeps.in"
 """Dependencies appended to locks without compiling their dependencies."""
+OVERRIDE = REQS / "override.txt"
+"""Overrides to satisfy otherwise incompatible combinations."""
 
 # ! Platform
 PLATFORM = platform(terse=True)
@@ -161,6 +163,7 @@ def comp(high: bool, no_deps: bool) -> str:
                 f"bin/uv pip compile --python-version {VERSION}",
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
+                f"--override {escape(OVERRIDE)}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",
                 *[
                     escape(path)
