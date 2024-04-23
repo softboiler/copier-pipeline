@@ -1,6 +1,8 @@
 <#.SYNOPSIS
 Common utilities.#>
 
+. scripts/Initialize-Shell.ps1
+
 function Get-Py {
     <#.SYNOPSIS
     Get virtual environment Python interpreter, creating it if necessary.#>
@@ -11,7 +13,7 @@ function Get-Py {
         'Virtual environment is the wrong Python version' | Write-Progress -Info
         Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
     }
-    & $(Get-PySystem $Version) -m venv '.venv'
+    uv venv --python $(Get-PySystem $Version)
     return Start-PyVenv
 }
 
@@ -42,7 +44,7 @@ function Get-PySystem {
     'Could not find correct version of Python' | Write-Progress -Info
     'DOWNLOADING AND INSTALLING CORRECT PYTHON VERSION TO PROJECT BIN' | Write-Progress
     $SysPyVenvPath = 'bin/sys_venv'
-    if (!(Test-Path $SysPyVenvPath)) { & $SysPy -m venv $SysPyVenvPath }
+    if (!(Test-Path $SysPyVenvPath)) { uv venv $SysPyVenvPath }
     $SysPyVenv = Start-PyVenv $SysPyVenvPath
     uv pip install $(Get-Content 'requirements/install.in')
     return & $SysPyVenv scripts/install.py $Version
@@ -54,12 +56,20 @@ function Start-PyVenv {
     Param([Parameter(ValueFromPipeline)][string]$Path = '.venv')
     process {
         if (Test-Path ($scripts = "$Path/Scripts")) {
-            & "$scripts/Activate.ps1"
-            return "$scripts/python.exe"
+            & "$scripts/activate.ps1"
+            $Py = "$scripts/python.exe"
         }
-        $bin = "$Path/bin"
-        & "$bin/Activate.ps1"
-        return "$bin/python"
+        else {
+            $bin = "$Path/bin"
+            & "$bin/activate.ps1"
+            # ? uv-sourced, virtualenv-based `activate.ps1` incorrectly uses  `;` sep
+            $Env:PATH = $Env:PATH -Replace ';', ':'
+            $Py = "$bin/python"
+        }
+        # ? Prepend local `bin` to PATH
+        $sep = $IsWindows ? ';' : ':'
+        $Env:PATH = "bin$sep$Env:PATH"
+        return $Py
     }
 }
 

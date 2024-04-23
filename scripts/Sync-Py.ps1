@@ -89,7 +89,7 @@ if (!$NoPreSync) {
 
 # ? Compile
 'COMPILING' | Write-Progress
-$Comps = & $py -m copier_python_tools compile
+$Comps = copier_python_tools compile
 $Comp = $High ? $Comps[1] : $Comps[0]
 'COMPILED' | Write-Progress -Done
 
@@ -115,7 +115,7 @@ if ($CI) {
 # ? Lock
 if ($Lock) {
     'LOCKING' | Write-Progress
-    & $py -m copier_python_tools lock
+    copier_python_tools lock
     'LOCKED' | Write-Progress -Done
 }
 

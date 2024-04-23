@@ -25,9 +25,9 @@ if ($templateExists) {
         git add --all
         $msg = "Update template digest to $(git rev-parse HEAD:submodules/template)"
         $origPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'SilentlyContinue'
         if ($NoVerify) { git commit --no-verify -m $msg }
         else { git commit -m $msg }
-        $ErrorActionPreference = 'SilentlyContinue'
         $ErrorActionPreference = $origPreference
     }
     $head = git rev-parse HEAD:submodules/template

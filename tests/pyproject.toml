@@ -7,6 +7,7 @@ name = "copier_python_tests"
 version = "0.0.0"
 description = "Tests."
 dependencies = [
+    # ? Core testing
     "pytest-cov==4.1.0",
     "pytest-custom-exit-code==0.3.0",
     "pytest-github-actions-annotate-failures==0.2.0",

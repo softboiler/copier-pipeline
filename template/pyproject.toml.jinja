@@ -22,7 +22,12 @@ name = "{{ project_owner_name }}"
 
 [tool.coverage.run]
 branch = true
-source = ["{{ project_name }}", "{{ project_name }}_docs", "{{ project_name }}_tests", "{{ project_name }}_tools"]
+source = [
+    "{{ project_name }}",
+    "{{ project_name }}_docs",
+    "{{ project_name }}_tests",
+    "{{ project_name }}_tools"
+]
 [tool.coverage.report]
 ignore_errors = true
 [tool.fawltydeps]
@@ -259,7 +264,4 @@ convention = "numpy"
     "S101",   # Allow assert
     "SIM300", # Allow constants (expectations) on the RHS
     "SLF001", # Allow private member access in tests
-]
-"pipeline/boilercv_pipeline/correlations.py" = [
-    "S307", # Allow `eval` since we're generating lambdas for correlations
 ]

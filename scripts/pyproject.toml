@@ -6,7 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "copier_python_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = ["cyclopts==2.5.0"]
+dependencies = ["cyclopts==2.5.0", "pipx==1.5.0"]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"
 
@@ -18,4 +18,7 @@ ignore_undeclared = [
     "copier_python_tests",
     "copier_python_tools",
     "copier_python",
+]
+ignore_unused = [
+    "pipx", # For `pipx run` of scripts with dependencies isolated by PEP 723
 ]
