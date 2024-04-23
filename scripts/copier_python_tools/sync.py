@@ -10,9 +10,19 @@ from subprocess import run
 from sys import version_info
 from typing import NamedTuple
 
+from ruamel.yaml import YAML
+
+from copier_python_tools.types import Platform, Version
+
 # ! Dependencies
+COPIER_ANSWERS = Path(".copier-answers.yml")
+"""Copier answers file."""
+PYTHON_VERSIONS = Path(".python-versions")
+"""File containing supported Python versions."""
 REQS = Path("requirements")
 """Requirements."""
+UV = REQS / "uv.in"
+"""UV requirement."""
 DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
 NODEPS = REQS / "nodeps.in"
@@ -20,40 +30,45 @@ NODEPS = REQS / "nodeps.in"
 OVERRIDE = REQS / "override.txt"
 """Overrides to satisfy otherwise incompatible combinations."""
 
-# ! Platform
-PLATFORM = platform(terse=True)
+# ! Template answers
+ANS = YAML().load(COPIER_ANSWERS.read_text(encoding="utf-8"))
+"""Project template answers."""
+AUTHORS = ANS["project_owner_name"]
+"""Authors of the project."""
+USER = ANS["project_owner_github_username"]
+"""Host GitHub user or organization for this repository."""
+REPO = ANS["github_repo_name"]
+"""GitHub repository name."""
+PACKAGE = ANS["project_name"]
+"""Package name."""
+VERSION = ANS["project_version"]
+"""Package version."""
+
+# ! Platforms and Python versions
+PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356
 """Platform identifier."""
-match PLATFORM.casefold().split("-")[0]:
-    case "macos":
-        _runner = "macos-13"
-    case "windows":
-        _runner = "windows-2022"
-    case "linux":
-        _runner = "ubuntu-22.04"
-    case _:
-        raise ValueError(f"Unsupported platform: {PLATFORM}")
-RUNNER = _runner
-"""Runner associated with this platform."""
-match version_info[:2]:
-    case (3, 11):
-        _python_version = "3.11"
-    case (3, 12):
-        _python_version = "3.12"
-    case (3, 13):
-        _python_version = "3.13.0-alpha.5"
-    case _:
-        _python_version = ".".join(str(v) for v in version_info[:2])
-        raise ValueError(f"Unsupported Python version: {_python_version}")
-VERSION = _python_version
+VERSION: Version = ".".join([str(v) for v in version_info[:2]])  # pyright: ignore[reportAssignmentType] 1.1.356
 """Python version associated with this platform."""
+PLATFORMS: tuple[Platform, ...] = ("linux", "macos", "windows")
+"""Supported platforms."""
+VERSIONS: tuple[Version, ...] = (  # pyright: ignore[reportAssignmentType] 1.1.356
+    tuple(PYTHON_VERSIONS.read_text("utf-8").splitlines())
+    if PYTHON_VERSIONS.exists()
+    else ("3.9", "3.10", "3.11", "3.12")
+)
+"""Supported Python versions."""
 
 # ! Compilation and locking
 COMPS = Path(".comps")
 """Platform-specific dependency compilations."""
 LOCK = Path("lock.json")
 """Locked set of dependency compilations for different runner/Python combinations."""
+LOCK_CONTENTS = loads(LOCK.read_text("utf-8")) if LOCK.exists() else {}
+"""Contents of the lock file."""
 
 # ! Checking
+UV_PAT = r"(?m)^# uv\s(?P<version>.+)$"
+"""Pattern for stored `uv` version comment."""
 SUB_PAT = r"(?m)^# submodules/(?P<name>[^\s]+)\s(?P<rev>[^\s]+)$"
 """Pattern for stored submodule revision comments."""
 DEP_PAT = r"(?mi)^(?P<name>[A-Z0-9]|[A-Z0-9][A-Z0-9._-]*[A-Z0-9])==.+$"
@@ -72,15 +87,42 @@ class Comp(NamedTuple):
     """Name of highest dependency compilation or the compilation itself."""
 
 
-def lock() -> Path:
-    """Lock all local dependency compilations."""
+def synchronize() -> tuple[Comp, ...]:
+    """Sync dependencies. Prefer the existing compilation if compatible."""
+    old = get_comps()
+    if not old.low:
+        return lock()  # Old compilation missing
+    if (old_uv := search(UV_PAT, old.low)) and old_uv["version"] != get_uv_version():
+        return lock()  # Older `uv` version last used to compile
+    directs = comp(high=False, no_deps=True)
+    try:
+        subs = dict(
+            zip(finditer(SUB_PAT, old.low), finditer(SUB_PAT, directs), strict=False)
+        )
+    except ValueError:
+        return lock()  # Submodule missing
+    if any(old_sub.groups() != new_sub.groups() for old_sub, new_sub in subs.items()):
+        return lock()  # Submodule pinned commit SHA mismatch
+    old_directs: list[str] = []
+    for direct in finditer(DEP_PAT, directs):
+        pat = rf"(?mi)^(?P<name>{direct['name']})==(?P<ver>.+$)"
+        if match := search(pat, old.low):
+            old_directs.append(match.group())
+            continue
+        return lock()  # Direct dependency missing
+    low = comp(high=False, no_deps=False)
+    return lock() if any(d not in low for d in old_directs) else get_all_comps()
+
+
+def lock() -> tuple[Comp, ...]:
+    """Lock dependencies for all platforms and Python versions."""
     LOCK.write_text(
         encoding="utf-8",
         data=dumps(
             indent=2,
             sort_keys=True,
             obj={
-                **(loads(LOCK.read_text("utf-8")) if LOCK.exists() else {}),
+                **LOCK_CONTENTS,
                 **{
                     get_comp_key(comp.stem): comp.read_text("utf-8")
                     for comp in COMPS.iterdir()
@@ -89,64 +131,90 @@ def lock() -> Path:
         )
         + "\n",
     )
-    return LOCK
+    return tuple(
+        recompile(platform, version) for platform in PLATFORMS for version in VERSIONS
+    )
 
 
-def compile() -> Comp:  # noqa: A001
-    """Compile dependencies. Prefer the existing compilation if compatible."""
-    old = get_comps()
-    if not old.low:
-        return recomp()  # Old compilation missing
-    directs = comp(high=False, no_deps=True)
-    try:
-        subs = dict(
-            zip(finditer(SUB_PAT, old.low), finditer(SUB_PAT, directs), strict=False)
-        )
-    except ValueError:
-        return recomp()  # Submodule missing
-    if any(old_sub.groups() != new_sub.groups() for old_sub, new_sub in subs.items()):
-        return recomp()  # Submodule pinned commit SHA mismatch
-    old_directs: list[str] = []
-    for direct in finditer(DEP_PAT, directs):
-        pat = rf"(?mi)^(?P<name>{direct['name']})==(?P<ver>.+$)"
-        if match := search(pat, old.low):
-            old_directs.append(match.group())
-            continue
-        return recomp()  # Direct dependency missing
-    low = comp(high=False, no_deps=False)
-    if any(d not in low for d in old_directs):
-        return Comp(low, comp(high=True, no_deps=False))  # Direct dep version mismatch
-    return old  # Existing compilation is compatible
+def recompile(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
+    """Recompile dependencies.
+
+    Parameters
+    ----------
+    platform
+        Platform to compile for.
+    version
+        Python version to compile for.
+    """
+    return Comp(
+        comp(high=False, no_deps=False, platform=platform, version=version),
+        comp(high=True, no_deps=False, platform=platform, version=version),
+    )
 
 
-def recomp() -> Comp:
-    """Recompile system dependencies."""
-    return Comp(comp(high=False, no_deps=False), comp(high=True, no_deps=False))
+def get_all_comps() -> tuple[Comp, ...]:
+    """Get all existing dependency compilations."""
+    return tuple(
+        get_comps(platform, version) for platform in PLATFORMS for version in VERSIONS
+    )
 
 
-def get_comps() -> Comp:
-    """Get existing dependency compilations."""
+def get_comps(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
+    """Get existing dependency compilations.
+
+    Parameters
+    ----------
+    platform
+        Platform to compile for.
+    version
+        Python version to compile for.
+    """
     if not LOCK.exists():
         return Comp("", "")
     return Comp(*[
-        loads(LOCK.read_text("utf-8")).get(get_comp_key(name)) or ""
-        for name in get_comp_names()
+        LOCK_CONTENTS.get(get_comp_key(name)) or ""
+        for name in get_comp_names(platform, version)
     ])
 
 
 def get_comp_key(name: str) -> str:
-    """Get the key to a dependency compilation in the lock."""
+    """Get the key to a dependency compilation in the lock.
+
+    Parameters
+    ----------
+    name
+        Name of the dependency compilation.
+    """
     return name.removeprefix("requirements_")
 
 
-def get_comp_names() -> Comp:
-    """Get names of a dependency compilation."""
+def get_all_comp_names() -> tuple[Comp, ...]:
+    """Get all compilation names."""
+    return tuple(
+        get_comp_names(platform, version)
+        for platform in PLATFORMS
+        for version in VERSIONS
+    )
+
+
+def get_comp_names(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
+    """Get names of a dependency compilation.
+
+    Parameters
+    ----------
+    platform
+        Platform to compile for.
+    version
+        Python version to compile for.
+    """
     sep = "_"
-    base = sep.join(["requirements", RUNNER, VERSION])
+    base = sep.join(["requirements", platform, version])
     return Comp(base, sep.join([base, "high"]))
 
 
-def comp(high: bool, no_deps: bool) -> str:
+def comp(
+    high: bool, no_deps: bool, platform: Platform = PLATFORM, version: Version = VERSION
+) -> str:
     """Compile system dependencies.
 
     Parameters
@@ -155,14 +223,19 @@ def comp(high: bool, no_deps: bool) -> str:
         Highest dependencies.
     no_deps
         Without transitive dependencies.
+    platform
+        Platform to compile for.
+    version
+        Python version to compile for.
     """
     sep = " "
     result = run(
         args=split(
             sep.join([
-                f"bin/uv pip compile --python-version {VERSION}",
-                f"--resolution {'highest' if high else 'lowest-direct'}",
+                "bin/uv pip compile",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
+                f"--python-platform {platform} --python-version {version}",
+                f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--override {escape(OVERRIDE)}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",
                 *[
@@ -198,6 +271,7 @@ def comp(high: bool, no_deps: bool) -> str:
     }
     return (
         "\n".join([
+            f"# uv {get_uv_version()}",
             *[f"# {sub} {rev}" for sub, rev in submodules.items()],
             *[line.strip() for line in deps.splitlines()],
             *[line.strip() for line in NODEPS.read_text("utf-8").splitlines()],
@@ -206,6 +280,20 @@ def comp(high: bool, no_deps: bool) -> str:
     )
 
 
+def get_uv_version() -> str:
+    """Get the installed version of `uv`."""
+    result = run(args="bin/uv --version", capture_output=True, check=False, text=True)
+    if result.returncode:
+        raise RuntimeError(result.stderr)
+    return result.stdout.split(" ")[1]
+
+
 def escape(path: str | Path) -> str:
-    """Path escape suitable for all operating systems."""
+    """Path escape suitable for all operating systems.
+
+    Parameters
+    ----------
+    path
+        Path to escape.
+    """
     return quote(Path(path).as_posix())

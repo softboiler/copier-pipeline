@@ -7,8 +7,15 @@ from typing import NamedTuple
 
 from cyclopts import App
 
-from copier_python_tools import sync
-from copier_python_tools.sync import COMPS, escape, get_comp_names
+from copier_python_tools.sync import (
+    COMPS,
+    PLATFORM,
+    VERSION,
+    escape,
+    get_all_comp_names,
+    get_comp_key,
+    synchronize,
+)
 
 APP = App(help_format="markdown")
 """CLI."""
@@ -28,23 +35,22 @@ class Comp(NamedTuple):
 
 
 @APP.command
-def lock():
-    """Lock dependencies."""
-    log(sync.lock())
-
-
-@APP.command
-def compile():  # noqa: A001
+def sync():
     """Prepare a compilation.
 
     Args:
         get: Get the compilation rather than compile it.
     """
-    comp_paths = Comp(*[COMPS / f"{name}.txt" for name in get_comp_names()])
     COMPS.mkdir(exist_ok=True, parents=True)
-    for path, comp in zip(comp_paths, sync.compile(), strict=True):
-        path.write_text(encoding="utf-8", data=comp)
-    log(comp_paths)
+    for comp_names, comps in zip(get_all_comp_names(), synchronize(), strict=True):
+        comp_paths = Comp(
+            COMPS / f"{comp_names.low}.txt", COMPS / f"{comp_names.high}.txt"
+        )
+        platform, version = get_comp_key(comp_names.low).split("_")
+        if platform == PLATFORM and version == VERSION:
+            log(comp_paths)
+        for name, comp in zip(comp_names, comps, strict=True):
+            (COMPS / f"{name}.txt").write_text(encoding="utf-8", data=comp)
 
 
 @APP.command
@@ -75,6 +81,9 @@ def log(obj):
     match obj:
         case str():
             print(obj)  # noqa: T201
+        case Comp():
+            for comp in obj:
+                log(comp)
         case Collection():
             for o in obj:
                 log(o)
