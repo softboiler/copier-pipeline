@@ -27,13 +27,17 @@ $Env:PYTHONWARNINGS = 'ignore'
 function Set-Env {
     <#.SYNOPSIS
     Load `.env`, activate a virtual environment found here or in parent directories.#>
+    # ? Activate virtual environment if one exists
+    if (Test-Path '.venv') {
+        if ($IsWindows) { .venv/scripts/activate.ps1 }
+        else {
+            .venv/bin/activate.ps1
+            # ? uv-sourced, virtualenv-based `activate.ps1` incorrectly uses  `;` sep
+            $Env:PATH = $Env:PATH -Replace ';', ':'
+        }
+    }
     # ? Prepend local `bin` to PATH
     $sep = $IsWindows ? ';' : ':'
     $Env:PATH = "bin$sep$Env:PATH"
-    # ? Activate virtual environment if one exists
-    if (Test-Path '.venv') {
-        if ($IsWindows) { return .venv/Scripts/Activate.ps1 }
-        return .venv/bin/Activate.ps1
-    }
 }
 Set-Env

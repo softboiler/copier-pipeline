@@ -89,7 +89,7 @@ if (!$NoPreSync) {
 
 # ? Compile
 'COMPILING' | Write-Progress
-$Comps = & $py -m {{ project_name }}_tools compile
+$Comps = {{ project_name }}_tools compile
 $Comp = $High ? $Comps[1] : $Comps[0]
 'COMPILED' | Write-Progress -Done
 
@@ -115,7 +115,7 @@ if ($CI) {
 # ? Lock
 if ($Lock) {
     'LOCKING' | Write-Progress
-    & $py -m {{ project_name }}_tools lock
+    {{ project_name }}_tools lock
     'LOCKED' | Write-Progress -Done
 }
 

@@ -101,7 +101,7 @@ jobs:
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - run: "pytest --cov --cov-config pyproject.toml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
-        uses: "codecov/codecov-action@54bcd8715eee62d40e33596ef5e8f0f48dbbccab" # v4.1.0
+        uses: "codecov/codecov-action@c16abc29c95fcf9174b58eb7e1abf4c866893bc8" # v4.1.1
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
       - uses: "actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3" # v4.3.1

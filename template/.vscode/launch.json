@@ -24,6 +24,12 @@
       "console": "internalConsole"
     },
     {
+      "name": "Python: Current file (interactive terminal)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}"
+    },
+    {
       "name": "Python: Current file with args",
       "type": "debugpy",
       "request": "launch",
