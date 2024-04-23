@@ -87,12 +87,15 @@ class Comp(NamedTuple):
     """Name of highest dependency compilation or the compilation itself."""
 
 
-def synchronize() -> tuple[Comp, ...]:
+def synchronize() -> tuple[Comp, ...]:  # noqa: PLR0911
     """Sync dependencies. Prefer the existing compilation if compatible."""
     old = get_comps()
     if not old.low:
         return lock()  # Old compilation missing
-    if (old_uv := search(UV_PAT, old.low)) and old_uv["version"] != get_uv_version():
+    old_uv = search(UV_PAT, old.low)
+    if not old_uv:
+        return lock()  # Unknown `uv` version last used to compile
+    if old_uv["version"] != get_uv_version():
         return lock()  # Older `uv` version last used to compile
     directs = comp(high=False, no_deps=True)
     try:
