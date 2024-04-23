@@ -70,6 +70,11 @@ uv pip install --editable=scripts
 # ? Pre-sync
 if (!$NoPreSync) {
     '*** RUNNING PRE-SYNC TASKS' | Write-Progress
+    if ($CI) {
+        'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
+        scripts/Sync-Template.ps1 -Stay
+        'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
+    }
     'SYNCING SUBMODULES' | Write-Progress
     if ($Env:DEVCONTAINER) {
         $repo = Get-ChildItem /workspaces
@@ -98,12 +103,6 @@ if (!$NoPostSync) {
     'INSTALLING PRE-COMMIT HOOKS' | Write-Progress
     pre-commit install
     '*** POST-SYNC DONE ***' | Write-Progress -Done
-}
-# ? Sync project with template in CI
-if ($CI) {
-    'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
-    scripts/Sync-Template.ps1 -Stay
-    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 
 '' | Write-Host

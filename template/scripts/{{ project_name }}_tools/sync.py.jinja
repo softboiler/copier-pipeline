@@ -119,6 +119,9 @@ def synchronize() -> tuple[Comp, ...]:  # noqa: PLR0911
 
 def lock() -> tuple[Comp, ...]:
     """Lock dependencies for all platforms and Python versions."""
+    comps = tuple(
+        recompile(platform, version) for platform in PLATFORMS for version in VERSIONS
+    )
     LOCK.write_text(
         encoding="utf-8",
         data=dumps(
@@ -134,9 +137,7 @@ def lock() -> tuple[Comp, ...]:
         )
         + "\n",
     )
-    return tuple(
-        recompile(platform, version) for platform in PLATFORMS for version in VERSIONS
-    )
+    return comps
 
 
 def recompile(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
