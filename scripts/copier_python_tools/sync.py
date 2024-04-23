@@ -285,7 +285,9 @@ def comp(
 
 def get_uv_version() -> str:
     """Get the installed version of `uv`."""
-    result = run(args="bin/uv --version", capture_output=True, check=False, text=True)
+    result = run(
+        args=split("bin/uv --version"), capture_output=True, check=False, text=True
+    )
     if result.returncode:
         raise RuntimeError(result.stderr)
     return result.stdout.split(" ")[1]
