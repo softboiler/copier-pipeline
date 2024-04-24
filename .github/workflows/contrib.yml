@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         runner:
-          - "macos-13"
+          - "macos-14"
           - "ubuntu-22.04"
           - "windows-2022"
         python: ["3.11"]
@@ -35,7 +35,7 @@ jobs:
       - uses: "actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11" # v4.1.1
         with:
           submodules: True
-      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "${{ env.UV_CACHE_DIR }}"
           key: "uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}"
@@ -47,7 +47,7 @@ jobs:
     strategy:
       matrix:
         runner:
-          - "macos-13"
+          - "macos-14"
           - "ubuntu-22.04"
           - "windows-2022"
         python: ["3.11"]
@@ -58,7 +58,7 @@ jobs:
         with:
           submodules: True
           path: "repo path with spaces"
-      - uses: actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9 # v4.0.2
+      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "${{ env.UV_CACHE_DIR }}"
           key: "uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}"

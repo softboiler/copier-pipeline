@@ -3,12 +3,10 @@
 from collections.abc import Collection
 from pathlib import Path
 from re import finditer
-from shlex import split
-from subprocess import run
 
 from cyclopts import App
 
-from copier_python_tools.sync import CompPaths, escape, get_comps, synchronize
+from copier_python_tools.sync import check_compilation, escape
 
 APP = App(help_format="markdown")
 """CLI."""
@@ -19,16 +17,9 @@ def main():  # noqa: D103
 
 
 @APP.command
-def sync(high: bool = False):
-    """Sync."""
-    synchronize()
-    comps = get_comps()
-    run(
-        input=comps.high if high else comps.low,
-        args=split("bin/uv pip sync -"),
-        check=True,
-        text=True,
-    )
+def compile(high: bool = False):  # noqa: A001
+    """Compile."""
+    log(check_compilation(high))
 
 
 @APP.command
@@ -61,9 +52,6 @@ def log(obj):
     match obj:
         case str():
             print(obj)  # noqa: T201
-        case CompPaths():
-            for comp in obj:
-                log(comp)
         case Collection():
             for o in obj:
                 log(o)

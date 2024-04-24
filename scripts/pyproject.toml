@@ -6,7 +6,13 @@ build-backend = "flit_core.buildapi"
 name = "copier_python_tools"
 version = "0.0.0"
 description = "Tools."
-dependencies = ["cyclopts==2.5.0", "pipx==1.5.0", "ruamel-yaml==0.18.6"]
+dependencies = [
+    # ? Core script tools
+    "copier==9.2.0",
+    "cyclopts==2.5.0",
+    "pipx==1.5.0",
+    "ruamel-yaml==0.18.6",
+]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"
 
@@ -21,7 +27,8 @@ ignore_undeclared = [
 ]
 ignore_unused = [
     # ? Core script tools
-    "pipx", # For `pipx run` of scripts with dependencies isolated by PEP 723
+    "copier", # For template sync
+    "pipx",   # For `pipx run` of scripts with dependencies isolated by PEP 723
 ]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]

@@ -31,11 +31,14 @@ repos:
         stages:
           - "pre-commit"
           - "post-checkout"
-        always_run: true
         pass_filenames: false
         language: "system"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
+        exclude: |
+          (?x)^(
+            lock.+\.json
+          $)
       - id: "fawltydeps-src"
         name: "fawltydeps-src"
         pass_filenames: false
