@@ -87,15 +87,6 @@ class Comp(NamedTuple):
     """Name of highest dependency compilation or the compilation itself."""
 
 
-class CompPaths(NamedTuple):
-    """Dependency compilation."""
-
-    low: Path
-    """Path to the lowest direct dependency compilation."""
-    high: Path
-    """Path to the highest dependency compilation."""
-
-
 def get_comp_names(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
     """Get names of a dependency compilation.
 
