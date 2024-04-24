@@ -15,7 +15,7 @@
     "pip_requirements",
     "pre-commit"
   ],
-  "git-submodules": {
+  "github-actions": {
     "description": "Additionally monitor these files",
     "fileMatch": ["(^|/)\\.github/workflows/.+\\.ya?ml.jinja$"]
   },
