@@ -92,9 +92,7 @@ if (!$NoPreSync) {
 
 # ? Sync
 'SYNCING DEPENDENCIES' | Write-Progress
-$Comps = copier_python_tools sync
-$Comp = $High ? $Comps[1] : $Comps[0]
-uv pip sync $Comp
+copier_python_tools sync $($High ? '--high' : '--no-high')
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 # ? Post-sync
