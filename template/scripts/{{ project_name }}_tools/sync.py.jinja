@@ -8,11 +8,10 @@ from re import finditer, search
 from shlex import quote, split
 from subprocess import run
 from sys import version_info
-from typing import NamedTuple
 
 from ruamel.yaml import YAML
 
-from {{ project_name }}_tools.types import Platform, Version
+from {{ project_name }}_tools.types import Platform, PythonVersion
 
 # ! For local dev config tooling
 PYTEST = Path("pytest.ini")
@@ -21,7 +20,7 @@ PYTEST = Path("pytest.ini")
 # ! Dependencies
 COPIER_ANSWERS = Path(".copier-answers.yml")
 """Copier answers file."""
-PYTHON_VERSIONS = Path(".python-versions")
+PYTHON_VERSIONS_FILE = Path(".python-versions")
 """File containing supported Python versions."""
 REQS = Path("requirements")
 """Requirements."""
@@ -33,38 +32,24 @@ NODEPS = REQS / "nodeps.in"
 """Dependencies appended to locks without compiling their dependencies."""
 OVERRIDE = REQS / "override.txt"
 """Overrides to satisfy otherwise incompatible combinations."""
-
-# ! Template answers
-ANS = YAML().load(COPIER_ANSWERS.read_text(encoding="utf-8"))
-"""Project template answers."""
-AUTHORS = ANS["project_owner_name"]
-"""Authors of the project."""
-USER = ANS["project_owner_github_username"]
-"""Host GitHub user or organization for this repository."""
-REPO = ANS["github_repo_name"]
-"""GitHub repository name."""
-PACKAGE = ANS["project_name"]
-"""Package name."""
-VERSION = ANS["project_version"]
-"""Package version."""
+SYS_PYTHON_VERSION = YAML().load(COPIER_ANSWERS.read_text(encoding="utf-8"))[
+    "python_version"
+]
+"""Python version."""
 
 # ! Platforms and Python versions
-PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356
+SYS_PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356
 """Platform identifier."""
-VERSION: Version = ".".join([str(v) for v in version_info[:2]])  # pyright: ignore[reportAssignmentType] 1.1.356
+SYS_PYTHON_VERSION: PythonVersion = ".".join([str(v) for v in version_info[:2]])  # pyright: ignore[reportAssignmentType] 1.1.356
 """Python version associated with this platform."""
 PLATFORMS: tuple[Platform, ...] = ("linux", "macos", "windows")
 """Supported platforms."""
-VERSIONS: tuple[Version, ...] = (  # pyright: ignore[reportAssignmentType] 1.1.356
-    tuple(PYTHON_VERSIONS.read_text("utf-8").splitlines())
-    if PYTHON_VERSIONS.exists()
+PYTHON_VERSIONS: tuple[PythonVersion, ...] = (  # pyright: ignore[reportAssignmentType] 1.1.356
+    tuple(PYTHON_VERSIONS_FILE.read_text("utf-8").splitlines())
+    if PYTHON_VERSIONS_FILE.exists()
     else ("3.9", "3.10", "3.11", "3.12")
 )
 """Supported Python versions."""
-
-# ! Locking
-LOCK = Path("lock.json")
-"""Locked set of dependency compilations for different runner/Python combinations."""
 
 # ! Checking
 UV_PAT = r"(?m)^# uv\s(?P<version>.+)$"
@@ -78,123 +63,115 @@ See: https://packaging.python.org/en/latest/specifications/name-normalization/#n
 """
 
 
-class Comp(NamedTuple):
-    """Dependency compilation."""
-
-    low: str
-    """Name of lowest direct dependency compilation or the compilation itself."""
-    high: str
-    """Name of highest dependency compilation or the compilation itself."""
-
-
-def get_comp_names(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
-    """Get names of a dependency compilation.
+def check_compilation(high: bool = False) -> str:  # noqa: PLR0911
+    """Check compilation, re-lock if incompatible, and return the compilation.
 
     Parameters
     ----------
-    platform
-        Platform to compile for.
-    version
-        Python version to compile for.
+    high
+        Highest dependencies.
     """
-    sep = "_"
-    base = sep.join(["requirements", platform, version])
-    return Comp(base, sep.join([base, "high"]))
-
-
-def synchronize():  # noqa: PLR0911
-    """Sync dependencies. Prefer the existing compilation if compatible."""
-    old = get_comps()
-    if not old.low:
-        return lock()  # Old compilation missing
-    old_uv = search(UV_PAT, old.low)
+    old = get_compilation(SYS_PLATFORM, SYS_PYTHON_VERSION, high)
+    if not old:
+        return lock(high)  # Old compilation missing
+    old_uv = search(UV_PAT, old)
     if not old_uv:
-        return lock()  # Unknown `uv` version last used to compile
+        return lock(high)  # Unknown `uv` version last used to compile
     if old_uv["version"] != get_uv_version():
-        return lock()  # Older `uv` version last used to compile
-    directs = comp(high=False, no_deps=True)
+        return lock(high)  # Older `uv` version last used to compile
+    directs = compile(SYS_PLATFORM, SYS_PYTHON_VERSION, high, no_deps=True)
     try:
         subs = dict(
-            zip(finditer(SUB_PAT, old.low), finditer(SUB_PAT, directs), strict=False)
+            zip(finditer(SUB_PAT, old), finditer(SUB_PAT, directs), strict=False)
         )
     except ValueError:
-        return lock()  # Submodule missing
+        return lock(high)  # Submodule missing
     if any(old_sub.groups() != new_sub.groups() for old_sub, new_sub in subs.items()):
-        return lock()  # Submodule pinned commit SHA mismatch
+        return lock(high)  # Submodule pinned commit SHA mismatch
     old_directs: list[str] = []
     for direct in finditer(DEP_PAT, directs):
         pat = rf"(?mi)^(?P<name>{direct['name']})==(?P<ver>.+$)"
-        if match := search(pat, old.low):
+        if match := search(pat, old):
             old_directs.append(match.group())
             continue
-        return lock()  # Direct dependency missing
-    low = comp(high=False, no_deps=False)
-    if any(d not in low for d in old_directs):
-        return lock()  # Direct dependency version mismatch
+        return lock(high)  # Direct dependency missing
+    sys_compilation = compile(SYS_PLATFORM, SYS_PYTHON_VERSION, high)
+    if any(d not in sys_compilation for d in old_directs):
+        return lock(high, sys_compilation)  # Direct dependency version mismatch
+    return old  # The old compilation is compatible
 
 
-def lock():
+def lock(high: bool, sys_compilation: str = "") -> str:
     """Lock dependencies for all platforms and Python versions."""
     lock_contents: dict[str, str] = {}
     for platform in PLATFORMS:  # noqa: F402
-        for version in VERSIONS:
-            names = get_comp_names(platform, version)
-            comps = recompile(platform, version)
-            for name, comp in zip(names, comps, strict=True):
-                lock_contents[get_comp_key(name)] = comp
-    LOCK.write_text(
+        for python_version in PYTHON_VERSIONS:
+            key = get_compilation_key(platform, python_version, high)
+            compilation = compile(platform, python_version, high)
+            if (
+                not sys_compilation
+                and platform == SYS_PLATFORM
+                and python_version == SYS_PYTHON_VERSION
+            ):
+                sys_compilation = compilation
+            lock_contents[key] = compilation
+    get_lockfile(high).write_text(
         encoding="utf-8", data=dumps(indent=2, sort_keys=True, obj=lock_contents) + "\n"
     )
+    return sys_compilation
 
 
-def recompile(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
-    """Recompile dependencies.
-
-    Parameters
-    ----------
-    platform
-        Platform to compile for.
-    version
-        Python version to compile for.
-    """
-    return Comp(
-        comp(high=False, no_deps=False, platform=platform, version=version),
-        comp(high=True, no_deps=False, platform=platform, version=version),
-    )
-
-
-def get_comps(platform: Platform = PLATFORM, version: Version = VERSION) -> Comp:
+def get_compilation(
+    platform: Platform, python_version: PythonVersion, high: bool
+) -> str:
     """Get existing dependency compilations.
 
     Parameters
     ----------
+    high
+        Highest dependencies.
     platform
         Platform to compile for.
-    version
+    python_version
         Python version to compile for.
     """
-    if not LOCK.exists():
-        return Comp("", "")
-    contents = loads(LOCK.read_text("utf-8")) if LOCK.exists() else {}
-    return Comp(*[
-        contents.get(get_comp_key(name)) or ""
-        for name in get_comp_names(platform, version)
-    ])
+    lockfile = get_lockfile(high)
+    if not lockfile.exists():
+        return ""
+    contents = loads(lockfile.read_text("utf-8"))
+    return contents.get(get_compilation_key(platform, python_version, high), "")
 
 
-def get_comp_key(name: str) -> str:
-    """Get the key to a dependency compilation in the lock.
+def get_compilation_key(
+    platform: Platform, python_version: PythonVersion, high: bool
+) -> str:
+    """Get the name of a dependency compilation.
 
     Parameters
     ----------
-    name
-        Name of the dependency compilation.
+    platform
+        Platform to compile for.
+    python_version
+        Python version to compile for.
+    high
+        Highest dependencies.
     """
-    return name.removeprefix("requirements_")
+    return "_".join([platform, python_version, *(["high"] if high else [])])
 
 
-def comp(
-    high: bool, no_deps: bool, platform: Platform = PLATFORM, version: Version = VERSION
+def get_lockfile(high: bool) -> Path:
+    """Get lockfile path.
+
+    Parameters
+    ----------
+    high
+        Highest dependencies.
+    """
+    return Path(f"lock{'-high' if high else ''}.json")
+
+
+def compile(  # noqa: A001
+    platform: Platform, python_version: PythonVersion, high: bool, no_deps: bool = False
 ) -> str:
     """Compile system dependencies.
 
@@ -206,7 +183,7 @@ def comp(
         Without transitive dependencies.
     platform
         Platform to compile for.
-    version
+    python_version
         Python version to compile for.
     """
     sep = " "
@@ -215,7 +192,7 @@ def comp(
             sep.join([
                 "bin/uv pip compile",
                 f"--exclude-newer {datetime.now(UTC).isoformat().replace('+00:00', 'Z')}",
-                f"--python-platform {platform} --python-version {version}",
+                f"--python-platform {platform} --python-version {python_version}",
                 f"--resolution {'highest' if high else 'lowest-direct'}",
                 f"--override {escape(OVERRIDE)}",
                 f"--all-extras {'--no-deps' if no_deps else ''}",

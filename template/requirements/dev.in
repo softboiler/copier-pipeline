@@ -2,11 +2,11 @@
 --editable docs/
 --editable scripts/
 --editable tests/
-copier==9.2.0
 debugpy==1.8.1
 fawltydeps==0.15.0
 flit==3.9.0
-keyring==25.0.0
+keyring==25.1.0
+pandas-stubs~=2.2.0
 pre-commit==3.7.0
 pyright==1.1.356
 ruff==0.3.4
