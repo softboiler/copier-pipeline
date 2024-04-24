@@ -92,9 +92,7 @@ if (!$NoPreSync) {
 
 # ? Sync
 'SYNCING DEPENDENCIES' | Write-Progress
-$Comps = {{ project_name }}_tools sync
-$Comp = $High ? $Comps[1] : $Comps[0]
-uv pip sync $Comp
+{{ project_name }}_tools sync $($High ? '--high' : '--no-high')
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 # ? Post-sync
