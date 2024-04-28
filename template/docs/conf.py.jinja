@@ -188,11 +188,11 @@ intersphinx_mapping = ISPX_MAPPING
 nitpick_ignore = []
 nitpick_ignore_regex = [
     # ? Missing inventory
-    ("py:class", r"docutils\..+"),
-    ("py:class", r"numpydoc\.docscrape\..+"),
-    ("py:class", r"_pytest\..+"),
+    (r"py:.*", r"docutils\..+"),
+    (r"py:.*", r"numpydoc\.docscrape\..+"),
+    (r"py:.*", r"_pytest\..+"),
     # ? TypeAlias: https://github.com/sphinx-doc/sphinx/issues/10785
-    ("py:class", rf"{PACKAGE}.*\.types\..+"),
+    (r"py:.*", rf"{PACKAGE}.*\.types\..+"),
 ]
 # ! Tippy
 # ? https://sphinx-tippy.readthedocs.io/en/latest/index.html#confval-tippy_anchor_parent_selector
