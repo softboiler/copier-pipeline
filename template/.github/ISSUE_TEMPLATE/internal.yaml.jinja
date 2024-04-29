@@ -1,0 +1,25 @@
+name: "⚠️ Internal issue"
+description: "Please only select this if you are a maintainer or have been directed to do so"
+labels: ["internal"]
+body:
+  - type: "checkboxes"
+    id: "usage"
+    attributes:
+      label: "Please use this form appropriately"
+      options:
+        - required: True
+          label: "I am a maintainer or I have been directed me to use this form."
+  - type: "checkboxes"
+    id: "no-duplicates"
+    attributes:
+      label: "Please check that this internal matter hasn't already been raised"
+      options:
+        - required: True
+          label: "I searched [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label%3Ainternal+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3A{{ project_owner_github_username }}/{{ github_repo_name }}+label%3Ainternal&type=issues) and couldn't find a similar issue."
+  - type: "textarea"
+    id: "description"
+    validations:
+      required: True
+    attributes:
+      label: "Description"
+      description: "Please describe the matter. Please provide a few details as to how this matter might be resolved."

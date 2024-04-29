@@ -1,0 +1,16 @@
+labels: ["internal"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicates"
+    attributes:
+      label: "Please check for similar discussions first"
+      options:
+        - required: True
+          label: "I [searched](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/discussions/categories/internal) and couldn't find an appropriate discussion to participate in instead."
+  - type: "textarea"
+    id: "description"
+    validations:
+      required: True
+    attributes:
+      label: "Description"
+      description: "Please describe the internal matter. Please provide a few details as to how this matter might be handled."

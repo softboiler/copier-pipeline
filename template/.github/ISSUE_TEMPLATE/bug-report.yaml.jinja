@@ -1,27 +1,27 @@
-name: "Bug report"
+name: "🐞 Bug report"
 description: "Report a bug"
 labels: ["bug"]
 body:
   - type: "checkboxes"
-    id: "no-duplicate-issues"
+    id: "no-duplicates"
     attributes:
       label: "Please check that this bug hasn't been reported before"
       options:
         - required: True
-          label: "I searched previous bug reports [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3A{{ project_owner_github_username }}/{{ github_repo_name }}+label%3Abug&type=issues) and didn't find any similar reports."
+          label: "I searched [here](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3A{{ project_owner_github_username }}/{{ github_repo_name }}+label%3Abug&type=issues) and couldn't find a similar issue."
   - type: "checkboxes"
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking. If you have other issues or questions about earlier versions, please visit the [Q&A](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/discussions/new?category=q-a)."
+      description: "Please verify the issue is present in the latest version by installing it with `pip install pyxmatlab==2024.03.02` and checking that the bug is still there"
       options:
         - required: True
-          label: "This bug affects version `{{ project_version }}` of `{{ project_name }}`."
+          label: "This bug affects version `2024.03.02` of `pyxmatlab`."
   - type: "checkboxes"
     id: "operating-systems"
     attributes:
       label: "Please indicate which operating system(s) you are using"
-      description: "You may select more than one"
+      description: "Please select the most appropriate choice(s) if your exact OS is not listed"
       options:
         - label: "Linux"
         - label: "macOS"
@@ -31,7 +31,7 @@ body:
     validations:
       required: True
     attributes:
-      label: "Expected Behavior"
+      label: "Expected behavior"
       description: "Please explain what **should** happen"
   - type: "textarea"
     id: "what-happened"
@@ -48,7 +48,7 @@ body:
       label: "Steps to reproduce"
       description: "Please provide steps that would allow someone to reproduce the issue"
   - type: "textarea"
-    id: "possible-solution"
+    id: "solution"
     attributes:
       label: "Possible solution"
       description: "Please suggest a possible fix or any ideas you may have about the root cause"
