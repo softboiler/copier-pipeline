@@ -1,5 +1,5 @@
 name: "⚠️ Internal issue"
-description: "Please only select this if you are a maintainer or have been directed to do so"
+description: "Please only select this if you are a maintainer or have been directed to do so."
 labels: ["internal"]
 body:
   - type: "checkboxes"
