@@ -1,0 +1,16 @@
+labels: ["question"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicates"
+    attributes:
+      label: "Please check for similar discussions first"
+      options:
+        - required: True
+          label: "I [searched](https://github.com/blakeNaccarato/copier-python/discussions/categories/q-a) and couldn't find an appropriate discussion to participate in instead."
+  - type: "textarea"
+    id: "description"
+    validations:
+      required: True
+    attributes:
+      label: "Description"
+      description: "Please describe your question"

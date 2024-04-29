@@ -1,5 +1,5 @@
 name: "🐞 Bug report"
-description: "Report a bug"
+description: "Report a bug. Please don't request features or ask usage questions here."
 labels: ["bug"]
 body:
   - type: "checkboxes"
@@ -13,10 +13,10 @@ body:
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install pyxmatlab==2024.03.02` and checking that the bug is still there"
+      description: "Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking that the bug is still there"
       options:
         - required: True
-          label: "This bug affects version `2024.03.02` of `pyxmatlab`."
+          label: "This bug affects version `{{ project_version }}` of `{{ project_name }}`."
   - type: "checkboxes"
     id: "operating-systems"
     attributes:

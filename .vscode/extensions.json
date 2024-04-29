@@ -1,7 +1,6 @@
 {
   "recommendations": [
     "aaron-bond.better-comments",
-    "bierner.markdown-mermaid",
     "bierner.markdown-preview-github-styles",
     "charliermarsh.ruff",
     "davidanson.vscode-markdownlint",
@@ -27,7 +26,6 @@
     "stkb.rewrap",
     "TakumiI.markdowntable",
     "tamasfe.even-better-toml",
-    "yy0931.mplstyle",
     "yzhang.markdown-all-in-one"
   ]
 }

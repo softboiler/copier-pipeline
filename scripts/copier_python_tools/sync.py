@@ -9,8 +9,6 @@ from shlex import quote, split
 from subprocess import run
 from sys import version_info
 
-from ruamel.yaml import YAML
-
 from copier_python_tools.types import Platform, PythonVersion
 
 # ! For local dev config tooling
@@ -32,10 +30,6 @@ NODEPS = REQS / "nodeps.in"
 """Dependencies appended to locks without compiling their dependencies."""
 OVERRIDE = REQS / "override.txt"
 """Overrides to satisfy otherwise incompatible combinations."""
-SYS_PYTHON_VERSION = YAML().load(COPIER_ANSWERS.read_text(encoding="utf-8"))[
-    "python_version"
-]
-"""Python version."""
 
 # ! Platforms and Python versions
 SYS_PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356

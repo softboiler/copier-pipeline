@@ -56,7 +56,6 @@
       },
       "extensions": [
         "aaron-bond.better-comments@3.0.2",
-        "bierner.markdown-mermaid@1.22.0",
         "bierner.markdown-preview-github-styles@2.0.4",
         "charliermarsh.ruff@2024.16.0",
         "davidanson.vscode-markdownlint@0.54.0",
@@ -82,7 +81,6 @@
         "stkb.rewrap@1.16.3",
         "TakumiI.markdowntable@0.11.0",
         "tamasfe.even-better-toml@0.19.2",
-        "yy0931.mplstyle@1.14.3",
         "yzhang.markdown-all-in-one@3.6.2"
       ]
     }

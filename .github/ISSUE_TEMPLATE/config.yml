@@ -1,5 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: "Ask a question"
-    url: "https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a"
+  - name: "🙏 Ask a question"
     about: "Ask for help. Please search related Q&As in case your question has been asked before."
+    url: "https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a"
+  - name: "💡 Share an idea for a feature, documentation, or infrastructure"
+    about: "Feature requests. Please search for existing similar discussions."
+    url: "https://github.com/blakeNaccarato/copier-python/discussions/new?category=ideas"
+  - name: "❔ Something else"
+    about: "Please choose the most appropriate discussion category for your concern. Please search for existing similar discussions."
+    url: "https://github.com/blakeNaccarato/copier-python/discussions/new/choose"

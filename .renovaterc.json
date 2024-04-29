@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "description": "Establish base config, schedule, and manager defaults",
-  "addLabels": ["deps"],
+  "addLabels": ["dependencies"],
   "extends": ["config:base", "group:all", ":enablePreCommit"],
   "dependencyDashboardApproval": false,
   "schedule": ["on the 16th day of the month"],

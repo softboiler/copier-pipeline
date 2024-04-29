@@ -3,7 +3,7 @@ name: "high"
 on:
   workflow_dispatch:
   schedule:
-    - cron: "38 16 * * 4"
+    - cron: "15 10 * * 0"
 defaults:
   run:
     shell: "pwsh"

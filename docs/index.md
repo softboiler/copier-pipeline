@@ -1,7 +1,6 @@
-:::{include} ../README.md
-:relative-docs: docs/
-:relative-images:
-:::
+# copier_python
+
+Copier template for Python projects.
 
 :::{toctree}
 :hidden:

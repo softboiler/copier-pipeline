@@ -1,0 +1,16 @@
+labels: ["enhancement"]
+body:
+  - type: "checkboxes"
+    id: "no-duplicates"
+    attributes:
+      label: "Please check for similar discussions first"
+      options:
+        - required: True
+          label: "I [searched](https://github.com/blakeNaccarato/copier-python/discussions/categories/ideas) and couldn't find an appropriate discussion to participate in instead."
+  - type: "textarea"
+    id: "description"
+    validations:
+      required: True
+    attributes:
+      label: "Description"
+      description: "Please describe your idea. Please provide a few details as to how this idea might be implemented."
