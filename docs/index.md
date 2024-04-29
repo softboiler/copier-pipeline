@@ -1,4 +1,4 @@
-# copier_python
+# `copier_python`
 
 Copier template for Python projects.
 
