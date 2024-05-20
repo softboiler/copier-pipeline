@@ -8,7 +8,7 @@ body:
       label: "Please use this form appropriately"
       options:
         - required: True
-          label: "I am a maintainer or I have been directed me to use this form."
+          label: "I am a maintainer or I have been directed to use this form."
   - type: "checkboxes"
     id: "no-duplicates"
     attributes:
