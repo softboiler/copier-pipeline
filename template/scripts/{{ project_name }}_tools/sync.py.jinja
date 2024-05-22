@@ -48,13 +48,10 @@ UV = REQS / "uv.in"
 """UV requirement."""
 DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
-DVC = REQS / "dvc.in"
-"""Separate DVC dependency due to occasional VSCode extension sync conflict."""
 OVERRIDES = REQS / "override.txt"
 """Overrides to satisfy otherwise incompatible combinations."""
 DEPS = (
     DEV,
-    DVC,
     *[
         Path(editable["path"]) / "pyproject.toml"
         for editable in finditer(
