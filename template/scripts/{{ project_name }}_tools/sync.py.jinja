@@ -259,10 +259,11 @@ OP_PAT = "|".join(ops)
 """Regular expression for valid version separators."""
 
 
-def get_directs() -> dict[str, Dep]:
+def get_directs(requirements: str | None = None) -> dict[str, Dep]:
     """Get directs."""
     directs: dict[str, Dep] = {}
-    _, requirements = compile(Compiler(no_deps=True))
+    if not requirements:
+        _, requirements = compile(Compiler(no_deps=True))
     for direct in finditer(
         rf"(?m)^(?P<name>{NAME_PAT})(?P<op>{OP_PAT})(?P<rev>.+)$", requirements
     ):
@@ -312,7 +313,8 @@ class Compilation:
         return cls(
             compiler=compiler,
             time=contents[key]["time"],
-            requirements=contents[key]["requirements"],
+            requirements=(reqs := contents[key]["requirements"]),
+            directs=get_directs(reqs),
         )
 
 
