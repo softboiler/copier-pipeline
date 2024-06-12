@@ -5,10 +5,10 @@
 debugpy==1.8.1
 fawltydeps==0.15.0
 flit==3.9.0
-keyring==25.1.0
-pre-commit==3.7.0
-pyright==1.1.360
-ruff==0.4.1
+keyring==25.2.1
+pre-commit==3.7.1
+pyright==1.1.367
+ruff==0.4.8
 snakeviz==2.2.0
-sourcery==1.16.0
+sourcery==1.19.0
 towncrier==23.11.0
