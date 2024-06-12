@@ -9,9 +9,9 @@ description = "Tools."
 dependencies = [
     # ? Core script tools
     "copier==9.2.0",
-    "cyclopts==2.6.1",
-    "ipython==8.24.0",
-    "pipx==1.5.0",
+    "cyclopts==2.7.0",
+    "ipython==8.25.0",
+    "pipx==1.6.0",
 ]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"
