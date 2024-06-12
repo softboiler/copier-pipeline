@@ -9,6 +9,7 @@
     "enabled": true
   },
   "enabledManagers": [
+    "devcontainer",
     "git-submodules",
     "github-actions",
     "pep621",
@@ -25,6 +26,11 @@
       "groupName": "template",
       "matchManagers": ["git-submodules"],
       "matchPackageNames": ["submodules/template"]
-    }
+    },
+    {
+      "description": "Manually test `.devcontainer` updates separately",
+      "groupName": "devcontainer",
+      "matchManagers": ["devcontainer"]
+    },
   ]
 }
