@@ -179,12 +179,11 @@ reportUnusedCallResult = "none"
 cache-dir = ".cache/.ruff_cache"
 extend-exclude = ["bin", "submodules"]
 extend-include = ["*.ipynb"]
-src = ["src"]
+src = ["src", "docs", "scripts", "tests"]
 output-format = "grouped"
 fix = true
 preview = true
 show-fixes = true
-
 [tool.ruff.lint]
 fixable = ["ALL"]
 select = [
@@ -193,6 +192,9 @@ select = [
 ]
 unfixable = [
     "PIE790", # Don't remove `pass`/`...`, overridden in pre-commit
+]
+extend-safe-fixes = [
+    "F401", # Allow autofix for unused imports even in `__init__.py`
 ]
 ignore = [
     "ANN",     # Don't require type annotations
@@ -223,6 +225,7 @@ ignore = [
     "PLR6201", # Don't require set literal for membership checks
     "PGH003",  # Until black stops wrapping special ignores, let's allow bare
     "PIE804",  # Allow dict unpack even if unnecessary, consisent for df.assign{**...}
+    "PLC0105", # Dont enforce Hungarian notation for `TypeVar` variance
     "PLC2701", # Allow private name imports
     "PLR0913", # Allow more than five function arguments
     "PLR0914", # Allow lots of local variables
@@ -232,6 +235,7 @@ ignore = [
     "PLR6201", # Don't require set literal for membership checks
     "PLR6301", # Allow methods that don't reference self, may be overridden
     "PLW0108", # Don't warn about unnecessary lambda. Often needed in pandas chains
+    "PLW0642", # Allow reassignment to `cls` and `self`
     "PLW2901", # For loop variable
     "RET",     # Return checks are flaky, Sourcery does fine analysing these paths
     "S301",    # Don't warn about pickling.

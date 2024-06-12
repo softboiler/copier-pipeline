@@ -45,10 +45,7 @@
       "cwd": "${cwd}"
     },
     {
-      //? Needs to be "pytest" adapter for now.
-      //? "debugpy" adapter isn't seen, to toggle "justMyCode" in test configuration
-      //? https://github.com/microsoft/vscode-python-debugger/issues/112
-      //? https://github.com/microsoft/vscode-python-debugger/issues/94
+      //? https://github.com/microsoft/vscode-python-debugger/issues/335
       "name": "pytest",
       //! Uncomment below to disable "justMyCode" when debugging. Comment out after.
       // "purpose": ["debug-test"],
@@ -56,7 +53,7 @@
       "presentation": {
         "hidden": true
       },
-      "type": "python",
+      "type": "debugpy",
       "request": "launch",
       "program": "${file}",
       "console": "internalConsole",

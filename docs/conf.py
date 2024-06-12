@@ -4,11 +4,12 @@ from datetime import date
 from hashlib import sha256
 from pathlib import Path
 
+from ruamel.yaml import YAML
+from sphinx.application import Sphinx
+
 from copier_python_docs import DOCS, PYPROJECT, chdir_docs
 from copier_python_docs.intersphinx import get_ispx, get_rtd, get_url
 from copier_python_docs.types import IspxMappingValue
-from ruamel.yaml import YAML
-from sphinx.application import Sphinx
 
 # ! Root
 ROOT = chdir_docs()
@@ -65,7 +66,7 @@ def add_version_to_css(app: Sphinx, _pagename, _templatename, ctx, _doctree):
 
     See Also
     --------
-    - https://github.com/executablebooks/MyST-Parser/blob/978e845543b5bcb7af0ff89cac9f798cb8c16ab3/docs/conf.py#L241-L249
+    https://github.com/executablebooks/MyST-Parser/blob/978e845543b5bcb7af0ff89cac9f798cb8c16ab3/docs/conf.py#L241-L249
     """
     if app.builder.name != "html":
         return
@@ -193,7 +194,7 @@ nitpick_ignore_regex = [
     (r"py:.*", r"numpydoc\.docscrape\..+"),
     (r"py:.*", r"_pytest\..+"),
     # ? TypeAlias: https://github.com/sphinx-doc/sphinx/issues/10785
-    (r"py:.*", rf"{PACKAGE}.*\.types\..+"),
+    (r"py:class", rf"{PACKAGE}.*\.types\..+"),
 ]
 # ! Tippy
 # ? https://sphinx-tippy.readthedocs.io/en/latest/index.html#confval-tippy_anchor_parent_selector

@@ -4,9 +4,7 @@ Param(
     # Python version.
     [string]$Version,
     # Sync to highest dependencies.
-    [switch]$High,
-    # Sync with template.
-    [switch]$SyncTemplate
+    [switch]$High
 )
 
 . scripts/Common.ps1

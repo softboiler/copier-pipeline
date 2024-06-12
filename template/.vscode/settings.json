@@ -97,7 +97,6 @@
   "python.analysis.diagnosticMode": "openFilesOnly",
   "python.analysis.typeCheckingMode": "strict",
   "editor.inlayHints.enabled": "offUnlessPressed",
-  "python.analysis.addImport.heuristics": true,
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
   "python.analysis.extraCommitChars": true,

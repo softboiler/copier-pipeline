@@ -74,8 +74,8 @@ PROJECT_PYTHON_VERSION: PythonVersion = "3.11"
 """This project's default Python version."""
 PLATFORMS: tuple[Platform, ...] = ("linux", "macos", "windows")
 """Supported platforms."""
-PYTHON_VERSIONS: tuple[PythonVersion, ...] = (  # pyright: ignore[reportAssignmentType] 1.1.356
-    tuple(PYTHON_VERSIONS_FILE.read_text("utf-8").splitlines())
+PYTHON_VERSIONS: tuple[PythonVersion, ...] = (
+    tuple(PYTHON_VERSIONS_FILE.read_text("utf-8").splitlines())  # pyright: ignore[reportArgumentType] 1.1.356
     if PYTHON_VERSIONS_FILE.exists()
     else ("3.9", "3.10", "3.11", "3.12")
 )
@@ -92,53 +92,50 @@ def check_compilation(high: bool = False) -> str:
     old_proj_compilation = Compilation.from_lock()
     proj_compilation = Compiler(high=high, no_deps=True).compile()
     if proj_compilation.directs != old_proj_compilation.directs:
-        return lock(proj_compilation=proj_compilation)
+        return lock()
     return Compilation.from_lock(
         platform=SYS_PLATFORM, python_version=SYS_PYTHON_VERSION
     ).requirements
 
 
-def lock(high: bool = False, proj_compilation: Compilation | None = None) -> str:
+def lock(high: bool = False) -> str:
     """Lock."""
     proj_compiler = Compiler(
         platform=PROJECT_PLATFORM, python_version=PROJECT_PYTHON_VERSION, high=high
     )
-    sys_compilation = proj_compilation = proj_compilation or proj_compiler.compile()
+    proj_compilation = proj_compiler.compile()
+    sys_compiler = Compiler(
+        platform=SYS_PLATFORM, python_version=SYS_PYTHON_VERSION, high=high
+    )
+    sys_compilation = (
+        proj_compilation
+        if proj_compiler == sys_compiler
+        else sys_compiler.compile(directs=proj_compilation.directs)
+    )
     contents: Lock = {}
     contents["direct"] = {}
+    contents["direct"]["time"] = proj_compilation.time.isoformat()
+    contents["direct"]["uv"] = proj_compiler.uv
+    contents["direct"]["project_platform"] = proj_compiler.platform
+    contents["direct"]["project_python_version"] = proj_compiler.python_version
+    contents["direct"]["no_deps"] = proj_compiler.no_deps
+    contents["direct"]["high"] = proj_compiler.high
+    contents["direct"]["paths"] = tuple(p.as_posix() for p in proj_compiler.paths)
+    contents["direct"]["overrides"] = proj_compiler.overrides.as_posix()
+    contents["direct"]["directs"] = {
+        k: asdict(v) for k, v in proj_compilation.directs.items()
+    }
+    contents["direct"]["requirements"] = "\n".join([
+        f"{name}{dep.op}{dep.rev}" for name, dep in proj_compilation.directs.items()
+    ])
     for plat in sorted(PLATFORMS):
         for python_version in sorted(PYTHON_VERSIONS):
-            if plat == PROJECT_PLATFORM and python_version == PROJECT_PYTHON_VERSION:
-                compiler = proj_compiler
-                compilation = proj_compilation
-                contents["direct"]["time"] = compilation.time.isoformat()
-                contents["direct"]["uv"] = compiler.uv
-                contents["direct"]["project_platform"] = compiler.platform
-                contents["direct"]["project_python_version"] = compiler.python_version
-                contents["direct"]["no_deps"] = compiler.no_deps
-                contents["direct"]["high"] = compiler.high
-                contents["direct"]["paths"] = tuple(
-                    p.as_posix() for p in compiler.paths
-                )
-                contents["direct"]["overrides"] = compiler.overrides.as_posix()
-                contents["direct"]["directs"] = {
-                    k: asdict(v) for k, v in compilation.directs.items()
-                }
-                contents["direct"]["requirements"] = "\n".join([
-                    f"{name}{dep.op}{dep.rev}"
-                    for name, dep in compilation.directs.items()
-                ])
-            else:
-                compiler = Compiler(
-                    platform=plat, python_version=python_version, high=high
-                )
-                compilation = compiler.compile(directs=proj_compilation.directs)
+            compiler = Compiler(platform=plat, python_version=python_version, high=high)
+            compilation = compiler.compile(directs=proj_compilation.directs)
             key = compiler.get_lockfile_key()
             contents[key] = {}
             contents[key]["time"] = compilation.time.isoformat()
             contents[key]["requirements"] = compilation.requirements
-            if plat == SYS_PLATFORM and python_version == SYS_PYTHON_VERSION:
-                sys_compilation = compilation
     get_lockfile(high).write_text(
         encoding="utf-8", data=dumps(indent=2, obj=contents) + "\n"
     )
@@ -259,10 +256,11 @@ OP_PAT = "|".join(ops)
 """Regular expression for valid version separators."""
 
 
-def get_directs() -> dict[str, Dep]:
+def get_directs(requirements: str | None = None) -> dict[str, Dep]:
     """Get directs."""
     directs: dict[str, Dep] = {}
-    _, requirements = compile(Compiler(no_deps=True))
+    if not requirements:
+        _, requirements = compile(Compiler(no_deps=True))
     for direct in finditer(
         rf"(?m)^(?P<name>{NAME_PAT})(?P<op>{OP_PAT})(?P<rev>.+)$", requirements
     ):
@@ -312,7 +310,8 @@ class Compilation:
         return cls(
             compiler=compiler,
             time=contents[key]["time"],
-            requirements=contents[key]["requirements"],
+            requirements=(reqs := contents[key]["requirements"]),
+            directs=get_directs(reqs),
         )
 
 
