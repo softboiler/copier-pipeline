@@ -60,7 +60,7 @@ actions_runner:
   choices:
     - "ubuntu-22.04"
     - "windows-2022"
-    - "macos-14"
+    - "macos-13"
   default: "ubuntu-22.04"
   validator: "{% if not actions_runner %}Invalid input{% endif %}"
 
