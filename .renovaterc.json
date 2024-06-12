@@ -33,12 +33,12 @@
       "description": "Sync with template",
       "groupName": "template",
       "matchManagers": ["git-submodules"],
-      "matchPackageNames": ["submodules/template"]
+      "matchDepNames": ["submodules/template"]
     },
     {
       "description": "Manually test `.devcontainer` updates separately",
       "groupName": "devcontainer",
       "matchManagers": ["devcontainer"]
-    },
+    }
   ]
 }
