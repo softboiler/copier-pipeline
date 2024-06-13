@@ -84,7 +84,11 @@ PYTHON_VERSIONS: tuple[PythonVersion, ...] = (
 
 def check_compilation(high: bool = False) -> str:
     """Check compilation, re-lock if incompatible, and return the requirements."""
-    if high or not get_lockfile(high).exists():
+    if (
+        high
+        or not get_lockfile(high).exists()
+        or not loads(get_lockfile(high).read_text("utf-8"))
+    ):
         return lock(high)
     old_compiler = Compiler.from_lock()
     if Compiler() != old_compiler:
