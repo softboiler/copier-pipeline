@@ -37,7 +37,7 @@ repos:
           pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
         exclude: |
           (?x)^(
-            lock.+\.json
+            lock.*\.json
           $)
       - id: "fawltydeps-src"
         name: "fawltydeps-src"
