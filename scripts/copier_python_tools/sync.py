@@ -163,7 +163,8 @@ def lock(high: bool = False) -> str:
                         ])
                     )
                 ),
-            ]),
+            ])
+            + "\n",
         )
     return sys_compilation.requirements
 
