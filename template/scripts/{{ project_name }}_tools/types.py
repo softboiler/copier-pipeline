@@ -1,6 +1,6 @@
 """Types."""
 
-from typing import Literal, TypeAlias
+from typing import Literal, TypeAlias, TypedDict
 
 Platform: TypeAlias = Literal["linux", "macos", "windows"]
 """Platform."""
@@ -16,3 +16,34 @@ Op = Literal[" @ ", "=="]
 """Allowable operator."""
 ops: tuple[Op, ...] = (" @ ", "==")
 """Allowable operators."""
+
+
+class Dep(TypedDict):
+    """Dependency specification."""
+
+    op: Op
+    """Operator."""
+    rev: str
+    """Revision."""
+
+
+class Meta(TypedDict):
+    """Metadata."""
+
+    time: str
+    uv: str
+    project_platform: Platform
+    project_python_version: PythonVersion
+    no_deps: bool
+    high: bool
+    paths: tuple[str, ...]
+    overrides: str
+    directs: dict[str, Dep]
+    requirements: str
+
+
+class SpecificLock(TypedDict):
+    """Lock for a given platform and Python version."""
+
+    time: str
+    requirements: str
