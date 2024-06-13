@@ -116,8 +116,7 @@ def lock(high: bool = False) -> str:
         if proj_compiler == sys_compiler
         else sys_compiler.compile(directs=proj_compilation.directs)
     )
-    contents: Lock = {}
-    contents["direct"] = {}
+    contents: Lock = {% raw %}{"direct": {}}{% endraw %}
     contents["direct"]["time"] = proj_compilation.time.isoformat()
     contents["direct"]["uv"] = proj_compiler.uv
     contents["direct"]["project_platform"] = proj_compiler.platform

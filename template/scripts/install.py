@@ -20,7 +20,7 @@ from sysconfig import get_config_var
 from tempfile import TemporaryFile
 from urllib.request import urlopen
 
-from zstandard import ZstdDecompressor
+from zstandard import ZstdDecompressor  # pyright: ignore[reportMissingImports]
 
 BIN = Path("bin")
 """Local project binaries."""
