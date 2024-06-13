@@ -151,8 +151,10 @@ def lock(high: bool = False) -> str:
     if not high:
         SECURITY_REQS.write_text(
             encoding="utf-8",
-            data="\n".join(
-                sorted(
+            data="\n".join([
+                "# Merged requirements for all platforms for security audit",
+                "# Likely to be an incompatible dependency set, do not install from this file",
+                *sorted(
                     set(
                         chain.from_iterable([
                             findall(r"(?m)^\w.*$", v["requirements"])
@@ -160,8 +162,8 @@ def lock(high: bool = False) -> str:
                             if v.get("requirements")
                         ])
                     )
-                )
-            ),
+                ),
+            ]) + "\n",
         )
     return sys_compilation.requirements
 

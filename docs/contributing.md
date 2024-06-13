@@ -428,17 +428,7 @@ winget install --id 'Microsoft.VisualStudioCode'
 winget install --id 'Microsoft.WindowsTerminal'
 
 # Install cross-platform PowerShell
-$PowerShellOverrides = @(
-  '/quiet'
-  'ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1'
-  'ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1'
-  'ADD_PATH=1'
-  'ENABLE_MU=1'
-  'ENABLE_PSREMOTING=1'
-  'REGISTER_MANIFEST=1'
-  'USE_MU=1'
-)
-winget install --id 'Microsoft.PowerShell' --override $PowerShellOverrides
+winget install --id 'Microsoft.PowerShell' --override '/quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ADD_PATH=1 ENABLE_MU=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1'
 
 # Install git
 @'

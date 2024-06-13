@@ -4,20 +4,23 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
+from itertools import chain
 from json import dumps, loads
 from pathlib import Path
 from platform import platform
-from re import finditer
+from re import findall, finditer
 from shlex import quote, split
 from subprocess import run
 from sys import version_info
-from typing import Self
+from typing import Self, cast
 
+from copier_python_tools import types
 from copier_python_tools.types import (
-    Lock,
+    Meta,
     Op,
     Platform,
     PythonVersion,
+    SpecificLock,
     SubmoduleInfoKind,
     ops,
 )
@@ -32,24 +35,22 @@ class Dep:
     rev: str
     """Revision."""
 
+    def model_dump(self) -> types.Dep:
+        """Dump model."""
+        return cast(types.Dep, asdict(self))
+
 
 # ! For local dev config tooling
 PYTEST = Path("pytest.ini")
 """Resulting pytest configuration file."""
 
 # ! Dependencies
-COPIER_ANSWERS = Path(".copier-answers.yml")
-"""Copier answers file."""
 PYTHON_VERSIONS_FILE = Path(".python-versions")
 """File containing supported Python versions."""
 REQS = Path("requirements")
 """Requirements."""
-UV = REQS / "uv.in"
-"""UV requirement."""
 DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
-OVERRIDES = REQS / "override.txt"
-"""Overrides to satisfy otherwise incompatible combinations."""
 DEPS = (
     DEV,
     *[
@@ -60,8 +61,12 @@ DEPS = (
     ],
 )
 """Paths to compile dependencies for."""
+OVERRIDES = REQS / "override.txt"
+"""Overrides to satisfy otherwise incompatible combinations."""
 NODEPS = REQS / "nodeps.in"
 """Path to dependencies which should not have their transitive dependencies compiled."""
+SECURITY_REQS = REQS / "requirements.txt"
+"""Security requirements."""
 
 # ! Platforms and Python versions
 SYS_PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356
@@ -84,7 +89,11 @@ PYTHON_VERSIONS: tuple[PythonVersion, ...] = (
 
 def check_compilation(high: bool = False) -> str:
     """Check compilation, re-lock if incompatible, and return the requirements."""
-    if high or not get_lockfile(high).exists():
+    if (
+        high
+        or not (lockfile := get_lockfile(high)).exists()
+        or not loads(lockfile.read_text("utf-8")).get("meta")
+    ):
         return lock(high)
     old_compiler = Compiler.from_lock()
     if Compiler() != old_compiler:
@@ -112,33 +121,50 @@ def lock(high: bool = False) -> str:
         if proj_compiler == sys_compiler
         else sys_compiler.compile(directs=proj_compilation.directs)
     )
-    contents: Lock = {}
-    contents["direct"] = {}
-    contents["direct"]["time"] = proj_compilation.time.isoformat()
-    contents["direct"]["uv"] = proj_compiler.uv
-    contents["direct"]["project_platform"] = proj_compiler.platform
-    contents["direct"]["project_python_version"] = proj_compiler.python_version
-    contents["direct"]["no_deps"] = proj_compiler.no_deps
-    contents["direct"]["high"] = proj_compiler.high
-    contents["direct"]["paths"] = tuple(p.as_posix() for p in proj_compiler.paths)
-    contents["direct"]["overrides"] = proj_compiler.overrides.as_posix()
-    contents["direct"]["directs"] = {
-        k: asdict(v) for k, v in proj_compilation.directs.items()
+    meta: Meta = {
+        "time": proj_compilation.time.isoformat(),
+        "uv": proj_compiler.uv,
+        "project_platform": proj_compiler.platform,
+        "project_python_version": proj_compiler.python_version,
+        "no_deps": proj_compiler.no_deps,
+        "high": proj_compiler.high,
+        "paths": tuple(p.as_posix() for p in proj_compiler.paths),
+        "overrides": proj_compiler.overrides.as_posix(),
+        "directs": {k: v.model_dump() for k, v in proj_compilation.directs.items()},
+        "requirements": "\n".join([
+            f"{name}{dep.op}{dep.rev}" for name, dep in proj_compilation.directs.items()
+        ]),
     }
-    contents["direct"]["requirements"] = "\n".join([
-        f"{name}{dep.op}{dep.rev}" for name, dep in proj_compilation.directs.items()
-    ])
+    locks: dict[str, SpecificLock] = {}
     for plat in sorted(PLATFORMS):
         for python_version in sorted(PYTHON_VERSIONS):
             compiler = Compiler(platform=plat, python_version=python_version, high=high)
             compilation = compiler.compile(directs=proj_compilation.directs)
             key = compiler.get_lockfile_key()
-            contents[key] = {}
-            contents[key]["time"] = compilation.time.isoformat()
-            contents[key]["requirements"] = compilation.requirements
+            locks[key] = {
+                "time": compilation.time.isoformat(),
+                "requirements": compilation.requirements,
+            }
     get_lockfile(high).write_text(
-        encoding="utf-8", data=dumps(indent=2, obj=contents) + "\n"
+        encoding="utf-8", data=dumps(indent=2, obj={"meta": meta, **locks}) + "\n"
     )
+    if not high:
+        SECURITY_REQS.write_text(
+            encoding="utf-8",
+            data="\n".join([
+                "# Merged requirements for all platforms for security audit",
+                "# Likely to be an incompatible dependency set, do not install from this file",
+                *sorted(
+                    set(
+                        chain.from_iterable([
+                            findall(r"(?m)^\w.*$", v["requirements"])
+                            for v in locks.values()
+                            if v.get("requirements")
+                        ])
+                    )
+                ),
+            ]),
+        )
     return sys_compilation.requirements
 
 
@@ -231,19 +257,15 @@ class Compiler:
         high: bool = False,
     ) -> Self:
         """Get locked project compiler."""
-        contents = loads(get_lockfile(high).read_text("utf-8"))
+        meta: Meta = loads(get_lockfile(high).read_text("utf-8"))["meta"]
         return cls(
-            uv=contents["direct"]["uv"],
-            platform=platform or contents["direct"]["project_platform"],
-            python_version=(
-                python_version or contents["direct"]["project_python_version"]
-            ),
-            high=contents["direct"]["high"],
-            no_deps=(
-                contents["direct"]["no_deps"] if platform and python_version else False
-            ),
-            overrides=Path(contents["direct"]["overrides"]),
-            paths=tuple(Path(p) for p in contents["direct"]["paths"]),
+            uv=meta["uv"],
+            platform=platform or meta["project_platform"],
+            python_version=(python_version or meta["project_python_version"]),
+            high=meta["high"],
+            no_deps=(meta["no_deps"] if platform and python_version else False),
+            overrides=Path(meta["overrides"]),
+            paths=tuple(Path(p) for p in meta["paths"]),
         )
 
 
@@ -305,7 +327,7 @@ class Compilation:
             )
             key = compiler.get_lockfile_key()
         else:
-            key = "direct"
+            key = "meta"
             compiler = Compiler.from_lock()
         return cls(
             compiler=compiler,
