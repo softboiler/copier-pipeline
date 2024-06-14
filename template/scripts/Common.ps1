@@ -62,8 +62,6 @@ function Start-PyVenv {
         else {
             $bin = "$Path/bin"
             & "$bin/activate.ps1"
-            # ? uv-sourced, virtualenv-based `activate.ps1` incorrectly uses  `;` sep
-            $Env:PATH = $Env:PATH -Replace ';', ':'
             $Py = "$bin/python"
         }
         # ? Prepend local `bin` to PATH
