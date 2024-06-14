@@ -11,7 +11,6 @@ License: https://github.com/astral-sh/uv/blob/5270624b113d13525ef2e5bef925169154
 
 import tarfile
 from hashlib import sha256
-from json import loads
 from pathlib import Path
 from platform import machine, system
 from shutil import copyfileobj, rmtree
@@ -20,6 +19,7 @@ from sysconfig import get_config_var
 from tempfile import TemporaryFile
 from urllib.request import urlopen
 
+from httpx import Client  # pyright: ignore[reportMissingImports]
 from zstandard import ZstdDecompressor  # pyright: ignore[reportMissingImports]
 
 BIN = Path("bin")
@@ -29,11 +29,13 @@ PLAT = platform
 VER = argv[1] if len(argv) > 1 else "3.11"
 """Version to install."""
 # Retrieve Python versions and metadata from `astral/uv` tooling
-_source = "https://raw.githubusercontent.com/astral-sh/uv/5270624b113d13525ef2e5bef92516915497dc50"
-with urlopen(f"{_source}/.python-versions") as response:  # noqa: S310
-    VERSIONS = response.read().decode("utf-8").splitlines()
-with urlopen(f"{_source}/scripts/bootstrap/versions.json") as response:  # noqa: S310
-    META = loads(response.read().decode("utf-8"))
+_source = "https://raw.githubusercontent.com/astral-sh/uv/b7fb0b445f3698dd1dfc90361b9bea0ab1edee52"
+with Client() as client:
+    response = client.get(f"{_source}/.python-versions")
+    VERSIONS = response.text.splitlines()
+with Client() as client:
+    response = client.get(f"{_source}/crates/uv-toolchain/download-metadata.json")
+    META = response.json()
 
 
 def main():  # noqa: D103

@@ -38,6 +38,13 @@
       "console": "internalConsole"
     },
     {
+      "name": "Python: Debug bootstrapping Python install script",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/bin/sys_venv/bin/python",
+      "program": "${workspaceFolder}/scripts/install.py"
+    },
+    {
       "name": "PowerShell: Launch Current File",
       "type": "PowerShell",
       "request": "launch",
