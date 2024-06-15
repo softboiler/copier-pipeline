@@ -73,6 +73,7 @@
         "ms-python.vscode-pylance@2024.3.2",
         "ms-toolsai.jupyter@2024.1.1",
         "ms-vscode-remote.remote-containers@0.353.0",
+        "ms-vscode.powershell@2024.2.2",
         "njpwerner.autodocstring@0.6.1",
         "njpwerner.autodocstring@0.6.1",
         "redhat.vscode-yaml@1.14.0",

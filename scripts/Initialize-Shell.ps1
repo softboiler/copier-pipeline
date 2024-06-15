@@ -29,12 +29,7 @@ function Set-Env {
     Load `.env`, activate a virtual environment found here or in parent directories.#>
     # ? Activate virtual environment if one exists
     if (Test-Path '.venv') {
-        if ($IsWindows) { .venv/scripts/activate.ps1 }
-        else {
-            .venv/bin/activate.ps1
-            # ? uv-sourced, virtualenv-based `activate.ps1` incorrectly uses  `;` sep
-            $Env:PATH = $Env:PATH -Replace ';', ':'
-        }
+        if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
     }
     # ? Prepend local `bin` to PATH
     $sep = $IsWindows ? ';' : ':'

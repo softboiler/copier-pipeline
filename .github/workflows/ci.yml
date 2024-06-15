@@ -62,7 +62,7 @@ jobs:
       - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
-    if: "github.event_name != 'pull_request'"
+    if: github.event_name != 'pull_request'
     needs: "build-docs"
     permissions:
       pages: "write"
@@ -100,7 +100,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff check --no-fix --output-format github ."
+      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -123,7 +123,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "fawltydeps"
+      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -146,7 +146,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: pyright
+      - run: ". scripts/Initialize-Shell.ps1; pyright"
   test:
     needs: "sync"
     strategy:
@@ -177,8 +177,8 @@ jobs:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - run: "pytest --cov --cov-config pyproject.toml"
-      - if: "startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'"
+      - run: ". scripts/Initialize-Shell.ps1; pytest --cov --cov-config pyproject.toml"
+      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
         uses: "codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c" # v4.4.1
         env:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"

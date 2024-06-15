@@ -68,7 +68,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff check --no-fix --output-format github ."
+      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -87,7 +87,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "fawltydeps"
+      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -106,7 +106,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: pyright
+      - run: ". scripts/Initialize-Shell.ps1; pyright"
   test:
     needs: "sync"
     strategy:
@@ -128,7 +128,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      - run: "pytest"
+      - run: ". scripts/Initialize-Shell.ps1; pytest"
   lock:
     needs:
       - "ruff"

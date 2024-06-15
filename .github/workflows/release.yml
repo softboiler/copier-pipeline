@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "flit publish"
+      - run: ". scripts/Initialize-Shell.ps1; flit publish"
         env:
           FLIT_USERNAME: "__token__"
           FLIT_PASSWORD: "${{ secrets.PYPI_TOKEN }}"

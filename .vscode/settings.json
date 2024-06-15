@@ -34,7 +34,7 @@
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
     //? Prevents file nesting from hijacking brand new files before setting filename
-    "*.root": ".*, a*, b*, c*, d*, e*, f*, g*, h*, i*, j*, k*, l*, m*, n*, o*, p*, q*, r*, s*, t*, u*, v*, w*, x*, y*, z*, 0*, 1*, 2*, 3*, 4*, 5*, 6*, 7*, 8*, 9*, _*, -*, {*"
+    "*.root": ".*, a*, b*, c*, d*, e*, f*, g*, h*, i*, j*, k*, l*, m*, n*, o*, p*, q*, r*, s*, t*, u*, v*, w*, x*, y*, z*, A*, B*, C*, D*, E*, F*, G*, H*, I*, J*, K*, L*, M*, N*, O*, P*, Q*, R*, S*, T*, U*, V*, W*, X*, Y*, Z*, 0*, 1*, 2*, 3*, 4*, 5*, 6*, 7*, 8*, 9*, _*, -*, {*"
   },
   //! File associations
   "files.associations": {
@@ -111,6 +111,17 @@
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.inlayHints.variableTypes": true,
+  //* PowerShell
+  "powershell.startAutomatically": false,
+  "powershell.promptToUpdatePowerShell": false,
+  "powershell.integratedConsole.showOnStartup": false,
+  "powershell.codeFormatting.autoCorrectAliases": true,
+  "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": true,
+  "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+  "powershell.codeFormatting.useConstantStrings": true,
+  "powershell.codeFormatting.useCorrectCasing": true,
+  "powershell.codeFormatting.whitespaceBetweenParameters": true,
+  "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
   //* Rewrap
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
