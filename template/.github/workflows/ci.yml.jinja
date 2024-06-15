@@ -146,7 +146,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: pyright
+      - run: "pyright"
   test:
     needs: "sync"
     strategy:
