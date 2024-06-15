@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "flit publish"
+      - run: ". scripts/Initialize-Shell.ps1; flit publish"
         env:
           FLIT_USERNAME: "__token__"
           FLIT_PASSWORD: "{% raw %}${{ secrets.PYPI_TOKEN }}{% endraw %}"

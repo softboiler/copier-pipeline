@@ -100,7 +100,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "ruff check --no-fix --output-format github ."
+      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -123,7 +123,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "fawltydeps"
+      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -146,7 +146,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "pyright"
+      - run: ". scripts/Initialize-Shell.ps1; pyright"
   test:
     needs: "sync"
     strategy:
@@ -177,7 +177,7 @@ jobs:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - run: "pytest --cov --cov-config pyproject.toml"
+      - run: ". scripts/Initialize-Shell.ps1; pytest --cov --cov-config pyproject.toml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@125fc84a9a348dbcf27191600683ec096ec9021c" # v4.4.1
         env:

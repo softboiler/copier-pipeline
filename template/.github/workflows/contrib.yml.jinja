@@ -53,7 +53,7 @@ jobs:
         python: ["{{ python_version }}"]
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
-      - run: "New-Item -ItemType Directory 'repo path with spaces'"
+      - run: ". scripts/Initialize-Shell.ps1; New-Item -ItemType Directory 'repo path with spaces'"
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
