@@ -362,7 +362,7 @@ def get_subs() -> dict[str, Dep]:
         zip(get_submodule_info("paths"), get_submodule_info("urls"), strict=True)
     )
     revs = {
-        item[1]: item[0]
+        item[1]: item[0].removeprefix("+")  # ? Remove `+` in case it's not staged
         for item in (
             item.split()
             for item in run(
