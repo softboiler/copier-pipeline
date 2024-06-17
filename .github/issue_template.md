@@ -10,13 +10,13 @@ Please apply the `bug` label
 
 ### Please confirm that this bug affects the latest version
 
-{# Please verify the issue is present in the latest version by installing it with `pip install {{ project_name }}=={{ project_version }}` and checking that the bug is still there #}
+<!-- Please verify the issue is present in the latest version by installing it with `pip install copier_python==0.0.0` and checking that the bug is still there #} -->
 
 - [ ] This bug affects version `0.0.0` of `copier_python`.
 
 ### Please indicate which operating system(s) you are using
 
-{# Please select the most appropriate choice(s) if your exact OS is not listed #}
+<!-- Please select the most appropriate choice(s) if your exact OS is not listed #} -->
 
 - [ ] Linux
 - [ ] macOS
@@ -24,16 +24,16 @@ Please apply the `bug` label
 
 ### Expected behavior
 
-{# Please explain what **should** happen #}
+<!-- Please explain what **should** happen #} -->
 
 ### Current behaviour
 
-{# Please explain what happens instead of the expected behavior #}
+<!-- Please explain what happens instead of the expected behavior #} -->
 
 ### Steps to reproduce
 
-{# Please provide steps that would allow someone to reproduce the issue #}
+<!-- Please provide steps that would allow someone to reproduce the issue #} -->
 
 ### Possible solution
 
-{# Please suggest a possible fix or any ideas you may have about the root cause #}
+<!-- Please suggest a possible fix or any ideas you may have about the root cause #} -->
