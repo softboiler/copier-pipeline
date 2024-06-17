@@ -36,7 +36,14 @@ function Get-PySystem {
 
     # ? Look for suitable global Python interpreter, return if correct Python version
     'Looking for suitable global Python interpreter' | Write-Progress -Info
-    if ($py -eq 'py') { $SysPy = & $py -$Version -c $getExe }
+    if ($py -eq 'py') {
+        try {
+            $SysPy = & $py -$Version -c $getExe
+        }
+        catch [System.Management.Automation.NativeCommandExitException] {
+            $SysPy = & $py -c $getExe
+        }
+    }
     else { $SysPy = & $py -c $getExe }
     if (Select-PyVersion $py $Version) { return $SysPy }
 
