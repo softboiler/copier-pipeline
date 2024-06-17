@@ -17,7 +17,7 @@
   },
   "search.exclude": {
     //? Don't search in submodules or locks by default
-    "submodules/template": true,
+    "submodules": true,
     "lock*.json": true
   },
   //! File nesting
