@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from json import loads
 from re import sub
-from shlex import split
+from shlex import quote, split
 from subprocess import run
 from textwrap import dedent
 from typing import Any, NamedTuple
@@ -18,8 +18,11 @@ def add_change(typ: ChangeType = "change"):
     """Add change."""
     owner, repo, issue = get_issue_from_active_branch()
     change = get_change(owner, repo, issue)
+    content = quote(f"{change.name}\n")
     run(
-        split(f"towncrier create --content '{change.name}\n' {change.id}.{typ}.md"),  # noqa: S603
+        split(  # noqa: S603
+            f"""towncrier create --content {content} {change.id}.{typ}.md"""
+        ),
         check=True,
     )
 
