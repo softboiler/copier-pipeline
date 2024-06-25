@@ -59,7 +59,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "sphinx-build -EaT docs _site"
+      - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
     if: github.event_name != 'pull_request'
