@@ -79,7 +79,7 @@ def get_linked_branches(
         owner,
         repo,
         issue,
-        query=f"""linkedBranches(first: {first}) {{ nodes {{ id }} }}""",
+        query=f"""{% raw %}linkedBranches(first: {first}) {{ nodes {{ id }} }}{% endraw %}""",
     )["linkedBranches"]["nodes"]
 
 
@@ -91,14 +91,14 @@ def get_connected_prs(
         owner,
         repo,
         issue,
-        query=f"""
+        query=f"""{% raw %}
             timelineItems(itemTypes: CONNECTED_EVENT, first: {first}) {{
                 nodes {{
                     ... on ConnectedEvent {{
                         subject {{ ... on PullRequest {{ number title }} }}
                     }}
                 }}
-            }}""",
+            }}{% endraw %}""",
     )["timelineItems"]["nodes"]
 
 
@@ -112,11 +112,11 @@ def query_gh_issue(
             "api",
             "graphql",
             "-f",
-            sanitize(f"""query= {{
+            sanitize(f"""{% raw %}query= {{
                 repository(owner:"{owner}", name:"{repo}") {{
                     issue(number: {issue}) {{ {sanitize(query)} }}
                 }}
-            }}"""),
+            }}{% endraw %}"""),
         ],
         capture_output=True,
         text=True,
