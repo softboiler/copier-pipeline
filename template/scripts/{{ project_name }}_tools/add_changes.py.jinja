@@ -66,21 +66,7 @@ def get_change(owner: str, repo: str, issue: int) -> Change:
     if nodes := get_connected_prs(owner, repo, issue, first):
         subject = nodes[0]["subject"]
         return Change(id=subject["number"], name=subject["title"])
-    if nodes := get_linked_branches(owner, repo, issue, first):
-        Change(id=issue, name=nodes[0]["subject"]["title"])
     return Change(id=issue, name=query_gh_issue(owner, repo, issue)["title"])
-
-
-def get_linked_branches(
-    owner: str, repo: str, issue: int, first: int
-) -> list[dict[str, Any]]:
-    """Get first branch linked to an issue."""
-    return query_gh_issue(
-        owner,
-        repo,
-        issue,
-        query=f"""{% raw %}linkedBranches(first: {first}) {{ nodes {{ id }} }}{% endraw %}""",
-    )["linkedBranches"]["nodes"]
 
 
 def get_connected_prs(
