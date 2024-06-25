@@ -5,6 +5,11 @@
   "version": "2.0.0",
   "inputs": [
     {
+      "id": "dependency",
+      "type": "promptString",
+      "description": "Show tree of packages requesting this dependency."
+    },
+    {
       "id": "templateOptions",
       "description": "Template options.",
       "type": "pickString",
