@@ -112,7 +112,7 @@ repos:
             |tests/.*
           )$
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.4.8"
+    rev: "v0.4.10"
     hooks:
       - id: "ruff"
         args: ["--extend-fixable", "PIE790"]
