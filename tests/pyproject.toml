@@ -8,10 +8,10 @@ version = "0.0.0"
 description = "Tests."
 dependencies = [
     # ? Core testing
-    "pytest-cov==4.1.0",
+    "pytest-cov==5.0.0",
     "pytest-custom-exit-code==0.3.0",
     "pytest-github-actions-annotate-failures==0.2.0",
-    "pytest==8.0.0",
+    "pytest==8.2.2",
 ]
 
 [tool.fawltydeps]
