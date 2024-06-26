@@ -93,7 +93,7 @@
     {
       "label": "task: Generate changelog entry",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; python -m copier_python_tools add-change ${input:changeType}",
+      "command": ". scripts/Initialize-Shell.ps1; python -m _tools add-change ${input:changeType}",
       "icon": { "id": "request-changes" },
       "problemMatcher": []
     },
