@@ -4,40 +4,16 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
-from itertools import chain
 from json import dumps, loads
 from pathlib import Path
-from platform import platform
-from re import findall, finditer
+from re import finditer
 from shlex import quote, split
 from subprocess import run
-from sys import version_info
-from typing import Self, cast
 
-from copier_python_tools import types
-from copier_python_tools.types import (
-    Meta,
-    Op,
-    Platform,
-    PythonVersion,
-    SpecificLock,
-    SubmoduleInfoKind,
-    ops,
-)
+from copier_python_tools.types import Dep, PythonVersion, SubmoduleInfoKind, ops
 
-
-@dataclass
-class Dep:
-    """Dependency."""
-
-    op: Op
-    """Operator."""
-    rev: str
-    """Revision."""
-
-    def model_dump(self) -> types.Dep:
-        """Dump model."""
-        return cast(types.Dep, asdict(self))
+MINIMUM_PYTHON = "3.10"
+"""This project's default Python version."""
 
 
 # ! For local dev config tooling
@@ -65,128 +41,69 @@ OVERRIDES = REQS / "override.txt"
 """Overrides to satisfy otherwise incompatible combinations."""
 NODEPS = REQS / "nodeps.in"
 """Path to dependencies which should not have their transitive dependencies compiled."""
-SECURITY_REQS = REQS / "requirements.txt"
-"""Security requirements."""
+REQUIREMENTS = REQS / "requirements.txt"
+"""Requirements."""
 
-# ! Platforms and Python versions
-SYS_PLATFORM: Platform = platform(terse=True).casefold().split("-")[0]  # pyright: ignore[reportAssignmentType] 1.1.356
-"""Platform identifier."""
-SYS_PYTHON_VERSION: PythonVersion = ".".join([str(v) for v in version_info[:2]])  # pyright: ignore[reportAssignmentType] 1.1.356
-"""Python version associated with this platform."""
-PROJECT_PLATFORM: Platform = "linux"
-"""This project's default compilation platform."""
-PROJECT_PYTHON_VERSION: PythonVersion = "3.11"
-"""This project's default Python version."""
-PLATFORMS: tuple[Platform, ...] = ("linux", "macos", "windows")
-"""Supported platforms."""
-PYTHON_VERSIONS: tuple[PythonVersion, ...] = (
-    tuple(PYTHON_VERSIONS_FILE.read_text("utf-8").splitlines())  # pyright: ignore[reportArgumentType] 1.1.356
-    if PYTHON_VERSIONS_FILE.exists()
-    else ("3.9", "3.10", "3.11", "3.12")
-)
-"""Supported Python versions."""
+
+@dataclass
+class Lock:
+    """Lockfile."""
+
+    time: str
+    uv: str
+    minimum_python: PythonVersion
+    paths: tuple[str, ...]
+    overrides: str
+    directs: dict[str, Dep]
+    direct_requirements: str
+    requirements: str
 
 
 def check_compilation(high: bool = False) -> str:
     """Check compilation, re-lock if incompatible, and return the requirements."""
-    if (
-        high
-        or not (lockfile := get_lockfile(high)).exists()
-        or not loads(lockfile.read_text("utf-8")).get("meta")
+    if high:
+        return lock(high=high)
+    lockfile = get_lockfile(high)
+    if not lockfile.exists():
+        return lock()
+    contents = loads(lockfile.read_text("utf-8"))
+    if not contents:
+        return lock()
+    locked = Lock(**contents)
+    if Compiler() != Compiler(
+        uv=locked.uv,
+        overrides=Path(locked.overrides),
+        paths=tuple(Path(p) for p in locked.paths),
     ):
-        return lock(high)
-    old_compiler = Compiler.from_lock()
-    if Compiler() != old_compiler:
         return lock()
-    old_proj_compilation = Compilation.from_lock()
-    proj_compilation = Compiler(high=high, no_deps=True).compile()
-    if proj_compilation.directs != old_proj_compilation.directs:
-        return lock()
-    return Compilation.from_lock(
-        platform=SYS_PLATFORM, python_version=SYS_PYTHON_VERSION
-    ).requirements
+    if get_directs() != locked.directs:
+        return lock(directs=locked.directs)
+    return locked.requirements
 
 
-def lock(high: bool = False) -> str:
+def lock(directs: dict[str, Dep] | None = None, high: bool = False) -> str:
     """Lock."""
-    proj_compiler = Compiler(
-        platform=PROJECT_PLATFORM, python_version=PROJECT_PYTHON_VERSION, high=high
-    )
-    proj_compilation = proj_compiler.compile()
-    sys_compiler = Compiler(
-        platform=SYS_PLATFORM, python_version=SYS_PYTHON_VERSION, high=high
-    )
-    sys_compilation = (
-        proj_compilation
-        if proj_compiler == sys_compiler
-        else sys_compiler.compile(directs=proj_compilation.directs)
-    )
-    meta: Meta = {
-        "time": proj_compilation.time.isoformat(),
-        "uv": proj_compiler.uv,
-        "project_platform": proj_compiler.platform,
-        "project_python_version": proj_compiler.python_version,
-        "no_deps": proj_compiler.no_deps,
-        "high": proj_compiler.high,
-        "paths": tuple(p.as_posix() for p in proj_compiler.paths),
-        "overrides": proj_compiler.overrides.as_posix(),
-        "directs": {k: v.model_dump() for k, v in proj_compilation.directs.items()},
-        "requirements": "\n".join([
-            f"{name}{dep.op}{dep.rev}" for name, dep in proj_compilation.directs.items()
+    compiler = Compiler(high=high)
+    compilation = compiler.compile(directs=directs or {})
+    contents = Lock(
+        time=compilation.time.isoformat(),
+        uv=compiler.uv,
+        minimum_python=compiler.python_version,
+        paths=tuple(p.as_posix() for p in compiler.paths),
+        overrides=compiler.overrides.as_posix(),
+        directs=compilation.directs,
+        direct_requirements="\n".join([
+            f"{name}{dep['op']}{dep['rev']}"
+            for name, dep in compilation.directs.items()
         ]),
-    }
-    locks: dict[str, SpecificLock] = {}
-    for plat in sorted(PLATFORMS):
-        for python_version in sorted(PYTHON_VERSIONS):
-            compiler = Compiler(platform=plat, python_version=python_version, high=high)
-            compilation = compiler.compile(directs=proj_compilation.directs)
-            key = compiler.get_lockfile_key()
-            locks[key] = {
-                "time": compilation.time.isoformat(),
-                "requirements": compilation.requirements,
-            }
+        requirements=compilation.requirements,
+    )
     get_lockfile(high).write_text(
-        encoding="utf-8", data=dumps(indent=2, obj={"meta": meta, **locks}) + "\n"
+        encoding="utf-8", data=dumps(indent=2, obj=asdict(contents)) + "\n"
     )
     if not high:
-        SECURITY_REQS.write_text(
-            encoding="utf-8",
-            data="\n".join([
-                "# Merged requirements for all platforms for security audit",
-                "# Likely to be an incompatible dependency set, do not install from this file",
-                *sorted(
-                    set(
-                        chain.from_iterable([
-                            findall(r"(?m)^\w.*$", v["requirements"])
-                            for v in locks.values()
-                            if v.get("requirements")
-                        ])
-                    )
-                ),
-            ])
-            + "\n",
-        )
-    return sys_compilation.requirements
-
-
-def get_lockfile_key(platform: Platform, python_version: PythonVersion) -> str:
-    """Get the name of a dependency compilation.
-
-    Parameters
-    ----------
-    platform
-        Platform to compile for.
-    python_version
-        Python version to compile for.
-    high
-        Highest dependencies.
-    """
-    return "_".join([platform, python_version])
-
-
-def get_lockfile(high: bool) -> Path:
-    """Get lockfile path."""
-    return Path(f"lock{'-high' if high else ''}.json")
+        REQUIREMENTS.write_text(encoding="utf-8", data=contents.requirements)
+    return compilation.requirements
 
 
 def get_uv_version() -> str:
@@ -205,9 +122,7 @@ class Compiler:
 
     uv: str = field(default_factory=get_uv_version)
     """Version of `uv` used to compile."""
-    platform: Platform = PROJECT_PLATFORM
-    """Platform compiled for."""
-    python_version: PythonVersion = PROJECT_PYTHON_VERSION
+    python_version: PythonVersion = MINIMUM_PYTHON
     """Python version compiled for."""
     high: bool = False
     """Highest dependencies."""
@@ -225,49 +140,25 @@ class Compiler:
             "bin/uv",
             "pip",
             "compile",
+            "--universal",
+            "--all-extras",
             "--exclude-newer",
             time.isoformat().replace("+00:00", "Z"),
-            "--python-platform",
-            self.platform,
             "--python-version",
             self.python_version,
             "--resolution",
             "highest" if self.high else "lowest-direct",
             "--override",
             escape(self.overrides),
-            "--all-extras",
             *(["--no-deps"] if self.no_deps else []),
             *[escape(path) for path in self.paths],
         ]
-
-    def get_lockfile_key(self) -> str:
-        """Get lockfile key."""
-        return get_lockfile_key(self.platform, self.python_version)
 
     def compile(
         self, time: datetime = datetime.min, directs: dict[str, Dep] | None = None
     ) -> Compilation:
         """Compile dependencies."""
         return Compilation(compiler=self, time=time, directs=directs or get_directs())
-
-    @classmethod
-    def from_lock(
-        cls,
-        platform: Platform | None = None,
-        python_version: PythonVersion | None = None,
-        high: bool = False,
-    ) -> Self:
-        """Get locked project compiler."""
-        meta: Meta = loads(get_lockfile(high).read_text("utf-8"))["meta"]
-        return cls(
-            uv=meta["uv"],
-            platform=platform or meta["project_platform"],
-            python_version=(python_version or meta["project_python_version"]),
-            high=meta["high"],
-            no_deps=(meta["no_deps"] if platform and python_version else False),
-            overrides=Path(meta["overrides"]),
-            paths=tuple(Path(p) for p in meta["paths"]),
-        )
 
 
 NAME_PAT = r"[A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9._-]*[A-Za-z0-9]"
@@ -313,29 +204,10 @@ class Compilation:
             self.time = time
             self.requirements = requirements
 
-    @classmethod
-    def from_lock(
-        cls,
-        platform: Platform | None = None,
-        python_version: PythonVersion | None = None,
-        high: bool = False,
-    ) -> Self:
-        """Get locked project compiler."""
-        contents = loads(get_lockfile(high).read_text("utf-8"))
-        if platform and python_version:
-            compiler = Compiler.from_lock(
-                platform=platform, python_version=python_version, high=high
-            )
-            key = compiler.get_lockfile_key()
-        else:
-            key = "meta"
-            compiler = Compiler.from_lock()
-        return cls(
-            compiler=compiler,
-            time=contents[key]["time"],
-            requirements=(reqs := contents[key]["requirements"]),
-            directs=get_directs(reqs),
-        )
+
+def get_lockfile(high: bool) -> Path:
+    """Get lockfile path."""
+    return Path(f"lock{'-high' if high else ''}.json")
 
 
 def compile(compiler: Compiler) -> tuple[datetime, str]:  # noqa: A001
@@ -344,15 +216,15 @@ def compile(compiler: Compiler) -> tuple[datetime, str]:  # noqa: A001
     result = run(args=cmd, capture_output=True, check=False, text=True)
     if result.returncode:
         raise RuntimeError(result.stderr)
-    requirements = (
-        "\n".join([
-            "# nodeps",
-            *[line.strip() for line in NODEPS.read_text("utf-8").splitlines()],
-            "# compilation",
-            result.stdout,
-        ])
-        + "\n"
-    )
+    nodeps = NODEPS.read_text("utf-8").splitlines()
+    requirements = "\n".join([
+        *(
+            ["# nodeps", *[line.strip() for line in nodeps], "# compilation"]
+            if nodeps
+            else []
+        ),
+        result.stdout,
+    ])
     return time, requirements
 
 
