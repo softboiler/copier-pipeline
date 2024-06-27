@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass, field
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from json import dumps, loads
 from pathlib import Path
 from re import finditer
@@ -21,8 +21,6 @@ PYTEST = Path("pytest.ini")
 """Resulting pytest configuration file."""
 
 # ! Dependencies
-PYTHON_VERSIONS_FILE = Path(".python-versions")
-"""File containing supported Python versions."""
 REQS = Path("requirements")
 """Requirements."""
 DEV = REQS / "dev.in"
@@ -135,7 +133,7 @@ class Compiler:
 
     def get_command(self) -> tuple[datetime, list[str]]:
         """Command to reproduce compilation requirements."""
-        time = datetime.now(UTC)
+        time = datetime.now(timezone.utc)
         return time, [
             "bin/uv",
             "pip",
