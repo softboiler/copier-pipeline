@@ -56,7 +56,7 @@ def check_compilation(high: bool = False) -> str:
     """Check compilation, re-lock if incompatible, and return the requirements."""
     if high:
         return lock(high=high)
-    lockfile = get_lockfile(high)
+    lockfile = get_lockfile()
     if not lockfile.exists():
         return lock()
     contents = loads(lockfile.read_text("utf-8"))
