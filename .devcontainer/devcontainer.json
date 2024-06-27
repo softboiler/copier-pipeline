@@ -1,6 +1,6 @@
 {
   "name": "devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/base:1.1.1-ubuntu-22.04",
+  "image": "mcr.microsoft.com/devcontainers/base:1.0.22-ubuntu-22.04",
   "features": {
     "ghcr.io/devcontainers/features/powershell:1.4.0": {
       "version": "7.4.1"
@@ -16,6 +16,7 @@
     },
     "ghcr.io/joshuanianji/devcontainer-features/gcloud-cli-persistence:1.0.3": {}
   },
+
   "onCreateCommand": {
     "set-up-profile": [
       "pwsh",
