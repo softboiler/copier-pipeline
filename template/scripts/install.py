@@ -26,7 +26,7 @@ BIN = Path("bin")
 """Local project binaries."""
 PLAT = platform
 """Current platform."""
-VER = argv[1] if len(argv) > 1 else "3.11"
+VER = argv[1] if len(argv) > 1 else "3.10"
 """Version to install."""
 # Retrieve Python versions and metadata from `astral/uv` tooling
 _source = "https://raw.githubusercontent.com/astral-sh/uv/b7fb0b445f3698dd1dfc90361b9bea0ab1edee52"
