@@ -51,7 +51,7 @@ project_version:
 python_version:
   type: "str"
   help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`."
-  default: "3.11"
+  default: "3.10"
   validator: "{% if not '.' in python_version %}Invalid input{% endif %}"
 
 actions_runner:
