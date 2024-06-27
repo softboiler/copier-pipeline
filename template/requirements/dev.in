@@ -13,3 +13,6 @@ ruff==0.4.10
 snakeviz==2.2.0
 sourcery==1.19.0
 towncrier==23.11.0
+# ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
+# ? via flit
+urllib3>=2.2.2

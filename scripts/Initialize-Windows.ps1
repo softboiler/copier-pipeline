@@ -1,14 +1,14 @@
 <#.SYNOPSIS
-Initialize Windows.#>
+Initialize Windows machine.#>
 
-# Install GitHub CLI
-winget install --source 'winget' --id 'GitHub.cli'
 # Install Python
 winget install --source 'winget' --id 'Python.Python.3.11' --override '/quiet PrependPath=0'
 # Install VSCode
 winget install --source 'winget' --id 'Microsoft.VisualStudioCode'
 # Install Windows Terminal
 winget install --source 'winget' --id 'Microsoft.WindowsTerminal'
+# Install GitHub CLI
+winget install --source 'winget' --id 'GitHub.cli'
 # Install git
 @'
 [Setup]
@@ -35,4 +35,4 @@ EnableSymlinks=Disabled
 EnablePseudoConsoleSupport=Disabled
 EnableFSMonitor=Enabled
 '@ | Out-File ($inf = New-TemporaryFile)
-winget install --id 'Git.Git' --override "/SILENT /LOADINF=$inf"
+winget install --source 'winget' --id 'Git.Git' --override "/SILENT /LOADINF=$inf"

@@ -22,6 +22,8 @@ if [[ $OSTYPE == "darwin"* ]]; then
     $BREW install python@3.11
     # Install Python Launcher
     $BREW install python-launcher
+    # Install GitHub API
+    $BREW install gh
     return
 fi
 
@@ -56,7 +58,6 @@ if [ "$(command -v apt)" ]; then
             /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
             test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-            echo "eval \"\$($(brew --prefix)/bin/brew shellenv)\"" >> ~/.bashrc
         fi
         if grep -i microsoft /proc/version > /dev/null; then
             # Linuxbrew/Homebrew update hangs in WSL
@@ -82,7 +83,7 @@ elif [ "$(command -v dnf)" ]; then
 else return
 fi
 
-# Install Git, PowerShell, and VSCode on Linux
-sudo $PKG install -y git
+# Install Git, PowerShell, VSCode, and GitHub API on Linux
+sudo $PKG install -y git gh
 sudo $SNAP install powershell --classic
 sudo $SNAP install code --classic
