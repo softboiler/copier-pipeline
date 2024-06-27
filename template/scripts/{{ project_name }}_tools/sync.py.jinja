@@ -15,11 +15,6 @@ from {{ project_name }}_tools.types import Dep, PythonVersion, SubmoduleInfoKind
 MINIMUM_PYTHON = "{{ python_version }}"
 """This project's default Python version."""
 
-
-# ! For local dev config tooling
-PYTEST = Path("pytest.ini")
-"""Resulting pytest configuration file."""
-
 # ! Dependencies
 REQS = Path("requirements")
 """Requirements."""
