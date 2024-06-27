@@ -15,11 +15,6 @@ from copier_python_tools.types import Dep, PythonVersion, SubmoduleInfoKind, ops
 MINIMUM_PYTHON = "3.10"
 """This project's default Python version."""
 
-
-# ! For local dev config tooling
-PYTEST = Path("pytest.ini")
-"""Resulting pytest configuration file."""
-
 # ! Dependencies
 REQS = Path("requirements")
 """Requirements."""
@@ -61,7 +56,7 @@ def check_compilation(high: bool = False) -> str:
     """Check compilation, re-lock if incompatible, and return the requirements."""
     if high:
         return lock(high=high)
-    lockfile = get_lockfile(high)
+    lockfile = get_lockfile()
     if not lockfile.exists():
         return lock()
     contents = loads(lockfile.read_text("utf-8"))
@@ -203,7 +198,7 @@ class Compilation:
             self.requirements = requirements
 
 
-def get_lockfile(high: bool) -> Path:
+def get_lockfile(high: bool = False) -> Path:
     """Get lockfile path."""
     return Path(f"lock{'-high' if high else ''}.json")
 

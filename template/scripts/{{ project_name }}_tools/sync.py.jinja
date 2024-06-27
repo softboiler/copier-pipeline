@@ -198,7 +198,7 @@ class Compilation:
             self.requirements = requirements
 
 
-def get_lockfile(high: bool) -> Path:
+def get_lockfile(high: bool = False) -> Path:
     """Get lockfile path."""
     return Path(f"lock{'-high' if high else ''}.json")
 
