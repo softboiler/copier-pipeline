@@ -10,5 +10,5 @@ project_name: copier_python
 project_owner_github_username: blakeNaccarato
 project_owner_name: Blake Naccarato
 project_version: 0.0.0
-python_version: '3.11'
+python_version: '3.10'
 year_of_project_creation: 2022
