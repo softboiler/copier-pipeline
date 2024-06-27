@@ -44,7 +44,7 @@
       }
     },
     {
-      "label": "setup: Perform first-time setup",
+      "label": "setup: Initialize repository",
       "type": "shell",
       "command": "scripts/Initialize-Repo.ps1",
       "icon": { "id": "file-symlink-directory" },
@@ -54,6 +54,29 @@
       "label": "setup: Remove *.rej",
       "type": "shell",
       "command": "Get-ChildItem -Recurse -Filter *.rej | Remove-Item",
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Initialize Windows machine",
+      "type": "shell",
+      "options": { "shell": { "executable": "powershell" } },
+      "command": "scripts/Initialize-Windows.ps1",
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Initialize Linux/MacOS machine",
+      "type": "shell",
+      "options": { "shell": { "executable": "bash" } },
+      "command": "scripts/Initialize-LinuxMacOS.sh",
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "setup: Finish initializing machine (cross-platform)",
+      "type": "shell",
+      "command": "scripts/Initialize-Machine.ps1",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
