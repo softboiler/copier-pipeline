@@ -2,7 +2,7 @@
 Initialize Windows machine.#>
 
 # Install Python
-winget install --source 'winget' --id 'Python.Python.3.11' --override '/quiet PrependPath=0'
+winget install --source 'winget' --id 'Python.Python.3.10' --override '/quiet PrependPath=0'
 # Install VSCode
 winget install --source 'winget' --id 'Microsoft.VisualStudioCode'
 # Install Windows Terminal

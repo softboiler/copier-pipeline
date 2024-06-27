@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0

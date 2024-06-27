@@ -14,5 +14,5 @@ ignore:
   - ".*"
 
 rule_settings:
-  python_version: "3.11"
+  python_version: "3.10"
   enable: ["default"]

@@ -19,7 +19,7 @@ if [[ $OSTYPE == "darwin"* ]]; then
     # Install PowerShell
     $BREW install powershell/tap/powershell
     # Install appropriate Python (can't easily use `python-build-standalone`)
-    $BREW install python@3.11
+    $BREW install python@3.10
     # Install Python Launcher
     $BREW install python-launcher
     # Install GitHub API

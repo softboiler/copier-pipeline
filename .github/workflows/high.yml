@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -35,7 +35,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -55,7 +55,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -74,7 +74,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -93,7 +93,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -115,7 +115,7 @@ jobs:
           - "macos-13"
           - "ubuntu-22.04"
           - "windows-2022"
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -140,7 +140,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.11"]
+        python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
