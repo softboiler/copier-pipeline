@@ -22,7 +22,7 @@ if ($Recopy) {
 if ($templateExists) {
     if (!$Stay) {
         git submodule update --init --remote --merge $template
-        git add --all
+        git add .
         $msg = "Update template digest to $(git rev-parse HEAD:submodules/template)"
         $origPreference = $ErrorActionPreference
         $ErrorActionPreference = 'SilentlyContinue'

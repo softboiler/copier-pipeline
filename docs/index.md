@@ -1,13 +1,15 @@
 # `copier_python`
 
+[![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/copier-python?color=ee8449&style=flat-square)](../README.md#contributors)
+
 Copier template for Python projects.
 
 :::{toctree}
 :hidden:
 contributing
-troubleshooting
 examples/index
 changelog
+contributors
 apidocs/index
 references
 :::

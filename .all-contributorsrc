@@ -1,0 +1,11 @@
+{
+  "commitConvention": "angular",
+  "commitType": "docs",
+  "contributorsPerLine": 7,
+  "files": [
+  "CONTRIBUTORS.md",
+  "README.md"
+  ],
+  "projectName": "copier-python",
+  "projectOwner": "blakeNaccarato"
+}

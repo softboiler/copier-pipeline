@@ -5,6 +5,11 @@
   "version": "2.0.0",
   "inputs": [
     {
+      "id": "version",
+      "type": "promptString",
+      "description": "Version number."
+    },
+    {
       "id": "dependency",
       "type": "promptString",
       "description": "Show tree of packages requesting this dependency."
@@ -182,6 +187,13 @@
       "label": "task: view profile results with snakeviz",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; snakeviz .prof",
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Bump version",
+      "type": "shell",
+      "command": "copier update --vcs-ref=$(git rev-parse HEAD:submodules/template) --defaults --data project_version='${input:version}'; git add .; git commit -m 'Bump version'; git push",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     }
