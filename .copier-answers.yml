@@ -4,7 +4,7 @@ _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-22.04
 active: true
 github_repo_name: copier-python
-project_description: Copier template for Python projects.
+project_description: Copier template for Python projects
 project_email: blake.naccarato@gmail.com
 project_name: copier_python
 project_owner_github_username: blakeNaccarato

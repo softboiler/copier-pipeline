@@ -2,6 +2,7 @@
 --editable docs/
 --editable scripts/
 --editable tests/
+build==1.2.1
 debugpy==1.8.2
 fawltydeps==0.16.0
 flit==3.9.0
