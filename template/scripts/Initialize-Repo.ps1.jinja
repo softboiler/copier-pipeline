@@ -12,8 +12,10 @@ scripts/Sync-Py.ps1
 Set-Env
 git add .
 git commit --no-verify -m 'Lock'
-git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'
-git branch -M main
+if (!(git remote)) {
+    git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'
+    git branch -M main
+}
 git push -u origin main
 gh repo edit -d "$((Get-Content '.copier-answers.yml' |
     Select-String -Pattern '^project_description:\s(.+)$').Matches.Groups[1].value)"
