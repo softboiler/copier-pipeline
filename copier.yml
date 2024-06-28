@@ -35,7 +35,7 @@ year_of_project_creation:
 
 project_description:
   type: "str"
-  help: "A brief description for your project. Required, but can easily be changed manually later."
+  help: "A brief description for your project (please omit trailing punctuation). Required, but can easily be changed manually later."
   validator: "{% if not project_description %}Invalid input{% endif %}"
 
 project_email:
