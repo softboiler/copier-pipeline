@@ -69,8 +69,8 @@ def check_compilation(high: bool = False) -> str:
         paths=tuple(Path(p) for p in locked.paths),
     ):
         return lock()
-    if get_directs() != locked.directs:
-        return lock(directs=locked.directs)
+    if (new_directs := get_directs()) != locked.directs:
+        return lock(directs=new_directs)
     return locked.requirements
 
 
