@@ -4,6 +4,19 @@ on:
   release:
     types: ["published"]
 jobs:
+  changerelease:
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.11"]
+    permissions:
+      contents: "write"
+    runs-on: "${{ matrix.runner }}"
+    steps:
+      - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
+        with:
+          github_token: "${{ github.token }}"
+          tag_prefix: ""
   release:
     permissions:
       contents: "write"
