@@ -16,7 +16,7 @@ begin {
     . scripts/Initialize-Shell.ps1
     $Template = 'submodules/template'
     $TemplateExists = $Template | Test-Path
-    $Template = $TemplateExists ? $Template : 'origin/main'
+    $Template = $TemplateExists ? "HEAD:$Template" : 'origin/main'
     function Get-Ref {
         Param($Ref)
         return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
