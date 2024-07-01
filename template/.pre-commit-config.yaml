@@ -1,6 +1,8 @@
 exclude: |
   (?x)^(
     \.copier-answers\.yml
+    changelog/towncrier_template\.md\.jinja
+    lock.*\.json
   $)
 ci:
   skip:
@@ -31,10 +33,6 @@ repos:
         language: "system"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; scripts/Sync-Py.ps1"
-        exclude: |
-          (?x)^(
-            lock.*\.json
-          $)
       - id: "fawltydeps-src"
         name: "fawltydeps-src"
         pass_filenames: false

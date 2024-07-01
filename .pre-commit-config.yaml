@@ -1,9 +1,12 @@
 exclude: |
   (?x)^(
     \.copier-answers\.yml
+    changelog/towncrier_template\.md\.jinja
+    lock.*\.json
     |template/(
       .*answers_file.*
       |.*project_name.*
+      |changelog/towncrier_template.md.jinja.jinja
     )
   $)
 ci:
