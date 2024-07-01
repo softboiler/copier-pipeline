@@ -11,6 +11,7 @@ defaults:
     shell: "pwsh"
 jobs:
   changerelease:
+    continue-on-error: true
     strategy:
       matrix:
         runner: ["{{ actions_runner }}"]
