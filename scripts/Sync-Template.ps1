@@ -25,10 +25,9 @@ begin {
 }
 process {
     if ($TemplateExists -and !$Stay) {
-        $Ref = Get-Ref $Ref
         git submodule update --init --remote --merge $Template
         git add .
-        $Msg = "Update template digest to $Ref"
+        $Msg = "Update template digest to $(Get-Ref $Ref)"
         $origPreference = $ErrorActionPreference
         $ErrorActionPreference = 'SilentlyContinue'
         if ($NoVerify) { git commit --no-verify -m $Msg }
