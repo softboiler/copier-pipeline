@@ -157,6 +157,7 @@ jobs:
           - "windows-2022"
         # ? https://github.com/actions/python-versions/releases
         python:
+          - "3.9"
           - "3.10"
           - "3.11"
           - "3.12"
