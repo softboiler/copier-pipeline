@@ -20,9 +20,7 @@ def add_change(typ: ChangeType = "change"):
     change = get_change(owner, repo, issue)
     content = quote(f"{change.name}\n")
     run(
-        split(  # noqa: S603
-            f"""towncrier create --content {content} {change.id}.{typ}.md"""
-        ),
+        split(f"""towncrier create --content {content} {change.id}.{typ}.md"""),
         check=True,
     )
 
@@ -96,7 +94,7 @@ def query_gh_issue(
 ) -> dict[str, Any]:
     """Query GitHub for an issue."""
     result = run(
-        [  # noqa: S603, S607
+        [  # noqa: S607
             "gh",
             "api",
             "graphql",
