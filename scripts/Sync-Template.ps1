@@ -1,6 +1,8 @@
 <#.SYNOPSIS
 Sync with template.#>
 Param(
+    # Specific template VCS reference.
+    [Parameter(ValueFromPipeline)]$Ref = 'HEAD',
     # Prompt for new answers.
     [switch]$Prompt,
     # Recopy, ignoring prior diffs instead of a smart update.
@@ -10,29 +12,44 @@ Param(
     # Skip verifification when committing changes.
     [switch]$NoVerify
 )
-. scripts/Initialize-Shell.ps1
-$template = 'submodules/template'
-$templateExists = $template | Test-Path
-if (!$templateExists -and $Stay) { return }
-if ($Recopy) {
-    $head = git rev-parse HEAD:submodules/template
-    if ($Prompt) { return copier recopy --overwrite --vcs-ref=$head }
-    return copier recopy --overwrite --defaults --vcs-ref=$head
-}
-if ($templateExists) {
-    if (!$Stay) {
-        git submodule update --init --remote --merge $template
-        git add .
-        $msg = "Update template digest to $(git rev-parse HEAD:submodules/template)"
-        $origPreference = $ErrorActionPreference
-        $ErrorActionPreference = 'SilentlyContinue'
-        if ($NoVerify) { git commit --no-verify -m $msg }
-        else { git commit -m $msg }
-        $ErrorActionPreference = $origPreference
+begin {
+    . scripts/Initialize-Shell.ps1
+    $Template = 'submodules/template'
+    $TemplateExists = $Template | Test-Path
+    function Get-Ref {
+        <#.SYNOPSIS
+        Get VCS reference.
+        #>
+        Param($Ref)
+        if ($TemplateExists) { return $Ref }
+        return ($Ref -eq 'HEAD') ? $(git rev-parse 'HEAD:submodules/template') : $Ref
     }
-    $head = git rev-parse HEAD:submodules/template
-    if ($Prompt) { return copier update --vcs-ref=$head }
-    return copier update --vcs-ref=$head --defaults
 }
-if ($Prompt) { return copier update }
-copier update --defaults
+process {
+    if ($TemplateExists) {
+        if (!$Stay) {
+            $Ref = Get-Ref $Ref
+            git submodule update --init --remote --merge $Template
+            git add .
+            $Msg = "Update template digest to $Ref"
+            $origPreference = $ErrorActionPreference
+            $ErrorActionPreference = 'SilentlyContinue'
+            if ($NoVerify) { git commit --no-verify -m $Msg }
+            else { git commit -m $Msg }
+            $ErrorActionPreference = $origPreference
+        }
+        $Ref = Get-Ref $Ref
+        $VcsRef = "--vcs-ref==$Ref"
+    }
+    else {
+        if ($Stay) { return }
+        $Ref = Get-Ref $Ref
+        $VcsRef = ''
+    }
+    if ($Recopy) {
+        if ($Prompt) { return copier recopy --overwrite $VcsRef }
+        return copier recopy --overwrite --defaults $VcsRef
+    }
+    if ($Prompt) { return copier update $VcsRef }
+    return copier update --defaults $VcsRef
+}
