@@ -39,7 +39,7 @@ if (!(Test-Path 'bin/uv*') -or !(bin/uv --version | Select-String $uvVersion)) {
     else {
         'INSTALLING UV' | Write-Progress
         $Env:INSTALLER_NO_MODIFY_PATH = $true
-        curl --proto='=https' --tlsv1.2 -LsSf "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.sh" |
+        curl --proto '=https' --tlsv1.2 -LsSf "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.sh" |
             sh
     }
     'UV INSTALLED' | Write-Progress -Done
