@@ -9,7 +9,17 @@ description = "{{ project_description }}"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">={{ python_version }}"
-classifiers = ["License :: OSI Approved :: MIT License"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    # "Programming Language :: Python :: 3.7",  # ? EOL
+    # "Programming Language :: Python :: 3.8",
+    # "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
+    # "Programming Language :: Python :: 3.14",  # ? https://peps.python.org/pep-0745
+]
 dependencies = []
 [project.urls]
 Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
