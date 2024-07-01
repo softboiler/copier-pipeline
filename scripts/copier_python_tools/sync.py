@@ -12,7 +12,7 @@ from subprocess import run
 
 from copier_python_tools.types import Dep, PythonVersion, SubmoduleInfoKind, ops
 
-MINIMUM_PYTHON = "3.10"
+MINIMUM_PYTHON = "3.9"
 """This project's default Python version."""
 
 # ! Dependencies
@@ -223,9 +223,7 @@ def compile(compiler: Compiler) -> tuple[datetime, str]:  # noqa: A001
 
 def get_subs() -> dict[str, Dep]:
     """Get submodules."""
-    subs = dict(
-        zip(get_submodule_info("paths"), get_submodule_info("urls"), strict=True)
-    )
+    subs = dict(zip(get_submodule_info("paths"), get_submodule_info("urls")))
     revs = {
         item[1]: item[0].removeprefix("+")  # ? Remove `+` in case it's not staged
         for item in (

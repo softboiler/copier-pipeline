@@ -57,16 +57,15 @@ def get_actions():
 
 def log(obj):
     """Send object to `stdout`."""
-    match obj:
-        case str():
-            print(obj)  # noqa: T201
-        case Collection():
-            for o in obj:
-                log(o)
-        case Path():
-            log(escape(obj))
-        case _:
-            print(obj)  # noqa: T201
+    if isinstance(obj, str):
+        print(obj)  # noqa: T201
+    elif isinstance(obj, Collection):
+        for o in obj:
+            log(o)
+    elif isinstance(obj, Path):
+        log(escape(obj))
+    else:
+        print(obj)  # noqa: T201
 
 
 if __name__ == "__main__":

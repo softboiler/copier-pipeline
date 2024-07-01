@@ -8,9 +8,12 @@ version = "2024.1.1"
 description = "Copier template for Python projects"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 classifiers = [
     "License :: OSI Approved :: MIT License",
+    # "Programming Language :: Python :: 3.7",  # ? EOL
+    # "Programming Language :: Python :: 3.8",  # ? EOL soon (https://devguide.python.org/versions/)
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",

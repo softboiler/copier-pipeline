@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 2024.1.1-13-gfc43806
+_commit: 2024.1.1-17-g32480ee
 _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-22.04
 active: true
@@ -10,5 +10,5 @@ project_name: copier_python
 project_owner_github_username: blakeNaccarato
 project_owner_name: Blake Naccarato
 project_version: 2024.1.1
-python_version: '3.10'
+python_version: '3.9'
 year_of_project_creation: 2022

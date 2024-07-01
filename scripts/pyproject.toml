@@ -11,8 +11,8 @@ dependencies = [
     "copier==9.2.0",
     "cyclopts==2.7.1",
     "dulwich==0.22.1",
-    "ipython==8.25.0",
     "pipx==1.6.0",
+    "typing-extensions==4.12.2",
 ]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"
@@ -30,6 +30,4 @@ ignore_unused = [
     # ? Core script tools
     "copier", # For template sync
     "pipx",   # For `pipx run` of scripts with dependencies isolated by PEP 723
-    # ? Other deps
-    "ipython", # Used for local experimentation
 ]
