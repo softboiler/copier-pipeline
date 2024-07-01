@@ -16,10 +16,11 @@ begin {
     . scripts/Initialize-Shell.ps1
     $Template = 'submodules/template'
     $TemplateExists = $Template | Test-Path
-    $Template = $TemplateExists ? "HEAD:$Template" : 'origin/main'
+    $Template = $TemplateExists ? $Template : 'origin/main'
     function Get-Ref {
         Param($Ref)
-        return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
+        $TemplateRev = $TemplateExists ? "HEAD:$Template" : 'origin/main'
+        return ($Ref -eq 'HEAD') ? $(git rev-parse $TemplateRev) : $Ref
     }
 }
 process {
