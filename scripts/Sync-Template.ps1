@@ -21,8 +21,10 @@ begin {
         Get VCS reference.
         #>
         Param($Ref)
-        if ($TemplateExists) { return $Ref }
-        return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
+        if ($TemplateExists) {
+            return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref 
+        }
+        return $Ref
     }
 }
 process {

@@ -21,8 +21,10 @@ begin {
         Get VCS reference.
         #>
         Param($Ref)
-        if ($TemplateExists) { return $Ref }
-        return ($Ref -eq 'HEAD') ? $(git rev-parse 'HEAD:submodules/template') : $Ref
+        if ($TemplateExists) {
+            return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
+        }
+        return $Ref
     }
 }
 process {
@@ -39,17 +41,15 @@ process {
             $ErrorActionPreference = $origPreference
         }
         $Ref = Get-Ref $Ref
-        $VcsRef = "--vcs-ref==$Ref"
     }
     else {
         if ($Stay) { return }
         $Ref = Get-Ref $Ref
-        $VcsRef = ''
     }
     if ($Recopy) {
-        if ($Prompt) { return copier recopy --overwrite $VcsRef }
-        return copier recopy --overwrite --defaults $VcsRef
+        if ($Prompt) { return copier recopy --overwrite --vcs-ref=$Ref }
+        return copier recopy --overwrite --defaults --vcs-ref=$Ref
     }
-    if ($Prompt) { return copier update $VcsRef }
-    return copier update --defaults $VcsRef
+    if ($Prompt) { return copier update --vcs-ref=$Ref }
+    return copier update --defaults --vcs-ref=$Ref
 }
