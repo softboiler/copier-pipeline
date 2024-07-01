@@ -16,36 +16,26 @@ begin {
     . scripts/Initialize-Shell.ps1
     $Template = 'submodules/template'
     $TemplateExists = $Template | Test-Path
+    $Template = $TemplateExists ? $Template : 'origin/main'
     function Get-Ref {
-        <#.SYNOPSIS
-        Get VCS reference.
-        #>
         Param($Ref)
-        if ($TemplateExists) {
-            return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
-        }
-        return $Ref
+        return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
     }
 }
 process {
-    if ($TemplateExists) {
-        if (!$Stay) {
-            $Ref = Get-Ref $Ref
-            git submodule update --init --remote --merge $Template
-            git add .
-            $Msg = "Update template digest to $Ref"
-            $origPreference = $ErrorActionPreference
-            $ErrorActionPreference = 'SilentlyContinue'
-            if ($NoVerify) { git commit --no-verify -m $Msg }
-            else { git commit -m $Msg }
-            $ErrorActionPreference = $origPreference
-        }
+    if ($TemplateExists -and !$Stay) {
         $Ref = Get-Ref $Ref
+        git submodule update --init --remote --merge $Template
+        git add .
+        $Msg = "Update template digest to $Ref"
+        $origPreference = $ErrorActionPreference
+        $ErrorActionPreference = 'SilentlyContinue'
+        if ($NoVerify) { git commit --no-verify -m $Msg }
+        else { git commit -m $Msg }
+        $ErrorActionPreference = $origPreference
     }
-    else {
-        if ($Stay) { return }
-        $Ref = Get-Ref $Ref
-    }
+    elseif (!$TemplateExists -and $Stay) { return }
+    $Ref = Get-Ref $Ref
     if ($Recopy) {
         if ($Prompt) { return copier recopy --overwrite --vcs-ref=$Ref }
         return copier recopy --overwrite --defaults --vcs-ref=$Ref
