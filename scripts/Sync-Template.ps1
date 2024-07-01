@@ -22,7 +22,7 @@ begin {
         #>
         Param($Ref)
         if ($TemplateExists) {
-            return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref 
+            return ($Ref -eq 'HEAD') ? $(git rev-parse $Template) : $Ref
         }
         return $Ref
     }
