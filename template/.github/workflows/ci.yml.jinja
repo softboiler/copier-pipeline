@@ -155,13 +155,10 @@ jobs:
           - "macos-13"
           - "ubuntu-22.04"
           - "windows-2022"
-        # ? https://github.com/actions/python-versions/releases
         python:
           - "3.10"
           - "3.11"
           - "3.12"
-          # - "3.13.0-beta.3"  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
-          # - "3.14.0-alpha.0"  # ? https://peps.python.org/pep-0745
     runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7

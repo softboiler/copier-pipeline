@@ -11,16 +11,16 @@ license = { file = "LICENSE" }
 requires-python = ">={{ python_version }}"
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    # "Programming Language :: Python :: 3.7",  # ? EOL
-    # "Programming Language :: Python :: 3.8",
-    # "Programming Language :: Python :: 3.9",
+    # ? Also in CI (https://github.com/actions/python-versions/releases)
+    # "Programming Language :: Python :: 3.7",  # ? EOL (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.8",  # ? EOL soon (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.9",  # ? `sphinx-autobuild` broken even when pointing to fix (https://github.com/sphinx-doc/sphinx-autobuild/issues/166)
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
-    # "Programming Language :: Python :: 3.14",  # ? https://peps.python.org/pep-0745
-]
-dependencies = []
+    # "Programming Language :: Python :: 3.14",  # ? Unreleased (https://peps.python.org/pep-0745)
+]dependencies = []
 [project.urls]
 Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
 Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"

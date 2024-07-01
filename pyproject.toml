@@ -8,14 +8,18 @@ version = "2024.1.1"
 description = "Copier template for Python projects"
 readme = "README.md"
 license = { file = "LICENSE" }
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 classifiers = [
     "License :: OSI Approved :: MIT License",
+    # ? Also in CI (https://github.com/actions/python-versions/releases)
+    # "Programming Language :: Python :: 3.7",  # ? EOL (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.8",  # ? EOL soon (https://devguide.python.org/versions/)
+    # "Programming Language :: Python :: 3.9",  # ? `sphinx-autobuild` broken even when pointing to fix (https://github.com/sphinx-doc/sphinx-autobuild/issues/166)
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     # "Programming Language :: Python :: 3.13",  # ? (via myst-nb) https://github.com/crate-py/rpds/issues/72
-    # "Programming Language :: Python :: 3.14",  # ? https://peps.python.org/pep-0745
+    # "Programming Language :: Python :: 3.14",  # ? Unreleased (https://peps.python.org/pep-0745)
 ]
 dependencies = []
 [project.urls]
