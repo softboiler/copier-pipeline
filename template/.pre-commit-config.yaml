@@ -1,8 +1,8 @@
 exclude: |
   (?x)^(
     \.copier-answers\.yml
-    changelog/towncrier_template\.md\.jinja
-    lock.*\.json
+    |changelog/towncrier_template\.md\.jinja
+    |lock.*\.json
   $)
 ci:
   skip:
