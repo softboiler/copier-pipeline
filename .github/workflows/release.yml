@@ -14,9 +14,6 @@ jobs:
         runner: ["ubuntu-22.04"]
         python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
-    environment:
-      name: "release"
-      url: "https://pypi.org/p/boilercv"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
       - uses: "actions/setup-python@82c7e631bb3cdc910f68e0081d67478d79c6982d" # v5.1.0
@@ -30,6 +27,5 @@ jobs:
       - run: "gh release upload '${{ github.event.release.tag_name }}' dist/**"
         env:
           GITHUB_TOKEN: "${{ github.token }}"
-      - uses: "pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0" # v1.9.0
   changerelease:
     uses: "./.github/workflows/changerelease.yml"
