@@ -58,6 +58,7 @@ if ($CI) {
         'ONLY INSTALLING BUILD TOOLS' | Write-Progress
         bin/uv pip install --requirement='requirements/build.txt'
         'BUILD TOOLS INSTALLED' | Write-Progress -Done
+        '****** DONE ******' | Write-Progress -Done
         return
     }
 }

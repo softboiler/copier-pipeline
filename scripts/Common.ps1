@@ -13,7 +13,7 @@ function Get-Py {
         'Virtual environment is the wrong Python version' | Write-Progress -Info
         Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
     }
-    bin/uv venv --python $(Get-PySystem $Version)
+    bin/uv venv --python=$(Get-PySystem $Version)
     return Start-PyVenv
 }
 
@@ -53,7 +53,7 @@ function Get-PySystem {
     $SysPyVenvPath = 'bin/sys_venv'
     if (!(Test-Path $SysPyVenvPath)) { bin/uv venv $SysPyVenvPath }
     $SysPyVenv = Start-PyVenv $SysPyVenvPath
-    bin/uv pip install $(Get-Content 'requirements/install.in')
+    bin/uv pip install --requirement 'requirements/install.txt'
     return & $SysPyVenv scripts/install.py $Version
 }
 

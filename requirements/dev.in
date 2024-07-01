@@ -2,11 +2,8 @@
 --editable docs/
 --editable scripts/
 --editable tests/
-build==1.2.1
 debugpy==1.8.2
 fawltydeps==0.16.0
-flit==3.9.0
-keyring==25.2.1
 pipdeptree==2.23.0
 pre-commit==3.7.1
 pyright==1.1.369
@@ -14,6 +11,3 @@ ruff==0.4.10
 snakeviz==2.2.0
 sourcery==1.19.0
 towncrier==23.11.0
-# ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
-# ? via flit
-urllib3>=2.2.2

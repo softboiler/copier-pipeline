@@ -53,7 +53,7 @@ function Get-PySystem {
     $SysPyVenvPath = 'bin/sys_venv'
     if (!(Test-Path $SysPyVenvPath)) { bin/uv venv $SysPyVenvPath }
     $SysPyVenv = Start-PyVenv $SysPyVenvPath
-    bin/uv pip install $(Get-Content 'requirements/install.txt')
+    bin/uv pip install --requirement 'requirements/install.txt'
     return & $SysPyVenv scripts/install.py $Version
 }
 
