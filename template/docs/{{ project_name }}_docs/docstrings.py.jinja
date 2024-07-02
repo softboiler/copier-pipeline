@@ -5,6 +5,8 @@ References
 Copyright 2023 Digital Biology, Inc., SPDX-License-Identifier: Apache-2.0, https://github.com/sphinx-extensions2/sphinx-autodoc2/issues/33#issuecomment-1817348449
 """
 
+from __future__ import annotations
+
 import re
 import textwrap
 from typing import Final
