@@ -5,7 +5,7 @@
     "ghcr.io/devcontainers/features/powershell:1.4.0": {
       "version": "7.4.1"
     },
-    "ghcr.io/devcontainers/features/python:1.6.1": {
+    "ghcr.io/devcontainers/features/python:1.6.2": {
       "version": "3.10"
     },
     "ghcr.io/devcontainers/features/desktop-lite:1.2.0": {
@@ -56,34 +56,35 @@
       },
       "extensions": [
         "aaron-bond.better-comments@3.0.2",
+        "bierner.markdown-mermaid@1.23.1",
         "bierner.markdown-preview-github-styles@2.0.4",
-        "charliermarsh.ruff@2024.16.0",
-        "davidanson.vscode-markdownlint@0.54.0",
+        "charliermarsh.ruff@2024.30.0",
+        "davidanson.vscode-markdownlint@0.55.0",
         "donjayamanne.githistory@0.6.20",
-        "eamodio.gitlens@14.9.0",
+        "eamodio.gitlens@15.1.0",
         "esbenp.prettier-vscode@10.4.0",
         "executablebookproject.myst-highlight@0.11.0",
-        "github.codespaces@1.16.17",
+        "github.codespaces@1.16.23",
         "GitHub.remotehub@0.62.0",
-        "github.vscode-github-actions@0.26.2",
-        "github.vscode-pull-request-github@0.80.1",
-        "ms-azuretools.vscode-docker@1.29.0",
-        "ms-python.debugpy@2024.2.0",
-        "ms-python.python@2024.2.1",
-        "ms-python.vscode-pylance@2024.3.2",
-        "ms-toolsai.jupyter@2024.1.1",
-        "ms-vscode-remote.remote-containers@0.353.0",
+        "github.vscode-github-actions@0.26.3",
+        "github.vscode-pull-request-github@0.88.1",
+        "iterative.dvc@1.2.14",
+        "ms-azuretools.vscode-docker@1.29.1",
+        "ms-python.debugpy@2024.6.0",
+        "ms-python.python@2024.8.1",
+        "ms-python.vscode-pylance@2024.6.1",
+        "ms-toolsai.jupyter@2024.4.0",
+        "ms-vscode-remote.remote-containers@0.369.0",
         "ms-vscode.powershell@2024.2.2",
         "njpwerner.autodocstring@0.6.1",
-        "njpwerner.autodocstring@0.6.1",
-        "redhat.vscode-yaml@1.14.0",
-        "rodolphebarbanneau.python-docstring-highlighter@0.2.3",
+        "redhat.vscode-yaml@1.15.0",
         "rodolphebarbanneau.python-docstring-highlighter@0.2.3",
         "ryanluker.vscode-coverage-gutters@2.11.1",
-        "sourcery.sourcery@1.16.0",
+        "sourcery.sourcery@1.19.0",
         "stkb.rewrap@1.16.3",
         "TakumiI.markdowntable@0.11.0",
         "tamasfe.even-better-toml@0.19.2",
+        "yy0931.mplstyle@1.14.4",
         "yzhang.markdown-all-in-one@3.6.2"
       ]
     }
