@@ -52,7 +52,16 @@
           "pythonREPLSmartSend",
           "pythonTestAdapter",
           "pythonTerminalEnvVarActivation"
-        ]
+        ],
+        // ? Not picked up in workspace settings in Codespaces
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.wordWrap": "off"
+        },
+        "[ipynb]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.wordWrap": "off"
+        }
       },
       "extensions": [
         "aaron-bond.better-comments@3.0.2",
