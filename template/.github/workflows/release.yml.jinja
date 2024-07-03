@@ -31,7 +31,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Release"
-      - run: "python -m build --installer uv"
+      - run: ". scripts/Initialize-Shell.ps1; python -m build --installer uv"
       - uses: actions/attest-build-provenance@bdd51370e0416ac948727f861e03c2f05d32d78e # v1.3.2
         with:
           subject-path: "dist/**"
@@ -40,4 +40,7 @@ jobs:
           GITHUB_TOKEN: "{% raw %}${{ github.token }}{% endraw %}"
       - uses: "pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0" # v1.9.0
   changerelease:
+    needs: "release"
+    permissions:
+      contents: "write"
     uses: "./.github/workflows/changerelease.yml"
