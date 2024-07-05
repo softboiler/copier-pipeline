@@ -98,22 +98,6 @@
       "problemMatcher": []
     },
     {
-      "label": "setup: Initialize Windows machine",
-      "type": "shell",
-      "options": { "shell": { "executable": "powershell" } },
-      "command": "scripts/Initialize-Windows.ps1",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Initialize Linux/MacOS machine",
-      "type": "shell",
-      "options": { "shell": { "executable": "bash" } },
-      "command": "scripts/Initialize-LinuxMacOS.sh",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
       "label": "setup: Finish initializing machine (cross-platform)",
       "type": "shell",
       "command": "scripts/Initialize-Machine.ps1",
@@ -122,37 +106,29 @@
     },
 
     // * -------------------------------------------------------------------------- * //
-    // * PRE-COMMIT * //
+    // * OTHER TASKS * //
 
     {
-      "label": "pre-commit",
+      "label": "task: pre-commit",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; pre-commit",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
     {
-      "label": "pre-commit: all",
+      "label": "task: pre-commit (all)",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; pre-commit run --all-files",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
-
-    // * -------------------------------------------------------------------------- * //
-    // * GIT * //
-
     {
-      "label": "git: Rebase back to fork",
+      "label": "task: Rebase back to fork",
       "type": "shell",
       "command": "git rebase -i --fork-point main",
       "icon": { "id": "git-branch" },
       "problemMatcher": []
     },
-
-    // * -------------------------------------------------------------------------- * //
-    // * OTHER TASKS * //
-
     {
       "label": "task: Show tree of packages requesting a dependency",
       "type": "shell",
@@ -182,14 +158,14 @@
       "problemMatcher": []
     },
     {
-      "label": "task: profile this file",
+      "label": "task: Profile this file",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; python -m cProfile -o .prof ${file}",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
     {
-      "label": "task: view profile results with snakeviz",
+      "label": "task: View profile results with snakeviz",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; snakeviz .prof",
       "icon": { "id": "graph-line" },
@@ -198,7 +174,14 @@
     {
       "label": "task: Bump version",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; copier update --vcs-ref=$(git rev-parse HEAD:submodules/template) --defaults --data project_version='${input:version}'; git add .; git commit -m 'Bump version'; towncrier build --version '${input:version}'",
+      "command": ". scripts/Initialize-Shell.ps1; copier update --vcs-ref=$(git rev-parse HEAD:submodules/template) --defaults --data project_version='${input:version}'; towncrier build --yes --version '${input:version}'; git add .; git commit -m '${input:version}'",
+      "icon": { "id": "tag" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Release version",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; $version = (Get-Content '.copier-answers.yml' | Select-String -Pattern '^project_version:\\s(.+)$').Matches.Groups[1].value; git tag --sign -m $version $version; git push; gh release create --discussion-category='announcements' --notes='' --title=$version --verify-tag $version",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
@@ -212,7 +195,7 @@
     {
       "label": "task: Update changelog with the latest commit's message",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' [' + $(git rev-parse --short HEAD) + '](https://github.com/blakeNaccarato/copier-python/commit/' + $(git rev-parse HEAD) + ')\n')",
+      "command": ". scripts/Initialize-Shell.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/blakeNaccarato/copier-python/commit/' + $(git rev-parse HEAD) + '))\n')",
       "icon": { "id": "tag" },
       "problemMatcher": []
     }
