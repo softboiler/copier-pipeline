@@ -97,39 +97,39 @@
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
-
-    // * -------------------------------------------------------------------------- * //
-    // * PRE-COMMIT * //
-
     {
-      "label": "pre-commit",
+      "label": "setup: Finish initializing machine (cross-platform)",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; pre-commit",
-      "icon": { "id": "git-commit" },
-      "problemMatcher": []
-    },
-    {
-      "label": "pre-commit: all",
-      "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; pre-commit run --all-files",
-      "icon": { "id": "git-commit" },
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * GIT * //
-
-    {
-      "label": "git: Rebase back to fork",
-      "type": "shell",
-      "command": "git rebase -i --fork-point main",
-      "icon": { "id": "git-branch" },
+      "command": "scripts/Initialize-Machine.ps1",
+      "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //
 
+
+    {
+      "label": "task: pre-commit",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit",
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: pre-commit (all)",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit run --all-files",
+      "icon": { "id": "git-commit" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Rebase back to fork",
+      "type": "shell",
+      "command": "git rebase -i --fork-point main",
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
     {
       "label": "task: Show tree of packages requesting a dependency",
       "type": "shell",
@@ -159,14 +159,14 @@
       "problemMatcher": []
     },
     {
-      "label": "task: profile this file",
+      "label": "task: Profile this file",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; python -m cProfile -o .prof ${file}",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
     {
-      "label": "task: view profile results with snakeviz",
+      "label": "task: View profile results with snakeviz",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; snakeviz .prof",
       "icon": { "id": "graph-line" },
