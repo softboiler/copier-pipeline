@@ -19,7 +19,7 @@ These changes reflect the current [development progress](https://github.com/{% e
 {% for category, val in definitions.items() if category in sections[section] %}
 ### {{ definitions[category]['name'] }}
 
-{% for text, values in sections[section][category].items() %}
+{% for text, values in sections[section][category].items()|reverse %}
 - {{ text }}
 {%- if values %}
 {% if "\n  - " in text or '\n  * ' in text %}

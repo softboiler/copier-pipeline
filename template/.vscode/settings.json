@@ -44,6 +44,7 @@
   "git.confirmNoVerifyCommit": false,
   "git.commandsToLog": ["commit", "push"],
   //! Line-width
+  "git.inputValidation": true,
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
   "editor.wordWrapColumn": 88,
