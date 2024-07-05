@@ -189,7 +189,7 @@
     {
       "label": "task: Update changelog with the latest commit's message",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + '[' + $(git rev-parse --short HEAD) + '](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/commit/' + $(git rev-parse HEAD) + ')\n')",
+      "command": ". scripts/Initialize-Shell.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' [' + $(git rev-parse --short HEAD) + '](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/commit/' + $(git rev-parse HEAD) + ')\n')",
       "icon": { "id": "tag" },
       "problemMatcher": []
     }
