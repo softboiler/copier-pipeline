@@ -132,7 +132,7 @@ html_context = {
     "default_mode": "light"
 }
 COMMON_OPTIONS = {
-    "repository_url": f"https://github.com/{USER}/{PACKAGE}",
+    "repository_url": f"https://github.com/{USER}/{REPO}",
     "path_to_docs": dpath(DOCS),
 }
 html_theme_options = {
