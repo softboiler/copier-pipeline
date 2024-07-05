@@ -2,9 +2,21 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "files": [
-  "CONTRIBUTORS.md",
-  "README.md"
+    "CONTRIBUTORS.md",
+    "README.md"
   ],
   "projectName": "copier-python",
-  "projectOwner": "blakeNaccarato"
+  "projectOwner": "blakeNaccarato",
+  "commitType": "docs",
+  "contributors": [
+    {
+      "login": "blakeNaccarato",
+      "name": "Blake Naccarato",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20692450?v=4",
+      "profile": "https://www.blakenaccarato.com/",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
