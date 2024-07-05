@@ -25,7 +25,7 @@ elseif ($Release) { $msg = 'release' }
 "Will run $msg steps" | Write-Progress -Info
 
 'FINDING UV' | Write-Progress
-$uvVersionRe = Get-Content 'requirements/uv.in' | Select-String -Pattern '^uv==(.+)$'
+$uvVersionRe = Get-Content 'requirements/uv.txt' | Select-String -Pattern '^uv==(.+)$'
 $uvVersion = $uvVersionRe.Matches.Groups[1].value
 if (!(Test-Path 'bin/uv*') -or !(bin/uv --version | Select-String $uvVersion)) {
     $Env:CARGO_HOME = '.'
