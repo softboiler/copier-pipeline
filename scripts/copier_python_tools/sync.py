@@ -20,20 +20,21 @@ REQS = Path("requirements")
 """Requirements."""
 DEV = REQS / "dev.in"
 """Other development tools and editable local dependencies."""
+OVERRIDES = REQS / "override.txt"
+"""Overrides to satisfy otherwise incompatible combinations."""
+NODEPS = REQS / "nodeps.in"
+"""Path to dependencies which should not have their transitive dependencies compiled."""
 DEPS = (
     DEV,
     *[
         Path(editable["path"]) / "pyproject.toml"
         for editable in finditer(
-            r"(?m)^(?:-e|--editable)\s(?P<path>.+)$", DEV.read_text("utf-8")
+            r"(?m)^(?:-e|--editable)\s(?P<path>.+)$",
+            "".join([path.read_text("utf-8") for path in [DEV, OVERRIDES, NODEPS]]),
         )
     ],
 )
 """Paths to compile dependencies for."""
-OVERRIDES = REQS / "override.txt"
-"""Overrides to satisfy otherwise incompatible combinations."""
-NODEPS = REQS / "nodeps.in"
-"""Path to dependencies which should not have their transitive dependencies compiled."""
 REQUIREMENTS = REQS / "requirements.txt"
 """Requirements."""
 
