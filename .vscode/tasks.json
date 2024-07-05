@@ -5,16 +5,6 @@
   "version": "2.0.0",
   "inputs": [
     {
-      "id": "version",
-      "type": "promptString",
-      "description": "Version number."
-    },
-    {
-      "id": "dependency",
-      "type": "promptString",
-      "description": "Show tree of packages requesting this dependency."
-    },
-    {
       "id": "templateOptions",
       "type": "pickString",
       "description": "Template options.",
@@ -24,6 +14,16 @@
       "id": "ref",
       "type": "promptString",
       "description": "Commit SHA or other VCS reference."
+    },
+    {
+      "id": "dependency",
+      "type": "promptString",
+      "description": "Show tree of packages requesting this dependency."
+    },
+    {
+      "id": "version",
+      "type": "promptString",
+      "description": "Version number."
     },
     {
       "id": "changeType",
@@ -154,13 +154,6 @@
     // * OTHER TASKS * //
 
     {
-      "label": "task: Generate changelog entry",
-      "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; python -m copier_python_tools add-change ${input:changeType}",
-      "icon": { "id": "request-changes" },
-      "problemMatcher": []
-    },
-    {
       "label": "task: Show tree of packages requesting a dependency",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; pipdeptree --reverse --packages ${input:dependency}",
@@ -205,8 +198,22 @@
     {
       "label": "task: Bump version",
       "type": "shell",
-      "command": "copier update --defaults --data project_version='${input:version}'; git add .; git commit -m 'Bump version'; towncrier build --version '${input:version}'",
-      "icon": { "id": "graph-line" },
+      "command": ". scripts/Initialize-Shell.ps1; copier update --vcs-ref=$(git rev-parse HEAD:submodules/template) --defaults --data project_version='${input:version}'; git add .; git commit -m 'Bump version'; towncrier build --version '${input:version}'",
+      "icon": { "id": "tag" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Update changelog",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; python -m copier_python_tools add-change ${input:changeType}",
+      "icon": { "id": "tag" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Update changelog with the latest commit's message",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + '[' + $(git rev-parse --short HEAD) + '](https://github.com/blakeNaccarato/copier-python/commit/' + $(git rev-parse HEAD) + ')\n')",
+      "icon": { "id": "tag" },
       "problemMatcher": []
     }
   ]

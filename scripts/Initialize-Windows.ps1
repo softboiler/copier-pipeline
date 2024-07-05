@@ -3,14 +3,25 @@ Initialize Windows machine.#>
 
 $origPreference = $ErrorActionPreference
 $ErrorActionPreference = 'SilentlyContinue'
+# Common winget options
+$Install = @(
+    'install',
+    '--accept-package-agreements',
+    '--accept-source-agreements',
+    '--disable-interactivity'
+    '--exact',
+    '--no-upgrade',
+    '--silent',
+    '--source=winget'
+)
 # Install Python
-winget install --source='winget' --id='Python.Python.3.10' --override='/quiet PrependPath=0'
+winget @Install --id='Python.Python.3.10' --override='/quiet PrependPath=0'
 # Install VSCode
-winget install --source='winget' --id='Microsoft.VisualStudioCode'
+winget @Install --id='Microsoft.VisualStudioCode'
 # Install Windows Terminal
-winget install --source='winget' --id='Microsoft.WindowsTerminal'
+winget @Install --id='Microsoft.WindowsTerminal'
 # Install GitHub CLI
-winget install --source='winget' --id='GitHub.cli'
+winget @Install --id='GitHub.cli'
 # Install git
 @'
 [Setup]
@@ -37,5 +48,5 @@ EnableSymlinks=Disabled
 EnablePseudoConsoleSupport=Disabled
 EnableFSMonitor=Enabled
 '@ | Out-File ($inf = New-TemporaryFile)
-winget install --source='winget' --id='Git.Git' --override="/SILENT /LOADINF=$inf"
+winget @Install --id='Git.Git' --override="/SILENT /LOADINF=$inf"
 $ErrorActionPreference = $origPreference
