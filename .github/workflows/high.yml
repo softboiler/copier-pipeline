@@ -32,9 +32,21 @@ jobs:
         with:
           name: "lock"
           path: "lock-high.json"
+  check:
+    if: always()
+    needs: "sync"
+    strategy:
+      matrix:
+        runner: ["ubuntu-22.04"]
+        python: ["3.10"]
+    runs-on: "${{ matrix.runner }}"
+    steps:
+      - uses: "re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe" # v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
   build-docs:
     if: ${{ success() || failure() }}
-    needs: "sync"
+    needs: "check"
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
@@ -54,7 +66,7 @@ jobs:
       - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   ruff:
-    needs: "sync"
+    needs: "check"
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
@@ -73,7 +85,7 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
   fawltydeps:
-    needs: "sync"
+    needs: "check"
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
@@ -92,7 +104,7 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
   pyright:
-    needs: "sync"
+    needs: "check"
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
@@ -111,7 +123,7 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; pyright"
   test:
-    needs: "sync"
+    needs: "check"
     strategy:
       matrix:
         runner:
