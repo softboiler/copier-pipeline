@@ -140,7 +140,7 @@ class Compiler:
 
     def get_command(self) -> tuple[datetime, list[str]]:
         """Command to reproduce compilation requirements."""
-        time = datetime.now(timezone.utc)
+        time = datetime.now(UTC)
         return time, [
             "bin/uv",
             "pip",
