@@ -12,7 +12,7 @@ from {{ project_name }}_tools import add_changes
 from {{ project_name }}_tools.sync import check_compilation, escape
 from {{ project_name }}_tools.types import ChangeType
 
-if version_info >= (3, 11):
+if version_info >= (3, 11):  # noqa: UP036, RUF100
     from tomllib import loads  # pyright: ignore[reportMissingImports]
 else:
     from toml import loads  # pyright: ignore[reportMissingImports]
