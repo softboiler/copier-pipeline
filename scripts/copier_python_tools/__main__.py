@@ -12,7 +12,7 @@ from copier_python_tools import add_changes
 from copier_python_tools.sync import check_compilation, escape
 from copier_python_tools.types import ChangeType
 
-if version_info >= (3, 11):
+if version_info >= (3, 11):  # noqa: UP036, RUF100
     from tomllib import loads  # pyright: ignore[reportMissingImports]
 else:
     from toml import loads  # pyright: ignore[reportMissingImports]
