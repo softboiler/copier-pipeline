@@ -15,7 +15,6 @@ jobs:
   sync:
     continue-on-error: true
     strategy:
-      fail-fast: true
       matrix:
         runner: ["ubuntu-22.04"]
         python: ["3.10"]
@@ -34,6 +33,7 @@ jobs:
           name: "lock"
           path: "lock-high.json"
   build-docs:
+    if: ${{ success() || failure() }}
     needs: "sync"
     strategy:
       matrix:
