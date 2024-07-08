@@ -13,7 +13,6 @@ env:
   SYNC_PY_HIGH: "true"
 jobs:
   sync:
-    continue-on-error: true
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
@@ -32,7 +31,6 @@ jobs:
           name: "lock"
           path: "lock-high.json"
   build-docs:
-    continue-on-error: true
     needs: "sync"
     strategy:
       matrix:
@@ -53,7 +51,6 @@ jobs:
       - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   ruff:
-    continue-on-error: true
     needs: "sync"
     strategy:
       matrix:
@@ -73,7 +70,6 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
   fawltydeps:
-    continue-on-error: true
     needs: "sync"
     strategy:
       matrix:
@@ -93,7 +89,6 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
   pyright:
-    continue-on-error: true
     needs: "sync"
     strategy:
       matrix:
@@ -113,7 +108,6 @@ jobs:
       - run: "scripts/Sync-Py.ps1"
       - run: ". scripts/Initialize-Shell.ps1; pyright"
   test:
-    continue-on-error: true
     needs: "sync"
     strategy:
       matrix:
@@ -139,7 +133,6 @@ jobs:
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
       - run: ". scripts/Initialize-Shell.ps1; pytest"
   lock:
-    continue-on-error: true
     needs:
       - "ruff"
       - "fawltydeps"
