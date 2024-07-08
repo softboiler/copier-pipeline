@@ -15,7 +15,9 @@ from copier_python_tools.types import ChangeType
 if version_info >= (3, 11):  # noqa: UP036, RUF100
     from tomllib import loads  # pyright: ignore[reportMissingImports]
 else:
-    from toml import loads  # pyright: ignore[reportMissingImports]
+    from toml import (  # pyright: ignore[reportMissingModuleSource, reportMissingImports]
+        loads,
+    )
 
 APP = App(help_format="markdown")
 """CLI."""
