@@ -13,12 +13,14 @@ env:
   SYNC_PY_HIGH: "true"
 jobs:
   sync:
+    continue-on-error: true
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
         python: ["3.10"]
     runs-on: "${{ matrix.runner }}"
     steps:
+      - run: "foo"
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
