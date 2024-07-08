@@ -72,6 +72,7 @@ bin/uv pip install --editable=scripts
 '*** RUNNING PRE-SYNC TASKS' | Write-Progress
 if ($CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
+    {{ project_name }}_tools elevate-pyright-warnings
     try {scripts/Sync-Template.ps1 -Stay} catch [System.Management.Automation.NativeCommandExitException] {
         git stash save --include-untracked
         scripts/Sync-Template.ps1 -Stay
