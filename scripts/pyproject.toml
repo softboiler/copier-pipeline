@@ -13,6 +13,7 @@ dependencies = [
     "dulwich==0.22.1",
     "ipython==8.25.0",
     "pipx==1.6.0",
+    "toml==0.10.2 ; python_version < '3.11'",
 ]
 [project.scripts]
 "copier_python_tools" = "copier_python_tools.__main__:main"

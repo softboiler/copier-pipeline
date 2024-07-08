@@ -9,14 +9,6 @@
   ],
   "configurations": [
     {
-      "name": "Python: Sphinx build docs",
-      "type": "debugpy",
-      "request": "launch",
-      "module": "sphinx",
-      "args": ["-EaT", "docs", "_site"],
-      "console": "internalConsole"
-    },
-    {
       "name": "Python: Current file",
       "type": "debugpy",
       "request": "launch",
@@ -35,6 +27,14 @@
       "request": "launch",
       "program": "${file}",
       "args": ["${input:input}"],
+      "console": "internalConsole"
+    },
+    {
+      "name": "Python: Sphinx build docs",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "sphinx",
+      "args": ["-EaT", "docs", "_site"],
       "console": "internalConsole"
     },
     {
