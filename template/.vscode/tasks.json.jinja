@@ -151,6 +151,13 @@
       "problemMatcher": []
     },
     {
+      "label": "task: Run pyright",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; pyright",
+      "icon": { "id": "check" },
+      "problemMatcher": []
+    },
+    {
       "label": "task: sphinx-autobuild docs (preview)",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; sphinx-autobuild -T docs _site --ignore **/apidocs",
