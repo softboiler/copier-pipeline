@@ -16,6 +16,7 @@ ci:
     - "fawltydeps-docs"
     - "fawltydeps-scripts"
     - "fawltydeps-tests"
+    - "pyright"
     - "pytest-fast-only"
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
@@ -76,7 +77,7 @@ repos:
         language: "system"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; pyright"
-        types_or: ["python", "pyi", "jupyter"]
+        types_or: ["python", "pyi"]
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
