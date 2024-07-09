@@ -38,3 +38,9 @@ $Install = @(
     '--install-extension=ms-python.vscode-pylance@2024.6.1'
 )
 code @Install
+# Remove Pylance bundled stubs
+Get-ChildItem -Path '.vscode/extensions' -Filter 'ms-python.vscode-pylance-*' |
+    ForEach-Object {
+        Get-ChildItem -Path "$($_.FullName)/dist/bundled" -Filter '*stubs'
+    } |
+    Remove-Item -Recurse
