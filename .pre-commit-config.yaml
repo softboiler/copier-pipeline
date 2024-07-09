@@ -70,12 +70,19 @@ repos:
         files: "^tests/.*$"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file tests/pyproject.toml"
+      - id: "pyright"
+        name: "pyright"
+        pass_filenames: false
+        language: "system"
+        entry: |
+          pwsh -Command ". scripts/Initialize-Shell.ps1; pyright"
+        types_or: ["python", "pyi", "jupyter"]
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command ". scripts/Initialize-Shell.ps1; pytest -m 'not slow' --suppress-no-test-exit-code"
+          pwsh -Command ". scripts/Initialize-Shell.ps1; pytest -m 'not slow'"
         files: |
           (?x)^(
             .*/pyproject\.toml

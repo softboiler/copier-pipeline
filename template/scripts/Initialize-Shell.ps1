@@ -16,8 +16,7 @@ if ($IsWindows) {
 }
 
 # ? Environment variables
-$Env:PIP_DISABLE_PIP_VERSION_CHECK = 1
-$Env:PYRIGHT_PYTHON_IGNORE_WARNINGS = 1
+$Env:PYRIGHT_PYTHON_PYLANCE_VERSION = '2024.6.1'
 $Env:PYDEVD_DISABLE_FILE_VALIDATION = 1
 $Env:PYTHONIOENCODING = 'utf-8:strict'
 $Env:PYTHONUTF8 = 1
@@ -25,6 +24,7 @@ $Env:PYTHONWARNDEFAULTENCODING = 1
 # Ignore warnings until explicitly re-enabled in tests
 $Env:PYTHONWARNINGS = 'ignore'
 
+# ? Environment setup
 function Set-Env {
     <#.SYNOPSIS
     Load `.env`, activate a virtual environment found here or in parent directories.#>

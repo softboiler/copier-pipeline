@@ -106,7 +106,9 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; pyright"
+      - uses: "jakebailey/pyright-action@3bdde3b31d26f0f1f5de051b1fbd7a536a9a4e7f" # v4.1.7
+        with:
+          pylance-version: "2024.6.1"
   test:
     needs: "sync"
     strategy:

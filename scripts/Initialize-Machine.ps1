@@ -30,3 +30,11 @@ if (! (gh auth status)) {
     gh auth login
     'GITHUB API LOGIN COMPLETE' | Write-Progress -Done
 }
+
+# Install VSCode local workspace extensions
+$Install = @(
+    '--extensions-dir=.vscode/extensions',
+    '--install-extension=charliermarsh.ruff@2024.30.0',
+    '--install-extension=ms-python.vscode-pylance@2024.6.1'
+)
+code @Install

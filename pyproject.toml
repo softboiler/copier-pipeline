@@ -39,9 +39,6 @@ source = [
     "copier_python_tests",
     "copier_python_tools",
 ]
-[tool.coverage.report]
-format = "xml"
-ignore_errors = true
 
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
@@ -52,11 +49,13 @@ code = ["src"]
 addopts = '''
     --strict-config
     --strict-markers
+    --suppress-no-test-exit-code
     --color yes
     -p no:legacypaths
     -r a
     --cov
     --cov-config=pyproject.toml
+    --cov-report=xml
 '''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
