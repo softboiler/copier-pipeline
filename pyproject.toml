@@ -95,9 +95,7 @@ exclude = [
     "**/AppData",
     "bin",
     "submodules/template",
-    "submodules/typings",
 ]
-stubPath = "submodules/typings"
 typeCheckingMode = "strict"
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
