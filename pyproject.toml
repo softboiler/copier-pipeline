@@ -50,7 +50,7 @@ addopts = '''
     --strict-config
     --strict-markers
     --suppress-no-test-exit-code
-    --color yes
+    --color=yes
     -p no:legacypaths
     -r a
     --cov
