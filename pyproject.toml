@@ -55,6 +55,7 @@ addopts = '''
     -r a
     --cov
     --cov-config=pyproject.toml
+    --cov-report=xml
 '''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
