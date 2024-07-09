@@ -130,13 +130,6 @@
       "problemMatcher": []
     },
     {
-      "label": "task: Run pytest with coverage",
-      "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; pytest --cov  --cov-config pyproject.toml --cov-report xml",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
       "label": "task: Run ruff",
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; ruff check .; ruff format .",
