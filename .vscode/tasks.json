@@ -97,13 +97,6 @@
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
-    {
-      "label": "setup: Finish initializing machine (cross-platform)",
-      "type": "shell",
-      "command": "scripts/Initialize-Machine.ps1",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
 
     // * -------------------------------------------------------------------------- * //
     // * OTHER TASKS * //

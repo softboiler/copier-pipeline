@@ -11,15 +11,15 @@ if (!$name) {
     git config --global 'user.name' "$((Get-Content '.copier-answers.yml' |
     Select-String -Pattern '^project_owner_github_username:\s(.+)$').Matches.Groups[1].value)"
     # Have Git auto set up local branches to track remote branches if not yet configured
-    try { $name = git config --global 'push.autoSetupRemote' }
-    catch [System.Management.Automation.NativeCommandExitException] { $name = '' }
-    if (!$name) { git config --global 'push.autoSetupRemote' 'true' }
+    try { $auto = git config --global 'push.autoSetupRemote' }
+    catch [System.Management.Automation.NativeCommandExitException] { $auto = '' }
+    if (!$auto) { git config --global 'push.autoSetupRemote' 'true' }
 }
 
 # Set Git email if missing
-try { $name = git config --global 'user.email' }
-catch [System.Management.Automation.NativeCommandExitException] { $name = '' }
-if (!$name) {
+try { $email = git config --global 'user.email' }
+catch [System.Management.Automation.NativeCommandExitException] { $email = '' }
+if (!$email) {
     git config --global 'user.email' "$((Get-Content '.copier-answers.yml' |
     Select-String -Pattern '^project_email:\s(.+)$').Matches.Groups[1].value)"
 }
