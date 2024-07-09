@@ -258,6 +258,8 @@ def get_subs() -> dict[str, Dep]:
 
 def get_submodule_info(kind: SubmoduleInfoKind) -> list[str]:
     """Get submodule info."""
+    if not Path(".gitmodules").exists():
+        return []
     return [
         item.split()[1].removesuffix(".git")
         for item in run(
