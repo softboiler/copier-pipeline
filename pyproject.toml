@@ -40,18 +40,23 @@ source = [
     "copier_python_tools",
 ]
 [tool.coverage.report]
+format = "xml"
 ignore_errors = true
+
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
 code = ["src"]
 
 [tool.pytest.ini_options]
+# ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
 addopts = '''
     --strict-config
     --strict-markers
     --color yes
     -p no:legacypaths
     -r a
+    --cov
+    --cov-config=pyproject.toml
 '''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"

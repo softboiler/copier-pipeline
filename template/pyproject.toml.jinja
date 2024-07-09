@@ -40,18 +40,23 @@ source = [
     "{{ project_name }}_tools",
 ]
 [tool.coverage.report]
+format = "xml"
 ignore_errors = true
+
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
 code = ["src"]
 
 [tool.pytest.ini_options]
+# ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
 addopts = '''
     --strict-config
     --strict-markers
     --color yes
     -p no:legacypaths
     -r a
+    --cov
+    --cov-config=pyproject.toml
 '''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
@@ -274,6 +279,9 @@ convention = "numpy"
     "F821", # Allow undefined names, such as `display`
     "S101", # Allow assert
     "T201", # Allow print in notebooks
+]
+"template/**" = [
+    "N999", # Jinja-templated folder path
 ]
 "docs/**" = [
     "E402", # Need to allow imports below patches in docs notebooks
