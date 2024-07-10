@@ -22,7 +22,6 @@ function Set-Env {
 
     # ? Set environment variables
     $LocalBin = (Test-Path 'bin') ? (Get-Item 'bin') : (New-Item -ItemType Directory 'bin')
-    $(Get-Item 'bin')
     $Vars = $Env:GITHUB_ENV ? $(Get-Content $Env:GITHUB_ENV |
             Select-String -Pattern '^(.+)=.+$' |
             ForEach-Object { $_.Matches.Groups[1].value }) : @{}

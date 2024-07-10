@@ -9,12 +9,29 @@
     "enabled": true
   },
   "enabledManagers": [
+    "custom.regex",
     "devcontainer",
     "git-submodules",
     "github-actions",
     "pep621",
     "pip_requirements",
     "pre-commit"
+  ],
+  "customManagers": [
+    {
+      "description": "Pylance",
+      "customType": "regex",
+      "fileMatch": [
+        "scripts/Initialize-Shell\\.ps1",
+        "\\.devcontainer/devcontainer\\.json"
+      ],
+      "matchStrings": [
+        "PYRIGHT_PYTHON_PYLANCE_VERSION = '(?<currentValue>.+?)'",
+        "ms-python.vscode-pylance@(?<currentValue>.+?)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/pylance-release"
+    }
   ],
   "pip_requirements": {
     "description": "Additionally monitor these files",
