@@ -24,11 +24,10 @@ elseif ($Devcontainer) { $msg = 'devcontainer' }
 elseif ($Release) { $msg = 'release' }
 "Will run $msg steps" | Write-Progress -Info
 
-$LocalExtensions = '.vscode/extensions'
-$Pylance = 'ms-python.vscode-pylance'
-$PylanceVersion = '2024.6.1'
-if (!$CI -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
+if (!$CI -and !$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
     'INSTALLING PYLANCE LOCALLY' | Write-Progress
+    $LocalExtensions = '.vscode/extensions'
+    $Pylance = 'ms-python.vscode-pylance'
     $Install = @(
         "--extensions-dir=$LocalExtensions",
         "--install-extension=$Pylance@$Env:PYRIGHT_PYTHON_PYLANCE_VERSION"
