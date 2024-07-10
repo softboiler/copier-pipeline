@@ -19,16 +19,10 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "controller-tools version updates",
-      "fileMatch": [
-        "^.github/(?:workflows|actions)/.+\\.ya?ml$",
-        "(^|/)Makefile$"
-      ],
-      "matchStrings": [
-        "CONTROLLER_TOOLS_VERSION\\s*:=?\\s*\"?(?<currentValue>.+?)\"?\\n"
-      ],
-      "depNameTemplate": "kubernetes-sigs/controller-tools",
-      "datasourceTemplate": "github-releases"
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": ["ENV YARN_VERSION=(?<currentValue>.*?)\\n"],
+      "depNameTemplate": "yarn",
+      "datasourceTemplate": "npm"
     }
   ],
   "github-actions": {
