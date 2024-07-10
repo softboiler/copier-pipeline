@@ -27,11 +27,7 @@ elseif ($Release) { $msg = 'release' }
 $LocalExtensions = '.vscode/extensions'
 $Pylance = 'ms-python.vscode-pylance'
 $PylanceVersion = '2024.6.1'
-if (!$CI -and
-    (Get-Command -Name 'code' -ErrorAction 'Ignore') -and
-    !(code --list-extensions | Select-String -Pattern $PylanceVersion) -and
-    !(Test-Path "$LocalExtensions/$Pylance-$PylanceVersion")
-) {
+if (!$CI -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
     'INSTALLING PYLANCE LOCALLY' | Write-Progress
     $Install = @(
         "--extensions-dir=$LocalExtensions",
