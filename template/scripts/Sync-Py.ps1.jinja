@@ -41,9 +41,7 @@ if (!$CI -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
         Remove-Item -Recurse
     # Remove local Pylance bundled stubs
     $PylanceExtension |
-        ForEach-Object {
-            Get-ChildItem -Path "$($_.FullName)/dist/bundled" -Filter '*stubs'
-        } |
+        ForEach-Object { Get-ChildItem "$_/dist/bundled" -Filter '*stubs' } |
         Remove-Item -Recurse
     'INSTALLED PYLANCE LOCALLY' | Write-Progress -Done
 }
