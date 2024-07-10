@@ -20,8 +20,8 @@
     {
       "customType": "regex",
       "fileMatch": ["\\.pylance-version"],
-      "matchStrings": ["^(?<currentValue>.+)\\n$"],
-      "datasourceTemplate": "github-tags",
+      "matchStrings": ["^(?<currentValue>.+)\n$"],
+      "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
     }
   ],
