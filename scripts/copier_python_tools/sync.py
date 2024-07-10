@@ -253,7 +253,7 @@ def get_subs() -> dict[str, Dep]:
             op=" @ ", rev=f"git+{subs[path]}@{revs[path]}"
         )
         for path in subs
-        if path != "submodules/template"
+        if path not in ["submodules/stubs", "submodules/template"]
     }
 
 

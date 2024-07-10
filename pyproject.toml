@@ -85,6 +85,7 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
+stubPath = "submodules/stubs/stubs"
 exclude = ["submodules/**", "bin"]
 typeCheckingMode = "strict"
 # Default "true" in strict

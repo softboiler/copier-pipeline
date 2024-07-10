@@ -9,7 +9,8 @@ catch [System.Management.Automation.NativeCommandExitException] { $fresh = $true
 
 git add .
 git commit --no-verify -m 'Prepare template using blakeNaccarato/copier-python'
-git submodule add --force --name template 'https://github.com/blakeNaccarato/copier-python.git' submodules/template
+git submodule add --force --name 'template' 'https://github.com/blakeNaccarato/copier-python.git' 'submodules/template'
+git submodule add --force --name 'stubs' 'https://github.com/microsoft/python-type-stubs.git' 'submodules/stubs'
 git add .
 git commit --no-verify -m 'Add template and type stub submodules'
 scripts/Sync-Py.ps1

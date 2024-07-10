@@ -1,0 +1,3 @@
+[submodule "stubs"]
+	path = submodules/stubs
+	url = https://github.com/microsoft/python-type-stubs.git
