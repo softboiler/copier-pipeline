@@ -22,14 +22,14 @@
       "description": "Pylance",
       "customType": "regex",
       "fileMatch": [
-        "scripts/Initialize-Shell\\.ps1",
-        "\\.devcontainer/devcontainer\\.json",
-        "template/scripts/Initialize-Shell\\.ps1",
-        "template/\\.devcontainer/devcontainer\\.json\\.jinja"
+        "^scripts/Initialize-Shell\\.ps1$",
+        "^\\.devcontainer/devcontainer\\.json$",
+        "^template/scripts/Initialize-Shell\\.ps1$",
+        "^template/\\.devcontainer/devcontainer\\.json\\.jinja$"
       ],
       "matchStrings": [
         "PYRIGHT_PYTHON_PYLANCE_VERSION = '(?<currentValue>.+)'",
-        "ms-python\\.vscode-pylance@(?<currentValue>\\S+)"
+        "ms-python\\.vscode-pylance@(?<currentValue>[^\"]+)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
