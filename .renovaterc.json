@@ -8,6 +8,15 @@
   "git-submodules": {
     "enabled": true
   },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["\\.pylance-version"],
+      "matchStrings": [".*"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/pylance-release"
+    }
+  ],
   "enabledManagers": [
     "devcontainer",
     "git-submodules",
