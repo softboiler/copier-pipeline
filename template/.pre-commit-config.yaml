@@ -1,4 +1,4 @@
-exclude: |
+: |
   (?x)^(
     \.copier-answers\.yml
     |changelog/towncrier_template\.md\.jinja
@@ -11,7 +11,6 @@ ci:
     - "fawltydeps-docs"
     - "fawltydeps-scripts"
     - "fawltydeps-tests"
-    - "pyright"
     - "pytest-fast-only"
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
@@ -66,13 +65,6 @@ repos:
         files: "^tests/.*$"
         entry: |
           pwsh -Command ". scripts/Initialize-Shell.ps1; fawltydeps --config-file tests/pyproject.toml"
-      - id: "pyright"
-        name: "pyright"
-        pass_filenames: false
-        language: "system"
-        entry: |
-          pwsh -Command ". scripts/Initialize-Shell.ps1; pyright"
-        types_or: ["python", "pyi"]
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
