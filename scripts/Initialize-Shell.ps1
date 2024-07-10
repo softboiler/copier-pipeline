@@ -21,11 +21,13 @@ function Set-Env {
     Activate virtual environment and set environment variables.#>
 
     # ? Set environment variables
+    $LocalBin = (Test-Path 'bin') ? (Get-Item 'bin') : (New-Item -ItemType Directory 'bin')
+    $(Get-Item 'bin')
     $Vars = $Env:GITHUB_ENV ? $(Get-Content $Env:GITHUB_ENV |
             Select-String -Pattern '^(.+)=.+$' |
             ForEach-Object { $_.Matches.Groups[1].value }) : @{}
     foreach ($i in @{
-            PATH                           = "$(Get-Item 'bin')$($IsWindows ? ';' : ':')$Env:PATH"
+            PATH                           = "$LocalBin$($IsWindows ? ';' : ':')$Env:PATH"
             PYRIGHT_PYTHON_PYLANCE_VERSION = '2024.6.1'
             PYDEVD_DISABLE_FILE_VALIDATION = '1'
             PYTHONIOENCODING               = 'utf-8:strict'
