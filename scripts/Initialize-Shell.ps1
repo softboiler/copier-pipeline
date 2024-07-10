@@ -4,8 +4,8 @@ Initialization commands for PowerShell shells in pre-commit and tasks.#>
 
 # ? Error-handling
 $ErrorActionPreference = 'Stop'
-($PSNativeCommandUseErrorActionPreference = $true) | Out-Null
-($ErrorView = 'NormalView') | Out-Null
+$PSNativeCommandUseErrorActionPreference = $true
+$ErrorView = 'NormalView'
 
 # ? Fix leaky UTF-8 encoding settings on Windows
 if ($IsWindows) {
@@ -15,25 +15,33 @@ if ($IsWindows) {
     [console]::InputEncoding = [console]::OutputEncoding = [System.Text.UTF8Encoding]::new()
 }
 
-# ? Environment variables
-$Env:PYRIGHT_PYTHON_PYLANCE_VERSION = '2024.6.1'
-$Env:PYDEVD_DISABLE_FILE_VALIDATION = 1
-$Env:PYTHONIOENCODING = 'utf-8:strict'
-$Env:PYTHONUTF8 = 1
-$Env:PYTHONWARNDEFAULTENCODING = 1
-# Ignore warnings until explicitly re-enabled in tests
-$Env:PYTHONWARNINGS = 'ignore'
-
 # ? Environment setup
 function Set-Env {
     <#.SYNOPSIS
-    Load `.env`, activate a virtual environment found here or in parent directories.#>
+    Activate virtual environment and set environment variables.#>
+
+    # ? Set environment variables
+    $Vars = $Env:GITHUB_ENV ? $(Get-Content $Env:GITHUB_ENV |
+            Select-String -Pattern '^(.+)=.+$' |
+            ForEach-Object { $_.Matches.Groups[1].value }) : @{}
+    foreach ($i in @{
+            PATH                           = "$(Get-Item 'bin')$($IsWindows ? ';' : ':')$Env:PATH"
+            PYRIGHT_PYTHON_PYLANCE_VERSION = '2024.6.1'
+            PYDEVD_DISABLE_FILE_VALIDATION = '1'
+            PYTHONIOENCODING               = 'utf-8:strict'
+            PYTHONWARNDEFAULTENCODING      = '1'
+            PYTHONWARNINGS                 = 'ignore'
+        }.GetEnumerator() ) {
+        Set-Item "Env:$($i.Key)" $($i.Value)
+        if ($Env:GITHUB_ENV -and ($i.Key -notin $Vars)) {
+            "$($i.Key)=$($i.Value)" >> $Env:GITHUB_ENV
+        }
+    }
+
     # ? Activate virtual environment if one exists
     if (Test-Path '.venv') {
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
     }
-    # ? Prepend local `bin` to PATH
-    $sep = $IsWindows ? ';' : ':'
-    $Env:PATH = "bin$sep$Env:PATH"
+
 }
 Set-Env

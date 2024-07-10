@@ -26,12 +26,11 @@ elseif ($Release) { $msg = 'release' }
 
 $LocalExtensions = '.vscode/extensions'
 $Pylance = 'ms-python.vscode-pylance'
-$PylanceVersion = '2024.6.1'
 if (!$CI -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
     'INSTALLING PYLANCE LOCALLY' | Write-Progress
     $Install = @(
         "--extensions-dir=$LocalExtensions",
-        "--install-extension=$Pylance@$PylanceVersion"
+        "--install-extension=$Pylance@$Env:PYRIGHT_PYTHON_PYLANCE_VERSION"
     )
     code @Install
     $PylanceExtension = Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
