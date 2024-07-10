@@ -1,6 +1,6 @@
 # copier_python
 
-[![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/copier-python?color=ee8449&style=flat-square)](../README.md#contributors)
+[![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/copier-python?color=ee8449&style=flat-square)](contributors)
 
 Copier template for Python projects.
 
