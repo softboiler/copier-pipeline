@@ -18,13 +18,17 @@
   ],
   "customManagers": [
     {
-      "description": "Foo",
       "customType": "regex",
-      "fileMatch": ["^\\.pylance-version$"],
-      "matchStrings": ["^(?<currentValue>\\S+).+$"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/pylance-release",
-      "versioningTemplate": "loose"
+      "description": "controller-tools version updates",
+      "fileMatch": [
+        "^.github/(?:workflows|actions)/.+\\.ya?ml$",
+        "(^|/)Makefile$"
+      ],
+      "matchStrings": [
+        "CONTROLLER_TOOLS_VERSION\\s*:=?\\s*\"?(?<currentValue>.+?)\"?\\n"
+      ],
+      "depNameTemplate": "kubernetes-sigs/controller-tools",
+      "datasourceTemplate": "github-releases"
     }
   ],
   "github-actions": {
