@@ -4,7 +4,7 @@
   "addLabels": ["dependencies"],
   "extends": ["config:base", "group:all", ":enablePreCommit"],
   "dependencyDashboardApproval": false,
-  "schedule": ["on the 16th day of the month"],
+  // "schedule": ["on the 16th day of the month"],
   "git-submodules": {
     "enabled": true
   },
