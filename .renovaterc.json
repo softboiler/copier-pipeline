@@ -4,11 +4,12 @@
   "addLabels": ["dependencies"],
   "extends": ["config:base", "group:all", ":enablePreCommit"],
   "dependencyDashboardApproval": false,
-  // "schedule": ["on the 16th day of the month"],
+  "schedule": ["on the 16th day of the month"],
   "git-submodules": {
     "enabled": true
   },
   "enabledManagers": [
+    "custom.regex",
     "devcontainer",
     "git-submodules",
     "github-actions",
@@ -18,11 +19,12 @@
   ],
   "customManagers": [
     {
+      "description": "Pylance",
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": ["ENV YARN_VERSION=(?<currentValue>.*?)\\n"],
-      "depNameTemplate": "yarn",
-      "datasourceTemplate": "npm"
+      "fileMatch": ["^\\.pylance-version$"],
+      "matchStrings": ["^(?<currentValue>.+?)\\n$"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/pylance-release"
     }
   ],
   "github-actions": {
