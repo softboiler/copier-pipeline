@@ -9,7 +9,6 @@
     "enabled": true
   },
   "enabledManagers": [
-    "custom",
     "devcontainer",
     "git-submodules",
     "github-actions",
@@ -19,6 +18,7 @@
   ],
   "customManagers": [
     {
+      "description": "Foo",
       "customType": "regex",
       "fileMatch": [".*pylance-version"],
       "matchStrings": ["(?<currentValue>.*?)\\n"],
