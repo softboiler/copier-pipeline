@@ -85,17 +85,7 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
-exclude = [
-    "**/node_modules",
-    "**/__pycache__",
-    "**/.*",
-    "**/.*/**",
-    "**/.venv",
-    "**/.vscode/extensions",
-    "**/AppData",
-    "bin",
-    "submodules/template",
-]
+exclude = ["submodules/**", "bin"]
 typeCheckingMode = "strict"
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
