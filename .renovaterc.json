@@ -8,6 +8,15 @@
   "git-submodules": {
     "enabled": true
   },
+  "enabledManagers": [
+    "devcontainer",
+    "github-releases",
+    "git-submodules",
+    "github-actions",
+    "pep621",
+    "pip_requirements",
+    "pre-commit"
+  ],
   "customManagers": [
     {
       "customType": "regex",
@@ -16,14 +25,6 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
     }
-  ],
-  "enabledManagers": [
-    "devcontainer",
-    "git-submodules",
-    "github-actions",
-    "pep621",
-    "pip_requirements",
-    "pre-commit"
   ],
   "github-actions": {
     "description": "Additionally monitor these files",
