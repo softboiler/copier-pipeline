@@ -59,7 +59,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
+      - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
     if: github.event_name != 'pull_request'
@@ -100,7 +100,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
+      - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -123,7 +123,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
+      - run: "fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -178,7 +178,7 @@ jobs:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - run: ". scripts/Initialize-Shell.ps1; pytest --cov --cov-config pyproject.toml"
+      - run: "pytest --cov --cov-config pyproject.toml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:

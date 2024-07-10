@@ -48,7 +48,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
+      - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   ruff:
     needs: "sync"
@@ -68,7 +68,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
+      - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -87,7 +87,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
+      - run: "fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -133,7 +133,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      - run: ". scripts/Initialize-Shell.ps1; pytest"
+      - run: "pytest"
   lock:
     needs:
       - "ruff"

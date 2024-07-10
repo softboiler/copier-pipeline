@@ -59,7 +59,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; sphinx-build -EaT docs _site"
+      - run: "sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
     if: github.event_name != 'pull_request'
@@ -100,7 +100,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; ruff check --no-fix --output-format github ."
+      - run: "ruff check --no-fix --output-format github ."
   fawltydeps:
     needs: "sync"
     strategy:
@@ -123,7 +123,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1"
-      - run: ". scripts/Initialize-Shell.ps1; fawltydeps"
+      - run: "fawltydeps"
   pyright:
     needs: "sync"
     strategy:
@@ -177,7 +177,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      - run: ". scripts/Initialize-Shell.ps1; pytest"
+      - run: "pytest"
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
