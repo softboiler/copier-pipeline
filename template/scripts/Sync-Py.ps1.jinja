@@ -24,25 +24,32 @@ elseif ($Devcontainer) { $msg = 'devcontainer' }
 elseif ($Release) { $msg = 'release' }
 "Will run $msg steps" | Write-Progress -Info
 
+$LocalExtensions = '.vscode/extensions'
+$Pylance = 'ms-python.vscode-pylance'
+$PylanceVersion = '2024.6.1'
 if (!$CI -and
     (Get-Command -Name 'code' -ErrorAction 'Ignore') -and
-    !(code --list-extensions | Select-String -Pattern 'charliermarsh.ruff', 'ms-python.vscode-pylance')
+    !(code --list-extensions | Select-String -Pattern $PylanceVersion) -and
+    !(Test-Path "$LocalExtensions/$Pylance-$PylanceVersion")
 ) {
-    'INSTALLING LOCAL VSCODE WORKSPACE EXTENSIONS' | Write-Progress
-    if (Get-Command -Name 'code' -ErrorAction 'Ignore') { $py = 'py' }
+    'INSTALLING PYLANCE LOCALLY' | Write-Progress
     $Install = @(
-        '--extensions-dir=.vscode/extensions',
-        '--install-extension=charliermarsh.ruff@2024.30.0',
-        '--install-extension=ms-python.vscode-pylance@2024.6.1'
+        "--extensions-dir=$LocalExtensions",
+        "--install-extension=$Pylance@$PylanceVersion"
     )
     code @Install
+    $PylanceExtension = Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
+    # Remove other files
+    Get-ChildItem -Path $LocalExtensions |
+        Where-Object { Compare-Object $_ $PylanceExtension } |
+        Remove-Item -Recurse
     # Remove local Pylance bundled stubs
-    Get-ChildItem -Path '.vscode/extensions' -Filter 'ms-python.vscode-pylance-*' |
+    $PylanceExtension |
         ForEach-Object {
             Get-ChildItem -Path "$($_.FullName)/dist/bundled" -Filter '*stubs'
         } |
         Remove-Item -Recurse
-    'INSTALLED LOCAL VSCODE WORKSPACE EXTENSIONS' | Write-Progress -Done
+    'INSTALLED PYLANCE LOCALLY' | Write-Progress -Done
 }
 'FINDING UV' | Write-Progress
 $uvVersionRe = Get-Content 'requirements/uv.txt' | Select-String -Pattern '^uv==(.+)$'
