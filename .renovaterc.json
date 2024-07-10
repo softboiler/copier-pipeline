@@ -28,8 +28,8 @@
         "template/\\.devcontainer/devcontainer\\.json\\.jinja"
       ],
       "matchStrings": [
-        "PYRIGHT_PYTHON_PYLANCE_VERSION = '(?<currentValue>.+?)'",
-        "ms-python.vscode-pylance@(?<currentValue>.+?)"
+        "PYRIGHT_PYTHON_PYLANCE_VERSION = '(?<currentValue>.+)'",
+        "ms-python\\.vscode-pylance@(?<currentValue>\\N+)"
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
