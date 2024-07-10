@@ -10,7 +10,6 @@
   },
   "enabledManagers": [
     "devcontainer",
-    "github-releases",
     "git-submodules",
     "github-actions",
     "pep621",
