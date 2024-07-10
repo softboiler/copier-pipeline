@@ -106,7 +106,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - uses: "jakebailey/pyright-action@3bdde3b31d26f0f1f5de051b1fbd7a536a9a4e7f" # v2.3.11.7
+      - uses: "jakebailey/pyright-action@3bdde3b31d26f0f1f5de051b1fbd7a536a9a4e7f" # v2.3.1
         with:
           pylance-version: "${{ env.PYRIGHT_PYTHON_PYLANCE_VERSION }}"
   test:
