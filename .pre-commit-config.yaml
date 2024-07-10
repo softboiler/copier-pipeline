@@ -122,8 +122,7 @@ repos:
     rev: "v0.4.10"
     hooks:
       - id: "ruff"
-        args: ["--config", "pyproject.toml", "--extend-fixable", "PIE790"]
+        args: ["--extend-fixable", "PIE790"]
         types_or: ["python", "pyi", "jupyter"]
       - id: "ruff-format"
-        args: ["--config", "pyproject.toml"]
         types_or: ["python", "pyi", "jupyter"]
