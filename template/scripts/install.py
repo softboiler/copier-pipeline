@@ -28,12 +28,14 @@ PLAT = platform
 """Current platform."""
 VER = argv[1] if len(argv) > 1 else "3.10"
 """Version to install."""
+TIMEOUT = 10.0
+"""Request timeout."""
 # Retrieve Python versions and metadata from `astral/uv` tooling
 _source = "https://raw.githubusercontent.com/astral-sh/uv/b7fb0b445f3698dd1dfc90361b9bea0ab1edee52"
-with Client() as client:
+with Client(timeout=TIMEOUT) as client:
     response = client.get(f"{_source}/.python-versions")
     VERSIONS = response.text.splitlines()
-with Client() as client:
+with Client(timeout=TIMEOUT) as client:
     response = client.get(f"{_source}/crates/uv-toolchain/download-metadata.json")
     META = response.json()
 
