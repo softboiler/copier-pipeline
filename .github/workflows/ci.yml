@@ -12,7 +12,7 @@ defaults:
   run:
     shell: "pwsh"
 env:
-  UV_CACHE_DIR: ".cache/uv-cache"
+  UV_CACHE_DIR: "../.cache/uv-cache"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   sync:
@@ -178,8 +178,6 @@ jobs:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
       - run: "pytest"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
-        run: "Remove-Item -Recurse -Force .cache/uv-cache"
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
