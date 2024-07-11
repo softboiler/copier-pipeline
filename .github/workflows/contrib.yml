@@ -19,7 +19,7 @@ defaults:
   run:
     shell: "pwsh"
 env:
-  UV_CACHE_DIR: ".cache/uv-cache"
+  UV_CACHE_DIR: "../uv-cache"
   SYNC_PY_DISABLE_CI: True
 jobs:
   no-spaces-in-path:

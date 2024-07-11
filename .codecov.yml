@@ -1,4 +1,3 @@
-ignore: [".cache/**"]
 coverage:
   status:
     project: off
