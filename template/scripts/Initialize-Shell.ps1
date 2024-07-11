@@ -32,6 +32,7 @@ function Set-Env {
             PYTHONIOENCODING               = 'utf-8:strict'
             PYTHONWARNDEFAULTENCODING      = '1'
             PYTHONWARNINGS                 = 'ignore'
+            COVERAGE_CORE                  = 'sysmon'
         }.GetEnumerator() ) {
         Set-Item "Env:$($i.Key)" $($i.Value)
         if ($Env:GITHUB_ENV -and ($i.Key -notin $Vars)) {
