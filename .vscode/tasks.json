@@ -104,7 +104,7 @@
     {
       "label": "task: pre-commit",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; pre-commit --verbose",
+      "command": ". scripts/Initialize-Shell.ps1; pre-commit run --verbose",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
@@ -127,6 +127,13 @@
       "type": "shell",
       "command": ". scripts/Initialize-Shell.ps1; pipdeptree --reverse --packages ${input:dependency}",
       "icon": { "id": "versions" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Run pytest with coverage",
+      "type": "shell",
+      "command": ". scripts/Initialize-Shell.ps1; pytest --cov  --cov-config pyproject.toml --cov-report xml",
+      "icon": { "id": "check" },
       "problemMatcher": []
     },
     {

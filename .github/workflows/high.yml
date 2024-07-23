@@ -133,7 +133,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      - run: "pytest"
+      - run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
   lock:
     needs:
       - "ruff"
@@ -149,6 +149,8 @@ jobs:
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
+        with:
+          submodules: True
       - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
         with:
           name: "lock"

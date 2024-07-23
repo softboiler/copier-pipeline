@@ -53,9 +53,6 @@ addopts = '''
     --color=yes
     -p no:legacypaths
     -r a
-    --cov
-    --cov-config=pyproject.toml
-    --cov-report=xml
 '''
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
@@ -86,7 +83,7 @@ showcontent = true
 
 [tool.pyright]
 stubPath = "submodules/stubs/stubs"
-ignore = ["submodules/**", "bin"]
+ignore = ["bin", "submodules", "scripts/install.py"]
 typeCheckingMode = "strict"
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
@@ -185,7 +182,7 @@ reportUnusedCallResult = "none"
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"
-extend-exclude = ["bin", "submodules"]
+extend-exclude = ["bin", "submodules", "scripts/install.py"]
 extend-include = ["*.ipynb"]
 src = ["src", "docs", "scripts", "tests"]
 output-format = "grouped"
