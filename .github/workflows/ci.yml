@@ -184,6 +184,7 @@ jobs:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
   lock:
     needs:
+      - "build-docs"
       - "ruff"
       - "fawltydeps"
       - "pyright"
