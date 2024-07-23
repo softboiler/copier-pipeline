@@ -133,7 +133,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
-      - run: "pytest"
+      - run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
   lock:
     needs:
       - "ruff"
