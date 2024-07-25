@@ -33,16 +33,22 @@ if (!$CI -and !$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore
         "--install-extension=$Pylance@$Env:PYRIGHT_PYTHON_PYLANCE_VERSION"
     )
     code @Install
-    $PylanceExtension = Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
-    # Remove other files
-    Get-ChildItem -Path $LocalExtensions |
-        Where-Object { Compare-Object $_ $PylanceExtension } |
-        Remove-Item -Recurse
-    # Remove local Pylance bundled stubs
-    $PylanceExtension |
-        ForEach-Object { Get-ChildItem "$_/dist/bundled" -Filter '*stubs' } |
-        Remove-Item -Recurse
-    'INSTALLED PYLANCE LOCALLY' | Write-Progress -Done
+    if (!(Test-Path $LocalExtensions)) {
+        'COULD NOT INSTALL PYLANCE LOCALLY' | Write-Progress -Info
+        'PROCEEDING WITHOUT LOCAL PYLANCE INSTALL' | Write-Progress -Done
+    }
+    else {
+        $PylanceExtension = Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
+        # Remove other files
+        Get-ChildItem -Path $LocalExtensions |
+            Where-Object { Compare-Object $_ $PylanceExtension } |
+            Remove-Item -Recurse
+        # Remove local Pylance bundled stubs
+        $PylanceExtension |
+            ForEach-Object { Get-ChildItem "$_/dist/bundled" -Filter '*stubs' } |
+            Remove-Item -Recurse
+        'INSTALLED PYLANCE LOCALLY' | Write-Progress -Done
+    }
 }
 'FINDING UV' | Write-Progress
 $uvVersionRe = Get-Content 'requirements/uv.txt' | Select-String -Pattern '^uv==(.+)$'
