@@ -111,6 +111,7 @@ if ($Devcontainer) {
 }
 if (!$CI) {
     'SYNCING SUBMODULES' | Write-Progress
+    Get-ChildItem '.git/modules' -Filter 'config.lock' -Recurse -Depth 1 | Remove-Item
     git submodule update --init --merge
     'SUBMODULES SYNCED' | Write-Progress -Done
     '' | Write-Host
