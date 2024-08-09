@@ -177,6 +177,7 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
+      # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
