@@ -73,7 +73,7 @@ function Start-PyVenv {
         }
         # ? Prepend local `bin` to PATH
         $sep = $IsWindows ? ';' : ':'
-        $Env:PATH = "bin$sep$Env:PATH"
+        $Env:PATH = "$(Get-Item 'bin')$sep$Env:PATH"
         return $Py
     }
 }
