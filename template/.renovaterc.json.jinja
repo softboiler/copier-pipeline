@@ -22,11 +22,11 @@
       "description": "Pylance",
       "customType": "regex",
       "fileMatch": [
-        "^scripts/Initialize-Shell\\.ps1$",
+        "^pyproject\\.toml$",
         "^\\.devcontainer/devcontainer\\.json$"
       ],
       "matchStrings": [
-        "PYRIGHT_PYTHON_PYLANCE_VERSION = '(?<currentValue>.+)'",
+        "PYRIGHT_PYTHON_PYLANCE_VERSION = \"(?<currentValue>.+)\"",
         "ms-python\\.vscode-pylance@(?<currentValue>[^\"]+)"
       ],
       "datasourceTemplate": "github-releases",

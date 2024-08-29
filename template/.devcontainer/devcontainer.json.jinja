@@ -33,15 +33,7 @@
   "postAttachCommand": {
     "sync-py": ["pwsh", "scripts/Sync-Py.ps1"]
   },
-  "containerEnv": {
-    "DEVCONTAINER": "1",
-    "PIP_DISABLE_PIP_VERSION_CHECK": "1",
-    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYTHONIOENCODING": "utf-8:strict",
-    "PYTHONUTF8": "1",
-    "PYTHONWARNDEFAULTENCODING": "1",
-    "PYTHONWARNINGS": "ignore"
-  },
+  "containerEnv": { "DEVCONTAINER": "1" },
   "customizations": {
     "vscode": {
       "settings": {

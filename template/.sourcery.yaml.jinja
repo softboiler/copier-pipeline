@@ -16,3 +16,5 @@ ignore:
 rule_settings:
   python_version: "{{ python_version }}"
   enable: ["default"]
+  disable:
+    - "remove-redundant-pass" # Managed by Ruff

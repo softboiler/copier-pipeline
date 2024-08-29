@@ -12,7 +12,7 @@ defaults:
   run:
     shell: "pwsh"
 env:
-  UV_CACHE_DIR: "../uv-cache"
+  UV_CACHE_DIR: ".cache/uv"
   UV_SYSTEM_PYTHON: "true"
 jobs:
   sync:
@@ -29,11 +29,11 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - uses: "actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808" # v4.3.3
+      - uses: "actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b" # v4.3.4
         with:
           name: "lock"
           path: "lock.json"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/save@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"
@@ -48,10 +48,10 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"
@@ -89,10 +89,10 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"
@@ -112,10 +112,10 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"
@@ -123,7 +123,13 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1"
-      - run: "fawltydeps"
+      - run: |
+          pre-commit run fawltydeps-src
+          pre-commit run fawltydeps-docs
+          pre-commit run fawltydeps-pipeline
+          pre-commit run fawltydeps-scripts
+          pre-commit run fawltydeps-tests
+
   pyright:
     needs: "sync"
     strategy:
@@ -135,10 +141,10 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"
@@ -166,7 +172,7 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
       - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
@@ -177,8 +183,13 @@ jobs:
         with:
           python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
       - run: "scripts/Sync-Py.ps1 -Version '{% raw %}${{ matrix.python }}{% endraw %}'"
+      - if: (!(startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && (matrix.python == '{{ python_version }}')))
+        run: "pytest"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
+      - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
+        run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
+      - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
+        run: "Remove-Item -Recurse -Force .cache/uv"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
@@ -201,10 +212,10 @@ jobs:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
           submodules: True
-      - uses: "actions/download-artifact@65a9edc5881444af0b9093a5e628f2fe47ea3b2e" # v4.1.7
+      - uses: "actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16" # v4.1.8
         with:
           name: "lock"
-      - uses: "actions/cache@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
+      - uses: "actions/cache/restore@0c45773b623bea8c8e75f6c82b208c3cf94ea4f9" # v4.0.2
         with:
           path: "{% raw %}${{ env.UV_CACHE_DIR }}{% endraw %}"
           key: "{% raw %}uv-${{ matrix.runner }}-${{ matrix.python }}-${{ hashFiles('lock.json') }}{% endraw %}"

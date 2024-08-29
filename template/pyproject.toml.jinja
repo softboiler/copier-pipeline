@@ -59,6 +59,16 @@ markers = "slow"
 testpaths = "tests"
 xfail_strict = true
 
+[tool.{{ project_name }}_env]
+COVERAGE_CORE = "sysmon"
+JUPYTER_PLATFORM_DIRS = "1"
+PYRIGHT_PYTHON_PYLANCE_VERSION = "2024.6.1"
+PYDEVD_DISABLE_FILE_VALIDATION = "1"
+PYTHONIOENCODING = "utf-8:strict"
+PYTHONUTF8 = "1"
+PYTHONWARNDEFAULTENCODING = "1"
+PYTHONWARNINGS = "ignore"
+
 [tool.towncrier]
 directory = "changelog"
 filename = "CHANGELOG.md"
@@ -83,7 +93,15 @@ showcontent = true
 
 [tool.pyright]
 stubPath = "submodules/stubs/stubs"
-ignore = ["bin", "submodules", "scripts/install.py"]
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    ".cache",
+    "bin",
+    "submodules",
+    "scripts/install.py",
+]
 typeCheckingMode = "strict"
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
@@ -265,7 +283,7 @@ convention = "numpy"
     "S101", # Allow assert
     "T201", # Allow print in notebooks
 ]
-"docs/**" = [
+"docs/**.ipynb" = [
     "E402", # Need to allow imports below patches in docs notebooks
 ]
 "tests/**" = [

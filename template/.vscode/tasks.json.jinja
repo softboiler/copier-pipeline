@@ -151,9 +151,9 @@
       "problemMatcher": []
     },
     {
-      "label": "task: sphinx-autobuild docs (preview)",
+      "label": "task: Build docs",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; sphinx-autobuild -T docs _site --ignore **/apidocs",
+      "command": ". scripts/Initialize-Shell.ps1; {{ project_name }}_tools build-docs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },
