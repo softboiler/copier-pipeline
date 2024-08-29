@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -70,7 +70,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     environment:
       name: "github-pages"
       url: "${{ steps.deployment.outputs.page_url }}"
@@ -83,7 +83,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -106,7 +106,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -134,7 +134,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
@@ -163,7 +163,6 @@ jobs:
           - "ubuntu-22.04"
           - "windows-2022"
         python:
-          - "3.10"
           - "3.11"
           - "3.12"
     runs-on: "${{ matrix.runner }}"
@@ -182,14 +181,14 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      - if: (!(startsWith(matrix.runner, 'ubuntu') && (matrix.python == '3.10')))
+      - if: (!(startsWith(matrix.runner, 'ubuntu') && (matrix.python == '3.11')))
         run: "pytest"
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
+      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
         run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
+      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
         run: "Remove-Item -Recurse -Force .cache/uv"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.10'
+      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
@@ -205,7 +204,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-22.04"]
-        python: ["3.10"]
+        python: ["3.11"]
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7

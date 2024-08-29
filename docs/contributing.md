@@ -44,7 +44,7 @@ This project and its guide are set up to smooth out that learning curve for you 
 
 To make a new contribution, fork this repository, clone it, switch to a new branch (please don't commit directly to `main`), run [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), make changes, commit and push them, and open a Pull Request targeting `main`. You may also open a draft Pull Request if you want feedback before your branch is ready to merge, but remember to mention (`@`) us. In more detail:
 
-- Perform first-time setup, including installing [cross-platform PowerShell](#cross-platform-powershell) and Python 3.10 [(details)](#first-time-setup).
+- Perform first-time setup, including installing [cross-platform PowerShell](#cross-platform-powershell) and Python 3.11 [(details)](#first-time-setup).
 - Fork the repository by selecting "Fork" near the top-right corner of the project page on GitHub. Clone your fork and open it locally, e.g. in VSCode [(details)](#fork-and-clone).
 - If using VSCode, consider installing the recommended extensions when prompted [(details)](#installing-recommended-extensions-in-vscode).
 - Create a new branch and switch to it, e.g. `git checkout -b my-new-feature` or in VSCode or select `+` in the GitLens branches view ([Palette: `GitLens: Show Branches View`](#vscode-command-palette)).
@@ -208,15 +208,15 @@ If you're on Windows, paste the script detailed in the [first-time setup script 
 
 ### Installing Python
 
-If no [system Python](#system-python-environment) matches Python 3.10 needed for contributing, [the necessary Python version will be sourced](#source-for-different-system-python-versions). However, if you don't have any version of Python installed, or would prefer to source Python 3.10 yourself, you may install Python as follows.
+If no [system Python](#system-python-environment) matches Python 3.11 needed for contributing, [the necessary Python version will be sourced](#source-for-different-system-python-versions). However, if you don't have any version of Python installed, or would prefer to source Python 3.11 yourself, you may install Python as follows.
 
 #### Windows or MacOS
 
-If you're on Windows or MacOS, consider installing Python 3.10 from <https://www.python.org/downloads/> rather than from the Windows Store or Homebrew! These are built by the CPython team, and they know best when it comes to setting the right compiler flags when building for your operating system. Select the latest version of Python 3.10 in the "Looking for a specific release?" section, then select the appropriate installer in the "Files" section of the resulting page.
+If you're on Windows or MacOS, consider installing Python 3.11 from <https://www.python.org/downloads/> rather than from the Windows Store or Homebrew! These are built by the CPython team, and they know best when it comes to setting the right compiler flags when building for your operating system. Select the latest version of Python 3.11 in the "Looking for a specific release?" section, then select the appropriate installer in the "Files" section of the resulting page.
 
 #### Linux, Ubuntu, or other UNIX-like systems
 
-If you're on Linux, Ubuntu, or another UNIX-like systems, you could compile and install Python from source at <https://www.python.org/downloads/>, but consider installing Python from [deadsnakes](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa) instead. This allows you to install Python with necessary extras, e.g. `sudo apt install python3.10 python3.10-dev python3.10-venv python3.10-distutils python3.10-tk`. Make sure you at least install `python#.##-venv` for your chosen Python.
+If you're on Linux, Ubuntu, or another UNIX-like systems, you could compile and install Python from source at <https://www.python.org/downloads/>, but consider installing Python from [deadsnakes](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa) instead. This allows you to install Python with necessary extras, e.g. `sudo apt install python3.11 python3.11-dev python3.11-venv python3.11-distutils python3.11-tk`. Make sure you at least install `python#.##-venv` for your chosen Python.
 
 [back](#first-time-setup)
 
@@ -250,7 +250,7 @@ If done via the VSCode UI, click `Open` when prompted to open your newly-created
 If you missed your chance on initial setup, you can still set the Python interpreter at any point. This will select the [virtual environment](#virtual-environment) for the workspace folder, and allow your Python scripts to leverage the packages we have installed from `requirements.txt`.
 
 - Open the main script in your Gist, e.g. `example.py`
-- Check for `venv` in the bottom-right corner of VSCode, e.g. `3.10.# 64-bit (.venv: venv)`
+- Check for `venv` in the bottom-right corner of VSCode, e.g. `3.11.# 64-bit (.venv: venv)`
 - If you don't see `venv`, click the version number to select the option with `.venv` in it
 
 [Workflow](#workflow)
@@ -316,7 +316,7 @@ In short, in Python dependency specifications, `<3` doesn't have the same heart-
 
 ### Source for different system Python versions
 
-This project looks for Python 3.10 on your system to generate the [virtual environment](#virtual-environment) used for development. See how to [install Python](#installing-python) if you don't have Python installed at all. If your system has any version of Python pre-installed other than Python 3.10 used for development, a temporary virtual environment with `zstandard` is installed and [`scripts/install.py`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/install.py>) used to source the necessary Python version from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone). This approach is derived from the one used by the [`uv`](https://github.com/astral-sh/uv) team to source Python binaries for their tooling!
+This project looks for Python 3.11 on your system to generate the [virtual environment](#virtual-environment) used for development. See how to [install Python](#installing-python) if you don't have Python installed at all. If your system has any version of Python pre-installed other than Python 3.11 used for development, a temporary virtual environment with `zstandard` is installed and [`scripts/install.py`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/install.py>) used to source the necessary Python version from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone). This approach is derived from the one used by the [`uv`](https://github.com/astral-sh/uv) team to source Python binaries for their tooling!
 
 looks for any system Python on your machine, and uses it directly to create a development [virtual environment](#virtual-environment) if it's the correct version, or sources the expected version of Python (in a project-local `bin`)
 
@@ -421,7 +421,7 @@ One-time setup for Python dev tools on Windows. Installs Python, VSCode, Windows
 #>
 
 # Install Python
-winget install --id 'Python.Python.3.10' --override '/quiet PrependPath=0'
+winget install --id 'Python.Python.3.11' --override '/quiet PrependPath=0'
 # Install VSCode
 winget install --id 'Microsoft.VisualStudioCode'
 # Install Windows Terminal

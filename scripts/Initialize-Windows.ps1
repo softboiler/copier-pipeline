@@ -15,7 +15,7 @@ $Install = @(
     '--source=winget'
 )
 # Install Python
-winget @Install --id='Python.Python.3.10' --override='/quiet PrependPath=0'
+winget @Install --id='Python.Python.3.11' --override='/quiet PrependPath=0'
 # Install VSCode
 winget @Install --id='Microsoft.VisualStudioCode'
 # Install Windows Terminal

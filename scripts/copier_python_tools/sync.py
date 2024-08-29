@@ -25,7 +25,7 @@ else:
 if TYPE_CHECKING:
     UTC: timezone
 
-MINIMUM_PYTHON = "3.10"
+MINIMUM_PYTHON = "3.11"
 """This project's default Python version."""
 
 # ! Dependencies

@@ -26,7 +26,7 @@ BIN = Path("bin")
 """Local project binaries."""
 PLAT = platform
 """Current platform."""
-VER = argv[1] if len(argv) > 1 else "3.10"
+VER = argv[1] if len(argv) > 1 else "3.11"
 """Version to install."""
 TIMEOUT = 10.0
 """Request timeout."""
