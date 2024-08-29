@@ -286,6 +286,9 @@ convention = "numpy"
     "S603", # Allow shell expressions here
     "S607", # Allow shell expressions here
 ]
+"template/**" = [
+    "N999", # Jinja-templated folder path
+]
 "docs/**.ipynb" = [
     "E402", # Need to allow imports below patches in docs notebooks
 ]
