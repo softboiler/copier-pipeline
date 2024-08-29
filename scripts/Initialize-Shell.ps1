@@ -19,31 +19,39 @@ if ($IsWindows) {
 function Set-Env {
     <#.SYNOPSIS
     Activate virtual environment and set environment variables.#>
-
-    # ? Set environment variables
-    $LocalBin = (Test-Path 'bin') ? (Get-Item 'bin') : (New-Item -ItemType Directory 'bin')
-    $Vars = $Env:GITHUB_ENV ? $(Get-Content $Env:GITHUB_ENV |
-            Select-String -Pattern '^(.+)=.+$' |
-            ForEach-Object { $_.Matches.Groups[1].value }) : @{}
-    foreach ($i in @{
-            PATH                           = "$LocalBin$($IsWindows ? ';' : ':')$Env:PATH"
-            PYRIGHT_PYTHON_PYLANCE_VERSION = '2024.6.1'
-            PYDEVD_DISABLE_FILE_VALIDATION = '1'
-            PYTHONIOENCODING               = 'utf-8:strict'
-            PYTHONWARNDEFAULTENCODING      = '1'
-            PYTHONWARNINGS                 = 'ignore'
-            COVERAGE_CORE                  = 'sysmon'
-        }.GetEnumerator() ) {
-        Set-Item "Env:$($i.Key)" $($i.Value)
-        if ($Env:GITHUB_ENV -and ($i.Key -notin $Vars)) {
-            "$($i.Key)=$($i.Value)" >> $Env:GITHUB_ENV
-        }
-    }
-
     # ? Activate virtual environment if one exists
     if (Test-Path '.venv') {
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
     }
-
+    # ? Set environment variables
+    if (Get-Command -Name 'copier_python_tools' -ErrorAction 'Ignore') {
+        $EnvVars = @{}
+        copier_python_tools init-shell |
+            Select-String -Pattern '^(.+)=(.+)$' |
+            ForEach-Object {
+                $EnvVars.Add($_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value)
+            }
+        $Keys = @()
+        $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
+        if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
+        $Lines = Get-Content $EnvFile | ForEach-Object {
+            $_ -replace '^(?<Key>.+)=(?<Value>.+)$', {
+                $Key = $_.Groups['Key'].Value
+                if ($EnvVars.ContainsKey($Key)) {
+                    $Keys += $Key
+                    return "$Key=$($EnvVars[$Key])"
+                }
+                return $_
+            }
+        }
+        $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
+            $Key, $Value = $_.Key, $_.Value
+            Set-Item "Env:$Key" $Value
+            if (($Key.ToLower() -ne 'path') -and ($Keys -notcontains $Key)) {
+                return "$Key=$Value"
+            }
+        }
+        @($Lines, $NewLines) | Set-Content $EnvFile
+    }
 }
 Set-Env

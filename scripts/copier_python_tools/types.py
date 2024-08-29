@@ -12,6 +12,8 @@ ops: tuple[Op, ...] = (" @ ", "==")
 """Allowable operators."""
 ChangeType: TypeAlias = Literal["breaking", "deprecation", "change"]
 """Type of change to add to changelog."""
+Action: TypeAlias = Literal["default", "error", "ignore", "always", "module", "once"]
+"""Action to take for a warning."""
 
 
 class Dep(TypedDict):

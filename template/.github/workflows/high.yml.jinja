@@ -93,7 +93,6 @@ jobs:
           pre-commit run fawltydeps-pipeline
           pre-commit run fawltydeps-scripts
           pre-commit run fawltydeps-tests
-
   pyright:
     needs: "sync"
     strategy:
@@ -143,7 +142,8 @@ jobs:
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
-        run: "Remove-Item -Recurse -Force .cache/uv"  lock:
+        run: "Remove-Item -Recurse -Force .cache/uv"
+  lock:
     needs:
       - "build-docs"
       - "ruff"

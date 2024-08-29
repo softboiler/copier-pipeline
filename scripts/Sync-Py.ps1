@@ -83,6 +83,7 @@ if ($CI) {
     if ($Release) {
         'ONLY INSTALLING BUILD TOOLS' | Write-Progress
         bin/uv pip install --requirement='requirements/build.txt'
+        . scripts/Initialize-Shell.ps1
         'BUILD TOOLS INSTALLED' | Write-Progress -Done
         '****** DONE ******' | Write-Progress -Done
         return

@@ -4,7 +4,22 @@
     {
       "id": "input",
       "type": "promptString",
-      "description": "Input arguments."
+      "description": "Input."
+    },
+    {
+      "id": "input1",
+      "type": "promptString",
+      "description": "1st arg."
+    },
+    {
+      "id": "input2",
+      "type": "promptString",
+      "description": "2nd arg."
+    },
+    {
+      "id": "input3",
+      "type": "promptString",
+      "description": "3rd arg."
     }
   ],
   "configurations": [
@@ -22,7 +37,38 @@
       "program": "${file}"
     },
     {
-      "name": "Python: Current file with args",
+      "name": "Python: Debug bootstrapping Python install script",
+      "type": "debugpy",
+      "request": "launch",
+      "python": "${workspaceFolder}/bin/sys_venv/bin/python",
+      "program": "${workspaceFolder}/scripts/install.py"
+    },
+    {
+      "name": "Python: Build docs",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "sphinx",
+      "args": ["-T", "docs", "_site"],
+      "console": "internalConsole"
+    },
+    {
+      "name": "Python: WRITE",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "internalConsole",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: PREVIEW",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "internalConsole",
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Current file with 1 arg",
       "type": "debugpy",
       "request": "launch",
       "program": "${file}",
@@ -30,19 +76,20 @@
       "console": "internalConsole"
     },
     {
-      "name": "Python: Sphinx build docs",
+      "name": "Python: Current file with 2 args",
       "type": "debugpy",
       "request": "launch",
-      "module": "sphinx",
-      "args": ["-EaT", "docs", "_site"],
+      "program": "${file}",
+      "args": ["${input:input1}", "${input:input2}"],
       "console": "internalConsole"
     },
     {
-      "name": "Python: Debug bootstrapping Python install script",
+      "name": "Python: Current file with 3 args",
       "type": "debugpy",
       "request": "launch",
-      "python": "${workspaceFolder}/bin/sys_venv/bin/python",
-      "program": "${workspaceFolder}/scripts/install.py"
+      "program": "${file}",
+      "args": ["${input:input1}", "${input:input2}", "${input:input3}"],
+      "console": "internalConsole"
     },
     {
       "name": "PowerShell: Launch Current File",
