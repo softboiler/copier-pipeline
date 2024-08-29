@@ -7,17 +7,18 @@ from datetime import datetime
 from json import dumps, loads
 from pathlib import Path
 from re import finditer
-from shlex import quote, split
+from shlex import split
 from subprocess import run
 from sys import version_info
 from typing import TYPE_CHECKING
 
+from copier_python_tools.environment import escape
 from copier_python_tools.types import Dep, PythonVersion, SubmoduleInfoKind, ops
 
 if version_info >= (3, 11):  # noqa: UP036, RUF100
     from datetime import UTC  # pyright: ignore[reportAttributeAccessIssue]
 else:
-    from datetime import timezone  # pyright: ignore[reportPossiblyUnboundVariable]
+    from datetime import timezone
 
     UTC = timezone.utc  # noqa: UP017, RUF100
 
@@ -272,8 +273,3 @@ def get_submodule_info(kind: SubmoduleInfoKind) -> list[str]:
             text=True,
         ).stdout.splitlines()
     ]
-
-
-def escape(path: str | Path) -> str:
-    """Escape a path, suitable for passing to e.g. {func}`~subprocess.run`."""
-    return quote(Path(path).as_posix())

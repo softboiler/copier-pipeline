@@ -15,7 +15,7 @@ from {{ project_name }}_tools.sync import check_compilation
 from {{ project_name }}_tools.types import ChangeType
 
 if version_info >= (3, 11):  # noqa: UP036, RUF100
-    from tomllib import loads
+    from tomllib import loads  # pyright: ignore[reportMissingImports]
 else:
     from toml import loads  # pyright: ignore[reportMissingModuleSource]
 
