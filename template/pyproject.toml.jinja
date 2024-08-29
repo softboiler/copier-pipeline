@@ -46,14 +46,14 @@ code = ["src"]
 
 [tool.pytest.ini_options]
 # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-addopts = '''
+addopts = """
     --strict-config
     --strict-markers
     --suppress-no-test-exit-code
     --color=yes
     -p no:legacypaths
     -r a
-'''
+"""
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
 testpaths = "tests"
