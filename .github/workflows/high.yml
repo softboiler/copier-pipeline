@@ -137,11 +137,7 @@ jobs:
         with:
           python-version: "${{ matrix.python }}"
       - run: "scripts/Sync-Py.ps1 -Version '${{ matrix.python }}'"
-      # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
-        run: "pytest --cov --cov-config=pyproject.toml --cov-report=xml"
-      - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'
-        run: "Remove-Item -Recurse -Force .cache/uv"
+      - run: "pytest"
   lock:
     needs:
       - "build-docs"
