@@ -40,7 +40,7 @@ function Set-Env {
             if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
         }
     }
-    if (!(Get-Command 'context_models_tools' -ErrorAction 'Ignore')) {
+    if (!(Get-Command '{{ project_name }}_tools' -ErrorAction 'Ignore')) {
         'Installing tools' | Write-Progress
         $Env:UV_TOOL_BIN_DIR = Get-Item 'bin'
         uv tool install --force --python $Version --resolution 'lowest-direct' 'scripts/.'

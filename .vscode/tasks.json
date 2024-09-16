@@ -174,7 +174,7 @@
     {
       "label": "task: Bump version",
       "type": "shell",
-      "command": ". scripts/Initialize-Shell.ps1; copier update --vcs-ref=$(git rev-parse HEAD:submodules/template) --defaults --data project_version='${input:version}'; towncrier build --yes --version '${input:version}'; git add .; git commit -m '${input:version}'",
+      "command": ". scripts/Initialize-Shell.ps1; uvx copier@9.2.0 update --vcs-ref=HEAD --defaults --data project_version='${input:version}'; towncrier build --yes --version '${input:version}'; git add .; git commit -m '${input:version}'",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },

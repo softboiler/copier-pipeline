@@ -29,20 +29,24 @@ function Set-Env {
 
     # ? Sync the virtual environment
     Sync-Uv
-    if (!(Test-Path '.venv')) { uv venv --python $Version }
-    if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
-    if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
-        'Virtual environment is the wrong Python version.' | Write-Progress -Info
-        'Creating virtual environment with correct Python version' | Write-Progress
-        Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
-        uv venv --python $Version
+    if (!$Env:CI) {
+        if (!(Test-Path '.venv')) { uv venv --python $Version }
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
+        if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
+            'Virtual environment is the wrong Python version.' | Write-Progress -Info
+            'Creating virtual environment with correct Python version' | Write-Progress
+            Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
+            uv venv --python $Version
+            if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
+        }
     }
     if (!(Get-Command 'copier_python_tools' -ErrorAction 'Ignore')) {
         'Installing tools' | Write-Progress
-        uv tool install --python $Version --resolution 'lowest-direct' 'scripts/.'
+        $Env:UV_TOOL_BIN_DIR = Get-Item 'bin'
+        uv tool install --force --python $Version --resolution 'lowest-direct' 'scripts/.'
         'Tools installed' | Write-Progress -Done
     }
+
 
     # ? Set environment variables
     $EnvVars = @{}

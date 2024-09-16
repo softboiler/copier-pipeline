@@ -2,7 +2,7 @@
 
 from typing import Literal, TypeAlias, TypedDict
 
-PythonVersion: TypeAlias = Literal["3.9", "3.10", "3.11", "3.12"]
+PythonVersion: TypeAlias = Literal["3.11", "3.12", "3.13", "3.14"]
 """Python version."""
 SubmoduleInfoKind = Literal["paths", "urls"]
 """Submodule info kind."""
