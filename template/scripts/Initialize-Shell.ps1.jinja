@@ -29,7 +29,8 @@ function Set-Env {
 
     # ? Sync the virtual environment
     Sync-Uv
-    if (!$Env:CI) {
+    $CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
+    if (!$CI) {
         if (!(Test-Path '.venv')) { uv venv --python $Version }
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
         if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
