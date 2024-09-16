@@ -47,7 +47,6 @@ function Set-Env {
         'Tools installed' | Write-Progress -Done
     }
 
-
     # ? Set environment variables
     $EnvVars = @{}
     copier_python_tools init-shell |

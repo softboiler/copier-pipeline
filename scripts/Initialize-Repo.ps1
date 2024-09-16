@@ -27,7 +27,7 @@ try { git commit --no-verify -m 'Lock' }
 catch [System.Management.Automation.NativeCommandExitException] { $AlreadyLocked = $true }
 
 # ? Modify GitHub repo if there were not already commits in this repo
-if ($fresh) {
+if ($Fresh) {
     if (!(git remote)) {
         git remote add origin 'https://github.com/blakeNaccarato/copier-python.git'
         git branch --move --force main

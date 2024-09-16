@@ -17,7 +17,6 @@ Param(
 'CHECKING ENVIRONMENT TYPE' | Write-Progress
 $High = $High ? $High : [bool]$Env:SYNC_PY_HIGH
 $Devcontainer = $Env:SYNC_PY_DISABLE_DEVCONTAINER ? $null : $Env:DEVCONTAINER
-$Env:UV_SYSTEM_PYTHON = $Env:CI ? 'true' : $null
 if (!$Release -and $Env:CI) { $msg = 'CI' }
 elseif ($Devcontainer) { $msg = 'devcontainer' }
 elseif ($Release) { $msg = 'release' }
