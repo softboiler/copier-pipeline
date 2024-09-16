@@ -2,6 +2,8 @@
 .SYNOPSIS
 Initialization commands for PowerShell shells in pre-commit and tasks.#>
 
+. scripts/Common.ps1
+
 # ? Error-handling
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
@@ -19,39 +21,57 @@ if ($IsWindows) {
 function Set-Env {
     <#.SYNOPSIS
     Activate virtual environment and set environment variables.#>
-    # ? Activate virtual environment if one exists
-    if (Test-Path '.venv') {
+
+    Param([string]$Version = $(Get-Content '.copier-answers.yml' |
+                Find-Pattern '^python_version:\s?["'']([^"'']+)["'']$' |
+                Find-Pattern '^([^.]+\.[^.]+).*$')
+    )
+
+    # ? Sync the virtual environment
+    Sync-Uv
+    if (!(Test-Path '.venv')) { uv venv --python $Version }
+    if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
+    if (!(python --version | Select-String -Pattern $([Regex]::Escape($Version)))) {
+        'Virtual environment is the wrong Python version.' | Write-Progress -Info
+        'Creating virtual environment with correct Python version' | Write-Progress
+        Remove-Item -Recurse -Force $Env:VIRTUAL_ENV
+        uv venv --python $Version
         if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
     }
-    # ? Set environment variables
-    if (Get-Command -Name '{{ project_name }}_tools' -ErrorAction 'Ignore') {
-        $EnvVars = @{}
-        {{ project_name }}_tools init-shell |
-            Select-String -Pattern '^(.+)=(.+)$' |
-            ForEach-Object {
-                $EnvVars.Add($_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value)
-            }
-        $Keys = @()
-        $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
-        if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
-        $Lines = Get-Content $EnvFile | ForEach-Object {
-            $_ -replace '^(?<Key>.+)=(?<Value>.+)$', {
-                $Key = $_.Groups['Key'].Value
-                if ($EnvVars.ContainsKey($Key)) {
-                    $Keys += $Key
-                    return "$Key=$($EnvVars[$Key])"
-                }
-                return $_
-            }
-        }
-        $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
-            $Key, $Value = $_.Key, $_.Value
-            Set-Item "Env:$Key" $Value
-            if (($Key.ToLower() -ne 'path') -and ($Keys -notcontains $Key)) {
-                return "$Key=$Value"
-            }
-        }
-        @($Lines, $NewLines) | Set-Content $EnvFile
+    if (!(Get-Command '{{ project_name }}_tools' -ErrorAction 'Ignore')) {
+        'Installing tools' | Write-Progress
+        uv tool install --python-version $Version --resolution 'lowest-direct' 'scripts/.'
+        'Tools installed' | Write-Progress -Done
     }
+
+    # ? Set environment variables
+    $EnvVars = @{}
+    {{ project_name }}_tools init-shell |
+        Select-String -Pattern '^(.+)=(.+)$' |
+        ForEach-Object {
+            $EnvVars.Add($_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value)
+        }
+    $Keys = @()
+    $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
+    if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
+    $Lines = Get-Content $EnvFile | ForEach-Object {
+        $_ -replace '^(?<Key>.+)=(?<Value>.+)$', {
+            $Key = $_.Groups['Key'].Value
+            if ($EnvVars.ContainsKey($Key)) {
+                $Keys += $Key
+                return "$Key=$($EnvVars[$Key])"
+            }
+            return $_
+        }
+    }
+    $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
+        $Key, $Value = $_.Key, $_.Value
+        Set-Item "Env:$Key" $Value
+        if (($Key.ToLower() -ne 'path') -and ($Keys -notcontains $Key)) {
+            return "$Key=$Value"
+        }
+    }
+    @($Lines, $NewLines) | Set-Content $EnvFile
 }
+
 Set-Env

@@ -1,10 +1,9 @@
 <#.SYNOPSIS
 Finish machine initialization (cross-platform).#>
 
-. scripts/Common.ps1
 . scripts/Initialize-Shell.ps1
 
-# Set Git username if missing
+# ? Set Git username if missing
 try { $name = git config 'user.name' }
 catch [System.Management.Automation.NativeCommandExitException] { $name = '' }
 if (!$name) {
@@ -16,7 +15,7 @@ if (!$name) {
     if (!$auto) { git config --global 'push.autoSetupRemote' 'true' }
 }
 
-# Set Git email if missing
+# ? Set Git email if missing
 try { $email = git config 'user.email' }
 catch [System.Management.Automation.NativeCommandExitException] { $email = '' }
 if (!$email) {
@@ -24,7 +23,7 @@ if (!$email) {
     Select-String -Pattern '^project_email:\s(.+)$').Matches.Groups[1].value)"
 }
 
-# Log in to GitHub API
+# ? Log in to GitHub API
 if (! (gh auth status)) {
     'LOGGING IN TO GITHUB API' | Write-Progress
     gh auth login

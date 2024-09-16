@@ -7,26 +7,26 @@ name = "{{ project_name }}_tests"
 version = "0.0.0"
 description = "Tests."
 dependencies = [
-    # ? Core testing
-    "pytest-cov==5.0.0",
-    "pytest-custom-exit-code==0.3.0",
-    "pytest-github-actions-annotate-failures==0.2.0",
-    "pytest==8.2.2",
+  # ? Core testing
+  "pytest-cov==5.0.0",
+  "pytest-custom-exit-code==0.3.0",
+  "pytest-github-actions-annotate-failures==0.2.0",
+  "pytest==8.2.2",
 ]
 
 [tool.fawltydeps]
 deps = ["tests/pyproject.toml"]
 code = ["tests/{{ project_name }}_tests"]
 ignore_undeclared = [
-    "{{ project_name }}_docs",
-    "{{ project_name }}_tests",
-    "{{ project_name }}_tools",
-    "{{ project_name }}",
+  "{{ project_name }}_docs",
+  "{{ project_name }}_tests",
+  "{{ project_name }}_tools",
+  "{{ project_name }}",
 ]
 ignore_unused = [
-    # ? Core testing tools or plugins
-    "pytest-cov",
-    "pytest-custom-exit-code",
-    "pytest-github-actions-annotate-failures",
-    "pytest",
+  # ? Core testing tools or plugins
+  "pytest-cov",
+  "pytest-custom-exit-code",
+  "pytest-github-actions-annotate-failures",
+  "pytest",
 ]

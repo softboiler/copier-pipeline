@@ -37,13 +37,6 @@
       "program": "${file}"
     },
     {
-      "name": "Python: Debug bootstrapping Python install script",
-      "type": "debugpy",
-      "request": "launch",
-      "python": "${workspaceFolder}/bin/sys_venv/bin/python",
-      "program": "${workspaceFolder}/scripts/install.py"
-    },
-    {
       "name": "Python: Build docs",
       "type": "debugpy",
       "request": "launch",

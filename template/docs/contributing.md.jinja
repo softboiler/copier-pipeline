@@ -206,20 +206,6 @@ If you're on Windows, paste the script detailed in the [first-time setup script 
 
 [Workflow](#workflow)
 
-### Installing Python
-
-If no [system Python](#system-python-environment) matches Python {{ python_version }} needed for contributing, [the necessary Python version will be sourced](#source-for-different-system-python-versions). However, if you don't have any version of Python installed, or would prefer to source Python {{ python_version }} yourself, you may install Python as follows.
-
-#### Windows or MacOS
-
-If you're on Windows or MacOS, consider installing Python {{ python_version }} from <https://www.python.org/downloads/> rather than from the Windows Store or Homebrew! These are built by the CPython team, and they know best when it comes to setting the right compiler flags when building for your operating system. Select the latest version of Python {{ python_version }} in the "Looking for a specific release?" section, then select the appropriate installer in the "Files" section of the resulting page.
-
-#### Linux, Ubuntu, or other UNIX-like systems
-
-If you're on Linux, Ubuntu, or another UNIX-like systems, you could compile and install Python from source at <https://www.python.org/downloads/>, but consider installing Python from [deadsnakes](https://launchpad.net/~deadsnakes/+archive/ubuntu/ppa) instead. This allows you to install Python with necessary extras, e.g. `sudo apt install python{{ python_version }} python{{ python_version }}-dev python{{ python_version }}-venv python{{ python_version }}-distutils python{{ python_version }}-tk`. Make sure you at least install `python#.##-venv` for your chosen Python.
-
-[back](#first-time-setup)
-
 ### Create a GitHub account and configure git
 
 Modify the following terminal commands with your GitHub username/email to populate `.gitconfig` in your user folder (e.g. `%USERPROFILE%/.gitconfig` on Windows, `~/.gitconfig` otherwise), so that you can commit changes in VSCode using your GitHub identity.
@@ -273,9 +259,7 @@ It should only trigger if you have allowed VSCode Tasks to run automatically and
 
 ### Cross-platform PowerShell
 
-PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell, which, among other things, [sources the appropriate Python version](#source-for-different-system-python-versions). Install PowerShell [like this](https://github.com/PowerShell/PowerShell#get-powershell).
-
-The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
+PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell. The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
 
 However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/Initialize-Shell.ps1>) into a conditional statement that checks whether you are in this project's directory (e.g. `{{ github_repo_name }}`), like so:
 
@@ -314,14 +298,6 @@ In short, in Python dependency specifications, `<3` doesn't have the same heart-
 
 [Workflow](#workflow)
 
-### Source for different system Python versions
-
-This project looks for Python {{ python_version }} on your system to generate the [virtual environment](#virtual-environment) used for development. See how to [install Python](#installing-python) if you don't have Python installed at all. If your system has any version of Python pre-installed other than Python {{ python_version }} used for development, a temporary virtual environment with `zstandard` is installed and [`scripts/install.py`](<https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/blob/main/scripts/install.py>) used to source the necessary Python version from [`indygreg/python-build-standalone`](https://github.com/indygreg/python-build-standalone). This approach is derived from the one used by the [`uv`](https://github.com/astral-sh/uv) team to source Python binaries for their tooling!
-
-looks for any system Python on your machine, and uses it directly to create a development [virtual environment](#virtual-environment) if it's the correct version, or sources the expected version of Python (in a project-local `bin`)
-
-[Workflow](#workflow)
-
 ### System Python environment
 
 Depending on my OS, I use "system Python environment" or just "system Python" to refer to the version of Python already installed on my machine and the set of packages installed and usable by that Python installation. I also use "system Python" to refer to versions of Python manually installed, for instance from <https://www.python.org/>. This differentiates Python environments installed and expected to be used across the entire machine from [virtual environments](#virtual-environment) to be used for specific projects.
@@ -334,7 +310,7 @@ This repository features tooling that bootstraps the entire development environm
 
 - Sets some environment variables and error handling.
 - Installs [`uv`](https://github.com/astral-sh/uv).
-- Creates a virtual environment from your system Python if it's the correct version for development or else [sources the appropriate Python version](#source-for-different-system-python-versions) and bases the virtual environment on that.
+- Creates a virtual environment.
 - Syncs submodules.
 - Syncs a Python [virtual environment](#virtual-environment) to platform-specific dependencies in `lock.json`.
 - Installs pre-commit hooks.
