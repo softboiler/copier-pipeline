@@ -21,8 +21,14 @@ $Devcontainer = $Env:SYNC_PY_DISABLE_DEVCONTAINER ? $null : $Env:DEVCONTAINER
 $Env:UV_SYSTEM_PYTHON = $CI ? 'true' : $null
 if (!$Release -and $CI) { $msg = 'CI' }
 elseif ($Devcontainer) { $msg = 'devcontainer' }
-elseif ($Release) { $msg = 'release' }
+elseif ($Release) {$msg = 'release'}
 "Will run $msg steps" | Write-Progress -Info
+
+if ($Release) {
+    "Finished $msg steps" | Write-Progress -Info
+    '****** DONE ******' | Write-Progress -Done
+    return
+}
 
 if (!$CI -and !$Devcontainer -and
     (Get-Command -Name 'code' -ErrorAction 'Ignore') -and
@@ -53,52 +59,6 @@ if (!$CI -and !$Devcontainer -and
         'INSTALLED PYLANCE LOCALLY' | Write-Progress -Done
     }
 }
-'FINDING UV' | Write-Progress
-$uvVersionRe = Get-Content 'requirements/uv.txt' | Select-String -Pattern '^uv==(.+)$'
-$uvVersion = $uvVersionRe.Matches.Groups[1].value
-if (!(Test-Path 'bin/uv*') -or !(bin/uv --version | Select-String $uvVersion)) {
-    $Env:CARGO_HOME = '.'
-    if ($IsWindows) {
-        'INSTALLING UV FOR WINDOWS' | Write-Progress
-        $uvInstaller = "$([System.IO.Path]::GetTempPath())$([System.Guid]::NewGuid()).ps1"
-        Invoke-RestMethod "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.ps1" |
-            Out-File $uvInstaller
-        powershell -Command "& '$uvInstaller' -NoModifyPath"
-    }
-    else {
-        'INSTALLING UV' | Write-Progress
-        $Env:INSTALLER_NO_MODIFY_PATH = $true
-        curl --proto '=https' --tlsv1.2 -LsSf "https://github.com/astral-sh/uv/releases/download/$uvVersion/uv-installer.sh" |
-            sh
-    }
-    'UV INSTALLED' | Write-Progress -Done
-}
-
-'INSTALLING TOOLS' | Write-Progress
-$pyDevVersionRe = Get-Content '.copier-answers.yml' |
-    Select-String -Pattern '^python_version:\s?["'']([^"'']+)["'']$'
-$Version = $Version ? $Version : $pyDevVersionRe.Matches.Groups[1].value
-$MajorMinorVersionRe = $Version | Select-String -Pattern '^([^.]+\.[^.]+).*$'
-$Version = $MajorMinorVersionRe.Matches.Groups[1].value
-if ($CI) {
-    $py = Get-PySystem $Version
-    "Using $(Resolve-Path $py)" | Write-Progress -Info
-    if ($Release) {
-        'ONLY INSTALLING BUILD TOOLS' | Write-Progress
-        bin/uv pip install --requirement='requirements/build.txt'
-        . scripts/Initialize-Shell.ps1
-        'BUILD TOOLS INSTALLED' | Write-Progress -Done
-        '****** DONE ******' | Write-Progress -Done
-        return
-    }
-}
-else {
-    $py = Get-Py $Version
-    "Using $(Resolve-Path $py -Relative)" | Write-Progress -Info
-}
-bin/uv pip install --editable=scripts
-'TOOLS INSTALLED' | Write-Progress -Done
-
 '*** RUNNING PRE-SYNC TASKS' | Write-Progress
 if ($CI) {
     'SYNCING PROJECT WITH TEMPLATE' | Write-Progress
@@ -109,7 +69,7 @@ if ($CI) {
         git stash pop
         git add .
     }
-    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress -Done
+    'PROJECT SYNCED WITH TEMPLATE' | Write-Progress
 }
 if ($Devcontainer) {
     $repo = Get-ChildItem '/workspaces'
@@ -129,7 +89,7 @@ if (!$CI) {
 '*** PRE-SYNC DONE ***' | Write-Progress -Done
 
 'SYNCING DEPENDENCIES' | Write-Progress
-copier_python_tools compile $($High ? '--high' : '--no-high') | bin/uv pip sync -
+copier_python_tools compile $($High ? '--high' : '--no-high') | uv pip sync -
 'DEPENDENCIES SYNCED' | Write-Progress -Done
 
 '*** RUNNING POST-SYNC TASKS' | Write-Progress

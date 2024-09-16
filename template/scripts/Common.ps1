@@ -45,6 +45,9 @@ function Sync-Uv {
     else {
         $Uv = Get-Item 'bin/uv.???' -ErrorAction 'Ignore'
         # ? Prepend local `bin` to PATH
+        if (!($Bin = Get-Item 'bin' -ErrorAction 'Ignore')) {
+            New-Item 'bin' -ItemType 'Directory'
+        }
         $Sep = $IsWindows ? ';' : ':'
         $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
     }
