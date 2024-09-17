@@ -8,27 +8,29 @@ Param(
     # Recopy, ignoring prior diffs instead of a smart update.
     [switch]$Recopy,
     # Stay on the current template version when updating.
-    [switch]$Stay,
-    # Skip verifification when committing changes.
-    [switch]$NoVerify
+    [switch]$Stay
 )
 begin {
     . scripts/Initialize-Shell.ps1
     $Template = 'submodules/template'
     $Copier = 'copier@9.2.0'
+    $TemplateExists = $Template | Test-Path
+    $Template = $TemplateExists ? $Template : 'origin/main'
+    function Get-Ref {
+        Param($Ref = 'HEAD')
+        $TemplateRev = $TemplateExists ? "HEAD:$Template" : 'origin/main'
+        return ($Ref -eq 'HEAD') ? (git rev-parse $TemplateRev) : $Ref
+    }
 }
 process {
-    if (($Template | Test-Path) -and !$Stay) {
+    if ($TemplateExists -and !$Stay) {
         git submodule update --init --remote --merge $Template
         git add .
-        $Msg = "Update template digest to $(git rev-parse "HEAD:$Template")"
-        $origPreference = $ErrorActionPreference
-        $ErrorActionPreference = 'SilentlyContinue'
-        if ($NoVerify) { git commit --no-verify -m $Msg }
-        else { git commit -m $Msg }
-        $ErrorActionPreference = $origPreference
+        try { git commit --no-verify -m "Update template digest to $(Get-Ref $Ref)" }
+        catch [System.Management.Automation.NativeCommandExitException] { $AlreadyUpdated = $true }
     }
     elseif (!$TemplateExists -and $Stay) { return }
+    $Ref = Get-Ref $Ref
     if ($Recopy) {
         if ($Prompt) { return uvx $Copier recopy --overwrite --vcs-ref=$Ref }
         return uvx $Copier recopy --overwrite --defaults --vcs-ref=$Ref
