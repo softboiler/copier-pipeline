@@ -42,7 +42,7 @@ function Set-Env {
         $Bin = Get-Item 'bin'
     }
     # ? Add local `bin` to path
-    $Env:PATH = "$Bin$Sep$Env:PATH"
+    $Path = $Env:PATH = "$Bin$Sep$Env:PATH"
     # ? Set `uv` tool directory to local `bin`
     $Env:UV_TOOL_BIN_DIR = $Bin
     $EnvVars.Add('UV_TOOL_BIN_DIR', $Bin)
