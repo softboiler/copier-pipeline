@@ -45,17 +45,6 @@ function Sync-Uv {
     else {
         $Uv = Get-Item 'bin/uv.*' -ErrorAction 'Ignore'
     }
-    # ? Prepend local `bin` to PATH
-    if (!($Bin = Get-Item 'bin' -ErrorAction 'Ignore')) {
-        New-Item 'bin' -ItemType 'Directory'
-        $Bin = Get-Item 'bin'
-    }
-    $Sep = $IsWindows ? ';' : ':'
-    $Env:PATH = "$(Get-Item 'bin')$Sep$Env:PATH"
-    $CI = $Env:SYNC_PY_DISABLE_CI ? $null : $Env:CI
-    $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.env'
-    if ($CI) { ("PATH=$Env:PATH", "UV_TOOL_BIN_DIR=$Bin") | Add-Content $EnvFile }
-    # ? Install `uv`
     if ((!$Uv -or !(& $Uv --version | Select-String $Version))) {
         'Installing uv' | Write-Progress
         $OrigCargoHome = $Env:CARGO_HOME
