@@ -43,10 +43,9 @@ function Set-Env {
     }
     # ? Add local `bin` to path
     $Env:PATH = "$Bin$Sep$Env:PATH"
-    if ($CI) { $EnvVars.Add("PATH", $Env:PATH) }
     # ? Set `uv` tool directory to local `bin`
     $Env:UV_TOOL_BIN_DIR = $Bin
-    $EnvVars.Add("UV_TOOL_BIN_DIR", $Bin)
+    $EnvVars.Add('UV_TOOL_BIN_DIR', $Bin)
 
     # ? Sync local `uv` version
     Sync-Uv
@@ -74,30 +73,34 @@ function Set-Env {
     copier_python_tools init-shell |
         Select-String -Pattern '^(.+)=(.+)$' |
         ForEach-Object {
-            $EnvVars.Add($_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value)
+            $Key, $Value = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
+            if ((($Key.ToLower() -ne 'path')) -and ($EnvVars -notcontains $Key)) {
+                $EnvVars.Add($Key, $Value)
+            }
         }
     # ? Get environment variables to update in `.env`
     $Keys = @()
     $Lines = Get-Content $EnvFile | ForEach-Object {
         $_ -replace '^(?<Key>.+)=(?<Value>.+)$', {
             $Key = $_.Groups['Key'].Value
-            if ($EnvVars.ContainsKey($Key)) {
+            if ($Key.ToLower() -eq 'path') { $PathInEnvFile = $true }
+            elseif ($EnvVars.ContainsKey($Key)) {
                 $Keys += $Key
                 return "$Key=$($EnvVars[$Key])"
             }
             return $_
         }
     }
-    # ? Get environment variables to add to `.env`
+    # ? Sync environment variables and those in `.env`
     $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
         $Key, $Value = $_.Key, $_.Value
-        Set-Item "Env:$Key" $Value
-        if (($Key.ToLower() -ne 'path') -and ($Keys -notcontains $Key)) {
-            return "$Key=$Value"
+        if ($Key.ToLower() -ne 'path') {
+            Set-Item "Env:$Key" $Value
+            if ($Keys -notcontains $Key) { return "$Key=$Value" }
         }
     }
-    # ? Update `.env`
     @($Lines, $NewLines) | Set-Content $EnvFile
+    if ($CI -and !$PathInEnvFile) { "PATH=$Path" | Add-Content $EnvFile }
 }
 
 Set-Env
