@@ -29,11 +29,7 @@ name = "{{ project_owner_name }}"
 
 [tool.coverage.run]
 branch = true
-source = [
-  "{{ project_name }}",
-  "{{ project_name }}_docs",
-  "{{ project_name }}_tests",
-  "{{ project_name }}_tools",
+source = ["{{ project_name }}", "{{ project_name }}_docs", "{{ project_name }}_tests", "{{ project_name }}_tools",
 ]
 
 [tool.fawltydeps]
