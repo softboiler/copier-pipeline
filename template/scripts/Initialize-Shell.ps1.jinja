@@ -63,14 +63,14 @@ function Set-Env {
             if ($IsWindows) { .venv/scripts/activate.ps1 } else { .venv/bin/activate.ps1 }
         }
     }
-    if (!(Get-Command 'copier_python_tools' -ErrorAction 'Ignore')) {
+    if (!(Get-Command '{{ project_name }}_tools' -ErrorAction 'Ignore')) {
         'Installing tools' | Write-Progress
         uv tool install --force --python $Version --resolution 'lowest-direct' --editable 'scripts/.'
         'Tools installed' | Write-Progress -Done
     }
 
     # ? Get environment variables from `pyproject.toml`
-    copier_python_tools init-shell |
+    {{ project_name }}_tools init-shell |
         Select-String -Pattern '^(.+)=(.+)$' |
         ForEach-Object {
             $Key, $Value = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
