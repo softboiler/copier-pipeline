@@ -23,8 +23,7 @@ dependencies = [
 [tool.fawltydeps]
 deps = ["scripts/pyproject.toml"]
 code = ["scripts/{{ project_name }}_tools"]
-ignore_undeclared = ["{{ project_name }}_docs", "{{ project_name }}_tests", "{{ project_name }}_tools", "{{ project_name }}"
-]
+ignore_undeclared = ["{{ project_name }}_docs", "{{ project_name }}_tests", "{{ project_name }}_tools", "{{ project_name }}"]
 ignore_unused = [
   # ? Core script tools
   "copier", # For template sync
