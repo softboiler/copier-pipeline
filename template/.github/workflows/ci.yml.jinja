@@ -116,5 +116,5 @@ jobs:
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
-      - if: (!(startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && (matrix.python == '{{ python_version }}')))
+      - if: (!(startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'))
         run: "scripts/Sync-Env.ps1 -PythonVersion '{% raw %}${{ matrix.python }}{% endraw %}'; pytest"

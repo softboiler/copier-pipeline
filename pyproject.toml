@@ -28,7 +28,7 @@ name = "Blake Naccarato"
 email = "blake.naccarato@gmail.com"
 
 [tool.uv]
-constraints-dependencies = [
+constraint-dependencies = [
   # ? Security
   # ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
   # ? via sphinx
