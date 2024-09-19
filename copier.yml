@@ -63,9 +63,3 @@ actions_runner:
     - "macos-13"
   default: "ubuntu-22.04"
   validator: "{% if not actions_runner %}Invalid input{% endif %}"
-
-active:
-  type: "bool"
-  help: "Whether this project is active. Controls whether bots will generate dependency PRs and the like."
-  default: true
-  validator: "{% if active == '' %}Invalid input{% endif %}"
