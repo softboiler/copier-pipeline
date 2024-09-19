@@ -1,0 +1,35 @@
+[build-system]
+requires = ["flit_core==3.9.0"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "dev"
+version = "0.0.0"
+description = "Dev"
+dependencies = [
+  # ? Dev
+  "cyclopts==2.9.3",
+  "dulwich==0.22.1",
+  "pydantic-settings==2.5.2",
+  "python-dotenv==1.0.1",
+  "toml==0.10.2",
+  # ? Docs
+  "docutils==0.21.2",
+  "numpydoc==1.7.0",
+  "ruamel-yaml==0.18.6",
+  "sphinx==7.3.7",
+]
+[project.scripts]
+"dev" = "dev.tools.__main__:main"
+
+[tool.fawltydeps]
+deps = ["packages/_dev/pyproject.toml"]
+code = ["packages/_dev", "docs", "tests"]
+ignore_undeclared = [
+  # ? This project
+  "{{ project_name }}",
+  # ? Workspaces
+  "dev",
+]
+[tool.fawltydeps.custom_mapping]
+ruamel-yaml = ["ruamel"]

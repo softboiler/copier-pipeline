@@ -11,7 +11,7 @@ from urllib.parse import urlparse
 
 from dulwich.repo import Repo
 
-from {{ project_name }}_tools.types import ChangeType
+from dev.tools.types import ChangeType
 
 
 def add_change(typ: ChangeType = "change"):
@@ -78,14 +78,14 @@ def get_connected_prs(
         owner,
         repo,
         issue,
-        query=f"""{% raw %}
+        query=f"""
             timelineItems(itemTypes: CONNECTED_EVENT, first: {first}) {{
                 nodes {{
                     ... on ConnectedEvent {{
                         subject {{ ... on PullRequest {{ number title }} }}
                     }}
                 }}
-            }}{% endraw %}""",
+            }}""",
     )["timelineItems"]["nodes"]
 
 
@@ -99,11 +99,11 @@ def query_gh_issue(
             "api",
             "graphql",
             "-f",
-            sanitize(f"""{% raw %}query= {{
+            sanitize(f"""query= {{
                 repository(owner:"{owner}", name:"{repo}") {{
                     issue(number: {issue}) {{ {sanitize(query)} }}
                 }}
-            }}{% endraw %}"""),
+            }}"""),
         ],
         capture_output=True,
         text=True,

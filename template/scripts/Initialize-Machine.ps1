@@ -24,8 +24,4 @@ if (!$email) {
 }
 
 # ? Log in to GitHub API
-if (! (gh auth status)) {
-    'LOGGING IN TO GITHUB API' | Write-Progress
-    gh auth login
-    'GITHUB API LOGIN COMPLETE' | Write-Progress -Done
-}
+if (! (gh auth status)) { gh auth login -Done }

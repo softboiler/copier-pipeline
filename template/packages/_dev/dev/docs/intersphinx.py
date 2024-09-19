@@ -1,6 +1,6 @@
 """Intersphinx URL handlers."""
 
-from {{ project_name }}_docs.types import IspxMappingValue
+from dev.docs.types import IspxMappingValue
 
 
 def get_url(url: str, latest: bool = False):

@@ -15,21 +15,17 @@ jobs:
       contents: "write"
       id-token: "write"
       attestations: "write"
-    strategy:
-      matrix:
-        runner: ["{{ actions_runner }}"]
-        python: ["{{ python_version }}"]
-    runs-on: "{% raw %}${{ matrix.runner }}{% endraw %}"
+    runs-on: "{{ actions_runner }}"
     environment:
       name: "release"
       url: "https://pypi.org/p/{{ github_repo_name }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
-      - uses: "actions/setup-python@39cd14951b08e74b54015e9e001cdefcf80e669f" # v5.1.1
+      - uses: "astral-sh/setup-uv@9f1f1fece28798fe5e7ece00f4243abe886974b2" # v3.0.0
         with:
-          python-version: "{% raw %}${{ matrix.python }}{% endraw %}"
-      - run: "scripts/Sync-Py.ps1 -Release"
-      - run: "uv build"
+          version: "0.4.12"
+          enable-cache: true
+      - run: "scripts/Sync-Env.ps1 -Release; uv build"
       - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         with:
           subject-path: "dist/**"

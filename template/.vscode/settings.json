@@ -17,8 +17,8 @@
   },
   "search.exclude": {
     //? Don't search in submodules or locks by default
-    "submodules": true,
-    "lock*.json": true
+    "typings": true,
+    "uv.lock": true,
   },
   //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
@@ -36,7 +36,8 @@
     ".sourcery.yaml": "yaml",
     "*ipython-input*": "python",
     "*requirements*.in": "pip-requirements",
-    "pyrightconfig.json": "jsonc"
+    "pyrightconfig.json": "jsonc",
+    "uv.lock": "toml",
   },
   //! Git
   "git.allowNoVerifyCommit": true,
@@ -240,6 +241,7 @@
   },
   //* Even Better TOML (TOML)
   "[toml]": {
+    "editor.tabSize": 2,
     "editor.defaultFormatter": "tamasfe.even-better-toml",
     "editor.wordWrap": "off"
   },

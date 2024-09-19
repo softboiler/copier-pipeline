@@ -1,7 +1,6 @@
 <#.SYNOPSIS
 Initialize repository.#>
 
-. scripts/Common.ps1
 . scripts/Initialize-Shell.ps1
 
 git init
@@ -20,8 +19,8 @@ git add .
 try { git commit --no-verify -m 'Add template and type stub submodules' }
 catch [System.Management.Automation.NativeCommandExitException] { $HadSubmodules = $true }
 
-scripts/Sync-Py.ps1
-Set-Env
+. scripts/Sync-Env.ps1
+
 git add .
 try { git commit --no-verify -m 'Lock' }
 catch [System.Management.Automation.NativeCommandExitException] { $AlreadyLocked = $true }

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Establish base config, schedule, and manager defaults",
+  "addLabels": ["dependencies"],
+  "extends": [
+    ":dependencyDashboard",
+    ":semanticPrefixFixDepsChoreOthers",
+    ":ignoreModulesAndTests",
+    "replacements:all",
+    "workarounds:all"
+  ],
+  "dependencyDashboardApproval": true,
+  "lockFileMaintenance": { "enabled": true },
+  "separateMajorMinor": false,
+  "git-submodules": { "enabled": true },
+  "pre-commit": { "enabled": true },
+  "enabledManagers": [
+    "custom.regex",
+    "devcontainer",
+    "git-submodules",
+    "github-actions",
+    "pep621",
+    "pre-commit"
+  ],
+  "customManagers": [
+    {
+      "description": "uv",
+      "customType": "regex",
+      "fileMatch": ["^\\.uv-version$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "astral-sh/uv"
+    },
+    {
+      "description": "uv-gha",
+      "customType": "regex",
+      "fileMatch": ["^\\.github/workflows/.*$"],
+      "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version: \"(?<currentValue>.+)\""],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "astral-sh/uv"
+    },
+    {
+      "description": "Copier",
+      "customType": "regex",
+      "fileMatch": ["^\\.copier-version$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "copier"
+    },
+    {
+      "description": "Pylance",
+      "customType": "regex",
+      "fileMatch": ["^\\.pylance-version$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "microsoft/pylance-release"
+    }
+  ],
+  "packageRules": [
+    {
+      "groupName": "all dependencies",
+      "groupSlug": "all",
+      "matchPackageNames": ["*"]
+    },
+    {
+      "description": "Update regex pins separately",
+      "groupName": "regex",
+      "matchManagers": ["regex"]
+    },
+    {
+      "description": "Update `.devcontainer` updates separately for manual testing",
+      "groupName": "devcontainer",
+      "matchManagers": ["devcontainer"]
+    }
+  ]
+}
