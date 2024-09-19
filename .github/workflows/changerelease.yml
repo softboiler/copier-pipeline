@@ -12,12 +12,9 @@ defaults:
 jobs:
   changerelease:
     continue-on-error: true
-    strategy:
-      matrix:
-        runner: ["ubuntu-22.04"]
     permissions:
       contents: "write"
-    runs-on: "${{ matrix.runner }}"
+    runs-on: "ubuntu-22.04"
     steps:
       - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
         with:

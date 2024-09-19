@@ -1,6 +1,8 @@
 <#.SYNOPSIS
 Initialize Windows machine.#>
 
+. scripts/Initialize-Shell.ps1
+
 $origPreference = $ErrorActionPreference
 $ErrorActionPreference = 'SilentlyContinue'
 # Common winget options
@@ -14,8 +16,6 @@ $Install = @(
     '--silent',
     '--source=winget'
 )
-# Install Python
-winget @Install --id='Python.Python.3.11' --override='/quiet PrependPath=0'
 # Install VSCode
 winget @Install --id='Microsoft.VisualStudioCode'
 # Install Windows Terminal

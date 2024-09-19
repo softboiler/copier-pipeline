@@ -27,11 +27,11 @@
     "sync-py-in-codespace": [
       "pwsh",
       "-Command",
-      "if (Test-Path /.codespaces) { scripts/Sync-Py.ps1 }"
+      "if (Test-Path /.codespaces) { scripts/Sync-Env.ps1 }"
     ]
   },
   "postAttachCommand": {
-    "sync-py": ["pwsh", "scripts/Sync-Py.ps1"]
+    "sync-py": ["pwsh", "scripts/Sync-Env.ps1"]
   },
   "containerEnv": { "DEVCONTAINER": "1" },
   "customizations": {

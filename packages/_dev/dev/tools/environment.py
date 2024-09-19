@@ -4,7 +4,6 @@ import subprocess
 from collections.abc import Sequence
 from contextlib import chdir, nullcontext
 from io import StringIO
-from os import environ
 from pathlib import Path
 from shlex import quote, split
 from sys import platform
@@ -23,11 +22,6 @@ def init_shell(path: Path | None = None) -> str:
         environment = Environment().model_dump()
         dotenv = "\n".join(f"{k}={v}" for k, v in environment.items())
         load_dotenv(stream=StringIO(dotenv))
-        if ((bin_ := Path("bin").resolve()).exists()) and (p := environ.get("PATH")):
-            environment["PATH"] = environ["PATH"] = (
-                f"{bin_}{';' if platform == 'win32' else ':'}{p}"
-            )
-            dotenv += f"\nPATH={environment['PATH']}"
         return dotenv
 
 
@@ -47,10 +41,10 @@ def run(args: str | Sequence[str]):
 
 
 class Environment(BaseSettings):
-    """Get environment variables from `pyproject.toml:[tool.copier_python_env]`."""
+    """Get environment variables from `pyproject.toml:[tool.env]`."""
 
     model_config = SettingsConfigDict(
-        extra="allow", pyproject_toml_table_header=("tool", "copier_python_env")
+        extra="allow", pyproject_toml_table_header=("tool", "env")
     )
 
     @classmethod

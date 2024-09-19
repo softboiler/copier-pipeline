@@ -9,10 +9,9 @@ from sys import version_info
 
 from cyclopts import App
 
-from copier_python_tools import add_changes, environment
-from copier_python_tools.environment import escape, run
-from copier_python_tools.sync import check_compilation
-from copier_python_tools.types import ChangeType
+from dev.tools import add_changes, environment
+from dev.tools.environment import escape, run
+from dev.tools.types import ChangeType
 
 if version_info >= (3, 11):  # noqa: UP036, RUF100
     from tomllib import loads  # pyright: ignore[reportMissingImports]
@@ -31,12 +30,6 @@ def main():  # noqa: D103
 def init_shell():
     """Initialize shell."""
     log(environment.init_shell())
-
-
-@APP.command
-def compile(high: bool = False):  # noqa: A001
-    """Compile."""
-    log(check_compilation(high))
 
 
 @APP.command

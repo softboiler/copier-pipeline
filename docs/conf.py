@@ -4,12 +4,11 @@ from datetime import date
 from hashlib import sha256
 from pathlib import Path
 
+from dev.docs import DOCS, PYPROJECT, chdir_docs
+from dev.docs.intersphinx import get_ispx, get_rtd, get_url
+from dev.docs.types import IspxMappingValue
 from ruamel.yaml import YAML
 from sphinx.application import Sphinx
-
-from copier_python_docs import DOCS, PYPROJECT, chdir_docs
-from copier_python_docs.intersphinx import get_ispx, get_rtd, get_url
-from copier_python_docs.types import IspxMappingValue
 
 # ! Root
 ROOT = chdir_docs()

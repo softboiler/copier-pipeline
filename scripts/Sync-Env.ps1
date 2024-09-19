@@ -122,7 +122,9 @@ if ($Devcontainer) {
 elseif ($CI) { dev elevate-pyright-warnings }
 else {
     $Hooks = '.git/hooks'
-    if (!(Test-Path "$Hooks/pre-commit")) { pre-commit install --install-hooks }
+    if (!(Test-Path "$Hooks/post-checkout") -or !(Test-Path "$Hooks/pre-commit") -or
+        !(Test-Path "$Hooks/pre-push")
+    ) { pre-commit install --install-hooks }
     if (!$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
         $LocalExtensions = '.vscode/extensions'
         $Pylance = 'ms-python.vscode-pylance'

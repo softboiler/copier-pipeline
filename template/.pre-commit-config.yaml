@@ -54,18 +54,6 @@ repos:
             |docs/.*
             |tests/.*
           )$
-      - id: "fawltydeps-pipeline"
-        name: "fawltydeps-pipeline"
-        pass_filenames: false
-        language: "system"
-        entry: |
-          pwsh -Command ". scripts/Sync-Env.ps1; fawltydeps --config-file packages/pipeline/pyproject.toml"
-        files: |
-          (?x)^(
-            packages/pipeline/pyproject\.toml
-            |docs/.*
-            |tests/.*
-          )$
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
