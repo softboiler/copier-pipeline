@@ -25,6 +25,9 @@ jobs:
         with:
           version: "0.4.12"
           enable-cache: true
+          cache-dependency-glob: |
+            **/uv.lock
+            .github/workflows/**
       - run: "scripts/Sync-Env.ps1 -Release; uv build"
       - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         with:
