@@ -188,7 +188,7 @@
     {
       "label": "task: Update changelog",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; python -m copier_python_tools add-change ${input:changeType}",
+      "command": ". scripts/Sync-Env.ps1; dev add-change ${input:changeType}",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },

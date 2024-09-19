@@ -117,4 +117,4 @@ jobs:
         env:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
       - if: (!(startsWith(matrix.runner, 'ubuntu') && matrix.python == '3.11'))
-        run: "scripts/Sync-Env.ps1 -PythonVersion '3.11'; pytest"
+        run: "scripts/Sync-Env.ps1 -PythonVersion '${{ matrix.python }}'; pytest"
