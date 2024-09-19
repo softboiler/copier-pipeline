@@ -13,8 +13,7 @@ git add .
 try { git commit --no-verify -m 'Prepare template using blakeNaccarato/copier-python' }
 catch [System.Management.Automation.NativeCommandExitException] { $AlreadyTemplated = $true }
 
-git submodule add --force --name 'template' 'https://github.com/blakeNaccarato/copier-python.git' 'submodules/template'
-git submodule add --force --name 'stubs' 'https://github.com/microsoft/python-type-stubs.git' 'submodules/stubs'
+git submodule add --force --name 'typings' 'https://github.com/microsoft/python-type-stubs.git' 'typings'
 git add .
 try { git commit --no-verify -m 'Add template and type stub submodules' }
 catch [System.Management.Automation.NativeCommandExitException] { $HadSubmodules = $true }
