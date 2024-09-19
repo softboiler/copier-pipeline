@@ -117,4 +117,4 @@ jobs:
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
       - if: (!(startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'))
-        run: "scripts/Sync-Env.ps1 -PythonVersion '{% raw %}{{ python_version }}{% endraw %}'; pytest"
+        run: "scripts/Sync-Env.ps1 -PythonVersion '{{ python_version }}'; pytest"
