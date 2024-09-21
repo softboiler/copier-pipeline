@@ -9,7 +9,6 @@
     "workarounds:all"
   ],
   "dependencyDashboardApproval": true,
-  "lockFileMaintenance": { "enabled": true },
   "separateMajorMinor": false,
   "git-submodules": { "enabled": true },
   "pre-commit": { "enabled": true },
@@ -22,7 +21,10 @@
     "pre-commit"
   ],
   "github-actions": { "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"] },
-  "pep621": { "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"] },
+  "pep621": {
+    "fileMatch": ["[^|/]pyproject\\.toml[^/]*$"],
+    "rangeStrategy": "bump"
+  },
   "ignoreDeps": ["towncrier"],
   "customManagers": [
     {
@@ -42,20 +44,20 @@
       "depNameTemplate": "astral-sh/uv"
     },
     {
-      "description": "copier",
-      "customType": "regex",
-      "fileMatch": ["[^|/]\\.copier-version[^/]*$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+)"],
-      "datasourceTemplate": "pypi",
-      "depNameTemplate": "copier"
-    },
-    {
       "description": "pylance",
       "customType": "regex",
       "fileMatch": ["[^|/]\\.pylance-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
+    },
+    {
+      "description": "copier",
+      "customType": "regex",
+      "fileMatch": ["[^|/]\\.copier-version[^/]*$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "copier"
     }
   ],
   "packageRules": [
