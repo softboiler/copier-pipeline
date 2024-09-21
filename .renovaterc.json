@@ -1,6 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "description": "Establish base config, schedule, and manager defaults",
   "addLabels": ["dependencies"],
   "extends": [
     ":dependencyDashboard",
@@ -40,7 +39,7 @@
       "depNameTemplate": "astral-sh/uv"
     },
     {
-      "description": "Copier",
+      "description": "copier",
       "customType": "regex",
       "fileMatch": ["[^|/]\\.copier-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
@@ -48,7 +47,7 @@
       "depNameTemplate": "copier"
     },
     {
-      "description": "Pylance",
+      "description": "pylance",
       "customType": "regex",
       "fileMatch": ["[^|/]\\.pylance-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
@@ -57,18 +56,14 @@
     }
   ],
   "github-actions": {
-    "description": "Additionally monitor these files",
-    "fileMatch": ["(^|/)\\.github/workflows/.+$"]
+    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
   },
   "pep621": {
-    "description": "Additionally monitor these files",
     "fileMatch": ["(^|/)pyproject\\.toml\\.jinja$"]
   },
-  "ignorePaths": ["requirements/requirements.txt"],
   "packageRules": [
     {
-      "groupName": "all",
-      "matchPackageNames": ["*"]
+      "groupName": "all"
     },
     {
       "groupName": "dev",
@@ -76,7 +71,8 @@
     },
     {
       "groupName": "gha",
-      "matchManagers": ["github-actions"]
+      "matchManagers": ["github-actions"],
+      "excludePackageNames": ["astral-sh/uv"]
     },
     {
       "groupName": "dev package",
@@ -104,16 +100,13 @@
     },
     {
       "groupName": "tests",
-      "matchPackageNames": [".*pytest.*"],
-      "matchDepTypes": ["devDependencies"]
+      "matchPackageNames": [".*pytest.*"]
     },
     {
       "groupName": "docs",
-      "matchPackageNames": ["docutils", "numpydoc", ".*sphinx.*", ".*myst.*"],
-      "matchDepTypes": ["devDependencies"]
+      "matchPackageNames": ["docutils", "numpydoc", ".*sphinx.*", ".*myst.*"]
     },
     {
-      "description": "Update `.devcontainer` separately for manual testing",
       "groupName": "devcontainer",
       "matchManagers": ["devcontainer"]
     }
