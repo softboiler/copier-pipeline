@@ -107,6 +107,7 @@ function Invoke-Uv {
             $Env:ENV_SYNCED = $null
         }
         elseif ($CI -or $Force -or !$Env:ENV_SYNCED) {
+            # ? Sync the environment
             uv sync --python $PythonVersion
             uv export --frozen --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_dev.txt"
@@ -114,79 +115,83 @@ function Invoke-Uv {
                 Add-Content $Env:GITHUB_PATH ("$PWD/.venv/bin", "$PWD/.venv/scripts")
             }
             $Env:ENV_SYNCED = $True
-        }
-        # ? Track environment variables to update `.env` with later
-        $EnvVars = @{}
-        $EnvVars.Add('PYRIGHT_PYTHON_PYLANCE_VERSION', $PylanceVersion)
-        $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : "$PWD/.env"
-        if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
-        # ? Get environment variables from `pyproject.toml`
-        uv run --no-sync --python $PythonVersion dev init-shell |
-            Select-String -Pattern '^(.+)=(.+)$' |
-            ForEach-Object {
-                $Key, $Value = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
-                if ($EnvVars -notcontains $Key) { $EnvVars.Add($Key, $Value) }
-            }
-        # ? Get environment variables to update in `.env`
-        $Keys = @()
-        $Lines = Get-Content $EnvFile | ForEach-Object {
-            $_ -Replace '^(?<Key>.+)=(?<Value>.+)$', {
-                $Key = $_.Groups['Key'].Value
-                if ($EnvVars.ContainsKey($Key)) {
-                    $Keys += $Key
-                    return "$Key=$($EnvVars[$Key])"
+
+            # ? Track environment variables to update `.env` with later
+            $EnvVars = @{}
+            $EnvVars.Add('PYRIGHT_PYTHON_PYLANCE_VERSION', $PylanceVersion)
+            $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : "$PWD/.env"
+            if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
+
+            # ? Get environment variables from `pyproject.toml`
+            uv run --no-sync --python $PythonVersion dev init-shell |
+                Select-String -Pattern '^(.+)=(.+)$' |
+                ForEach-Object {
+                    $Key, $Value = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
+                    if ($EnvVars -notcontains $Key) { $EnvVars.Add($Key, $Value) }
                 }
-                return $_
-            }
-        }
-        # ? Sync environment variables and those in `.env`
-        $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
-            $Key, $Value = $_.Key, $_.Value
-            Set-Item "Env:$Key" $Value
-            if ($Keys -notcontains $Key) { return "$Key=$Value" }
-        }
-        @($Lines, $NewLines) | Set-Content $EnvFile
-        # ? Environment-specific setup
-        if ($Devcontainer) {
-            $Repo = Get-ChildItem '/workspaces'
-            $Packages = Get-ChildItem "$Repo/packages"
-            $SafeDirs = @($Repo) + $Packages
-            foreach ($Dir in $SafeDirs) {
-                if (!($SafeDirs -contains $Dir)) {
-                    git config --global --add safe.directory $Dir
+
+            # ? Get environment variables to update in `.env`
+            $Keys = @()
+            $Lines = Get-Content $EnvFile | ForEach-Object {
+                $_ -Replace '^(?<Key>.+)=(?<Value>.+)$', {
+                    $Key = $_.Groups['Key'].Value
+                    if ($EnvVars.ContainsKey($Key)) {
+                        $Keys += $Key
+                        return "$Key=$($EnvVars[$Key])"
+                    }
+                    return $_
                 }
             }
-        }
-        elseif ($CI) {
-            uv run --no-sync --python $PythonVersion dev elevate-pyright-warnings
-        }
-        else {
-            $Hooks = '.git/hooks'
-            if (!(Test-Path "$Hooks/post-checkout") -or
-                !(Test-Path "$Hooks/pre-commit") -or
-                !(Test-Path "$Hooks/pre-push")
-            ) { pre-commit install --install-hooks }
-            if (!$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
-                $LocalExtensions = '.vscode/extensions'
-                $Pylance = 'ms-python.vscode-pylance'
-                if (!(Test-Path "$LocalExtensions/$Pylance-$PylanceVersion")) {
-                    $Install = @(
-                        "--extensions-dir=$LocalExtensions",
-                        "--install-extension=$Pylance@$PylanceVersion"
-                    )
-                    code @Install
-                    if (Test-Path $LocalExtensions) {
-                        $PylanceExtension = (
-                            Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
+            # ? Sync environment variables and those in `.env`
+            $NewLines = $EnvVars.GetEnumerator() | ForEach-Object {
+                $Key, $Value = $_.Key, $_.Value
+                Set-Item "Env:$Key" $Value
+                if ($Keys -notcontains $Key) { return "$Key=$Value" }
+            }
+            @($Lines, $NewLines) | Set-Content $EnvFile
+            # ? Environment-specific setup
+            if ($Devcontainer) {
+                $Repo = Get-ChildItem '/workspaces'
+                $Packages = Get-ChildItem "$Repo/packages"
+                $SafeDirs = @($Repo) + $Packages
+                foreach ($Dir in $SafeDirs) {
+                    if (!($SafeDirs -contains $Dir)) {
+                        git config --global --add safe.directory $Dir
+                    }
+                }
+            }
+            elseif ($CI) {
+                uv run --no-sync --python $PythonVersion dev elevate-pyright-warnings
+            }
+            # ? Install pre-commit hooks
+            else {
+                $Hooks = '.git/hooks'
+                if (
+                    !(Test-Path "$Hooks/pre-commit") -or
+                    !(Test-Path "$Hooks/post-checkout")
+                ) { uv run --no-sync --python $PythonVersion pre-commit install --install-hooks }
+                if (!$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
+                    $LocalExtensions = '.vscode/extensions'
+                    $Pylance = 'ms-python.vscode-pylance'
+                    if (!(Test-Path "$LocalExtensions/$Pylance-$PylanceVersion")) {
+                        $Install = @(
+                            "--extensions-dir=$LocalExtensions",
+                            "--install-extension=$Pylance@$PylanceVersion"
                         )
-                        # ? Remove other files
-                        Get-ChildItem -Path $LocalExtensions |
-                            Where-Object { Compare-Object $_ $PylanceExtension } |
-                            Remove-Item -Recurse
-                        # ? Remove local Pylance bundled stubs
-                        $PylanceExtension | ForEach-Object {
-                            Get-ChildItem "$_/dist/bundled" -Filter '*stubs'
-                        } | Remove-Item -Recurse
+                        code @Install
+                        if (Test-Path $LocalExtensions) {
+                            $PylanceExtension = (
+                                Get-ChildItem -Path $LocalExtensions -Filter "$Pylance-*"
+                            )
+                            # ? Remove other files
+                            Get-ChildItem -Path $LocalExtensions |
+                                Where-Object { Compare-Object $_ $PylanceExtension } |
+                                Remove-Item -Recurse
+                            # ? Remove local Pylance bundled stubs
+                            $PylanceExtension | ForEach-Object {
+                                Get-ChildItem "$_/dist/bundled" -Filter '*stubs'
+                            } | Remove-Item -Recurse
+                        }
                     }
                 }
             }
@@ -248,7 +253,7 @@ function Initialize-Repo {
     # ? Modify GitHub repo if there were not already commits in this repo
     if ($Fresh) {
         if (!(git remote)) {
-        git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'
+            git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'
             git branch --move --force main
         }
         gh repo edit --description (
@@ -309,14 +314,21 @@ function Initialize-Windows {
         '--silent',
         '--source=winget'
     )
+
     # ? Install PowerShell Core
     winget @Install --id='Microsoft.PowerShell' --override='/quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ADD_PATH=1 ENABLE_MU=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1'
+    # ? Set Windows PowerShell execution policy
+    powershell -Command 'Set-ExecutionPolicy -Scope CurrentUser Unrestricted'
+    # ? Set PowerShell Core execution policy
+    pwsh -Command 'Set-ExecutionPolicy -Scope CurrentUser Unrestricted'
+
     # ? Install VSCode
     winget @Install --id='Microsoft.VisualStudioCode'
     # ? Install Windows Terminal
     winget @Install --id='Microsoft.WindowsTerminal'
     # ? Install GitHub CLI
     winget @Install --id='GitHub.cli'
+
     # ? Install git
     @'
 [Setup]
