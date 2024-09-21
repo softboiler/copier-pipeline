@@ -1,10 +1,10 @@
 {% if render_title %}{# Built documentation only #}{%- if versiondata["version"] == "main" -%}
 ## Unreleased
 :::{warning}
-These changes reflect the current [development progress](https://github.com/blakeNaccarato/copier-python/tree/main) and have **not** been part of a PyPI release yet.
+These changes reflect the current [development progress](https://github.com/softboiler/copier-pipeline/tree/main) and have **not** been part of a PyPI release yet.
 :::
 {# CHANGELOG.md entries #}{% else -%}
-## [{{ versiondata["version"] }}](https://github.com/blakeNaccarato/copier-python/tree/{{ versiondata["version"] }})
+## [{{ versiondata["version"] }}](https://github.com/softboiler/copier-pipeline/tree/{{ versiondata["version"] }})
 {% endif %}
 {% endif %}
 {% for section, _ in sections.items() %}

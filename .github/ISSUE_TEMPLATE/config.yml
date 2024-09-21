@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: "🙏 Ask a question"
     about: "Ask for help. Please search related Q&As in case your question has been asked before."
-    url: "https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a"
+    url: "https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a"
   - name: "💡 Share ideas for features, documentation, or infrastructure, or something else."
     about: "Please choose the most appropriate discussion category for your concern. Please search for existing similar discussions."
-    url: "https://github.com/blakeNaccarato/copier-python/discussions/new/choose"
+    url: "https://github.com/softboiler/copier-pipeline/discussions/new/choose"

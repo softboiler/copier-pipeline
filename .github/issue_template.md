@@ -6,13 +6,13 @@ Please apply the `bug` label
 
 ### Please check that this bug hasn't been reported before
 
-- [ ] I searched [here](https://github.com/blakeNaccarato/copier-python/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3AblakeNaccarato/copier-python+label%3Abug&type=issues) and couldn't find a similar issue.
+- [ ] I searched [here](https://github.com/softboiler/copier-pipeline/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3Asoftboiler/copier-pipeline+label%3Abug&type=issues) and couldn't find a similar issue.
 
 ### Please confirm that this bug affects the latest version
 
-<!-- Please verify the issue is present in the latest version by installing it with `pip install copier_python==2024.1.1` and checking that the bug is still there #} -->
+<!-- Please verify the issue is present in the latest version by installing it with `pip install copier_pipeline==2024.1.1` and checking that the bug is still there #} -->
 
-- [ ] This bug affects version `2024.1.1` of `copier_python`.
+- [ ] This bug affects version `2024.1.1` of `copier_pipeline`.
 
 ### Please indicate which operating system(s) you are using
 

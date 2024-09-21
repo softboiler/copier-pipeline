@@ -1,13 +1,13 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 2024.1.1-264-gf11c396
+_commit: 2024.1.1-266-g6f90c3b
 _src_path: gh:blakeNaccarato/copier-python
 actions_runner: ubuntu-22.04
-github_repo_name: copier-python
-project_description: Copier template for Python projects
+github_repo_name: copier-pipeline
+project_description: Copier template for research data pipelines
 project_email: blake.naccarato@gmail.com
-project_name: copier_python
-project_owner_github_username: blakeNaccarato
-project_owner_name: Blake Naccarato
+project_name: copier_pipeline
+project_owner_github_username: softboiler
+project_owner_name: Blake Naccarato, Kwang Jin Kim
 project_version: 2024.1.1
 python_version: '3.11'
 year_of_project_creation: 2022

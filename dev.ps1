@@ -253,14 +253,14 @@ function Initialize-Repo {
     # ? Modify GitHub repo if there were not already commits in this repo
     if ($Fresh) {
         if (!(git remote)) {
-            git remote add origin 'https://github.com/blakeNaccarato/copier-python.git'
+            git remote add origin 'https://github.com/softboiler/copier-pipeline.git'
             git branch --move --force main
         }
         gh repo edit --description (
             Get-Content '.copier-answers.yml' |
                 Find-Pattern '^project_description:\s(.+)$'
         )
-        gh repo edit --homepage 'https://blakeNaccarato.github.io/copier-python/'
+        gh repo edit --homepage 'https://softboiler.github.io/copier-pipeline/'
     }
 
     git push --set-upstream origin main

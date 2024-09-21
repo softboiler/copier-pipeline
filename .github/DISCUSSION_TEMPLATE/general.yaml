@@ -6,7 +6,7 @@ body:
       label: "Please check for similar discussions first"
       options:
         - required: True
-          label: "I [searched](https://github.com/blakeNaccarato/copier-python/discussions/categories/general) and couldn't find an appropriate discussion to participate in instead."
+          label: "I [searched](https://github.com/softboiler/copier-pipeline/discussions/categories/general) and couldn't find an appropriate discussion to participate in instead."
   - type: "textarea"
     id: "description"
     validations:

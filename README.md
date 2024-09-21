@@ -1,6 +1,6 @@
-# copier-python
+# copier_pipeline
 
-[![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/copier-python?color=ee8449&style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/github/all-contributors/softboiler/copier-pipeline?color=ee8449&style=flat-square)](#contributors)
 
 > [!IMPORTANT]
 > This template is diverging into one focused on engineering research pipelines in [`softboiler`](https://github.com/softboiler), and a more general one in [`copyit`](https://github.com/copyit-org). These will not be proper "forks" of one another, but will eventually be synchronized by tooling developed in the `copyit` organization. This template will continue to specialize until I graduate, after which the simpler version will be recovered and maintained at `copyit`.
@@ -110,9 +110,9 @@ See [this comparison of Copier to other project generators](https://copier.readt
 
 ## Project information
 
-- [Changes](<https://blakeNaccarato.github.io/copier-python/changelog.html>)
-- [Docs](<https://blakeNaccarato.github.io/copier-python>)
-- [Contributing](<https://blakeNaccarato.github.io/copier-python/contributing.html>)
+- [Changes](<https://softboiler.github.io/copier-pipeline/changelog.html>)
+- [Docs](<https://softboiler.github.io/copier-pipeline>)
+- [Contributing](<https://softboiler.github.io/copier-pipeline/contributing.html>)
 
 ## Contributors
 

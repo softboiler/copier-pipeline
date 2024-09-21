@@ -4,7 +4,7 @@ Opening this repository in VSCode may run a setup script on folder open if you t
 
 # Contributing
 
-Thank you for considering contributing to `copier_python`! No contribution is too small, even if you are just submitting a Pull Request through the GitHub UI to fix some typos or clarify our language! Before attempting larger changes, please [discuss it with us](<https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a>) or participate in the relevant [issue](<https://github.com/search?q=repo%3AblakeNaccarato/copier-python&type=issues>) topic.
+Thank you for considering contributing to `copier_pipeline`! No contribution is too small, even if you are just submitting a Pull Request through the GitHub UI to fix some typos or clarify our language! Before attempting larger changes, please [discuss it with us](<https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a>) or participate in the relevant [issue](<https://github.com/search?q=repo%3Asoftboiler/copier-pipeline&type=issues>) topic.
 
 This guide gives the high-level details needed for you to jump right in, but links to more detail throughout. And remember, [we're always learning](#were-always-learning)!
 
@@ -23,9 +23,9 @@ This guide consists of the following:
 
 ## We're always learning
 
-You already know that no contribution is too small, but also, no question is too small! We are here to help you contribute, so feel free to reach out with [questions](<https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a>) or submit your Pull Request as a "Draft" and mention (`@`) one of us if you need help along the way.
+You already know that no contribution is too small, but also, no question is too small! We are here to help you contribute, so feel free to reach out with [questions](<https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a>) or submit your Pull Request as a "Draft" and mention (`@`) one of us if you need help along the way.
 
-If you want to contribute but aren't sure where to start, chime in on any [good first issues](<https://github.com/blakeNaccarato/copier-python/?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22>) (or any issue) that interests you and we'll point you in the right direction! And remember that it's natural to experience some anxiety or or discomfort during this process. If you're new to contributing, you may be learning all of these things at once:
+If you want to contribute but aren't sure where to start, chime in on any [good first issues](<https://github.com/softboiler/copier-pipeline/?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3A%22good+first+issue%22>) (or any issue) that interests you and we'll point you in the right direction! And remember that it's natural to experience some anxiety or or discomfort during this process. If you're new to contributing, you may be learning all of these things at once:
 
 - How to interact with maintainers (strangers?!).
 - How to write Python code.
@@ -42,13 +42,13 @@ This project and its guide are set up to smooth out that learning curve for you 
 > [!IMPORTANT]
 > Project tooling requires installation of [cross-platform PowerShell](#cross-platform-powershell). This guide also features VSCode-specific instruction, but you are not required to use VSCode to contribute. The decision to organize around a single IDE and shell enables the cross-platform, beginner-friendly contributing experience.
 
-To make a new contribution, fork this repository, clone it, switch to a new branch (please don't commit directly to `main`), run [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), make changes, commit and push them, and open a Pull Request targeting `main`. You may also open a draft Pull Request if you want feedback before your branch is ready to merge, but remember to mention (`@`) us. In more detail:
+To make a new contribution, fork this repository, clone it, switch to a new branch (please don't commit directly to `main`), run [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>), make changes, commit and push them, and open a Pull Request targeting `main`. You may also open a draft Pull Request if you want feedback before your branch is ready to merge, but remember to mention (`@`) us. In more detail:
 
 - Perform first-time setup, including installing [cross-platform PowerShell](#cross-platform-powershell) and Python 3.11 [(details)](#first-time-setup).
 - Fork the repository by selecting "Fork" near the top-right corner of the project page on GitHub. Clone your fork and open it locally, e.g. in VSCode [(details)](#fork-and-clone).
 - If using VSCode, consider installing the recommended extensions when prompted [(details)](#installing-recommended-extensions-in-vscode).
 - Create a new branch and switch to it, e.g. `git checkout -b my-new-feature` or in VSCode or select `+` in the GitLens branches view ([Palette: `GitLens: Show Branches View`](#vscode-command-palette)).
-- If not already run automatically, run [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) to [set up your contribution environment](#contribution-environment-sync).
+- If not already run automatically, run [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>) to [set up your contribution environment](#contribution-environment-sync).
 - If using VSCode, respond `Yes` when prompted to select the virtual environment for your workspace, or select it later [(details)](#set-your-python-interpreter).
 - Make changes, commit, and push them. [(details)](#making-changes).
   - Follow [code](#code) style and ensure changes pass [checks](#checks).
@@ -60,7 +60,7 @@ To make a new contribution, fork this repository, clone it, switch to a new bran
 
 ## Checks
 
-Code and documentation style is checked with `pre-commit` and in continuous integration (CI) when you submit a Pull Request. Please ask [a question](<https://github.com/blakeNaccarato/copier-python/discussions/new?category=q-a>) if you are having trouble passing local `pre-commit` checks. `pyright` checks Python type annotations, `ruff` checks and formats code, `markdownlint-cli2` chcks and formats Markdown, and `fawltydeps` checks dependencies. VSCode is configured to auto-format on save, and certain tools will automatically apply fixes on save. See the [contributor tools guide](#contributor-tools-guide) for more detail on interactive tool usage in VSCode.
+Code and documentation style is checked with `pre-commit` and in continuous integration (CI) when you submit a Pull Request. Please ask [a question](<https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a>) if you are having trouble passing local `pre-commit` checks. `pyright` checks Python type annotations, `ruff` checks and formats code, `markdownlint-cli2` chcks and formats Markdown, and `fawltydeps` checks dependencies. VSCode is configured to auto-format on save, and certain tools will automatically apply fixes on save. See the [contributor tools guide](#contributor-tools-guide) for more detail on interactive tool usage in VSCode.
 
 > [!IMPORTANT]
 > If `pre-commit` fails while committing with the VSCode UI, it will throw up a dialog with a scary red "X" and an unhelpful message. Always select `Show Command Output` in this dialog and search for `failed` in the resulting window with `Ctrl+F`. Alternatively, run the [`pre-commit` VSCode Task](#run-a-vscode-task) to get color-coded feedback in the terminal instead.
@@ -80,7 +80,7 @@ To be continued...
 
 ## Tests
 
-This project uses `pytest` to test the `copier_python` code in `src`.
+This project uses `pytest` to test the `copier_pipeline` code in `src`.
 
 ## Documentation
 
@@ -245,7 +245,7 @@ If you missed your chance on initial setup, you can still set the Python interpr
 
 ### Conditions in which VSCode automatic tasks run
 
-If you have trusted this folder in VSCode or have `security.workspace.trust.enabled` set to `false` in your User `settings.json` and have `task.allowAutomaticTasks` set to `on` in your User `settings.json`, the VSCode Task `setup: Sync contributor environment` automatically runs on folder open and invokes [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>).
+If you have trusted this folder in VSCode or have `security.workspace.trust.enabled` set to `false` in your User `settings.json` and have `task.allowAutomaticTasks` set to `on` in your User `settings.json`, the VSCode Task `setup: Sync contributor environment` automatically runs on folder open and invokes [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>).
 
 ### Disable automatic tasks in VSCode
 
@@ -259,12 +259,12 @@ It should only trigger if you have allowed VSCode Tasks to run automatically and
 
 ### Cross-platform PowerShell
 
-PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell. The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
+PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell. The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
 
-However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Initialize-Shell.ps1>) into a conditional statement that checks whether you are in this project's directory (e.g. `copier-python`), like so:
+However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Initialize-Shell.ps1>) into a conditional statement that checks whether you are in this project's directory (e.g. `copier-pipeline`), like so:
 
 ```PowerShell
-if ((Get-Item '.' | Select-Object -ExpandProperty 'Name') -eq 'copier-python') {
+if ((Get-Item '.' | Select-Object -ExpandProperty 'Name') -eq 'copier-pipeline') {
   # Paste the contents of `scripts/Initialize-Shell.ps1` here
 }
 ```
@@ -288,11 +288,11 @@ See [this video segment](https://www.youtube.com/watch?v=i_23KUAEtUM&t=76s) for 
 
 ### Pinning dependencies
 
-If `copier_python` depends on `pandas` (for example), it helps if I write down the specific version of `pandas` that this package works with. If I `pip install pandas`, then a specific version of Pandas will be installed, for instance version `2.2.1` at the time of writing. When `import pandas` runs in this package, it uses `pandas` version `2.2.1`. But like any package, `pandas` changes over time, and `pandas` version `2.2.1` installed at the time of writing behaves differently from the version of `pandas` released a year ago or to be released a year from now. I can only guarantee that this package works with the version of `pandas` I'm running right now, so I keep track of that by writing `pandas==2.2.1` in `lock.json`. This is called dependency pinning, which can be done for every dependency of this project, including [transitive dependencies](#transitive-dependency), for different operating systems and different versions of Python! These exact version pins above are good for recreating the exact environment needed by you, a potential contributor to this project!
+If `copier_pipeline` depends on `pandas` (for example), it helps if I write down the specific version of `pandas` that this package works with. If I `pip install pandas`, then a specific version of Pandas will be installed, for instance version `2.2.1` at the time of writing. When `import pandas` runs in this package, it uses `pandas` version `2.2.1`. But like any package, `pandas` changes over time, and `pandas` version `2.2.1` installed at the time of writing behaves differently from the version of `pandas` released a year ago or to be released a year from now. I can only guarantee that this package works with the version of `pandas` I'm running right now, so I keep track of that by writing `pandas==2.2.1` in `lock.json`. This is called dependency pinning, which can be done for every dependency of this project, including [transitive dependencies](#transitive-dependency), for different operating systems and different versions of Python! These exact version pins above are good for recreating the exact environment needed by you, a potential contributor to this project!
 
-However, these exact version pins are overly restrictive to those who just want to use `copier_python` in their own code. Python environments cannot have multiple versions of `pandas` installed at once. If I install `copier_python` using `pip install copier_python` with no other qualifiers, it is retrieved from [PyPI](https://pypi.org/) and the the version metadata defined in `pyproject.toml` is used to decide which packages to install alongside it. If `copier_python` depends on `pandas==2.2.1` as specified in `pyproject.toml`, and I try to install something else alongside it that doesn't support `pandas` version `2.2.1`, Python will refuse to install it! I want `copier_python` to coexist to the greatest degree possible with other projects, so I list `pandas>=2.2.1` in `pyproject.toml` instead.
+However, these exact version pins are overly restrictive to those who just want to use `copier_pipeline` in their own code. Python environments cannot have multiple versions of `pandas` installed at once. If I install `copier_pipeline` using `pip install copier_pipeline` with no other qualifiers, it is retrieved from [PyPI](https://pypi.org/) and the the version metadata defined in `pyproject.toml` is used to decide which packages to install alongside it. If `copier_pipeline` depends on `pandas==2.2.1` as specified in `pyproject.toml`, and I try to install something else alongside it that doesn't support `pandas` version `2.2.1`, Python will refuse to install it! I want `copier_pipeline` to coexist to the greatest degree possible with other projects, so I list `pandas>=2.2.1` in `pyproject.toml` instead.
 
-Specifying `>=` may be seen as a promise that this version of `copier_python` will work with any new release of `pandas`, which I couldn't possibly know for sure. But it's a better alternative to specifying `pandas>=2.2.1,<3`, because the `<3` upper-bound will not allow this package to coexist in any Python environment with another package in that requires `pandas>=3.0.0` in the future. Upper-bound restrictions like `<3` would make `copier_python` eventually hostile to usage alongside other packages. This is because a project that depends on this package inherits `pandas>=2.2.1,<3` as a [transitive dependency](#transitive-dependency) specification, and there is no recourse for overriding it. If a new version of `pandas` must be restricted in the course of development of this package, it should be specified like `pandas>=2.2.1,!=3.0.0` at the time of breakage, and changes should be made to allow removing the `!=3.0.0` restriction as soon as possible.
+Specifying `>=` may be seen as a promise that this version of `copier_pipeline` will work with any new release of `pandas`, which I couldn't possibly know for sure. But it's a better alternative to specifying `pandas>=2.2.1,<3`, because the `<3` upper-bound will not allow this package to coexist in any Python environment with another package in that requires `pandas>=3.0.0` in the future. Upper-bound restrictions like `<3` would make `copier_pipeline` eventually hostile to usage alongside other packages. This is because a project that depends on this package inherits `pandas>=2.2.1,<3` as a [transitive dependency](#transitive-dependency) specification, and there is no recourse for overriding it. If a new version of `pandas` must be restricted in the course of development of this package, it should be specified like `pandas>=2.2.1,!=3.0.0` at the time of breakage, and changes should be made to allow removing the `!=3.0.0` restriction as soon as possible.
 
 In short, in Python dependency specifications, `<3` doesn't have the same heart-shaped connotation it might have as an emoji! I pin exact dependencies to ensure working environments for potential contributors across operating systems, but specify only lower bounds with short-lived `!=` exclusions in the distribution of this package to PyPI.
 
@@ -306,7 +306,7 @@ Depending on my OS, I use "system Python environment" or just "system Python" to
 
 ### Contribution environment sync
 
-This repository features tooling that bootstraps the entire development environment with [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>), to be run on [cross-platform PowerShell](#cross-platform-powershell), and the contribution workflow is tested on Windows, Ubuntu, and MacOS 13. If on Windows, you may need to complete `Task 1` in [this guide](https://denisecase.github.io/windows-setup/) to allow scripts to run. [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) ([Task: `setup: Sync contributor environment`](#run-a-vscode-task)). The [`scripts/Sync-Py.ps1`](<https://github.com/blakeNaccarato/copier-python/blob/main/scripts/Sync-Py.ps1>) script essentially does the following:
+This repository features tooling that bootstraps the entire development environment with [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>), to be run on [cross-platform PowerShell](#cross-platform-powershell), and the contribution workflow is tested on Windows, Ubuntu, and MacOS 13. If on Windows, you may need to complete `Task 1` in [this guide](https://denisecase.github.io/windows-setup/) to allow scripts to run. [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>) ([Task: `setup: Sync contributor environment`](#run-a-vscode-task)). The [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>) script essentially does the following:
 
 - Sets some environment variables and error handling.
 - Installs [`uv`](https://github.com/astral-sh/uv).

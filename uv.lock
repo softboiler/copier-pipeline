@@ -7,7 +7,7 @@ resolution-markers = [
 
 [manifest]
 members = [
-    "copier-python",
+    "copier-pipeline",
     "dev",
 ]
 constraints = [{ name = "urllib3", specifier = ">=2.2.2" }]
@@ -251,7 +251,7 @@ wheels = [
 ]
 
 [[package]]
-name = "copier-python"
+name = "copier-pipeline"
 version = "2024.1.1"
 source = { editable = "." }
 

@@ -195,7 +195,7 @@
     {
       "label": "task: Update changelog with the latest commit's message",
       "type": "shell",
-      "command": "./Invoke-Uv.ps1 towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/blakeNaccarato/copier-python/commit/' + $(git rev-parse HEAD) + '))\n')",
+      "command": "./Invoke-Uv.ps1 towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/softboiler/copier-pipeline/commit/' + $(git rev-parse HEAD) + '))\n')",
       "icon": { "id": "tag" },
       "problemMatcher": []
     }

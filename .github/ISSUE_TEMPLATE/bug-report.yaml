@@ -8,15 +8,15 @@ body:
       label: "Please check that this bug hasn't been reported before"
       options:
         - required: True
-          label: "I searched [here](https://github.com/blakeNaccarato/copier-python/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3AblakeNaccarato/copier-python+label%3Abug&type=issues) and couldn't find a similar issue."
+          label: "I searched [here](https://github.com/softboiler/copier-pipeline/issues?q=label%3Abug+sort%3Acomments-desc) or [here](https://github.com/search?q=repo%3Asoftboiler/copier-pipeline+label%3Abug&type=issues) and couldn't find a similar issue."
   - type: "checkboxes"
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install copier_python==2024.1.1` and checking that the bug is still there"
+      description: "Please verify the issue is present in the latest version by installing it with `pip install copier_pipeline==2024.1.1` and checking that the bug is still there"
       options:
         - required: True
-          label: "This bug affects version `2024.1.1` of `copier_python`."
+          label: "This bug affects version `2024.1.1` of `copier_pipeline`."
   - type: "checkboxes"
     id: "operating-systems"
     attributes:

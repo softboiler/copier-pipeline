@@ -28,7 +28,7 @@ deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
 ignore_undeclared = [
   # ? This project
-  "copier_python",
+  "copier_pipeline",
   # ? Workspaces
   "dev",
 ]

@@ -3,9 +3,9 @@ requires = ["flit_core==3.9.0"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "copier_python"
+name = "copier_pipeline"
 version = "2024.1.1"
-description = "Copier template for Python projects"
+description = "Copier template for research data pipelines"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
@@ -19,12 +19,12 @@ classifiers = [
 ]
 dependencies = []
 [project.urls]
-Changes = "https://blakeNaccarato.github.io/copier-python/changelog.html"
-Docs = "https://blakeNaccarato.github.io/copier-python"
-Home = "https://github.com/blakeNaccarato/copier-python"
-Tracker = "https://github.com/blakeNaccarato/copier-python/issues"
+Changes = "https://softboiler.github.io/copier-pipeline/changelog.html"
+Docs = "https://softboiler.github.io/copier-pipeline"
+Home = "https://github.com/softboiler/copier-pipeline"
+Tracker = "https://github.com/softboiler/copier-pipeline/issues"
 [[project.authors]]
-name = "Blake Naccarato"
+name = "Blake Naccarato, Kwang Jin Kim"
 email = "blake.naccarato@gmail.com"
 
 [tool.uv]
@@ -75,7 +75,7 @@ dev = { workspace = true }
 
 [tool.coverage.run]
 branch = true
-source = ["copier_python", "dev", "tests"]
+source = ["copier_pipeline", "dev", "tests"]
 
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
@@ -109,7 +109,7 @@ directory = "changelog"
 filename = "CHANGELOG.md"
 template = "changelog/towncrier_template.md.jinja"
 title_format = ""
-issue_format = "[#{issue}](https://github.com/blakeNaccarato/copier-python/issues/{issue})"
+issue_format = "[#{issue}](https://github.com/softboiler/copier-pipeline/issues/{issue})"
 underlines = ["", "", ""]
 [[tool.towncrier.section]]
 path = ""

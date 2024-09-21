@@ -5,8 +5,8 @@
     "CONTRIBUTORS.md",
     "README.md"
   ],
-  "projectName": "copier-python",
-  "projectOwner": "blakeNaccarato",
+  "projectName": "copier-pipeline",
+  "projectOwner": "softboiler",
   "commitType": "docs",
   "contributors": [
     {

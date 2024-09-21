@@ -1,4 +1,4 @@
-# copier_python
+# copier_pipeline
 
 [![All Contributors](https://img.shields.io/github/all-contributors/blakeNaccarato/copier-python?color=ee8449&style=flat-square)](contributors)
 
