@@ -67,7 +67,6 @@
     {
       "groupName": "gha",
       "matchManagers": ["github-actions"],
-      "excludePackageNames": ["astral-sh/uv"]
     },
     {
       "groupName": "dev package",
@@ -75,7 +74,7 @@
     },
     {
       "groupName": "uv",
-      "matchPackageNames": ["astral-sh/uv"]
+      "matchPackageNames": ["astral-sh/setup-uv"]
     },
     {
       "groupName": "ruff",
