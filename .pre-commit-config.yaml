@@ -35,13 +35,13 @@ repos:
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command ". scripts/Sync-Env.ps1"
+          pwsh -Command "./Invoke-Uv.ps1 -Sync -Update"
       - id: "fawltydeps-src"
         name: "fawltydeps-src"
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command ". scripts/Sync-Env.ps1; fawltydeps --config-file pyproject.toml"
+          pwsh -Command "./Invoke-Uv.ps1 fawltydeps --config-file pyproject.toml"
         files: |
           (?x)^(
             pyproject\.toml
@@ -52,7 +52,7 @@ repos:
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command ". scripts/Sync-Env.ps1; fawltydeps --config-file packages/_dev/pyproject.toml"
+          pwsh -Command "./Invoke-Uv.ps1 fawltydeps --config-file packages/_dev/pyproject.toml"
         files: |
           (?x)^(
             packages/_dev/.*
@@ -64,7 +64,7 @@ repos:
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command ". scripts/Sync-Env.ps1; pytest -m 'not slow'"
+          pwsh -Command "./Invoke-Uv.ps1 pytest -m 'not slow'"
         files: |
           (?x)^(
             .*/pyproject\.toml

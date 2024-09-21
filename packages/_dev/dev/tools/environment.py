@@ -1,12 +1,12 @@
 """Contributor environment."""
 
 import subprocess
-from collections.abc import Sequence
+from collections.abc import Iterable
 from contextlib import chdir, nullcontext
 from io import StringIO
 from pathlib import Path
-from shlex import quote, split
-from sys import platform
+from shlex import quote
+from sys import executable
 
 from dotenv import load_dotenv
 from pydantic_settings import (
@@ -25,18 +25,19 @@ def init_shell(path: Path | None = None) -> str:
         return dotenv
 
 
-def run(args: str | Sequence[str]):
-    """Build docs."""
+def run(args: str | Iterable[str] | None = None):
+    """Run command."""
     sep = " "
     subprocess.run(
         check=True,
-        args=split(
+        args=[
+            "pwsh",
+            "-Command",
             sep.join([
-                "pwsh -Command",
-                f"{get_venv_activator()};",
-                *([args] if isinstance(args, str) else args),
-            ])
-        ),
+                f"& {quote(executable)} -m",
+                *(([args] if isinstance(args, str) else args) or []),
+            ]),
+        ],
     )
 
 
@@ -51,21 +52,6 @@ class Environment(BaseSettings):
     def settings_customise_sources(cls, settings_cls, **_):  # pyright: ignore[reportIncompatibleMethodOverride]
         """Customize so that all keys are loaded despite not being model fields."""
         return (PyprojectTomlConfigSettingsSource(settings_cls),)
-
-
-def get_venv_activator():
-    """Get virtual environment activator."""
-    return (
-        escape(activate)
-        if (
-            activate := (
-                Path(".venv/scripts/activate.ps1")
-                if platform == "win32"
-                else Path(".venv/bin/activate.ps1")
-            )
-        ).exists()
-        else ""
-    )
 
 
 def escape(path: str | Path) -> str:

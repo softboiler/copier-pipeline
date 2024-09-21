@@ -315,6 +315,10 @@ convention = "numpy"
   "S603", # Allow shell expressions here
   "S607", # Allow shell expressions here
 ]
+"template/packages/_dev/dev/tools/add_changes.py" = [
+  "S603", # Allow shell expressions here
+  "S607", # Allow shell expressions here
+]
 "template/**" = [
   "N999", # Jinja-templated folder path
 ]
