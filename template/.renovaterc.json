@@ -21,7 +21,10 @@
     "pep621",
     "pre-commit"
   ],
-  "pep621": { "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"] },
+  "pep621": {
+    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
+    "rangeStrategy": "in-range-only"
+  },
   "customManagers": [
     {
       "description": "uv",
