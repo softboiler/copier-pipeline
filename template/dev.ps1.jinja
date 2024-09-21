@@ -271,26 +271,37 @@ function Initialize-Machine {
     <#.SYNOPSIS
     Finish machine initialization (cross-platform).#>
 
+    Param([switch]$Force)
+
+    # ? Hook into user profile if it doesn't exist already
+    if ($Force -or !(Test-Path $PROFILE)) {
+        if (!(Test-Path $PROFILE)) { New-Item $PROFILE }
+        'if (Test-Path ''dev.ps1'') { . ./dev.ps1 && Initialize-Shell }' |
+            Add-Content $PROFILE
+    }
+
     # ? Set Git username if missing
-    try { $name = git config 'user.name' }
-    catch [System.Management.Automation.NativeCommandExitException] { $name = '' }
-    if (!$name) {
+    try { $Name = git config 'user.name' }
+    catch [System.Management.Automation.NativeCommandExitException] { $Name = '' }
+    if ($Force -or !$Name) {
         Write-Output 'Username missing from `.gitconfig`. Prompting for GitHub username/email ...'
-        git config --global 'user.name' (Read-Host -Prompt 'Enter your GitHub username')
+        $Ans = Read-Host -Prompt 'Enter your GitHub username'
+        if ($Ans) { git config --global 'user.name' $Ans }
         git config --global fetch.prune true
         git config --global pull.rebase true
         git config --global push.autoSetupRemote true
         git config --global push.followTags true
 
         # ? Set Git email if missing
-        try { $email = git config 'user.email' }
-        catch [System.Management.Automation.NativeCommandExitException] { $email = '' }
-        if (!$email) {
-            git config --global 'user.email' (Read-Host -Prompt 'Enter the email address associated with your GitHub account')
+        try { $Email = git config 'user.email' }
+        catch [System.Management.Automation.NativeCommandExitException] { $Email = '' }
+        if ($Force -or !$Email) {
+            $Ans = Read-Host -Prompt 'Enter the email address associated with your GitHub account'
+            if ($Ans) { git config --global 'user.email' $Ans }
         }
     }
     # ? Log in to GitHub API
-    if (! (gh auth status)) { gh auth login -Done }
+    if ($Force -or !(gh auth status)) { gh auth login -Done }
 }
 
 function Initialize-Windows {
