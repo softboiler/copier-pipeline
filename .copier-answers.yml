@@ -1,6 +1,6 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
 _commit: 2024.1.1-266-g6f90c3b
-_src_path: gh:blakeNaccarato/copier-python
+_src_path: gh:softboiler/copier-pipeline
 actions_runner: ubuntu-22.04
 github_repo_name: copier-pipeline
 project_description: Copier template for research data pipelines
