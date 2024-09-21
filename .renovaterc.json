@@ -62,50 +62,6 @@
     {
       "groupName": "all",
       "matchPackageNames": ["*"]
-    },
-    {
-      "groupName": "dev",
-      "matchDepTypes": ["devDependencies"]
-    },
-    {
-      "groupName": "gha",
-      "matchManagers": ["github-actions"]
-    },
-    {
-      "groupName": "dev package",
-      "matchFileNames": ["[^|/]packages/_dev/pyproject.toml[^/]*$"]
-    },
-    {
-      "groupName": "uv",
-      "matchPackageNames": ["astral-sh/setup-uv"]
-    },
-    {
-      "groupName": "ruff",
-      "matchPackageNames": ["/^.*ruff.*$/"]
-    },
-    {
-      "groupName": "fawltydeps",
-      "matchPackageNames": ["/^.*fawltydeps.*$/"]
-    },
-    {
-      "groupName": "pylance",
-      "matchPackageNames": ["microsoft/pylance-release"]
-    },
-    {
-      "groupName": "copier",
-      "matchPackageNames": ["copier"]
-    },
-    {
-      "groupName": "tests",
-      "matchPackageNames": ["/^.*pytest.*$/"]
-    },
-    {
-      "groupName": "docs",
-      "matchPackageNames": ["docutils", "numpydoc", "/^.*sphinx.*$/", "/^.*myst.*$/"]
-    },
-    {
-      "groupName": "devcontainer",
-      "matchManagers": ["devcontainer"]
     }
   ]
 }
