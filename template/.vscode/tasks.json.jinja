@@ -1,4 +1,4 @@
-// Run tasks like `pwsh -C ". scripts/Sync-Env.ps1; {task}` to run profile-like
+// Run tasks like `pwsh -Command "./Invoke-Uv.ps1 && {task}` to run profile-like
 // commands without requiring users to modify global profile.
 
 {
@@ -39,21 +39,21 @@
     {
       "label": "setup: Sync with template",
       "type": "shell",
-      "command": "scripts/Sync-Template.ps1 ${input:templateOptions}",
+      "command": ". ./Dev.ps1 && Sync-Template ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
       "label": "setup: Sync with specific template ref",
       "type": "shell",
-      "command": "scripts/Sync-Template.ps1 ${input:ref} ${input:templateOptions}",
+      "command": ". ./Dev.ps1 && Sync-Template ${input:ref} ${input:templateOptions}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
     {
       "label": "setup: Sync contributor environment",
       "type": "shell",
-      "command": "if (!$Env:DEVCONTAINER) {scripts/Sync-Env.ps1}",
+      "command": "if (!$Env:DEVCONTAINER) {./Invoke-Uv.ps1 -Sync -Update}",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": [],
       "runOptions": {
@@ -63,7 +63,7 @@
     {
       "label": "setup: Initialize repository",
       "type": "shell",
-      "command": "scripts/Initialize-Repo.ps1",
+      "command": ". ./Dev.ps1 && Initialize-Repo",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
@@ -78,7 +78,7 @@
       "label": "setup: Initialize Windows machine",
       "type": "shell",
       "options": { "shell": { "executable": "powershell" } },
-      "command": "scripts/Initialize-Windows.ps1",
+      "command": ". ./Dev.ps1 && Initialize-Windows",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
@@ -93,7 +93,7 @@
     {
       "label": "setup: Finish initializing machine (cross-platform)",
       "type": "shell",
-      "command": "scripts/Initialize-Machine.ps1",
+      "command": ". ./Dev.ps1 && Initialize-Machine",
       "icon": { "id": "file-symlink-directory" },
       "problemMatcher": []
     },
@@ -104,14 +104,14 @@
     {
       "label": "task: pre-commit",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; pre-commit run --verbose",
+      "command": "./Invoke-Uv.ps1 pre-commit run --verbose",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
     {
       "label": "task: pre-commit (all)",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; pre-commit run --all-files --verbose",
+      "command": "./Invoke-Uv.ps1 pre-commit run --all-files --verbose",
       "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
@@ -125,77 +125,77 @@
     {
       "label": "task: Show tree of packages requesting a dependency",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; pipdeptree --reverse --packages ${input:dependency}",
+      "command": "./Invoke-Uv.ps1 pipdeptree --reverse --packages ${input:dependency}",
       "icon": { "id": "versions" },
       "problemMatcher": []
     },
     {
       "label": "task: Run pytest with coverage",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; pytest --cov  --cov-config pyproject.toml --cov-report xml",
+      "command": "./Invoke-Uv.ps1 pytest --cov  --cov-config pyproject.toml --cov-report xml",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
       "label": "task: Run ruff",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; ruff check .; ruff format .",
+      "command": ". ./Dev.ps1 && iuv ruff check . && iuv ruff format .",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
       "label": "task: Run pyright",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; pyright",
+      "command": "./Invoke-Uv.ps1 pyright",
       "icon": { "id": "check" },
       "problemMatcher": []
     },
     {
       "label": "task: Build docs",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; dev build-docs",
+      "command": "./Invoke-Uv.ps1 dev build-docs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },
     {
       "label": "task: Profile this file",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; python -m cProfile -o .prof ${file}",
+      "command": "./Invoke-Uv.ps1 cProfile -o .prof ${file}",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
     {
       "label": "task: View profile results with snakeviz",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; snakeviz .prof",
+      "command": "./Invoke-Uv.ps1 snakeviz .prof",
       "icon": { "id": "graph-line" },
       "problemMatcher": []
     },
     {
       "label": "task: Bump version",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; uvx copier@9.2.0 update --vcs-ref=HEAD --defaults --data project_version='${input:version}'; towncrier build --yes --version '${input:version}'; git add .; git commit -m '${input:version}'",
+      "command": ". ./Dev.ps1 && uvx copier@9.2.0 update --vcs-ref=HEAD --defaults --data project_version='${input:version}' && iuv towncrier build --yes --version '${input:version}' && git add . && git commit -m '${input:version}'",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
     {
       "label": "task: Release version",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; $version = (Get-Content '.copier-answers.yml' | Select-String -Pattern '^project_version:\\s(.+)$').Matches.Groups[1].value; git tag --sign -m $version $version; git push; gh release create --discussion-category='announcements' --notes='' --title=$version --verify-tag $version",
+      "command": "./Invoke-Uv.ps1 && ($version = (Get-Content '.copier-answers.yml' | Select-String -Pattern '^project_version:\\s(.+)$').Matches.Groups[1].value && git tag --sign -m $version $version && git push && gh release create --discussion-category='announcements' --notes='' --title=$version --verify-tag $version)",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
     {
       "label": "task: Update changelog",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; dev add-change ${input:changeType}",
+      "command": "./Invoke-Uv.ps1 python -m dev add-change ${input:changeType}",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
     {
       "label": "task: Update changelog with the latest commit's message",
       "type": "shell",
-      "command": ". scripts/Sync-Env.ps1; towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/commit/' + $(git rev-parse HEAD) + '))\n')",
+      "command": "./Invoke-Uv.ps1 towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/commit/' + $(git rev-parse HEAD) + '))\n')",
       "icon": { "id": "tag" },
       "problemMatcher": []
     }

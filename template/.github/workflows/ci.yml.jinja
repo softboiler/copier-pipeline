@@ -25,7 +25,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1"
+      - run: "./Invoke-Uv.ps1"
       - uses: "actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b" # v4.3.4
         with:
           name: "lock"
@@ -45,7 +45,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1; sphinx-build -EaT docs _site"
+      - run: "./Invoke-Uv.ps1 sphinx-build -EaT docs _site"
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
     if: github.event_name != 'pull_request'
@@ -73,7 +73,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1; ruff check --no-fix --output-format github ."
+      - run: "./Invoke-Uv.ps1 ruff check --no-fix --output-format github ."
   fawltydeps:
     runs-on: "{{ actions_runner }}"
     steps:
@@ -87,7 +87,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1; pre-commit run fawltydeps-src; pre-commit run fawltydeps-dev"
+      - run: ". ./Dev.ps1 && iuv pre-commit run fawltydeps-src && iuv pre-commit run fawltydeps-dev"
   pyright:
     runs-on: "{{ actions_runner }}"
     steps:
@@ -101,7 +101,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1"
+      - run: "./Invoke-Uv.ps1"
       - uses: "jakebailey/pyright-action@3bdde3b31d26f0f1f5de051b1fbd7a536a9a4e7f" # v2.3.1
         with:
           pylance-version: "{% raw %}${{ env.PYRIGHT_PYTHON_PYLANCE_VERSION }}{% endraw %}"
@@ -129,10 +129,10 @@ jobs:
             .github/workflows/**
       # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
-        run: "scripts/Sync-Env.ps1; pytest --cov --cov-config=pyproject.toml --cov-report=xml"
+        run: "./Invoke-Uv.ps1 pytest --cov --cov-config=pyproject.toml --cov-report=xml"
       - if: startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
           CODECOV_TOKEN: "{% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}"
       - if: (!(startsWith(matrix.runner, '{{ actions_runner.split('-')[0] }}') && matrix.python == '{{ python_version }}'))
-        run: "scripts/Sync-Env.ps1 -PythonVersion '{% raw %}${{ matrix.python }}{% endraw %}'; pytest"
+        run: "./Invoke-Uv.ps1 -PythonVersion '${{ matrix.python }}' pytest"

@@ -228,8 +228,8 @@ reportUnusedCallResult = "none"
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"
-extend-exclude = ["packages", "typings"]
-extend-include = ["*.ipynb", "packages/_dev"]
+extend-exclude = ["typings"]
+extend-include = ["*.ipynb"]
 src = ["src", "docs", "scripts", "tests"]
 output-format = "grouped"
 fix = true
@@ -317,9 +317,6 @@ convention = "numpy"
 ]
 "template/**" = [
   "N999", # Jinja-templated folder path
-]
-"docs/**.ipynb" = [
-  "E402", # Need to allow imports below patches in docs notebooks
 ]
 "tests/**" = [
   "ARG001", # Allow unused arguments

@@ -28,7 +28,7 @@ jobs:
           cache-dependency-glob: |
             **/uv.lock
             .github/workflows/**
-      - run: "scripts/Sync-Env.ps1 -Release; uv build"
+      - run: "./Invoke-Uv.ps1 -Build"
       - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         with:
           subject-path: "dist/**"
