@@ -70,4 +70,4 @@ sudo $SNAP install code --classic
 curl --proto '=https' --tlsv1.2 -LsSf 'https://astral.sh/uv/install.sh' | sh
 
 # ? Finish machine setup
-pwsh -Command '. ./Dev.ps1 && Initialize-Machine'
+pwsh -Command '. ./dev.ps1 && Initialize-Machine'

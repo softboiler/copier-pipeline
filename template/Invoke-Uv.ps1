@@ -15,7 +15,7 @@ Param(
     [Parameter(ValueFromRemainingArguments = $True)][string[]]$Run
 )
 
-. ./Dev.ps1
+. ./dev.ps1
 
 $InvokeUvArgs = @{
     Sync           = $Sync
