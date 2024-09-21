@@ -21,10 +21,9 @@
     "pep621",
     "pre-commit"
   ],
-  "pep621": {
-    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
-    "rangeStrategy": "in-range-only"
-  },
+  "github-actions": { "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"] },
+  "pep621": { "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"] },
+  "ignoreDeps": ["towncrier"],
   "customManagers": [
     {
       "description": "uv",
@@ -59,9 +58,6 @@
       "depNameTemplate": "microsoft/pylance-release"
     }
   ],
-  "github-actions": {
-    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
-  },
   "packageRules": [
     {
       "groupName": "all",
