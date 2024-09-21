@@ -63,9 +63,29 @@
       "matchPackageNames": ["*"]
     },
     {
-      "description": "Update regex pins separately",
-      "groupName": "regex",
-      "matchManagers": ["regex"]
+      "description": "Update uv separately",
+      "groupName": "uv",
+      "matchPackageNames": ["astral-sh/uv"]
+    },
+    {
+      "description": "Update ruff separately",
+      "groupName": "ruff",
+      "matchPackageNames": ["ruff", "charliermarsh/ruff-pre-commit"]
+    },
+    {
+      "description": "Update fawltydeps separately",
+      "groupName": "fawltydeps",
+      "matchPackageNames": ["fawltydeps"]
+    },
+    {
+      "description": "Update Pylance separately",
+      "groupName": "pylance",
+      "matchPackageNames": ["microsoft/pylance-release"]
+    },
+    {
+      "description": "Update Copier separately",
+      "groupName": "copier",
+      "matchPackageNames": ["copier"]
     },
     {
       "description": "Update `.devcontainer` updates separately for manual testing",
