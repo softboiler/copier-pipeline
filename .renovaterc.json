@@ -84,7 +84,7 @@
     },
     {
       "groupName": "ruff",
-      "matchPackageNames": [".*ruff.*"]
+      "matchPackageNames": ["/^.*ruff.*$/"]
     },
     {
       "groupName": "fawltydeps",
@@ -100,11 +100,11 @@
     },
     {
       "groupName": "tests",
-      "matchPackageNames": [".*pytest.*"]
+      "matchPackageNames": ["/^.*pytest.*$/"]
     },
     {
       "groupName": "docs",
-      "matchPackageNames": ["docutils", "numpydoc", ".*sphinx.*", ".*myst.*"]
+      "matchPackageNames": ["docutils", "numpydoc", "/^.*sphinx.*$/", "/^.*myst.*$/"]
     },
     {
       "groupName": "devcontainer",
