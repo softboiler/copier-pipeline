@@ -77,6 +77,16 @@
       "matchPackageNames": ["astral-sh/uv"]
     },
     {
+      "description": "Update ruff separately",
+      "groupName": "ruff",
+      "matchPackageNames": ["ruff", "charliermarsh/ruff-pre-commit"]
+    },
+    {
+      "description": "Update fawltydeps separately",
+      "groupName": "fawltydeps",
+      "matchPackageNames": ["fawltydeps"]
+    },
+    {
       "description": "Update Pylance separately",
       "groupName": "pylance",
       "matchPackageNames": ["microsoft/pylance-release"]

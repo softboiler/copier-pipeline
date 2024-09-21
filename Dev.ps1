@@ -253,14 +253,14 @@ function Initialize-Repo {
     # ? Modify GitHub repo if there were not already commits in this repo
     if ($Fresh) {
         if (!(git remote)) {
-            git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'
+            git remote add origin 'https://github.com/blakeNaccarato/copier-python.git'
             git branch --move --force main
         }
         gh repo edit --description (
             Get-Content '.copier-answers.yml' |
                 Find-Pattern '^project_description:\s(.+)$'
         )
-        gh repo edit --homepage 'https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/'
+        gh repo edit --homepage 'https://blakeNaccarato.github.io/copier-python/'
     }
 
     git push --set-upstream origin main
@@ -318,9 +318,9 @@ function Initialize-Windows {
     # ? Install PowerShell Core
     winget @Install --id='Microsoft.PowerShell' --override='/quiet ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=1 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ADD_PATH=1 ENABLE_MU=1 ENABLE_PSREMOTING=1 REGISTER_MANIFEST=1 USE_MU=1'
     # ? Set Windows PowerShell execution policy
-    powershell -Command 'Set-ExecutionPolicy -Scope CurrentUser Unrestricted'
+    powershell -Command 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned'
     # ? Set PowerShell Core execution policy
-    pwsh -Command 'Set-ExecutionPolicy -Scope CurrentUser Unrestricted'
+    pwsh -Command 'Set-ExecutionPolicy -Scope CurrentUser RemoteSigned'
 
     # ? Install VSCode
     winget @Install --id='Microsoft.VisualStudioCode'
