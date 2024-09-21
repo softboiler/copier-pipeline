@@ -20,7 +20,7 @@ jobs:
       name: "release"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
-      - uses: "astral-sh/setup-uv@9f1f1fece28798fe5e7ece00f4243abe886974b2" # v3.0.0
+      - uses: "astral-sh/setup-uv@abac0ce7b0768476333db78faaf98b1130f5face" # v3.1.1
         with:
           version: "0.4.15"
           enable-cache: true
@@ -28,7 +28,7 @@ jobs:
             **/uv.lock
             .github/workflows/**
       - run: "./Invoke-Uv.ps1 -Build"
-      - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
+      - uses: actions/attest-build-provenance@1c608d11d69870c2092266b3f9a6f3abbf17002c # v1.4.3
         with:
           subject-path: "dist/**"
   changerelease:
