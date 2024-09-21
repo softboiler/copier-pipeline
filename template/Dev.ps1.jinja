@@ -165,7 +165,7 @@ function Invoke-Uv {
             if (!(Test-Path "$Hooks/post-checkout") -or
                 !(Test-Path "$Hooks/pre-commit") -or
                 !(Test-Path "$Hooks/pre-push")
-            ) { pre-commit install --install-hooks }
+            ) { uv run --no-sync --python $PythonVersion pre-commit install --install-hooks }
             if (!$Devcontainer -and (Get-Command -Name 'code' -ErrorAction 'Ignore')) {
                 $LocalExtensions = '.vscode/extensions'
                 $Pylance = 'ms-python.vscode-pylance'
