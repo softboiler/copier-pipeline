@@ -431,16 +431,16 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "cyclopts", specifier = "==2.9.3" },
-    { name = "docutils", specifier = "==0.21.2" },
-    { name = "dulwich", specifier = "==0.22.1" },
-    { name = "myst-parser", specifier = "==3.0.1" },
-    { name = "numpydoc", specifier = "==1.7.0" },
-    { name = "pydantic-settings", specifier = "==2.5.2" },
-    { name = "python-dotenv", specifier = "==1.0.1" },
-    { name = "ruamel-yaml", specifier = "==0.18.6" },
-    { name = "sphinx", specifier = "==7.3.7" },
-    { name = "toml", specifier = "==0.10.2" },
+    { name = "cyclopts", specifier = ">=2.9.3" },
+    { name = "docutils", specifier = ">=0.21.2" },
+    { name = "dulwich", specifier = ">=0.22.1" },
+    { name = "myst-parser", specifier = ">=3.0.1" },
+    { name = "numpydoc", specifier = ">=1.7.0" },
+    { name = "pydantic-settings", specifier = ">=2.5.2" },
+    { name = "python-dotenv", specifier = ">=1.0.1" },
+    { name = "ruamel-yaml", specifier = ">=0.18.6" },
+    { name = "sphinx", specifier = ">=7.3.7" },
+    { name = "toml", specifier = ">=0.10.2" },
 ]
 
 [[package]]
