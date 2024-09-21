@@ -46,7 +46,8 @@ dev-dependencies = [
   "ruff==0.5.1",
   "snakeviz==2.2.0",
   "sourcery==1.21.0",
-  "towncrier==23.11.0",
+  # ? https://github.com/sphinx-contrib/sphinxcontrib-towncrier/issues/92
+  "towncrier==23.11.0, <24",
   # ? Docs
   "linkify-it-py==2.0.3",
   "myst-nb==1.1.1",

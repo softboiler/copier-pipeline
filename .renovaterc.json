@@ -21,6 +21,7 @@
     "pep621",
     "pre-commit"
   ],
+  "pep621": { "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"] },
   "customManagers": [
     {
       "description": "uv",
@@ -57,9 +58,6 @@
   ],
   "github-actions": {
     "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
-  },
-  "pep621": {
-    "fileMatch": ["(^|/)pyproject\\.toml\\.jinja$"]
   },
   "packageRules": [
     {

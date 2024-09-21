@@ -21,6 +21,7 @@
     "pep621",
     "pre-commit"
   ],
+  "pep621": { "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"] },
   "customManagers": [
     {
       "description": "uv",
