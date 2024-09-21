@@ -2,10 +2,10 @@
 
 [![All Contributors](https://img.shields.io/github/all-contributors/softboiler/copier-pipeline?color=ee8449&style=flat-square)](#contributors)
 
+This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow [dev machine setup](#dev-machine-setup) before following steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, Python, and the cross-platform PowerShell (with profile configurations to activate `.env` variables), installed to get the most use out of this template.
+
 > [!IMPORTANT]
 > This template is diverging into one focused on engineering research pipelines in [`softboiler`](https://github.com/softboiler), and a more general one in [`copyit`](https://github.com/copyit-org). These will not be proper "forks" of one another, but will eventually be synchronized by tooling developed in the `copyit` organization. This template will continue to specialize until I graduate, after which the simpler version will be recovered and maintained at `copyit`.
-
-This is a Copier template for Python projects, allowing for template evolution over time and sharing across projects. It is strongly recommended you follow [dev machine setup](#dev-machine-setup) before following steps for [generating a project from this template](#generate-a-project-from-this-template). In short, you should have Git, VSCode, Copier, Python, and the cross-platform PowerShell (with profile configurations to activate `.env` variables), installed to get the most use out of this template.
 
 ## Features
 
