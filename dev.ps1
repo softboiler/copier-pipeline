@@ -70,6 +70,7 @@ function Invoke-Uv {
         [switch]$Build,
         [switch]$Force,
         [switch]$CI = (New-Switch $Env:SYNC_ENV_DISABLE_CI (New-Switch $Env:CI)),
+        [switch]$Locked = $CI,
         [switch]$Devcontainer = (New-Switch $Env:SYNC_ENV_DISABLE_DEVCONTAINER (New-Switch $Env:DEVCONTAINER)),
         [string]$PythonVersion = (Get-Content '.python-version'),
         [string]$PylanceVersion = (Get-Content '.pylance-version'),
@@ -87,29 +88,31 @@ function Invoke-Uv {
         if (!(Test-Path 'requirements')) {
             New-Item 'requirements' -ItemType 'Directory'
         }
+        $LockedArg = $Locked ? '--locked' : $null
+        $FrozenArg = $Locked ? $null : '--frozen'
         if ($Low) {
-            uv sync --resolution lowest-direct --python $PythonVersion
-            uv export --resolution lowest-direct --frozen --no-hashes --python $PythonVersion |
+            uv sync $LockedArg --resolution lowest-direct --python $PythonVersion
+            uv export $LockedArg $FrozenArg --resolution lowest-direct --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_dev_low.txt"
             $Env:ENV_SYNCED = $null
         }
         elseif ($High) {
-            uv sync --upgrade --python $PythonVersion
-            uv export --frozen --no-hashes --python $PythonVersion |
+            uv sync $LockedArg --upgrade --python $PythonVersion
+            uv export $LockedArg $FrozenArg --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_dev_high.txt"
             $Env:ENV_SYNCED = $null
         }
         elseif ($Build) {
-            uv sync --no-sources --no-dev --python $PythonVersion
-            uv export --frozen --no-dev --no-hashes --python $PythonVersion |
+            uv sync $LockedArg --no-sources --no-dev --python $PythonVersion
+            uv export $LockedArg $FrozenArg --no-dev --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_prod.txt"
             uv build --python $PythonVersion
             $Env:ENV_SYNCED = $null
         }
         elseif ($CI -or $Force -or !$Env:ENV_SYNCED) {
             # ? Sync the environment
-            uv sync --python $PythonVersion
-            uv export --frozen --no-hashes --python $PythonVersion |
+            uv sync $LockedArg --python $PythonVersion
+            uv export $LockedArg $FrozenArg --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_dev.txt"
             if ($CI) {
                 Add-Content $Env:GITHUB_PATH ("$PWD/.venv/bin", "$PWD/.venv/scripts")
