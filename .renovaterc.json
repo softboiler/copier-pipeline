@@ -63,7 +63,8 @@
   },
   "packageRules": [
     {
-      "groupName": "all"
+      "groupName": "all",
+      "matchPackageNames": ["*"]
     },
     {
       "groupName": "dev",
@@ -88,7 +89,7 @@
     },
     {
       "groupName": "fawltydeps",
-      "matchPackageNames": [".*fawltydeps.*"]
+      "matchPackageNames": ["/^.*fawltydeps.*$/"]
     },
     {
       "groupName": "pylance",
