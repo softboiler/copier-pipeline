@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 2024.1.1-293-gc30eb51
+_commit: 2024.1.1-295-gc8b515a
 _src_path: gh:softboiler/copier-pipeline
 actions_runner: ubuntu-22.04
 github_repo_name: copier-pipeline
