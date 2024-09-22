@@ -69,7 +69,6 @@
       "groupName": "docs",
       "matchPackageNames": [
         "docutils",
-        "linkify-it-py",
         "numpydoc",
         "/^.*sphinx.*$/",
         "/^.*myst.*$/"
