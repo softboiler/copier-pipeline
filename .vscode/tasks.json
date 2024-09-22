@@ -181,7 +181,7 @@
     {
       "label": "task: Release version",
       "type": "shell",
-      "command": "./Invoke-Uv.ps1 && ($version = (Get-Content '.copier-answers.yml' | Select-String -Pattern '^project_version:\\s(.+)$').Matches.Groups[1].value && git tag --sign -m $version $version && git push && gh release create --discussion-category='announcements' --notes='' --title=$version --verify-tag $version)",
+      "command": ". ./dev.ps1 && Invoke-Uv && ($Version = (Get-Content '.copier-answers.yml' | Find-Pattern '^project_version:s(.+)$')) && git tag --sign -m $Version $Version && git push && gh release create --discussion-category='announcements' --notes='' --title=$Version --verify-tag $Version",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
