@@ -21,10 +21,10 @@
     "pre-commit"
   ],
   "github-actions": {
-    "fileMatch": ["(^|.*/)\\.github/workflows/[^/]+$", "template/pyproject\\.toml\\.jinja"]
+    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
   },
   "pep621": {
-    "fileMatch": ["(^|.*/)pyproject\\.toml[^/]*$"],
+    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
     "rangeStrategy": "bump"
   },
   "ignoreDeps": ["towncrier"],
@@ -56,7 +56,7 @@
     {
       "description": "copier",
       "customType": "regex",
-      "fileMatch": ["(^|.*/)\\.copier-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.copier-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "pypi",
       "depNameTemplate": "copier"

@@ -25,7 +25,7 @@ Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_na
 Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 [[project.authors]]
 name = "{{ project_owner_name }}"
-{% if project_email %}email = "{{ project_email }}"{% endif %}
+email = "{{ project_email }}"
 
 [tool.uv]
 constraint-dependencies = [
