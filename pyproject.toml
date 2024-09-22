@@ -68,6 +68,7 @@ dev-dependencies = [
   "pytest>=8.2.2",
 ]
 [tool.uv.pip]
+python-version = "3.11"
 all-extras = true
 [tool.uv.workspace]
 members = ["packages/*"]
