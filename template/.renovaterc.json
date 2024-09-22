@@ -21,12 +21,11 @@
     "pep621",
     "pre-commit"
   ],
-  "pep621": { "fileMatch": ["[^|/]pyproject\\.toml[^/]*$"] },
   "customManagers": [
     {
       "description": "uv",
       "customType": "regex",
-      "fileMatch": ["[^|/]\\.uv-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.uv-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
@@ -34,7 +33,7 @@
     {
       "description": "uv-gha",
       "customType": "regex",
-      "fileMatch": ["[^|/]\\.github/workflows/[^/]*$"],
+      "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
       "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version: \"(?<currentValue>.+)\""],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
@@ -42,7 +41,7 @@
     {
       "description": "pylance",
       "customType": "regex",
-      "fileMatch": ["[^|/]\\.pylance-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.pylance-version[^/]*$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
