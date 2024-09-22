@@ -3,9 +3,7 @@ name: "release"
 concurrency:
   group: "{% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}"
   cancel-in-progress: True
-on:
-  release:
-    types: ["published"]
+on: ["release"]
 defaults:
   run:
     shell: "pwsh"
