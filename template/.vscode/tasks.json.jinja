@@ -181,7 +181,7 @@
     {
       "label": "task: Release version",
       "type": "shell",
-      "command": ". ./dev.ps1 && Invoke-Uv && ($Version = (Get-Content '.copier-answers.yml' | Find-Pattern '^project_version:\\s(.+)$')) && git tag --sign -m $Version $Version && git push && gh release create --draft --notes='' --title=$Version --verify-tag $Version",
+      "command": ". ./dev.ps1 && Invoke-Uv && ($Version = (Get-Content '.copier-answers.yml' | Find-Pattern '^project_version:\\s(.+)$')) && git tag --sign -m $Version $Version && git push",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
