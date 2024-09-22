@@ -103,8 +103,9 @@ function Invoke-Uv {
             $Env:ENV_SYNCED = $null
         }
         elseif ($Build) {
-            uv sync $LockedArg --no-sources --no-dev --python $PythonVersion
-            uv export $LockedArg $FrozenArg --no-dev --no-hashes --python $PythonVersion |
+            # ? Don't check `$LOCKED` here because we intentionally override the lock
+            uv sync --no-sources --no-dev --python $PythonVersion
+            uv export --frozen --no-dev --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_prod.txt"
             uv build --python $PythonVersion
             $Env:ENV_SYNCED = $null
