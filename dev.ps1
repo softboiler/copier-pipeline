@@ -103,8 +103,8 @@ function Invoke-Uv {
             $Env:ENV_SYNCED = $null
         }
         elseif ($Build) {
-            $LockedArg = [switch]$False
-            $FrozenArg = $Locked ? $null : '--frozen'
+            $LockedArg = $null
+            $FrozenArg = '--frozen'
             uv sync $LockedArg --no-sources --no-dev --python $PythonVersion
             uv export $LockedArg $FrozenArg --no-dev --no-hashes --python $PythonVersion |
                 Set-Content "$PWD/requirements/requirements_prod.txt"
