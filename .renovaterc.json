@@ -20,6 +20,14 @@
     "pep621",
     "pre-commit"
   ],
+  "github-actions": {
+    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
+  },
+  "pep621": {
+    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
+    "rangeStrategy": "bump"
+  },
+  "ignoreDeps": ["towncrier"],
   "customManagers": [
     {
       "description": "uv",
@@ -46,37 +54,20 @@
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
+    },
+    {
+      "description": "copier",
+      "customType": "regex",
+      "fileMatch": ["(^|/)\\.copier-version[^/]*$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "copier"
     }
   ],
   "packageRules": [
     {
       "groupName": "all",
       "matchPackageNames": ["*"]
-    },
-    {
-      "groupName": "ruff",
-      "matchPackageNames": ["/^.*ruff.*$/"]
-    },
-    {
-      "groupName": "pylance",
-      "matchPackageNames": ["microsoft/pylance-release"]
-    },
-    {
-      "groupName": "tests",
-      "matchPackageNames": ["/^.*pytest.*$/"]
-    },
-    {
-      "groupName": "docs",
-      "matchPackageNames": [
-        "docutils",
-        "numpydoc",
-        "/^.*sphinx.*$/",
-        "/^.*myst.*$/"
-      ]
-    },
-    {
-      "groupName": "devcontainer",
-      "matchManagers": ["devcontainer"]
     }
   ]
 }
