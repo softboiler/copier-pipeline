@@ -3,7 +3,12 @@ exclude: |
     \.copier-answers\.yml
     |changelog/towncrier_template\.md\.jinja
     |lock.*\.json
-  )$
+    |template/(
+      .*answers_file.*
+      |.*project_name.*
+      |changelog/towncrier_template.md.jinja.jinja
+    )
+  $)
 ci:
   skip:
     - "sync"
@@ -12,8 +17,8 @@ ci:
     - "pytest-fast-only"
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
-  - pre-commit
-  - post-checkout # sync
+  - "pre-commit"
+  - "post-checkout" # sync
 repos:
   - repo: "meta"
     hooks:
@@ -97,11 +102,11 @@ repos:
   - repo: "https://github.com/rbubley/mirrors-prettier"
     rev: "v3.3.3"
     hooks:
-      - id: prettier
+      - id: "prettier"
   - repo: https://github.com/ComPWA/taplo-pre-commit
-    rev: v0.9.3
+    rev: "v0.9.3"
     hooks:
-      - id: taplo-format
+      - id: "taplo-format"
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
     rev: "v0.5.1"
     hooks:
