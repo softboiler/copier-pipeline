@@ -8,6 +8,6 @@ project_email: blake.naccarato@gmail.com
 project_name: copier_pipeline
 project_owner_github_username: softboiler
 project_owner_name: Blake Naccarato, Kwang Jin Kim
-project_version: 2024.1.1
+project_version: 2024.2.0
 python_version: '3.11'
 year_of_project_creation: 2022
