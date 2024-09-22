@@ -20,14 +20,6 @@
     "pep621",
     "pre-commit"
   ],
-  "github-actions": {
-    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
-  },
-  "pep621": {
-    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
-    "rangeStrategy": "bump"
-  },
-  "ignoreDeps": ["towncrier"],
   "customManagers": [
     {
       "description": "uv",
@@ -41,7 +33,9 @@
       "description": "uv-gha",
       "customType": "regex",
       "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
-      "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""],
+      "matchStrings": [
+        "- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""
+      ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
     },
@@ -52,20 +46,38 @@
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
-    },
-    {
-      "description": "copier",
-      "customType": "regex",
-      "fileMatch": ["(^|/)\\.copier-version[^/]*$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+)"],
-      "datasourceTemplate": "pypi",
-      "depNameTemplate": "copier"
     }
   ],
   "packageRules": [
     {
       "groupName": "all",
       "matchPackageNames": ["*"]
+    },
+    {
+      "groupName": "ruff",
+      "matchPackageNames": ["/^.*ruff.*$/"]
+    },
+    {
+      "groupName": "pylance",
+      "matchPackageNames": ["microsoft/pylance-release"]
+    },
+    {
+      "groupName": "tests",
+      "matchPackageNames": ["/^.*pytest.*$/"]
+    },
+    {
+      "groupName": "docs",
+      "matchPackageNames": [
+        "docutils",
+        "linkify-it-py",
+        "numpydoc",
+        "/^.*sphinx.*$/",
+        "/^.*myst.*$/"
+      ]
+    },
+    {
+      "groupName": "devcontainer",
+      "matchManagers": ["devcontainer"]
     }
   ]
 }

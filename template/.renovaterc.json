@@ -34,7 +34,9 @@
       "description": "uv-gha",
       "customType": "regex",
       "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
-      "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""],
+      "matchStrings": [
+        "- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""
+      ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
     },
@@ -66,7 +68,12 @@
     },
     {
       "groupName": "docs",
-      "matchPackageNames": ["docutils", "numpydoc", "/^.*sphinx.*$/", "/^.*myst.*$/"]
+      "matchPackageNames": [
+        "docutils",
+        "numpydoc",
+        "/^.*sphinx.*$/",
+        "/^.*myst.*$/"
+      ]
     },
     {
       "groupName": "devcontainer",

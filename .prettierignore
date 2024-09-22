@@ -1,5 +1,3 @@
-# ? Ignore hidden paths
-.*
 # ? Prettier clobbers Myst-specific syntax in notebooks
 *.py
 *.ipynb

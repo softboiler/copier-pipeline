@@ -1,10 +1,7 @@
 {
   "commitConvention": "angular",
   "contributorsPerLine": 7,
-  "files": [
-    "CONTRIBUTORS.md",
-    "README.md"
-  ],
+  "files": ["CONTRIBUTORS.md", "README.md"],
   "projectName": "copier-pipeline",
   "projectOwner": "softboiler",
   "commitType": "docs",
@@ -14,9 +11,7 @@
       "name": "Blake Naccarato",
       "avatar_url": "https://avatars.githubusercontent.com/u/20692450?v=4",
       "profile": "https://www.blakenaccarato.com/",
-      "contributions": [
-        "code"
-      ]
+      "contributions": ["code"]
     }
   ]
 }

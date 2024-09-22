@@ -2,6 +2,7 @@ exclude: |
   (?x)^(
     \.copier-answers\.yml
     |changelog/towncrier_template\.md\.jinja
+    |template/{{ _copier_conf\.answers_file }}\.jinja
   )$
 ci:
   skip:

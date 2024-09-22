@@ -23,7 +23,7 @@
   "search.exclude": {
     //? Don't search in submodules or locks by default
     "typings": true,
-    "uv.lock": true,
+    "uv.lock": true
   },
   //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
@@ -42,7 +42,7 @@
     "*ipython-input*": "python",
     "*requirements*.in": "pip-requirements",
     "pyrightconfig.json": "jsonc",
-    "uv.lock": "toml",
+    "uv.lock": "toml"
   },
   //! Git
   "git.allowNoVerifyCommit": true,
