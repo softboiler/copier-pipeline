@@ -22,7 +22,7 @@
   ],
   "github-actions": { "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"] },
   "pep621": {
-    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
+    "fileMatch": ["(^|/)pyproject\\.toml[^/]*?$"],
     "rangeStrategy": "bump"
   },
   "ignoreDeps": ["towncrier"],
@@ -30,7 +30,7 @@
     {
       "description": "uv",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.uv-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.uv-version[^/]*?$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
@@ -38,7 +38,7 @@
     {
       "description": "uv-gha",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
+      "fileMatch": ["(^|/)\\.github/workflows/[^/]*?$"],
       "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version: \"(?<currentValue>.+)\""],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
@@ -46,7 +46,7 @@
     {
       "description": "pylance",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.pylance-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.pylance-version[^/]*?$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
@@ -54,7 +54,7 @@
     {
       "description": "copier",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.copier-version[^/]*$"],
+      "fileMatch": ["(^|/)\\.copier-version[^/]*?$"],
       "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "pypi",
       "depNameTemplate": "copier"
@@ -63,7 +63,7 @@
   "packageRules": [
     {
       "groupName": "all",
-      "matchPackageNames": ["*"]
+      "matchPackageNames": ["*?"]
     }
   ]
 }
