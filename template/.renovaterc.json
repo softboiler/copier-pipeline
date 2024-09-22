@@ -25,24 +25,24 @@
     {
       "description": "uv",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.uv-version[^/]*?$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+?)"],
+      "fileMatch": ["(^|/)\\.uv-version[^/]*$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
     },
     {
       "description": "uv-gha",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.github/workflows/[^/]*?$"],
-      "matchStrings": ["- uses: \"astral-sh/setup-uv@.+?\\n\\s+?with:\\n\\s+?version:\\s\"(?<currentValue>.+?)\""],
+      "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
+      "matchStrings": ["- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv"
     },
     {
       "description": "pylance",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.pylance-version[^/]*?$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+?)"],
+      "fileMatch": ["(^|/)\\.pylance-version[^/]*$"],
+      "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release"
     }
@@ -50,11 +50,11 @@
   "packageRules": [
     {
       "groupName": "all",
-      "matchPackageNames": ["*?"]
+      "matchPackageNames": ["*"]
     },
     {
       "groupName": "ruff",
-      "matchPackageNames": ["/^.*?ruff.*?$/"]
+      "matchPackageNames": ["/^.*ruff.*$/"]
     },
     {
       "groupName": "pylance",
@@ -62,11 +62,11 @@
     },
     {
       "groupName": "tests",
-      "matchPackageNames": ["/^.*?pytest.*?$/"]
+      "matchPackageNames": ["/^.*pytest.*$/"]
     },
     {
       "groupName": "docs",
-      "matchPackageNames": ["docutils", "numpydoc", "/^.*?sphinx.*?$/", "/^.*?myst.*?$/"]
+      "matchPackageNames": ["docutils", "numpydoc", "/^.*sphinx.*$/", "/^.*myst.*$/"]
     },
     {
       "groupName": "devcontainer",
