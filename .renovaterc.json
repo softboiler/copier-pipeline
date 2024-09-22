@@ -20,7 +20,9 @@
     "pep621",
     "pre-commit"
   ],
-  "github-actions": { "fileMatch": ["(^|.*/)\\.github/workflows/[^/]+$"] },
+  "github-actions": {
+    "fileMatch": ["(^|.*/)\\.github/workflows/[^/]+$", "template/pyproject\\.toml\\.jinja"]
+  },
   "pep621": {
     "fileMatch": ["(^|.*/)pyproject\\.toml[^/]*$"],
     "rangeStrategy": "bump"
