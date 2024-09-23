@@ -40,9 +40,9 @@ function Install-Uv {
     Invoke `uv`.#>
     Param([switch]$Update)
     $Env:PATH = "$HOME/.cargo/bin$([System.IO.Path]::PathSeparator)$Env:PATH"
-    if (Get-Command 'uv' -ErrorAction 'Ignore') {
-        if ($Update) { uv self update }
-        return
+    if ((Get-Command 'uv' -ErrorAction 'Ignore') -and $Update) {
+        try { uv self update }
+        catch [System.Management.Automation.NativeCommandExitException] {}
     }
     if ($IsWindows) {
         Invoke-RestMethod 'https://astral.sh/uv/install.ps1' | Invoke-Expression
@@ -50,7 +50,6 @@ function Install-Uv {
     else {
         curl --proto '=https' --tlsv1.2 -LsSf 'https://astral.sh/uv/install.sh' | sh
     }
-
 }
 
 function New-Switch {
