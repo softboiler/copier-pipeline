@@ -7,7 +7,7 @@ authors:
   - family-names: "Kim"
     given-names: "Kwang"
     orcid: "https://orcid.org/0000-0003-2134-4964"
-title: "boilercv"
+title: "copier-pipeline"
 doi: "10.5281/zenodo.13824666"
 date-released: 2024-09-21
 url: "https://github.com/softboiler/copier-pipeline"
