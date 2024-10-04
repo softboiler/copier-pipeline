@@ -88,8 +88,7 @@
       "name": "PowerShell: Launch Current File",
       "type": "PowerShell",
       "request": "launch",
-      "script": "${file}",
-      "cwd": "${cwd}"
+      "script": "${file}"
     },
     {
       //? https://github.com/microsoft/vscode-python-debugger/issues/335
