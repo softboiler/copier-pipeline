@@ -22,7 +22,7 @@ APP = App(help_format="markdown")
 """CLI."""
 
 
-def main():  # noqa: D103
+def main():
     APP()
 
 

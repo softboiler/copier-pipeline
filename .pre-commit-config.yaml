@@ -7,7 +7,7 @@ exclude: |
 ci:
   skip:
     - "sync"
-    - "fawltydeps-src"
+    - "fawltydeps"
     - "fawltydeps-dev"
     - "pytest-fast-only"
   autoupdate_schedule: "quarterly"
@@ -30,36 +30,37 @@ repos:
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command "./Invoke-Uv.ps1 -Sync -Update"
-      - id: "fawltydeps-src"
-        name: "fawltydeps-src"
+          pwsh -Command "./j.ps1 uv-sync"
+      - id: "fawltydeps"
+        name: "fawltydeps"
         pass_filenames: false
         language: "system"
-        entry: |
-          pwsh -Command "./Invoke-Uv.ps1 fawltydeps --config-file pyproject.toml"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 fawltydeps'"
         files: |
           (?x)^(
-            pyproject\.toml
-            |src/.*
+            src/.*
           )$
       - id: "fawltydeps-dev"
         name: "fawltydeps-dev"
         pass_filenames: false
         language: "system"
-        entry: |
-          pwsh -Command "./Invoke-Uv.ps1 fawltydeps --config-file packages/_dev/pyproject.toml"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml'"
         files: |
           (?x)^(
             packages/_dev/.*
-            |docs/.*
-            |tests/.*
           )$
+      - id: "pytest"
+        name: "pytest"
+        always_run: true
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 pytest'"
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
         language: "system"
         entry: |
-          pwsh -Command "./Invoke-Uv.ps1 pytest -m 'not slow'"
+          pwsh -NonInteractive -NoProfile -Command './j.ps1 pytest -m `"not slow`"'
         files: |
           (?x)^(
             .*/pyproject\.toml
@@ -70,9 +71,16 @@ repos:
             |tests/.*
           )$
   - repo: "https://github.com/pre-commit/pre-commit-hooks"
-    rev: "v4.6.0"
+    rev: "v5.0.0"
     hooks:
+      - id: "check-illegal-windows-names"
+      - id: "check-merge-conflict"
+      - id: "destroyed-symlinks"
+      - id: "detect-private-key"
       - id: "end-of-file-fixer"
+      - id: "mixed-line-ending"
+      - id: "trailing-whitespace"
+        args: [--markdown-linebreak-ext=md]
       - id: "trailing-whitespace"
   - repo: "https://github.com/DavidAnson/markdownlint-cli2"
     rev: "v0.13.0"
@@ -95,15 +103,15 @@ repos:
             |tests/.*
           )$
   - repo: "https://github.com/rbubley/mirrors-prettier"
-    rev: "v3.3.3"
+    rev: "v3.5.1"
     hooks:
-      - id: "prettier"
+      - id: prettier
   - repo: https://github.com/ComPWA/taplo-pre-commit
-    rev: "v0.9.3"
+    rev: v0.9.3
     hooks:
-      - id: "taplo-format"
+      - id: taplo-format
   - repo: "https://github.com/charliermarsh/ruff-pre-commit"
-    rev: "v0.5.1"
+    rev: "v0.9.3"
     hooks:
       - id: "ruff"
         args: ["--extend-fixable", "PIE790"]

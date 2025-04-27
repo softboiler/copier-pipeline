@@ -1,54 +1,36 @@
 {
-  // * ------------------------------------------------------------------------------- *
+  // * ---------------------------------------------------------------------------- * //
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": ["*.yml.jinja"]
   },
-  // * ------------------------------------------------------------------------------- *
-  //! Terminal
-  //? Use PowerShell on all platforms, facilitates running template scripts
+  // * ---------------------------------------------------------------------------- * //
+  // ! Terminal
+  // ? Use PowerShell on all platforms, facilitates running template scripts
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.linux": "pwsh",
   "terminal.integrated.defaultProfile.osx": "pwsh",
-  //! File excludes
+  // ! File excludes
   "files.exclude": {
-    //? Cache directory set in `pyproject.toml`
-    "**/.cache": true,
-    //? Python
     "**/__pycache__": true,
     "**/.jupyter_cache": true,
-    "**/.pytest_cache/": true,
-    //? Attempt to prevent picking up temporary Pylance files in Problems pane
-    "**/*pylance-notebook-cell*": true
+    "**/.pytest_cache": true
   },
   "search.exclude": {
-    //? Don't search in submodules or locks by default
+    // ? Don't search in locks by default
     "typings": true,
     "uv.lock": true
   },
-  //! File nesting
+  // ! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
-  "explorer.fileNesting.patterns": {
-    //? Prevents file nesting from hijacking brand new files before setting filename
-    "*.root": ".*, a*, b*, c*, d*, e*, f*, g*, h*, i*, j*, k*, l*, m*, n*, o*, p*, q*, r*, s*, t*, u*, v*, w*, x*, y*, z*, A*, B*, C*, D*, E*, F*, G*, H*, I*, J*, K*, L*, M*, N*, O*, P*, Q*, R*, S*, T*, U*, V*, W*, X*, Y*, Z*, 0*, 1*, 2*, 3*, 4*, 5*, 6*, 7*, 8*, 9*, _*, -*, {*"
-  },
-  //! File associations
-  "files.associations": {
-    ".coveragerc": "ini",
-    ".pylintrc": "ini",
-    ".root": "plaintext",
-    ".sourcery.yaml": "yaml",
-    "*ipython-input*": "python",
-    "*requirements*.in": "pip-requirements",
-    "pyrightconfig.json": "jsonc",
-    "uv.lock": "toml"
-  },
-  //! Git
+  "explorer.fileNesting.patterns": { "*.root": ".*, uv.lock" },
+  // ! File associations
+  "files.associations": { ".root": "plaintext", "*.just": "just" },
+  // ! Git
   "git.allowNoVerifyCommit": true,
   "git.confirmNoVerifyCommit": false,
-  "git.commandsToLog": ["commit", "push"],
-  //! Line-width
+  // ! Line-width
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
@@ -59,10 +41,9 @@
   "[scminput]": {
     "editor.rulers": [88]
   },
-  //! pytest
-  "python.testing.unittestEnabled": false,
+  // ! pytest
   "python.testing.pytestEnabled": true,
-  //! Formatting
+  // ! Formatting
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.wordWrap": "bounded",
@@ -74,7 +55,7 @@
   "notebook.insertFinalNewline": false,
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
-  //! Code Actions
+  // ! Code Actions
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.organizeImports": "always"
@@ -83,10 +64,10 @@
     "notebook.source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
-  //! Extensions
-  //* autoDocstring
+  // ! Extensions
+  // * autoDocstring
   "autoDocstring.docstringFormat": "numpy-notypes",
-  //* Better Comments
+  // * Better Comments
   "better-comments.tags": [
     {
       "tag": "!",
@@ -161,30 +142,61 @@
       "italic": false
     }
   ],
-  //* GitHub Actions
+  // * GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/ci.yml"],
-  //* Jupyter Notebooks
+  // * Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
-  //* MyST
+  // * MyST
   "myst.preview.extensions": ["colon_fence", "dollarmath"],
   // * Python
-  "python.terminal.activateEnvInCurrentTerminal": true,
-  //* Pylance
-  "python.languageServer": "Pylance",
-  "python.analysis.diagnosticMode": "openFilesOnly",
-  "python.analysis.typeCheckingMode": "strict",
+  "python.terminal.activateEnvInCurrentTerminal": false,
+  "python.terminal.activateEnvironment": false,
+  // * Pylance
   "editor.inlayHints.enabled": "offUnlessPressed",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
+  "python.analysis.autoIndent": true,
+  "python.analysis.completeFunctionParens": false,
+  "python.analysis.diagnosticMode": "workspace",
+  "python.analysis.disableTaggedHints": false,
+  "python.analysis.displayEnglishDiagnostics": false,
+  "python.analysis.enablePytestSupport": true,
+  "python.analysis.enableSyncServer": false,
   "python.analysis.extraCommitChars": true,
+  "python.analysis.generateWithTypeAnnotation": true,
   "python.analysis.gotoDefinitionInStringLiteral": true,
   "python.analysis.importFormat": "absolute",
+  "python.analysis.includeAliasesFromUserFiles": true,
+  "python.analysis.indexing": true,
   "python.analysis.inlayHints.callArgumentNames": "all",
   "python.analysis.inlayHints.functionReturnTypes": true,
   "python.analysis.inlayHints.pytestParameters": true,
   "python.analysis.inlayHints.variableTypes": true,
-  //* PowerShell
+  "python.analysis.languageServerMode": "full",
+  "python.analysis.logLevel": "Information",
+  "python.analysis.persistAllIndices": true,
+  "python.analysis.regenerateStdLibIndices": true,
+  "python.analysis.reportExtraTelemetry": false,
+  "python.analysis.showOnlyDirectDependenciesInAutoImport": false,
+  "python.analysis.supportDocstringTemplate": true,
+  "python.analysis.supportRestructuredText": true,
+  "python.analysis.userFileIndexingLimit": -1,
+  "python.languageServer": "Pylance",
+  "python.analysis.aiCodeActions": {
+    "implementAbstractClasses": true,
+    "generateDocstring": true,
+    "generateSymbol": true
+  },
+  "python.analysis.fixAll": [
+    "source.convertImportFormat",
+    "source.unusedImports"
+  ],
+  "python.analysis.packageIndexDepths": [
+    { "name": "", "depth": 16, "includeAllSymbols": true }
+  ],
+
+  // * PowerShell
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,
   "powershell.integratedConsole.showOnStartup": false,
@@ -195,24 +207,24 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.codeFormatting.whitespaceBetweenParameters": true,
   "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
-  //* Rewrap
+  // * Rewrap
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
-  //* Sourcery
+  // * Sourcery
   "sourcery.codeLens": false,
-  //* vscode-icons
+  // * vscode-icons
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
-  //! Filetype extensions
-  //* Built-in Markdown support
-  //? Doesn't play nicely with All Contributors HTML
+  // ! Filetype extensions
+  // * Built-in Markdown support
+  // ? Doesn't play nicely with All Contributors HTML
   "markdown.validate.referenceLinks.enabled": "ignore",
-  //* Markdownlint (MD)
+  // * Markdownlint (MD)
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
-  //* Prettier (JSON, JSONC, YAML)
+  // * Prettier (JSON, JSONC, YAML)
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -232,10 +244,10 @@
     "editor.wordWrap": "off"
   },
   "yaml.format.printWidth": 88,
-  //* ruff (PY, IPYNB)
+  // * Justfile (JUST)
+  "[just]": { "editor.tabSize": 2, "editor.wordWrap": "off" },
+  // * ruff (PY, IPYNB)
   "ruff.importStrategy": "fromEnvironment",
-  "ruff.lint.args": ["--config", "pyproject.toml"],
-  "ruff.format.args": ["--config", "pyproject.toml"],
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.wordWrap": "off"
@@ -244,14 +256,82 @@
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.wordWrap": "off"
   },
-  //* Even Better TOML (TOML)
+  // * Even Better TOML (TOML)
   "[toml]": {
     "editor.tabSize": 2,
     "editor.defaultFormatter": "tamasfe.even-better-toml",
     "editor.wordWrap": "off"
   },
   "evenBetterToml.taplo.configFile.path": ".taplo.toml",
-  //! Other
-  //? Other automatically added settings below
+  // * Automatically synchronized environment variables
+  // ! To update, modify `env.json` and run `./j.ps1 con`
+  "terminal.integrated.env.linux": {
+    "COPIER_PIPELINE_VERSION": "0.0.0",
+    "COVERAGE_CORE": "sysmon",
+    "DEV_ENV_SET": "1",
+    "FORCE_COLOR": "1",
+    "INSTALLER_NO_MODIFY_PATH": "1",
+    "JUPYTER_PLATFORM_DIRS": "1",
+    "JUST_COMMAND_COLOR": "purple",
+    "JUST_EXPLAIN": "true",
+    "JUST_LIST_SUBMODULES": "true",
+    "JUST_UNSORTED": "true",
+    "JUST_VERSION": "1.39.0",
+    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
+    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
+    "PYTHON_VERSION": "3.11",
+    "PYTHONIOENCODING": "utf-8:strict",
+    "PYTHONUTF8": "1",
+    "PYTHONWARNDEFAULTENCODING": "1",
+    "PYTHONWARNINGS": "ignore",
+    "UV_INSTALL_DIR": ".",
+    "UV_VERSION": "0.6.16"
+  },
+  "terminal.integrated.env.osx": {
+    "COPIER_PIPELINE_VERSION": "0.0.0",
+    "COVERAGE_CORE": "sysmon",
+    "DEV_ENV_SET": "1",
+    "FORCE_COLOR": "1",
+    "INSTALLER_NO_MODIFY_PATH": "1",
+    "JUPYTER_PLATFORM_DIRS": "1",
+    "JUST_COMMAND_COLOR": "purple",
+    "JUST_EXPLAIN": "true",
+    "JUST_LIST_SUBMODULES": "true",
+    "JUST_UNSORTED": "true",
+    "JUST_VERSION": "1.39.0",
+    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
+    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
+    "PYTHON_VERSION": "3.11",
+    "PYTHONIOENCODING": "utf-8:strict",
+    "PYTHONUTF8": "1",
+    "PYTHONWARNDEFAULTENCODING": "1",
+    "PYTHONWARNINGS": "ignore",
+    "UV_INSTALL_DIR": ".",
+    "UV_VERSION": "0.6.16"
+  },
+  "terminal.integrated.env.windows": {
+    "COPIER_PIPELINE_VERSION": "0.0.0",
+    "COVERAGE_CORE": "sysmon",
+    "DEV_ENV_SET": "1",
+    "FORCE_COLOR": "1",
+    "INSTALLER_NO_MODIFY_PATH": "1",
+    "JUPYTER_PLATFORM_DIRS": "1",
+    "JUST_COMMAND_COLOR": "purple",
+    "JUST_EXPLAIN": "true",
+    "JUST_LIST_SUBMODULES": "true",
+    "JUST_UNSORTED": "true",
+    "JUST_VERSION": "1.39.0",
+    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
+    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
+    "PYTHON_VERSION": "3.11",
+    "PYTHONIOENCODING": "utf-8:strict",
+    "PYTHONUTF8": "1",
+    "PYTHONWARNDEFAULTENCODING": "1",
+    "PYTHONWARNINGS": "ignore",
+    "UV_INSTALL_DIR": ".",
+    "UV_VERSION": "0.6.16"
+  },
+  // ! Other
+  // ? Other automatically added settings below
   "": ""
 }

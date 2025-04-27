@@ -4,9 +4,9 @@ from datetime import date
 from hashlib import sha256
 from pathlib import Path
 
-from dev.docs import DOCS, PYPROJECT, chdir_docs
-from dev.docs.intersphinx import get_ispx, get_rtd, get_url
-from dev.docs.types import IspxMappingValue
+from copier_pipeline_dev.docs import DOCS, PYPROJECT, chdir_docs
+from copier_pipeline_dev.docs.intersphinx import get_ispx, get_rtd, get_url
+from copier_pipeline_dev.docs.types import IspxMappingValue
 from ruamel.yaml import YAML
 from sphinx.application import Sphinx
 

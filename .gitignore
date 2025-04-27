@@ -1,17 +1,21 @@
 # * -------------------------------------------------------------------------------- * #
 # * Template gitignore
 
-# Ignore local uv
-uv
-uv.exe
-uvx
-uvx.exe
-# Ignore local dev environment settings
+# Local uv
+/uv
+/uv.previous
+/uv.exe
+/uv.exe.previous.exe
+/uvx
+/uv.previous
+/uvx.exe
+/uv.exe.previous.exe
+# Dummy files for testing recipes
+.dummy*
+# Local dev environment settings
 *.env
 # local workspace extensions directory
 .vscode/extensions
-# uv binary
-bin
 # Locally-compiled dependencies
 .comps
 # Ignore `.ruff-cache` just in case, and to grey it out in the sidebar
@@ -26,7 +30,7 @@ pytest.ini
 *.rej
 # Don't commit code workspace files, which might be symlinked here
 *.code-workspace
-# Avoid committing local docs builds for previewing
+# Local docs builds
 _build/
 _site/
 # If using Google Cloud Platform Workload Identity Federation, avoid committing keys

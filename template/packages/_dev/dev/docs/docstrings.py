@@ -31,7 +31,7 @@ _REGULAR_SECTIONS: Final[tuple[str, ...]] = (
     "References",
     "Examples",
 )
-_OTHER_PARAMETERS = re.compile(".*Other Parameters *\n *--+ *\n")
+_OTHER_PARAMETERS = re.compile(r".*Other Parameters *\n *--+ *\n")
 """
 Regular expression to check if the "Other Parameters" section has been used.
 
@@ -46,7 +46,7 @@ Other Parameters
 ```
 """
 _OUTPUT_SECTION_TITLE = re.compile(
-    "(?P<before>.*?)(?P<padding> *)Output Files\n *-+(?P<after>.*)",
+    r"(?P<before>.*?)(?P<padding> *)Output Files\n *-+(?P<after>.*)",
     re.MULTILINE | re.DOTALL,
 )
 """

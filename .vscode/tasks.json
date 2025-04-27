@@ -1,9 +1,61 @@
-// Run tasks like `pwsh -Command "./Invoke-Uv.ps1 && {task}` to run profile-like
-// commands without requiring users to modify global profile.
-
 {
   "version": "2.0.0",
+  "type": "shell",
+  "problemMatcher": {},
   "inputs": [
+    {
+      "id": "args",
+      "description": "Recipe arguments",
+      "type": "promptString",
+      "default": ""
+    },
+    {
+      "id": "python",
+      "type": "pickString",
+      "description": "Python recipe to run",
+      "default": "",
+      "options": ["", "script", "gui-script", "module"]
+    },
+    {
+      "id": "tool",
+      "type": "pickString",
+      "description": "Tool recipe to run",
+      "options": [
+        "pre-commit",
+        "pyright",
+        "ruff",
+        "pytest",
+        "docs-preview",
+        "docs-build"
+      ]
+    },
+    {
+      "id": "packaging",
+      "type": "pickString",
+      "description": "Packaging recipe to run",
+      "options": ["build", "release"]
+    },
+    {
+      "id": "setup",
+      "type": "pickString",
+      "description": "Machine setup recipe to run",
+      "options": [
+        // "git", // ? Requires extra args
+        "git-recs  # 👤 Configure Git as recommended.",
+        "gh  # 🔑 Log in to GitHub API.",
+        "scripts  # 🔓 Allow running local PowerShell scripts."
+      ]
+    },
+    {
+      "id": "name",
+      "type": "promptString",
+      "description": "Git setup: Enter your GitHub username"
+    },
+    {
+      "id": "email",
+      "type": "promptString",
+      "description": "Git setup: Enter the email address associated with your GitHub account"
+    },
     {
       "id": "templateOptions",
       "type": "pickString",
@@ -33,86 +85,69 @@
     }
   ],
   "tasks": [
-    // * -------------------------------------------------------------------------- * //
-    // * PROJECT SETUP * //
+    {
+      "label": "👥 Run contributor environment setup",
+      "command": "./j.ps1 con",
+      "runOptions": { "runOn": "folderOpen" }
+    },
+    {
+      "label": "🏃 Run shell commands with UV synced...",
+      "command": "./j.ps1 run ${input:args}"
+    },
+    {
+      "label": "🟣 uv ...",
+      "command": "./j.ps1 uv ${input:args}"
+    },
+    {
+      "label": "🏃 uv run ...",
+      "command": "./j.ps1 uv-run ${input:args}"
+    },
+    {
+      "label": "♻️ uv sync ...",
+      "command": "./j.ps1 uv-sync ${input:args}"
+    },
+    {
+      "label": "🐍 Run a Python recipe...",
+      "command": "./j.ps1 py-${input:python} ${input:args}"
+    },
+    {
+      "label": "📦 Run a Packaging recipe...",
+      "command": "./j.ps1 pkg-${input:packaging} ${input:args}"
+    },
+    {
+      "label": "🛞 Build wheel, compile binary, and sign.",
+      "group": { "kind": "build", "isDefault": true },
+      "command": "./j.ps1 pkg-build"
+    },
+    {
+      "label": "🧪 pytest",
+      "command": "./j.ps1 tool-pytest",
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "⚙️ Run a tool recipe...",
+      "command": "./j.ps1 tool-${input:tool} ${input:args}"
+    },
+    {
+      "label": "🔵 pre-commit --all-files",
+      "command": "./j.ps1 tool-pre-commit --all-files"
+    },
+    {
+      "label": "💻 Run a machine setup recipe...",
+      "command": "./j.ps1 setup-${input:setup}"
+    },
+    {
+      "label": "👤 Set Git username and email...",
+      "command": "./j.ps1 setup-git ${input:name} ${input:email}"
+    },
 
-    {
-      "label": "setup: Sync with template",
-      "type": "shell",
-      "command": ". ./dev.ps1 && Sync-Template ${input:templateOptions}",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Sync with specific template ref",
-      "type": "shell",
-      "command": ". ./dev.ps1 && Sync-Template ${input:ref} ${input:templateOptions}",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Sync contributor environment",
-      "type": "shell",
-      "command": "if (!$Env:DEVCONTAINER) {./Invoke-Uv.ps1 -Sync -Update}",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": [],
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
-    },
-    {
-      "label": "setup: Initialize repository",
-      "type": "shell",
-      "command": ". ./dev.ps1 && Initialize-Repo",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
+    // TODO ------------------------------------------------------------------------- //
+
     {
       "label": "setup: Remove *.rej",
       "type": "shell",
       "command": "Get-ChildItem -Recurse -Filter *.rej | Remove-Item",
       "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Initialize Windows machine",
-      "type": "shell",
-      "options": { "shell": { "executable": "powershell" } },
-      "command": ". ./dev.ps1 && Initialize-Windows",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Initialize Linux/MacOS machine",
-      "type": "shell",
-      "options": { "shell": { "executable": "bash" } },
-      "command": "scripts/Initialize-LinuxMacOS.sh",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-    {
-      "label": "setup: Finish initializing machine (cross-platform)",
-      "type": "shell",
-      "command": ". ./dev.ps1 && Initialize-Machine",
-      "icon": { "id": "file-symlink-directory" },
-      "problemMatcher": []
-    },
-
-    // * -------------------------------------------------------------------------- * //
-    // * OTHER TASKS * //
-
-    {
-      "label": "task: pre-commit",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 pre-commit run --verbose",
-      "icon": { "id": "git-commit" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: pre-commit (all)",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 pre-commit run --all-files --verbose",
-      "icon": { "id": "git-commit" },
       "problemMatcher": []
     },
     {
@@ -130,30 +165,9 @@
       "problemMatcher": []
     },
     {
-      "label": "task: Run pytest with coverage",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 pytest --cov  --cov-config pyproject.toml --cov-report xml",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Run ruff",
-      "type": "shell",
-      "command": ". ./dev.ps1 && iuv ruff check . && iuv ruff format .",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Run pyright",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 pyright",
-      "icon": { "id": "check" },
-      "problemMatcher": []
-    },
-    {
       "label": "task: Build docs",
       "type": "shell",
-      "command": "./Invoke-Uv.ps1 dev build-docs",
+      "command": "./j.ps1 con-dev build-docs",
       "icon": { "id": "book" },
       "problemMatcher": []
     },

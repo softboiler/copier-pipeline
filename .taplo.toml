@@ -1,2 +1,2 @@
 formatting.column_width = 88
-exclude = ["**/expectations.toml"]
+exclude = ["data/headers/*.toml", "**/expectations.toml"]

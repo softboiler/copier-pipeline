@@ -1,5 +1,8 @@
 # Sync GitHub release notes with the changelog
 name: "changerelease"
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: True
 on:
   workflow_dispatch:
   workflow_call:
