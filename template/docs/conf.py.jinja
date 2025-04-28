@@ -4,9 +4,9 @@ from datetime import date
 from hashlib import sha256
 from pathlib import Path
 
-from dev.docs import DOCS, PYPROJECT, chdir_docs
-from dev.docs.intersphinx import get_ispx, get_rtd, get_url
-from dev.docs.types import IspxMappingValue
+from {{ project_name | replace("-", "_") }}_dev.docs import DOCS, PYPROJECT, chdir_docs
+from {{ project_name | replace("-", "_") }}_dev.docs.intersphinx import get_ispx, get_rtd, get_url
+from {{ project_name | replace("-", "_") }}_dev.docs.types import IspxMappingValue
 from ruamel.yaml import YAML
 from sphinx.application import Sphinx
 

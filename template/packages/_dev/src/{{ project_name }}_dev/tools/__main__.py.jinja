@@ -9,9 +9,9 @@ from sys import version_info
 
 from cyclopts import App
 
-from dev.tools import add_changes, environment
-from dev.tools.environment import escape, run
-from dev.tools.types import ChangeType
+from {{ project_name | replace("-", "_") }}_dev.tools import add_changes, environment
+from {{ project_name | replace("-", "_") }}_dev.tools.environment import escape, run
+from {{ project_name | replace("-", "_") }}_dev.tools.types import ChangeType
 
 if version_info >= (3, 11):  # noqa: UP036, RUF100
     from tomllib import loads  # pyright: ignore[reportMissingImports]
