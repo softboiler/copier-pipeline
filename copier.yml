@@ -1,4 +1,4 @@
-_min_copier_version: "9.2.0"
+_min_copier_version: "9.7.1"
 
 _subdirectory: "template"
 
@@ -8,35 +8,41 @@ _envops:
 project_owner_github_username:
   type: "str"
   help: "The GitHub username or organization that will host this project."
-  validator: "{% if not project_owner_github_username %}Invalid input{% endif %}"
+  validator: "{% if not project_owner_github_username %}Please enter a value{% endif %}"
 
 github_repo_name:
   type: "str"
   help: "The name of the GitHub repository that will host this project."
-  validator: "{% if not github_repo_name %}Invalid input{% endif %}"
+  validator: "{% if not github_repo_name %}Please enter a value{% endif %}"
 
 project_name:
   type: "str"
-  help: "The name of this project, if different from the repository name."
-  default: "{{ github_repo_name }}"
-  validator: "{% if not project_name %}Invalid input{% endif %}"
+  help: "The dash-delimited name of this project (e.g. as it might appear in `pip install...` statements)."
+  default: "{{ github_repo_name | replace('_', '-') }}"
+  validator: "{% if not project_name %}Please enter a value{% elif '_' in project_name %}Please use dashes, not underscores{% endif %}"
+
+package_name:
+  type: "str"
+  help: "The underscore-delimited name of this project (e.g. as it might appear in Python `from ... import ...` statements)."
+  default: "{{ project_name | replace('-', '_') }}"
+  validator: "{% if not package_name %}Please enter a value{% elif '-' in package_name %}Please use underscores, not dashes{% endif %}"
 
 project_owner_name:
   type: "str"
-  help: "The name (or names) for the MIT license, if different from the host user."
+  help: "How the first author name should appear (e.g. in the MIT license and project metadata), if different from the host username."
   default: "{{ project_owner_github_username }}"
-  validator: "{% if not project_owner_name %}Invalid input{% endif %}"
+  validator: "{% if not project_owner_name %}Please enter a value{% endif %}"
 
 year_of_project_creation:
   type: "int"
   help: "The year of project creation for the MIT license."
   default: 2024
-  validator: "{% if not year_of_project_creation %}Invalid input{% endif %}"
+  validator: "{% if not year_of_project_creation %}Please enter a value{% endif %}"
 
 project_description:
   type: "str"
   help: "A brief description for your project (please omit trailing punctuation). Required, but can easily be changed manually later."
-  validator: "{% if not project_description %}Invalid input{% endif %}"
+  validator: "{% if not project_description %}Please enter a value{% endif %}"
 
 project_email:
   type: "str"
@@ -44,22 +50,22 @@ project_email:
 
 project_version:
   type: "str"
-  help: "The package version for this project. Start with 0.0.0. Project may stay at 0.0.0 indefinitely if it is not meant to be versioned in this way."
+  help: "The package version for this project. Start with 0.0.0 (or a calendar version like {{ year_of_project_creation }}.0.0). Project may stay at 0.0.0 indefinitely if it is not meant to be versioned in this way."
   default: "0.0.0"
-  validator: "{% if not '.' in project_version %}Invalid input{% endif %}"
+  validator: "{% if not project_version %}Please enter a value{% endif %}"
 
 python_version:
   type: "str"
   help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`."
   default: "3.10"
-  validator: "{% if not '.' in python_version %}Invalid input{% endif %}"
+  validator: "{% if not python_version %}Please enter a value{% endif %}"
 
 actions_runner:
   type: "str"
   help: "The GitHub Actions runner to use."
   choices:
-    - "ubuntu-22.04"
-    - "windows-2022"
-    - "macos-13"
-  default: "ubuntu-22.04"
-  validator: "{% if not actions_runner %}Invalid input{% endif %}"
+    - "ubuntu-24.04"
+    - "windows-2025"
+    - "macos-15"
+  default: "ubuntu-24.04"
+  validator: "{% if not actions_runner %}Please enter a value{% endif %}"

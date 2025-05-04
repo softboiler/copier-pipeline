@@ -1,10 +1,13 @@
 [build-system]
-requires = ["flit_core==3.9.0"]
-build-backend = "flit_core.buildapi"
+requires = ["uv-build==0.6.16"]
+build-backend = "uv_build"
 
 [project]
 name = "{{ project_name }}"
 version = "{{ project_version }}"
+authors = [
+  { name = "{{ project_owner_name }}", email = "{{ project_email }}" }
+]
 description = "{{ project_description }}"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -23,34 +26,28 @@ Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_
 Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
 Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
 Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
-[[project.authors]]
-name = "{{ project_owner_name }}"
-email = "{{ project_email }}"
-
-[tool.uv]
-constraint-dependencies = [
-  # ? Security
-  # ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
-  # ? via sphinx
-  "urllib3>=2.2.2",
-]
-dev-dependencies = [
-  # ? Workspaces
-  "dev",
+[dependency-groups]
+dev = [
   # ? Dev
   "debugpy>=1.8.2",
-  "fawltydeps>=0.16.0",
+  "fawltydeps>=0.18.0",
   "pipdeptree>=2.23.0",
-  "pre-commit>=3.7.1",
-  "pyright>=1.1.371",
-  "ruff>=0.5.1",
+  "pre-commit>=4.1.0",
+  "pyright>=1.1.394",
+  "ruff>=0.9.3",
   "snakeviz>=2.2.0",
-  "sourcery>=1.21.0",
-  # ? https://github.com/sphinx-contrib/sphinxcontrib-towncrier/issues/92
-  "towncrier>=23.11.0, <24.7.0",
+  "sourcery>=1.32.0",
+  # ? For VSCode Jupyter notebooks and Data Wrangler
+  "ipykernel>=6.29.5",
+  "pandas-stubs==2.2.3.*",
+  "pandas>=2.2.3",
+  "pyarrow>=17.0.0",
+  "pyspark>=3.5.5",
+  "towncrier>=24.8.0",
   # ? Docs
   "linkify-it-py>=2.0.3",
   "myst-nb>=1.1.1",
+  "numpydoc>=1.8.0",
   "sphinx-autobuild>=2024.4.16",
   "sphinx-autodoc2>=0.5.0",
   "sphinx-book-theme>=1.1.3",
@@ -60,24 +57,43 @@ dev-dependencies = [
   "sphinx-togglebutton>=0.3.2",
   "sphinxcontrib-bibtex>=2.6.2",
   "sphinxcontrib-mermaid>=0.9.2",
-  "sphinxcontrib-towncrier>=0.4.0a0",
+  "sphinxcontrib-towncrier>=0.5.0a0",
   # ? Tests
   "pytest-cov>=5.0.0",
   "pytest-custom-exit-code>=0.3.0",
   "pytest-github-actions-annotate-failures>=0.2.0",
-  "pytest>=8.2.2",
+  "pytest>=8.3.4",
+]
+
+[tool.uv]
+required-version = "==0.6.16"
+constraint-dependencies = [
+  # ? Security
+  # ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
+  # ? via sphinx
+  "urllib3>=2.2.2",
 ]
 [tool.uv.pip]
 python-version = "{{ python_version }}"
-all-extras = true
+[tool.uv.sources]
+{{ project_name }}-dev = { workspace = true }
+{{ project_name }}-pipeline = { workspace = true }
 [tool.uv.workspace]
 members = ["packages/*"]
-[tool.uv.sources]
-dev = { workspace = true }
 
+[tool.coverage.report]
+exclude_also = ['if __name__ == "__main__":']
 [tool.coverage.run]
 branch = true
-source = ["{{ project_name }}", "dev", "tests"]
+source = [
+  "src",
+  "docs",
+  "packages/_dev",
+  "packages/_pipeline",
+  "notebooks",
+  "scripts",
+  "tests"
+]
 
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
@@ -85,26 +101,17 @@ code = ["src"]
 
 [tool.pytest.ini_options]
 addopts = """
+  -p no:legacypaths
+  -r a
   --strict-config
   --strict-markers
   --suppress-no-test-exit-code
   --color=yes
-  -p no:legacypaths
-  -r a
 """
 cache_dir = ".cache/.pytest_cache"
 markers = "slow"
 testpaths = "tests"
 xfail_strict = true
-
-[tool.env]
-COVERAGE_CORE = "sysmon"
-JUPYTER_PLATFORM_DIRS = "1"
-PYDEVD_DISABLE_FILE_VALIDATION = "1"
-PYTHONIOENCODING = "utf-8:strict"
-PYTHONUTF8 = "1"
-PYTHONWARNDEFAULTENCODING = "1"
-PYTHONWARNINGS = "ignore"
 
 [tool.towncrier]
 directory = "changelog"
@@ -130,9 +137,17 @@ showcontent = true
 
 [tool.pyright]
 stubPath = "typings/stubs"
-exclude = ["**/node_modules", "**/__pycache__", "**/.*", ".cache", "typings"]
-ignore = ["**/node_modules", "**/__pycache__", "**/.*", ".cache", "typings"]
 typeCheckingMode = "strict"
+include = [
+  "src",
+  "docs",
+  "notebooks",
+  "packages/_dev",
+  "packages/_pipeline",
+  "scripts",
+  "tests"
+]
+ignore = ["**/.*", "*:/**/.*", "*:/**/appdata", "typings"]
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
 strictParameterNoneValue = true
@@ -148,7 +163,7 @@ enableExperimentalFeatures = false
 reportMissingModuleSource = "warning"
 # Default "error" in strict
 reportMissingImports = "warning"
-reportInvalidTypeForm = "warning"
+reportInvalidTypeForm = "none"                 # Works fine in BaseModels
 reportUndefinedVariable = "warning"
 reportAssertAlwaysTrue = "warning"
 reportInvalidStringEscapeSequence = "warning"
@@ -230,13 +245,20 @@ reportUnusedCallResult = "none"
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"
-extend-exclude = ["packages", "typings"]
-extend-include = ["*.ipynb", "packages/_dev"]
-src = ["src", "docs", "scripts", "tests"]
-output-format = "grouped"
+extend-exclude = ["typings"]
 fix = true
+output-format = "grouped"
 preview = true
 show-fixes = true
+src = [
+  "src",
+  "docs",
+  "notebooks",
+  "packages/_dev",
+  "packages/_pipeline",
+  "scripts",
+  "tests"
+]
 [tool.ruff.lint]
 fixable = ["ALL"]
 select = [
@@ -255,7 +277,8 @@ ignore = [
   "C408",    # Allow dict calls
   "COM",     # Allow magic commas and magic missing commas
   "CPY001",  # Don't check for copyright
-  "D105",    # Allow missing docstring for magic methods
+  "D10",     # Allow missing docstrings
+  "DOC",     # Don't require documented returns, yields, exceptions, etc.
   "DTZ",     # Timezones are important, but only contextually necessary.
   "E501",    # Don't check line length. Black handles this.
   "EM",      # Don't check for exception message issues
@@ -294,7 +317,7 @@ ignore = [
   "S301",    # Don't warn about pickling.
   "S403",    # Don't warn about pickle-like modules.
   "S404",    # Don't warn about subprocess.
-  "TCH",     # Type checking linter doesn't play nicely with pydantic
+  "TC",      # Type checking linter doesn't play nicely with pydantic
   "TD",      # Disable to-do validation. Too pedantic for now.
   "TRY003",  # Allow long exception messages
   "W2",      # Allow whitespace issues. Fixed automatically by black.
@@ -325,4 +348,7 @@ convention = "numpy"
   "S101",   # Allow assert
   "SIM300", # Allow constants (expectations) on the RHS
   "SLF001", # Allow private member access in tests
+]
+"types.py" = [
+  "A005", # Allow types modules that shadow a stdlib module
 ]

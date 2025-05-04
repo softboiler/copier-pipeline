@@ -3,3 +3,5 @@
 *.ipynb
 # ? Markdownlint handles this
 *.md
+# ? Don't traverse typings
+typings

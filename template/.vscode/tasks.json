@@ -1,0 +1,213 @@
+{
+  "version": "2.0.0",
+  "type": "shell",
+  "problemMatcher": [],
+  "inputs": [
+    {
+      "id": "args",
+      "description": "Recipe arguments",
+      "type": "promptString",
+      "default": ""
+    },
+    {
+      "id": "python",
+      "type": "pickString",
+      "description": "Python recipe to run",
+      "default": "",
+      "options": ["", "script", "gui-script", "module"]
+    },
+    {
+      "id": "tool",
+      "type": "pickString",
+      "description": "Tool recipe to run",
+      "options": [
+        "pre-commit",
+        "pyright",
+        "ruff",
+        "pytest",
+        "docs-preview",
+        "docs-build"
+      ]
+    },
+    {
+      "id": "packaging",
+      "type": "pickString",
+      "description": "Packaging recipe to run",
+      "options": ["build", "release"]
+    },
+    {
+      "id": "setup",
+      "type": "pickString",
+      "description": "Machine setup recipe to run",
+      "options": [
+        // "git", // ? Requires extra args
+        "git-recs  # 👤 Configure Git as recommended.",
+        "gh  # 🔑 Log in to GitHub API.",
+        "scripts  # 🔓 Allow running local PowerShell scripts."
+      ]
+    },
+    {
+      "id": "name",
+      "type": "promptString",
+      "description": "Git setup: Enter your GitHub username"
+    },
+    {
+      "id": "email",
+      "type": "promptString",
+      "description": "Git setup: Enter the email address associated with your GitHub account"
+    },
+    {
+      "id": "templateOptions",
+      "type": "pickString",
+      "description": "Template options.",
+      "options": ["", "-Prompt", "-Stay", "-Stay -Prompt", "-Recopy -Prompt"]
+    },
+    {
+      "id": "ref",
+      "type": "promptString",
+      "description": "Commit SHA or other VCS reference."
+    },
+    {
+      "id": "dependency",
+      "type": "promptString",
+      "description": "Show tree of packages requesting this dependency."
+    },
+    {
+      "id": "version",
+      "type": "promptString",
+      "description": "Version number."
+    },
+    {
+      "id": "changeType",
+      "type": "pickString",
+      "description": "Change type.",
+      "options": ["breaking", "deprecation", "change"]
+    }
+  ],
+  "tasks": [
+    {
+      "label": "👥 Run contributor environment setup",
+      "command": "./j.ps1 con",
+      "runOptions": { "runOn": "folderOpen" }
+    },
+    {
+      "label": "🏃 Run shell commands with UV synced...",
+      "command": "./j.ps1 run ${input:args}"
+    },
+    {
+      "label": "🟣 uv ...",
+      "command": "./j.ps1 uv ${input:args}"
+    },
+    {
+      "label": "🏃 uv run ...",
+      "command": "./j.ps1 uv-run ${input:args}"
+    },
+    {
+      "label": "♻️ uv sync ...",
+      "command": "./j.ps1 uv-sync ${input:args}"
+    },
+    {
+      "label": "🐍 Run a Python recipe...",
+      "command": "./j.ps1 py-${input:python} ${input:args}"
+    },
+    {
+      "label": "📦 Run a Packaging recipe...",
+      "command": "./j.ps1 pkg-${input:packaging} ${input:args}"
+    },
+    {
+      "label": "🛞 Build wheel, compile binary, and sign.",
+      "group": { "kind": "build", "isDefault": true },
+      "command": "./j.ps1 pkg-build"
+    },
+    {
+      "label": "🧪 pytest",
+      "command": "./j.ps1 tool-pytest",
+      "group": { "kind": "test", "isDefault": true }
+    },
+    {
+      "label": "⚙️ Run a tool recipe...",
+      "command": "./j.ps1 tool-${input:tool} ${input:args}"
+    },
+    {
+      "label": "🔵 pre-commit --all-files",
+      "command": "./j.ps1 tool-pre-commit --all-files"
+    },
+    {
+      "label": "💻 Run a machine setup recipe...",
+      "command": "./j.ps1 setup-${input:setup}"
+    },
+    {
+      "label": "👤 Set Git username and email...",
+      "command": "./j.ps1 setup-git ${input:name} ${input:email}"
+    },
+    {
+      "label": "👥 Update changelog",
+      "type": "shell",
+      "command": "./j.ps1 con-update-changelog ${input:changeType}"
+    },
+    {
+      "label": "👥 Update changelog with the latest commit's message",
+      "type": "shell",
+      "command": "./j.ps1 con-update-changelog-latest-commit"
+    },
+
+    // TODO ------------------------------------------------------------------------- //
+
+    {
+      "label": "setup: Remove *.rej",
+      "type": "shell",
+      "command": "Get-ChildItem -Recurse -Filter *.rej | Remove-Item",
+      "icon": { "id": "file-symlink-directory" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Rebase back to fork",
+      "type": "shell",
+      "command": "git rebase -i --fork-point main",
+      "icon": { "id": "git-branch" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Show tree of packages requesting a dependency",
+      "type": "shell",
+      "command": "./Invoke-Uv.ps1 pipdeptree --reverse --packages ${input:dependency}",
+      "icon": { "id": "versions" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Build docs",
+      "type": "shell",
+      "command": "./j.ps1 con-dev build-docs",
+      "icon": { "id": "book" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Profile this file",
+      "type": "shell",
+      "command": "./Invoke-Uv.ps1 cProfile -o .prof ${file}",
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: View profile results with snakeviz",
+      "type": "shell",
+      "command": "./Invoke-Uv.ps1 snakeviz .prof",
+      "icon": { "id": "graph-line" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Bump version",
+      "type": "shell",
+      "command": ". ./dev.ps1 && uvx copier@9.7.1 update --vcs-ref=HEAD --defaults --data project_version='${input:version}' && iuv towncrier build --yes --version '${input:version}' && git add . && git commit -m '${input:version}'",
+      "icon": { "id": "tag" },
+      "problemMatcher": []
+    },
+    {
+      "label": "task: Release version",
+      "type": "shell",
+      "command": ". ./dev.ps1 && Invoke-Uv && ($Version = (Get-Content '.copier-answers.yml' | Find-Pattern '^project_version:\\s(.+)$')) && git tag --sign -m $Version $Version && git push",
+      "icon": { "id": "tag" },
+      "problemMatcher": []
+    }
+  ]
+}

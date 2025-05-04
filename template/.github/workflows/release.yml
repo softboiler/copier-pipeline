@@ -1,39 +1,45 @@
 # Publish release
 name: "release"
 concurrency:
-  group: "{% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw %}"
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: True
 on: ["workflow_dispatch"]
 defaults:
   run:
     shell: "pwsh"
 jobs:
+  env:
+    uses: "./.github/workflows/env.yml"
+  ci:
+    uses: "./.github/workflows/ci.yml"
   release:
+    needs:
+      - "env"
+      - "ci"
     permissions:
       contents: "write"
+      discussions: "write"
       id-token: "write"
       attestations: "write"
-    runs-on: "{{ actions_runner }}"
+    runs-on: "runs-on: ${{ needs.env.outputs.actions_runner }}"
     environment:
       name: "release"
-      url: "https://pypi.org/p/{{ github_repo_name }}"
+      url: "https://pypi.org/p/${{ needs.env.outputs.uv_version }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
       - uses: "astral-sh/setup-uv@9f1f1fece28798fe5e7ece00f4243abe886974b2" # v3.0.0
         with:
-          version: "0.4.15"
+          version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
-          cache-dependency-glob: |
-            **/uv.lock
-            .github/workflows/**
-      - run: "./Invoke-Uv.ps1 -Build"
+      - run: "uv build"
+      - run: "rm dist/.gitignore"
       - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         with:
           subject-path: "dist/**"
-      - run: "gh release upload '{% raw %}${{ github.event.release.tag_name }}{% endraw %}' dist/**"
+      - run: "uv publish"
+      - run: "gh release create --discussion-category announcements 0.0.0 dist/**"
         env:
-          GITHUB_TOKEN: "{% raw %}${{ github.token }}{% endraw %}"
-      - uses: "pypa/gh-action-pypi-publish@ec4db0b4ddc65acdf4bff5fa45ac92d78b56bdf0" # v1.9.0
+          GITHUB_TOKEN: "${{ github.token }}"
   changerelease:
     needs: "release"
     permissions:

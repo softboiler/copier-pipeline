@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Establish base config, schedule, and manager defaults",
   "addLabels": ["dependencies"],
   "extends": [
     ":dependencyDashboard",
@@ -21,61 +22,97 @@
     "pep621",
     "pre-commit"
   ],
+  "pep621": { "rangeStrategy": "bump" },
   "customManagers": [
     {
-      "description": "uv",
+      "description": "copier",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.uv-version[^/]*$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+)"],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "astral-sh/uv"
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "copier",
+      "fileMatch": [
+        "^env\\.json$",
+        "^\\.github/workflows/env\\.yml$",
+        "^\\.vscode/settings\\.json$"
+      ],
+      "matchStrings": [
+        "^\\s+\"COPIER_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
+        "^\\s+copier_version: { value: \"(?<currentValue>[^\"]+)\" }$"
+      ]
     },
     {
-      "description": "uv-gha",
+      "description": "just",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.github/workflows/[^/]*$"],
-      "matchStrings": [
-        "- uses: \"astral-sh/setup-uv@.+\\n\\s+with:\\n\\s+version:\\s\"(?<currentValue>.+)\""
+      "datasourceTemplate": "pypi",
+      "depNameTemplate": "rust-just",
+      "fileMatch": [
+        "^env\\.json$",
+        "^\\.github/workflows/env\\.yml$",
+        "^\\.vscode/settings\\.json$"
       ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "astral-sh/uv"
+      "matchStrings": [
+        "^\\s+\"JUST_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
+        "^\\s+just_version: { value: \"(?<currentValue>[^\"]+)\" }$"
+      ]
     },
     {
       "description": "pylance",
       "customType": "regex",
-      "fileMatch": ["(^|/)\\.pylance-version[^/]*$"],
-      "matchStrings": ["(?<currentValue>[^\\n]+)"],
       "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/pylance-release"
+      "depNameTemplate": "microsoft/pylance-release",
+      "fileMatch": [
+        "^env\\.json$",
+        "^\\.github/workflows/env\\.yml$",
+        "^\\.vscode/settings\\.json$"
+      ],
+      "matchStrings": [
+        "^\\s+\"PYRIGHT_PYTHON_PYLANCE_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
+        "^\\s+pyright_python_pylance_version: { value: \"(?<currentValue>[^\"]+)\" }$"
+      ]
+    },
+    {
+      "description": "python",
+      "customType": "regex",
+      "datasourceTemplate": "python-version",
+      "depNameTemplate": "python",
+      "fileMatch": [
+        "^env\\.json$",
+        "^\\.github/workflows/env\\.yml$",
+        "^\\.vscode/settings\\.json$"
+      ],
+      "matchStrings": [
+        "^\\s+\"PYTHON_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
+        "^\\s+python_version: { value: \"(?<currentValue>[^\"]+)\" }$"
+      ]
+    },
+    {
+      "description": "uv",
+      "customType": "regex",
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "astral-sh/uv",
+      "fileMatch": [
+        "^env\\.json$",
+        "^\\.github/workflows/env\\.yml$",
+        "^\\.vscode/settings\\.json$"
+      ],
+      "matchStrings": [
+        "^\\s+\"UV_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
+        "^\\s+uv_version: { value: \"(?<currentValue>[^\"]+)\" }$"
+      ]
     }
   ],
   "packageRules": [
     {
-      "groupName": "all",
+      "groupName": "all dependencies",
+      "groupSlug": "all",
       "matchPackageNames": ["*"]
     },
     {
-      "groupName": "ruff",
-      "matchPackageNames": ["/^.*ruff.*$/"]
+      "description": "Update regex pins separately",
+      "groupName": "regex",
+      "matchManagers": ["regex"]
     },
     {
-      "groupName": "pylance",
-      "matchPackageNames": ["microsoft/pylance-release"]
-    },
-    {
-      "groupName": "tests",
-      "matchPackageNames": ["/^.*pytest.*$/"]
-    },
-    {
-      "groupName": "docs",
-      "matchPackageNames": [
-        "docutils",
-        "numpydoc",
-        "/^.*sphinx.*$/",
-        "/^.*myst.*$/"
-      ]
-    },
-    {
+      "description": "Update `.devcontainer` updates separately for manual testing",
       "groupName": "devcontainer",
       "matchManagers": ["devcontainer"]
     }
