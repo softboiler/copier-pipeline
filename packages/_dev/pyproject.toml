@@ -6,7 +6,7 @@ build-backend = "uv_build"
 name = "copier-pipeline-dev"
 version = "0.0.0"
 requires-python = ">=3.11"
-dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1"]
+dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1", "ruamel-yaml>=0.18.6"]
 [project.scripts]
 copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 
@@ -14,3 +14,5 @@ copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
 ignore_undeclared = ["copier_pipeline"]
+[tool.fawltydeps.custom_mapping]
+ruamel-yaml = ["ruamel"]

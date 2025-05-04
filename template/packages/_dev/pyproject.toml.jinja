@@ -6,7 +6,7 @@ build-backend = "uv_build"
 name = "{{ project_name }}-dev"
 version = "0.0.0"
 requires-python = ">=3.11"
-dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1"]
+dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1", "ruamel-yaml>=0.18.6"]
 [project.scripts]
 {{ project_name }}-dev = "{{ package_name }}_dev.__main__:main"
 
@@ -14,3 +14,5 @@ dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1"]
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
 ignore_undeclared = ["{{ package_name }}"]
+[tool.fawltydeps.custom_mapping]
+ruamel-yaml = ["ruamel"]
