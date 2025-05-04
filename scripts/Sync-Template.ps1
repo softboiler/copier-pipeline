@@ -11,7 +11,7 @@ Param(
     [switch]$Stay
 )
 if (!(Get-Command 'uv' -ErrorAction 'Ignore')) { Install-Uv -Update }
-$Copier = "copier@$(Get-Content '.copier-version')"
+$Copier = "copier@$Env:COPIER_VERSION"
 $Ref = $Stay ? (Get-Content '.copier-answers.yml' | Find-Pattern '^_commit:\s.+-(.+)$') : $Ref
 if ($Recopy) {
     if ($Prompt) { return ./uvx $Copier recopy $Defaults --vcs-ref=$Ref }

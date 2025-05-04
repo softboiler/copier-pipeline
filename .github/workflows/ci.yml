@@ -17,7 +17,7 @@ jobs:
     uses: "./.github/workflows/env.yml"
   sync:
     needs: "env"
-    runs-on: "ubuntu-22.04"
+    runs-on: "ubuntu-24.04"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
@@ -35,7 +35,7 @@ jobs:
             requirements
   build-docs:
     needs: "env"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
@@ -48,20 +48,20 @@ jobs:
       - uses: "actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa" # v3.0.1
   deploy-docs:
     if: github.event_name != 'pull_request'
-    needs: "build-docs"
+    needs: ["env", "build-docs"]
     permissions:
       pages: "write"
       id-token: "write"
     environment:
       name: "github-pages"
       url: "${{ steps.deployment.outputs.page_url }}"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - id: "deployment"
         uses: "actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e" # v4.0.5
   ruff:
     needs: "env"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
@@ -73,7 +73,7 @@ jobs:
       - run: "./j.ps1 ci ruff --no-fix --output-format github"
   fawltydeps:
     needs: "env"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
@@ -88,7 +88,7 @@ jobs:
           ./j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml
   pyright:
     needs: "env"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
         with:
@@ -106,9 +106,9 @@ jobs:
     strategy:
       matrix:
         runner:
-          - "macos-14"
-          - "ubuntu-22.04"
-          - "windows-2022"
+          - "macos-15"
+          - "ubuntu-24.04"
+          - "windows-2025"
         python:
           - "3.11"
           - "3.12"

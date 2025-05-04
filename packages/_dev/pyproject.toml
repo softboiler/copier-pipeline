@@ -8,9 +8,9 @@ version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1"]
 [project.scripts]
-"copier-pipeline-dev" = "copier_pipeline_dev.__main__:main"
+copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 
 [tool.fawltydeps]
 deps = ["packages/_dev/pyproject.toml"]
-code = ["packages/_dev", "tests"]
+code = ["packages/_dev", "docs", "tests"]
 ignore_undeclared = ["copier_pipeline"]

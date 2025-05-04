@@ -2,7 +2,6 @@ exclude: |
   (?x)^(
     \.copier-answers\.yml
     |changelog/towncrier_template\.md\.jinja
-    |template/.*answers_file.*\.jinja
   )$
 ci:
   skip:
@@ -39,6 +38,7 @@ repos:
         files: |
           (?x)^(
             src/.*
+            |pyproject\.toml
           )$
       - id: "fawltydeps-dev"
         name: "fawltydeps-dev"
@@ -48,19 +48,14 @@ repos:
         files: |
           (?x)^(
             packages/_dev/.*
+            |docs/.*
+            |tests/.*
           )$
-      - id: "pytest"
-        name: "pytest"
-        always_run: true
-        pass_filenames: false
-        language: "system"
-        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 pytest'"
       - id: "pytest-fast-only"
         name: "pytest-fast-only"
         pass_filenames: false
         language: "system"
-        entry: |
-          pwsh -NonInteractive -NoProfile -Command './j.ps1 pytest -m `"not slow`"'
+        entry: 'pwsh -NonInteractive -NoProfile -Command ''./Invoke-Uv.ps1 pytest -m "not slow"'''
         files: |
           (?x)^(
             .*/pyproject\.toml

@@ -13,11 +13,14 @@ defaults:
   run:
     shell: "pwsh"
 jobs:
+  env:
+    uses: "./.github/workflows/env.yml"
   changerelease:
+    needs: "env"
     continue-on-error: true
     permissions:
       contents: "write"
-    runs-on: "ubuntu-22.04"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0
         with:

@@ -5,10 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "copier-pipeline"
 version = "2024.2.0"
-authors = [
-  { name = "Blake Naccarato", email = "blake.naccarato@gmail.com" },
-  { name = "Kwang Jin Kim" },
-]
+authors = [{ name = "Blake Naccarato", email = "blake.naccarato@gmail.com" }]
 description = "Copier template for research data pipelines"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -32,15 +29,26 @@ dev = [
   # ? Dev
   "debugpy>=1.8.2",
   "fawltydeps>=0.18.0",
-  "ipykernel>=6.29.5",
   "pipdeptree>=2.23.0",
   "pre-commit>=4.1.0",
   "pyright>=1.1.394",
   "ruff>=0.9.3",
   "snakeviz>=2.2.0",
   "sourcery>=1.32.0",
-  # ? https://github.com/sphinx-contrib/sphinxcontrib-towncrier/issues/92
-  "towncrier>=23.11.0, <24.7.0",
+  # ? For VSCode Jupyter notebooks and Data Wrangler
+  "ipykernel>=6.29.5",
+  "pandas-stubs==2.2.3.*",
+  "pandas>=2.2.3",
+  "pyarrow>=17.0.0",
+  "pyspark>=3.5.5",
+  "towncrier>=24.8.0",
+  # ? For VSCode Jupyter notebooks and Data Wrangler
+  "ipykernel>=6.29.5",
+  "pandas-stubs==2.2.3.*",
+  "pandas>=2.2.3",
+  "pyarrow>=17.0.0",
+  "pyspark>=3.5.5",
+  "towncrier>=24.8.0",
   # ? Docs
   "linkify-it-py>=2.0.3",
   "myst-nb>=1.1.1",
@@ -54,7 +62,8 @@ dev = [
   "sphinx-togglebutton>=0.3.2",
   "sphinxcontrib-bibtex>=2.6.2",
   "sphinxcontrib-mermaid>=0.9.2",
-  "sphinxcontrib-towncrier>=0.4.0a0",
+  "sphinxcontrib-towncrier>=0.5.0a0",
+  "sphinxcontrib-towncrier>=0.5.0a0",
   # ? Tests
   "pytest-cov>=5.0.0",
   "pytest-custom-exit-code>=0.3.0",
@@ -70,8 +79,11 @@ constraint-dependencies = [
   # ? via sphinx
   "urllib3>=2.2.2",
 ]
+[tool.uv.pip]
+python-version = "3.11"
 [tool.uv.sources]
 copier-pipeline-dev = { workspace = true }
+copier-pipeline-pipeline = { workspace = true }
 [tool.uv.workspace]
 members = ["packages/*"]
 
@@ -79,7 +91,15 @@ members = ["packages/*"]
 exclude_also = ['if __name__ == "__main__":']
 [tool.coverage.run]
 branch = true
-source = ["copier-pipeline", "copier-pipeline-dev", "tests"]
+source = [
+  "src",
+  "docs",
+  "packages/_dev",
+  "packages/_pipeline",
+  "notebooks",
+  "scripts",
+  "tests",
+]
 
 [tool.fawltydeps]
 deps = ["pyproject.toml"]
@@ -122,9 +142,17 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
-stubPath = "./typings/stubs"
+stubPath = "typings/stubs"
 typeCheckingMode = "strict"
-include = ["docs", "packages", "scripts", "tests"]
+include = [
+  "src",
+  "docs",
+  "notebooks",
+  "packages/_dev",
+  "packages/_pipeline",
+  "scripts",
+  "tests",
+]
 ignore = ["**/.*", "*:/**/.*", "*:/**/appdata", "typings"]
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
@@ -228,7 +256,15 @@ fix = true
 output-format = "grouped"
 preview = true
 show-fixes = true
-src = ["docs", "packages", "scripts", "tests"]
+src = [
+  "src",
+  "docs",
+  "notebooks",
+  "packages/_dev",
+  "packages/_pipeline",
+  "scripts",
+  "tests",
+]
 [tool.ruff.lint]
 fixable = ["ALL"]
 select = [

@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
   "type": "shell",
-  "problemMatcher": {},
+  "problemMatcher": [],
   "inputs": [
     {
       "id": "args",
@@ -140,6 +140,16 @@
       "label": "👤 Set Git username and email...",
       "command": "./j.ps1 setup-git ${input:name} ${input:email}"
     },
+    {
+      "label": "👥 Update changelog",
+      "type": "shell",
+      "command": "./j.ps1 con-update-changelog ${input:changeType}"
+    },
+    {
+      "label": "👥 Update changelog with the latest commit's message",
+      "type": "shell",
+      "command": "./j.ps1 con-update-changelog-latest-commit"
+    },
 
     // TODO ------------------------------------------------------------------------- //
 
@@ -188,7 +198,7 @@
     {
       "label": "task: Bump version",
       "type": "shell",
-      "command": ". ./dev.ps1 && uvx copier@9.2.0 update --vcs-ref=HEAD --defaults --data project_version='${input:version}' && iuv towncrier build --yes --version '${input:version}' && git add . && git commit -m '${input:version}'",
+      "command": ". ./dev.ps1 && uvx copier@9.7.1 update --vcs-ref=HEAD --defaults --data project_version='${input:version}' && iuv towncrier build --yes --version '${input:version}' && git add . && git commit -m '${input:version}'",
       "icon": { "id": "tag" },
       "problemMatcher": []
     },
@@ -196,20 +206,6 @@
       "label": "task: Release version",
       "type": "shell",
       "command": ". ./dev.ps1 && Invoke-Uv && ($Version = (Get-Content '.copier-answers.yml' | Find-Pattern '^project_version:\\s(.+)$')) && git tag --sign -m $Version $Version && git push",
-      "icon": { "id": "tag" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Update changelog",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 python -m dev add-change ${input:changeType}",
-      "icon": { "id": "tag" },
-      "problemMatcher": []
-    },
-    {
-      "label": "task: Update changelog with the latest commit's message",
-      "type": "shell",
-      "command": "./Invoke-Uv.ps1 towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/softboiler/copier-pipeline/commit/' + $(git rev-parse HEAD) + '))\n')",
       "icon": { "id": "tag" },
       "problemMatcher": []
     }

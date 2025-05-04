@@ -29,7 +29,7 @@ package_name:
 
 project_owner_name:
   type: "str"
-  help: "How the first author name should appear (e.g. in the MIT license and project metadata), if different from the host username."
+  help: "How the first author's name should appear (e.g. in the MIT license and project metadata), if different from the host username."
   default: "{{ project_owner_github_username }}"
   validator: "{% if not project_owner_name %}Please enter a value{% endif %}"
 

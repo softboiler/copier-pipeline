@@ -1,6 +1,10 @@
 # * Project
 name :=\
-  'copier-pipeline'
+  env('PROJECT_NAME', empty)
+project_owner_github_username :=\
+  env('PROJECT_OWNER_GITHUB_USERNAME', empty)
+github_repo_name :=\
+  env('GITHUB_REPO_NAME', empty)
 
 # * Settings
 set dotenv-load
@@ -254,6 +258,16 @@ con-dev *args:
   {{pre}} {{_dev}} {{args}}
 alias dev := con-dev
 alias d := con-dev
+
+# 👥 Update changelog
+[group('👥 Contributor environment setup')]
+con-update-changelog change_type:
+ {{pre}} {{_dev}} add-change {{change_type}}
+
+# 👥 Update changelog with the latest commit's message
+[group('👥 Contributor environment setup')]
+con-update-changelog-latest-commit:
+ {{pre}} {{_uvr}} towncrier create +$((Get-Date).ToUniversalTime().ToString('o').Replace(':','-')).change.md --content $($(git log -1 --format='%s') + ' ([' + $(git rev-parse --short HEAD) + '](https://github.com/{{project_owner_github_username}}/{{github_repo_name}}/commit/' + $(git rev-parse HEAD) + '))\n')
 
 # * 💻 Machine setup
 

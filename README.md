@@ -1,4 +1,4 @@
-# copier_pipeline
+# copier-pipeline
 
 [![All Contributors](https://img.shields.io/github/all-contributors/softboiler/copier-pipeline?color=ee8449&style=flat-square)](#contributors)
 
