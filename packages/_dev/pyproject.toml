@@ -6,7 +6,13 @@ build-backend = "uv_build"
 name = "copier-pipeline-dev"
 version = "0.0.0"
 requires-python = ">=3.11"
-dependencies = ["cappa>=0.26.4", "dulwich>=0.22.1", "ruamel-yaml>=0.18.6"]
+dependencies = [
+  "cappa>=0.26.4",
+  "cyclopts>=3.14.2",
+  "dulwich>=0.22.1",
+  # ? Docs
+  "ruamel-yaml>=0.18.6",
+]
 [project.scripts]
 copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 
