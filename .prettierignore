@@ -5,3 +5,5 @@
 *.md
 # ? Don't traverse typings
 typings
+# ? Template specifics
+template/.all-contributorsrc.jinja
