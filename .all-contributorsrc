@@ -4,7 +4,6 @@
   "files": ["CONTRIBUTORS.md", "README.md"],
   "projectName": "copier-pipeline",
   "projectOwner": "softboiler",
-  "commitType": "docs",
   "contributors": [
     {
       "login": "blakeNaccarato",
