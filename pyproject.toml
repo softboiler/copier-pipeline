@@ -72,7 +72,7 @@ dev = [
 ]
 
 [tool.uv]
-required-version = "==0.6.16"
+required-version = ">=0.6.16"
 constraint-dependencies = [
   # ? Security
   # ? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
