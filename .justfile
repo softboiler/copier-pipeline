@@ -231,10 +231,10 @@ alias release := pkg-release
 
 # * 🧩 Templating
 
-# ♻️ Sync with template
+# ♻️  Sync with template
 [group('🧩 Templating')]
 template-sync:
-  _uvx 'copier@9.7.1' update --vcs-ref=HEAD
+  {{_uvx}} 'copier@9.7.1' update --vcs-ref=HEAD
 
 
 # * 👥 Contributor environment setup
