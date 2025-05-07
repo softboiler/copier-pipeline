@@ -109,7 +109,7 @@
     {
       "description": "Update regex pins separately",
       "groupName": "regex",
-      "matchManagers": ["regex"]
+      "matchManagers": ["custom.regex"]
     },
     {
       "description": "Update `.devcontainer` updates separately for manual testing",
