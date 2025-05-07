@@ -8,8 +8,12 @@ function Sync-Uv {
     <#.SYNOPSIS
     Sync uv version.#>
     if (Get-Command './uv' -ErrorAction 'Ignore') {
-        (./uv --version) -Match "uv ([\d.]+)" | Out-Null
-        if ($Matches[1] -ne $Env:UV_VERSION) { ./uv self update $Env:UV_VERSION }
+        (./uv self version) -Match "uv ([\d.]+)" | Out-Null
+        $OrigForceColor = $Env:FORCE_COLOR
+        $Env:FORCE_COLOR = $null
+        (./uv self version) -Match 'uv (\d)'
+        $Env:FORCE_COLOR = $OrigForceColor
+        if ($Matches[1] -eq $Env:UV_VERSION) { return }
     }
     elseif (Get-Command 'uvx' -ErrorAction 'Ignore') { uvx --from "rust-just@$Env:JUST_VERSION" just inst uv }
     elseif ($IsWindows) { powershell -ExecutionPolicy 'ByPass' -Command "Invoke-RestMethod https://astral.sh/uv/$Env:UV_VERSION/install.ps1 | Invoke-Expression" }

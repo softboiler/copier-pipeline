@@ -291,7 +291,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.6.16"
+    "UV_VERSION": "0.7.2"
   },
   "terminal.integrated.env.osx": {
     "ACTIONS_RUNNER": "ubuntu-24.04",
@@ -318,7 +318,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.6.16"
+    "UV_VERSION": "0.7.2"
   },
   "terminal.integrated.env.windows": {
     "ACTIONS_RUNNER": "ubuntu-24.04",
@@ -345,7 +345,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.6.16"
+    "UV_VERSION": "0.7.2"
   },
   // ! Other
   // ? Other automatically added settings below

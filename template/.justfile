@@ -5,6 +5,8 @@ project_owner_github_username :=\
   env('PROJECT_OWNER_GITHUB_USERNAME', empty)
 github_repo_name :=\
   env('GITHUB_REPO_NAME', empty)
+copier_version :=\
+  env('COPIER_VERSION', empty)
 
 # * Settings
 set dotenv-load
@@ -114,6 +116,11 @@ uv-run *args:
   {{pre}} {{_uvr}} {{args}}
 alias uvr := uv-run
 
+# 🏃 uvx ...
+[group('🟣 uv')]
+uvx *args:
+  {{pre}} {{_uv}} {{args}}
+
 # ♻️  uv sync ...
 [group('🟣 uv')]
 uv-sync *args:
@@ -165,13 +172,13 @@ tool-pytest *args:
   {{pre}} {{_uvr}} pytest {{args}}
 alias pytest := tool-pytest
 
-# 📖 docs
+# 📖 preview docs
 [group('⚙️  Tools')]
 tool-docs-preview:
   {{pre}} {{_uvr}} sphinx-autobuild --show-traceback docs _site \
     {{ prepend( '--ignore', "'**/temp' '**/data' '**/apidocs' '**/*schema.json'" ) }}
 
-# 📖 docs
+# 📖 build docs
 [group('⚙️  Tools')]
 tool-docs-build:
   {{pre}} {{_uvr}} sphinx-build -EaT 'docs' '_site'
@@ -221,6 +228,14 @@ alias build := pkg-build
 pkg-release version:
   {{pre}} git tag --sign -m {{quote(version)}} {{quote(version)}} && git push
 alias release := pkg-release
+
+# * 🧩 Templating
+
+# ♻️ Sync with template
+[group('🧩 Templating')]
+template-sync:
+  _uvx 'copier@9.7.1' update --vcs-ref=HEAD
+
 
 # * 👥 Contributor environment setup
 

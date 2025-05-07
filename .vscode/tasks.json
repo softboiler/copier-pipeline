@@ -137,6 +137,10 @@
       "command": "./j.ps1 setup-${input:setup}"
     },
     {
+      "label": "♻️ Sync with template",
+      "command": "./j.ps1 template-sync"
+    },
+    {
       "label": "👤 Set Git username and email...",
       "command": "./j.ps1 setup-git ${input:name} ${input:email}"
     },
