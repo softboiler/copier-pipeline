@@ -11,8 +11,12 @@
   ],
   "dependencyDashboardApproval": true,
   "separateMajorMinor": false,
-  "git-submodules": { "enabled": true },
-  "pre-commit": { "enabled": true },
+  "git-submodules": {
+    "enabled": true
+  },
+  "pre-commit": {
+    "enabled": true
+  },
   "enabledManagers": [
     "custom.regex",
     "devcontainer",
@@ -22,10 +26,10 @@
     "pre-commit"
   ],
   "github-actions": {
-    "fileMatch": ["(^|/)\\.github/workflows/[^/]+$"]
+    "managerFilePatterns": ["/(^|/)\\.github/workflows/[^/]+$/"]
   },
   "pep621": {
-    "fileMatch": ["(^|/)pyproject\\.toml[^/]*$"],
+    "managerFilePatterns": ["/(^|/)pyproject\\.toml[^/]*$/"],
     "rangeStrategy": "bump"
   },
   "customManagers": [
@@ -34,10 +38,10 @@
       "customType": "regex",
       "datasourceTemplate": "pypi",
       "depNameTemplate": "copier",
-      "fileMatch": [
-        "(^|/)env\\.json[^/]*$",
-        "(^|/)\\.github/workflows/env\\.yml[^/]*$",
-        "(^|/)\\.vscode/settings\\.json[^/]*$"
+      "managerFilePatterns": [
+        "/(^|/)env\\.json[^/]*$/",
+        "/(^|/)\\.github/workflows/env\\.yml[^/]*$/",
+        "/(^|/)\\.vscode/settings\\.json[^/]*$/"
       ],
       "matchStrings": [
         "^\\s+\"COPIER_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
@@ -49,10 +53,10 @@
       "customType": "regex",
       "datasourceTemplate": "pypi",
       "depNameTemplate": "rust-just",
-      "fileMatch": [
-        "(^|/)env\\.json[^/]*$",
-        "(^|/)\\.github/workflows/env\\.yml[^/]*$",
-        "(^|/)\\.vscode/settings\\.json[^/]*$"
+      "managerFilePatterns": [
+        "/(^|/)env\\.json[^/]*$/",
+        "/(^|/)\\.github/workflows/env\\.yml[^/]*$/",
+        "/(^|/)\\.vscode/settings\\.json[^/]*$/"
       ],
       "matchStrings": [
         "^\\s+\"JUST_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
@@ -64,10 +68,10 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release",
-      "fileMatch": [
-        "(^|/)env\\.json[^/]*$",
-        "(^|/)\\.github/workflows/env\\.yml[^/]*$",
-        "(^|/)\\.vscode/settings\\.json[^/]*$"
+      "managerFilePatterns": [
+        "/(^|/)env\\.json[^/]*$/",
+        "/(^|/)\\.github/workflows/env\\.yml[^/]*$/",
+        "/(^|/)\\.vscode/settings\\.json[^/]*$/"
       ],
       "matchStrings": [
         "^\\s+\"PYRIGHT_PYTHON_PYLANCE_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
@@ -79,10 +83,10 @@
       "customType": "regex",
       "datasourceTemplate": "python-version",
       "depNameTemplate": "python",
-      "fileMatch": [
-        "(^|/)env\\.json[^/]*$",
-        "(^|/)\\.github/workflows/env\\.yml[^/]*$",
-        "(^|/)\\.vscode/settings\\.json[^/]*$"
+      "managerFilePatterns": [
+        "/(^|/)env\\.json[^/]*$/",
+        "/(^|/)\\.github/workflows/env\\.yml[^/]*$/",
+        "/(^|/)\\.vscode/settings\\.json[^/]*$/"
       ],
       "matchStrings": [
         "^\\s+\"PYTHON_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
@@ -94,10 +98,10 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv",
-      "fileMatch": [
-        "(^|/)env\\.json[^/]*$",
-        "(^|/)\\.github/workflows/env\\.yml[^/]*$",
-        "(^|/)\\.vscode/settings\\.json[^/]*$"
+      "managerFilePatterns": [
+        "/(^|/)env\\.json[^/]*$/",
+        "/(^|/)\\.github/workflows/env\\.yml[^/]*$/",
+        "/(^|/)\\.vscode/settings\\.json[^/]*$/"
       ],
       "matchStrings": [
         "^\\s+\"UV_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
@@ -114,7 +118,7 @@
     {
       "description": "Update regex pins separately",
       "groupName": "regex",
-      "matchManagers": ["regex"]
+      "matchManagers": ["custom.regex"]
     },
     {
       "description": "Update `.devcontainer` updates separately for manual testing",
