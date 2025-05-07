@@ -29,7 +29,7 @@
       "customType": "regex",
       "datasourceTemplate": "pypi",
       "depNameTemplate": "copier",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^env\\.json$",
         "^\\.github/workflows/env\\.yml$",
         "^\\.vscode/settings\\.json$"
@@ -44,7 +44,7 @@
       "customType": "regex",
       "datasourceTemplate": "pypi",
       "depNameTemplate": "rust-just",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^env\\.json$",
         "^\\.github/workflows/env\\.yml$",
         "^\\.vscode/settings\\.json$"
@@ -59,7 +59,7 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "microsoft/pylance-release",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^env\\.json$",
         "^\\.github/workflows/env\\.yml$",
         "^\\.vscode/settings\\.json$"
@@ -74,7 +74,7 @@
       "customType": "regex",
       "datasourceTemplate": "python-version",
       "depNameTemplate": "python",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^env\\.json$",
         "^\\.github/workflows/env\\.yml$",
         "^\\.vscode/settings\\.json$"
@@ -89,7 +89,7 @@
       "customType": "regex",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "astral-sh/uv",
-      "fileMatch": [
+      "managerFilePatterns": [
         "^env\\.json$",
         "^\\.github/workflows/env\\.yml$",
         "^\\.vscode/settings\\.json$"
