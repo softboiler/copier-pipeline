@@ -8,9 +8,9 @@ from re import finditer, sub
 from shlex import join, split
 from tomllib import loads
 
-from copier_pipeline_dev import log
-from copier_pipeline_dev.tools import add_changes
-from copier_pipeline_dev.tools.types import ChangeType
+from {{ package_name }}_dev import log
+from {{ package_name }}_dev.tools import add_changes
+from {{ package_name }}_dev.tools.types import ChangeType
 
 
 def add_change(change: ChangeType = "change"):
