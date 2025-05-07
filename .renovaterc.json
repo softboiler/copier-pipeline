@@ -10,6 +10,7 @@
     "workarounds:all"
   ],
   "dependencyDashboardApproval": true,
+  "lockFileMaintenance": { "enabled": true },
   "separateMajorMinor": false,
   "git-submodules": { "enabled": true },
   "pre-commit": { "enabled": true },
