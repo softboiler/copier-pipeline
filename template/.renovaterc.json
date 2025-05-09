@@ -11,8 +11,8 @@
   ],
   "dependencyDashboardApproval": true,
   "recreateWhen": "never",
-  "lockFileMaintenance": { "enabled": true },
   "separateMajorMinor": false,
+  "lockFileMaintenance": { "enabled": true },
   "git-submodules": { "enabled": true },
   "pre-commit": { "enabled": true },
   "enabledManagers": [
