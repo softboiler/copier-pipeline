@@ -1,14 +1,14 @@
 {
   "name": "devcontainer",
-  "image": "mcr.microsoft.com/devcontainers/base:1.1.2-ubuntu-24.04",
+  "image": "mcr.microsoft.com/devcontainers/base:1.2.6-ubuntu-24.04",
   "features": {
-    "ghcr.io/devcontainers/features/powershell:1.4.0": {
+    "ghcr.io/devcontainers/features/powershell:1.5.1": {
       "version": "7.4.1"
     },
-    "ghcr.io/devcontainers/features/python:1.6.2": {
-      "version": "3.11"
+    "ghcr.io/devcontainers/features/python:1.7.1": {
+      "version": "3.13"
     },
-    "ghcr.io/devcontainers/features/desktop-lite:1.2.0": {
+    "ghcr.io/devcontainers/features/desktop-lite:1.2.6": {
       "noVncVersion": "1.4.0"
     },
     "ghcr.io/dhoeric/features/google-cloud-cli:1.0.1": {
