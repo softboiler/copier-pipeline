@@ -10,8 +10,9 @@
     "workarounds:all"
   ],
   "dependencyDashboardApproval": true,
-  "lockFileMaintenance": { "enabled": true },
+  "recreateWhen": "never",
   "separateMajorMinor": false,
+  "lockFileMaintenance": { "enabled": true },
   "git-submodules": { "enabled": true },
   "pre-commit": { "enabled": true },
   "enabledManagers": [
