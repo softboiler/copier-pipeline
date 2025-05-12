@@ -12,7 +12,7 @@
   "dependencyDashboardApproval": true,
   "recreateWhen": "never",
   "separateMajorMinor": false,
-  "lockFileMaintenance": { "extends": ["schedule:yearly"], "enabled": true },
+  "lockFileMaintenance": { "enabled": true, "schedule": [] },
   "git-submodules": { "enabled": true },
   "pre-commit": { "enabled": true },
   "enabledManagers": [
