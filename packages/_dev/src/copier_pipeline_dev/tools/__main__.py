@@ -103,12 +103,14 @@ def elevate_pyright_warnings():
 @APP.command()
 def build_docs():
     """Build docs."""
-    run([
-        "sphinx-autobuild",
-        "--show-traceback",
-        "docs _site",
-        *[f"--ignore **/{p}" for p in ["temp", "data", "apidocs", "*schema.json"]],
-    ])
+    run(
+        args=[
+            "sphinx-autobuild",
+            "--show-traceback",
+            "docs _site",
+            *[f"--ignore **/{p}" for p in ["temp", "data", "apidocs", "*schema.json"]],
+        ]
+    )
 
 
 def log(obj):
