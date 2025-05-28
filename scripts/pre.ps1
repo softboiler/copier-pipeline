@@ -11,7 +11,7 @@ function Sync-Uv {
         (./uv self version) -Match "uv ([\d.]+)" | Out-Null
         $OrigForceColor = $Env:FORCE_COLOR
         $Env:FORCE_COLOR = $null
-        (./uv self version) -Match 'uv (\d)'
+        (./uv self version) -Match 'uv (\d)' | Out-Null
         $Env:FORCE_COLOR = $OrigForceColor
         if ($Matches[1] -eq $Env:UV_VERSION) { return }
     }

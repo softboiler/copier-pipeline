@@ -25,11 +25,16 @@ def init_shell(path: Path | None = None) -> str:
         return dotenv
 
 
-def run(args: str | Iterable[str] | None = None):
+def run(
+    args: str | Iterable[str] | None = None,
+    check: bool = True,
+    capture_output: bool = False,
+):
     """Run command."""
     sep = " "
     subprocess.run(
-        check=True,
+        check=check,
+        capture_output=capture_output,
         args=[
             "pwsh",
             "-Command",

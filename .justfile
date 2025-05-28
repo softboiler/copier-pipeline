@@ -277,7 +277,7 @@ alias d := con-dev
 # 👥 Update changelog
 [group('👥 Contributor environment setup')]
 con-update-changelog change_type:
-  {{pre}} {{_dev}} add-change {{change_type}}
+ {{pre}} {{_dev}} add-change {{change_type}}
 
 # 👥 Update changelog with the latest commit's message
 [group('👥 Contributor environment setup')]
