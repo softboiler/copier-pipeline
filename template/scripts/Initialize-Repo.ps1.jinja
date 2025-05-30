@@ -1,9 +1,13 @@
 <#.SYNOPSIS
 Initialize repository.#>
 
+#? Source common shell config
+. ./scripts/pre.ps1
+
+#? Initialize repo
 git init
 
-# ? Modify GitHub repo later on only if there were not already commits in this repo
+#? Modify GitHub repo later on only if there were not already commits in this repo
 try { git rev-parse HEAD }
 catch [System.Management.Automation.NativeCommandExitException] { $Fresh = $True }
 
@@ -22,7 +26,7 @@ git add .
 try { git commit --no-verify -m 'Lock' }
 catch [System.Management.Automation.NativeCommandExitException] {}
 
-# ? Modify GitHub repo if there were not already commits in this repo
+#? Modify GitHub repo if there were not already commits in this repo
 if ($Fresh) {
     if ( !(git remote) ) {
         git remote add origin 'https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}.git'

@@ -94,6 +94,7 @@ repos:
         files: |
           (?x)^(
             docs/.*
+            |notebooks/.*
             |src/.*
             |tests/.*
           )$
