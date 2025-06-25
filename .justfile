@@ -232,8 +232,9 @@ alias build := pkg-build
 # 📜 Build changelog for new version
 [group('📦 Packaging')]
 pkg-build-changelog version:
-  {{pre}} {{_copier_update}} update --vcs-ref='HEAD' --defaults --data 'project_version={{version}}'
+  {{pre}} {{_templ-sync}} --data 'project_version={{version}}'
   {{pre}} {{_uvr}} towncrier build --yes --version '{{version}}'
+  {{pre}} {{_handle_stale_git_status}}
   @{{quote(YELLOW+'Changelog draft built. Please finalize it, then run `./j.ps1 pkg-release`.'+NORMAL)}}
 
 # ✨ Release the current version
@@ -329,8 +330,10 @@ templ-update-prompt:
 # 🔃 Sync with current template
 [group('🧩 Templating')]
 templ-sync:
-  {{pre}} {{_sync_template}} --defaults
+  {{pre}} {{_templ-sync}}
   {{pre}} {{_handle_stale_git_status}}
+_templ-sync :=\
+  _sync_template + sp + '--defaults'
 
 # 🔃 Sync with current template (prompt)
 [group('🧩 Templating')]
