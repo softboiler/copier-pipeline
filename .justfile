@@ -312,32 +312,38 @@ ci-out-latest-release:
 # ⬆️  Update from template
 [group('🧩 Templating')]
 templ-update:
-  {{_update_template}} --defaults
+  {{pre}} {{_update_template}} --defaults
+  {{pre}} {{_handle_stale_git_status}}
 
 # ⬆️  Update from template (prompt)
 [group('🧩 Templating')]
 templ-update-prompt:
-  {{_update_template}}
+  {{pre}} {{_update_template}}
+  {{pre}} {{_handle_stale_git_status}}
 
 # 🔃 Sync with current template
 [group('🧩 Templating')]
 templ-sync:
-  {{_sync_template}} --defaults
+  {{pre}} {{_sync_template}} --defaults
+  {{pre}} {{_handle_stale_git_status}}
 
 # 🔃 Sync with current template (prompt)
 [group('🧩 Templating')]
 templ-sync-prompt:
-  {{_sync_template}}
+  {{pre}} {{_sync_template}}
+  {{pre}} {{_handle_stale_git_status}}
 
 # ➡️  Recopy current template
 [group('🧩 Templating')]
 templ-recopy:
-  {{_recopy_template}} --defaults
+  {{pre}} {{_recopy_template}} --defaults
+  {{pre}} {{_handle_stale_git_status}}
 
 # ➡️  Recopy current template (prompt)
 [group('🧩 Templating')]
 templ-recopy-prompt:
-  {{_recopy_template}}
+  {{pre}} {{_recopy_template}}
+  {{pre}} {{_handle_stale_git_status}}
 
 _update_template :=\
   _copier_update + sp + _latest_template
@@ -345,6 +351,8 @@ _sync_template :=\
   _copier_update + sp + _current_template
 _recopy_template :=\
   _copier_recopy + sp + _current_template
+_handle_stale_git_status :=\
+  'git add --all; git restore --staged .'
 _latest_template :=\
   quote('--vcs-ref=HEAD')
 _current_template :=\
@@ -354,7 +362,7 @@ _copier_recopy :=\
 _copier_update :=\
   _copier + sp + 'update'
 _copier :=\
-  _uvx + sp + 'copier@{{copier_version}}'
+  _uvx + sp + quote('copier@' + copier_version)
 
 #* 🛠️ Repository setup
 
