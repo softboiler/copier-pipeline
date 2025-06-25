@@ -39,7 +39,8 @@ jobs:
       - run: "gh release create --discussion-category announcements ${{ needs.env.outputs.project_version }} dist/**"
         env:
           GITHUB_TOKEN: "${{ github.token }}"
-      - run: "uv publish"
+      - if: "${{ needs.env.outputs.publish_project }}"
+        run: "uv publish"
   changerelease:
     needs: "release"
     permissions:

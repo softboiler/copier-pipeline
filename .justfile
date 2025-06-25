@@ -140,7 +140,6 @@ alias sync := uv-sync
 [group('🐍 Python')]
 py *args:
   {{pre}} {{_uvr}} 'python' {{args}}
-alias py- := py
 
 # 📦 uv run --module ...
 [group('🐍 Python')]
@@ -183,6 +182,7 @@ alias pytest := tool-pytest
 tool-docs-preview:
   {{pre}} {{_uvr}} sphinx-autobuild --show-traceback docs _site \
     {{ prepend( '--ignore', "'**/temp' '**/data' '**/apidocs' '**/*schema.json'" ) }}
+alias docs := tool-docs-preview
 
 # 📖 build docs
 [group('⚙️  Tools')]
@@ -229,14 +229,19 @@ pkg-build *args:
   {{pre}} {{_uvr}} {{project_name}} {{args}}
 alias build := pkg-build
 
-# ✨ Release new version
+# 📜 Build changelog for new version
 [group('📦 Packaging')]
-pkg-release version:
+pkg-build-changelog version:
   {{pre}} {{_copier_update}} update --vcs-ref='HEAD' --defaults --data 'project_version={{version}}'
   {{pre}} {{_uvr}} towncrier build --yes --version '{{version}}'
+  @{{quote(YELLOW+'Changelog draft built. Please finalize it, then run `./j.ps1 pkg-release`.'+NORMAL)}}
+
+# ✨ Release the current version
+[group('📦 Packaging')]
+pkg-release:
   {{pre}} git add --all
-  {{pre}} git commit -m '{{version}}'
-  {{pre}} git tag --force --sign -m {{version}} {{version}}
+  {{pre}} git commit -m '{{project_version}}'
+  {{pre}} git tag --force --sign -m {{project_version}} {{project_version}}
   {{pre}} git push
 alias release := pkg-release
 
@@ -277,7 +282,7 @@ con-dev *args:
 alias dev := con-dev
 alias d := con-dev
 
-# 👥 Update changelog
+# 👥 Update changelog...
 [group('👥 Contributor environment setup')]
 con-update-changelog change_type:
  {{pre}} {{_dev}} add-change {{change_type}}

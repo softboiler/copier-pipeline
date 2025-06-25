@@ -7,3 +7,5 @@
 typings
 # ? Template specifics
 template/.all-contributorsrc.jinja
+# ? Generated workflow
+.github/workflows/env.yml
