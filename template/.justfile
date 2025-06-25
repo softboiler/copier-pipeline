@@ -354,7 +354,7 @@ _copier_recopy :=\
 _copier_update :=\
   _copier + sp + 'update'
 _copier :=\
-  _uvx + sp + 'copier@{{copier_version}}'
+  _uvx + sp + quote('copier@' + copier_version)
 
 #* 🛠️ Repository setup
 
