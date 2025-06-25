@@ -290,7 +290,7 @@
     "PYTHONUTF8": "1",
     "PYTHONWARNDEFAULTENCODING": "1",
     "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "2024.2.0-52-g480c5a6",
+    "TEMPLATE_REF": "2024.2.0-53-gca4cd61",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
     "UV_VERSION": "0.7.2"
@@ -319,7 +319,7 @@
     "PYTHONUTF8": "1",
     "PYTHONWARNDEFAULTENCODING": "1",
     "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "2024.2.0-52-g480c5a6",
+    "TEMPLATE_REF": "2024.2.0-53-gca4cd61",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
     "UV_VERSION": "0.7.2"
@@ -348,7 +348,7 @@
     "PYTHONUTF8": "1",
     "PYTHONWARNDEFAULTENCODING": "1",
     "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "2024.2.0-52-g480c5a6",
+    "TEMPLATE_REF": "2024.2.0-53-gca4cd61",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
     "UV_VERSION": "0.7.2"
