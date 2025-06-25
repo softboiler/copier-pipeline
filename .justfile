@@ -235,6 +235,7 @@ pkg-build-changelog version:
   {{pre}} {{_templ-sync}} --data 'project_version={{version}}'
   {{pre}} {{_uvr}} towncrier build --yes --version '{{version}}'
   {{pre}} {{_handle_stale_git_status}}
+  {{pre}} git stage 'changelog/*.md'
   @{{quote(YELLOW+'Changelog draft built. Please finalize it, then run `./j.ps1 pkg-release`.'+NORMAL)}}
 
 # ✨ Release the current version

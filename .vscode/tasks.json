@@ -225,7 +225,7 @@
     },
     {
       "label": "pkg-release ✨ Release the current version",
-      "command": "./j.ps1 pkg-release ${input:version}"
+      "command": "./j.ps1 pkg-release"
     },
 
     //* 👥 Contributor environment setup

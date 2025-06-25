@@ -12,11 +12,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 <!-- towncrier release notes start -->
 
+## [2025.1.0](https://github.com/softboiler/copier-pipeline/tree/2025.1.0)
+
+- Don't recreate immortal PRs ([c034b08](https://github.com/softboiler/copier-pipeline/commit/c034b085f0eaeea5456728888293dfc35fd9e1a5))
+- Fix Just recipe "Update changelog with the latest commit's message" ([a8ddcfb](https://github.com/softboiler/copier-pipeline/commit/a8ddcfb6fad3e7a09d9aee875a3f0274a5fc2179))
+- Make uv installation robust to other kinds of installs ([e10f56c](https://github.com/softboiler/copier-pipeline/commit/e10f56c6d537ad8c43d6e1d471dee43cb967b906))
+- Try generating CI environment workflow and separating changelog drafting from releasing ([75edd78](https://github.com/softboiler/copier-pipeline/commit/75edd78e299915e3faec08172df70e9ade8d009e))
+
 ## [2024.2.0](https://github.com/softboiler/copier-pipeline/tree/2024.2.0)
 
 This release stabilizes the core mechanics of the template, including environment setup and synchronization, CI/CD workflows, documentation and tests, and more. The template now wraps `uv run` in `./dev.ps1` as `Invoke-Uv`, aliased to `iuv`, which keeps environment variables and hooks in sync in addition to the syncing done by `uv` itself.
-
-### Changes
 
 - Restructure template as a modern `uv` project with workspace layout and lockfiles
 - Add TOML and Prettier formatting to `pre-commit`
@@ -39,8 +44,6 @@ This release stabilizes the core mechanics of the template, including environmen
 - Single-source Pylance version ([5e878127](https://github.com/blakeNaccarato/copier-python/commit/5e878127462d24d818a8d42bf05d5b726a880b14))
 
 ## [2024.1.1](https://github.com/blakeNaccarato/copier-python/tree/2024.1.1)
-
-### Changes
 
 - Make first release
 - Actually compare directs ([#397](https://github.com/blakeNaccarato/copier-python/issues/397))
