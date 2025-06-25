@@ -15,11 +15,31 @@ defaults:
 jobs:
   env:
     uses: "./.github/workflows/env.yml"
-  changerelease:
+  now:
     needs: "env"
-    continue-on-error: true
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
+    outputs:
+      latest_release: "${{ steps.now.outputs.latest_release }}"
+    steps:
+      - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
+        with:
+          submodules: True
+      - uses: "astral-sh/setup-uv@9f1f1fece28798fe5e7ece00f4243abe886974b2" # v3.0.0
+        with:
+          version: "${{ needs.env.outputs.uv_version }}"
+          enable-cache: true
+      - id: "now"
+        env:
+          GH_TOKEN: "${{ github.token }}"
+        run: "./j.ps1 ci-out-latest-release"
+  changerelease:
+    needs:
+      - "env"
+      - "now"
     permissions:
       contents: "write"
+    if: needs.env.outputs.project_version == needs.now.outputs.latest_release
+    continue-on-error: true
     runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "dropseed/changerelease@3b121c9e98fa055f59a32b023cb4fd2325f4d9dc" # v1.6.0

@@ -1,8 +1,5 @@
 # Publish release
 name: "release"
-concurrency:
-  group: "${{ github.workflow }}-${{ github.ref }}"
-  cancel-in-progress: True
 on: ["workflow_dispatch"]
 defaults:
   run:
@@ -12,19 +9,22 @@ jobs:
     uses: "./.github/workflows/env.yml"
   ci:
     uses: "./.github/workflows/ci.yml"
+    permissions:
+      id-token: "write"
+      pages: "write"
   release:
     needs:
       - "env"
       - "ci"
+    environment:
+      name: "release"
+      url: "https://pypi.org/p/${{ needs.env.outputs.project_name }}"
     permissions:
+      attestations: "write"
       contents: "write"
       discussions: "write"
       id-token: "write"
-      attestations: "write"
-    runs-on: "runs-on: ${{ needs.env.outputs.actions_runner }}"
-    environment:
-      name: "release"
-      url: "https://pypi.org/p/${{ needs.env.outputs.uv_version }}"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7
       - uses: "astral-sh/setup-uv@9f1f1fece28798fe5e7ece00f4243abe886974b2" # v3.0.0
@@ -36,10 +36,10 @@ jobs:
       - uses: actions/attest-build-provenance@5e9cb68e95676991667494a6a4e59b8a2f13e1d0 # v1.3.3
         with:
           subject-path: "dist/**"
-      - run: "uv publish"
-      - run: "gh release create --discussion-category announcements 0.0.0 dist/**"
+      - run: "gh release create --discussion-category announcements ${{ needs.env.outputs.project_version }} dist/**"
         env:
           GITHUB_TOKEN: "${{ github.token }}"
+      - run: "uv publish"
   changerelease:
     needs: "release"
     permissions:

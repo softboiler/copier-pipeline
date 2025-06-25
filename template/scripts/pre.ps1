@@ -8,16 +8,23 @@ function Sync-Uv {
     <#.SYNOPSIS
     Sync uv version.#>
     if (Get-Command './uv' -ErrorAction 'Ignore') {
-        (./uv self version) -Match "uv ([\d.]+)" | Out-Null
         $OrigForceColor = $Env:FORCE_COLOR
         $Env:FORCE_COLOR = $null
-        (./uv self version) -Match 'uv (\d)' | Out-Null
+        (./uv self version) -Match 'uv ([\d.]+)' | Out-Null
         $Env:FORCE_COLOR = $OrigForceColor
         if ($Matches[1] -eq $Env:UV_VERSION) { return }
+        $Matches = $null
     }
-    elseif (Get-Command 'uvx' -ErrorAction 'Ignore') { uvx --from "rust-just@$Env:JUST_VERSION" just inst uv }
-    elseif ($IsWindows) { powershell -ExecutionPolicy 'ByPass' -Command "Invoke-RestMethod https://astral.sh/uv/$Env:UV_VERSION/install.ps1 | Invoke-Expression" }
-    else { curl -LsSf "https://astral.sh/uv/$Env:UV_VERSION/install.sh" | sh }
+    if (Get-Command 'uvx' -ErrorAction 'Ignore') {
+        uvx --from "rust-just@$Env:JUST_VERSION" just inst uv
+        return
+    }
+    if ($IsWindows) {
+        $InstallUv = "Invoke-RestMethod https://astral.sh/uv/$Env:UV_VERSION/install.ps1 | Invoke-Expression"
+        powershell -ExecutionPolicy 'ByPass' -Command $InstallUv
+        return
+    }
+    curl -LsSf "https://astral.sh/uv/$Env:UV_VERSION/install.sh" | sh
 }
 
 function Sync-DevEnv {
@@ -66,10 +73,10 @@ function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
     # ? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
-    $GitHubPath = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
-    if (!(Test-Path $GitHubPath)) { New-Item $GitHubPath }
-    if ( !(Get-Content $GitHubPath | Select-String -Pattern '.venv') ) {
-        Add-Content $GitHubPath ('.venv/bin', '.venv/scripts')
+    $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
+    if (!(Test-Path $PathFile)) { New-Item $PathFile }
+    if ( !(Get-Content $PathFile | Select-String -Pattern '.venv') ) {
+        Add-Content $PathFile ('.venv/bin', '.venv/scripts')
     }
     # ? Write environment variables to CI environment file
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
