@@ -5,11 +5,6 @@ Param([Parameter(ValueFromRemainingArguments)][string[]]$RemainingArgs)
 
 #? Source common shell config
 . ./scripts/pre.ps1
-#? Set verbosity and CI-specific environment variables
-$Verbose = $Env:CI -or ($DebugPreference -ne 'SilentlyContinue') -or ($VerbosePreference -ne 'SilentlyContinue')
-$Env:DEV_VERBOSE = $Verbose ? 'true' : $null
-$Env:JUST_VERBOSE = $Verbose ? '1' : $null
-$Env:OUTPUT_FILE = $Env:GITHUB_OUTPUT ? $Env:GITHUB_OUTPUT : '.dummy-ci-output-file'
 #? Set environment variables and uv version
 Sync-DevEnv
 if ($Env:CI) { $Uvx = 'uvx' }

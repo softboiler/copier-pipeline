@@ -30,6 +30,12 @@ function Sync-Uv {
 function Sync-DevEnv {
     <#.SYNOPSIS
     Write environment variables to the development environment used e.g. in `j.ps1`.#>
+    #? Set verbosity and CI-specific environment variables
+    $Verbose = $Env:CI -or ($DebugPreference -ne 'SilentlyContinue') -or ($VerbosePreference -ne 'SilentlyContinue')
+    $Env:DEV_VERBOSE = $Verbose ? 'true' : $null
+    $Env:JUST_VERBOSE = $Verbose ? '1' : $null
+    $Env:OUTPUT_FILE = $Env:GITHUB_OUTPUT ? $Env:GITHUB_OUTPUT : '.dummy-ci-output-file'
+    #? Populate DEV_ENV environment variable for passing environment variables to set
     $EnvVars = Get-Content 'env.json' | ConvertFrom-Json
     @{
         JUST_COLOR     = $Env:CI ? 'always' : $null
@@ -53,6 +59,7 @@ function Sync-DevEnv {
 function Sync-ContribEnv {
     <#.SYNOPSIS
     Write environment variables to VSCode contributor environment.#>
+    Sync-DevEnv
     $DevEnvSettingsJson = ''
     $DevEnvWorkflowYaml = ''
     $Env:DEV_ENV -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
