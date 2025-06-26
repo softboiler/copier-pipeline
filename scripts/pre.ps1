@@ -45,24 +45,25 @@ function Sync-DevEnv {
         $K, $V = $_.Key, $_.Value
         if ($V) { $EnvVars | Add-Member -NotePropertyName $K -NotePropertyValue $V }
     }
-    $Env:DEV_ENV = ''
+    $DevEnv = ''
     $EnvVars.PsObject.Properties | Sort-Object Name | ForEach-Object {
         $N, $V = $_.Name, $_.Value
         if ($V) {
             Set-Item "Env:$N" $V
-            $Env:DEV_ENV += "$N=$V;"
+            $DevEnv += "$N=$V;"
         }
     }
-    $Env:DEV_ENV = $Env:DEV_ENV.TrimEnd(';')
+    $DevEnv = $DevEnv.TrimEnd(';')
+    return $DevEnv
 }
 
 function Sync-ContribEnv {
     <#.SYNOPSIS
     Write environment variables to VSCode contributor environment.#>
-    Sync-DevEnv
     $DevEnvSettingsJson = ''
     $DevEnvWorkflowYaml = ''
-    $Env:DEV_ENV -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
+    $DevEnv = Sync-DevEnv
+    $DevEnv -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
         $K, $V = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
         $DevEnvSettingsJson += "`n    `"$K`": `"$V`","
         $DevEnvWorkflowYaml += "`n      $($K.ToLower()): { value: `"$V`" }"
@@ -81,23 +82,25 @@ function Sync-ContribEnv {
     $WorkflowRepl = "    outputs:$DevEnvWorkflowYaml"
     $WorkflowContent = (Get-Content $Workflow -Raw) -Replace $WorkflowPat, $WorkflowRepl
     Set-Content $Workflow $WorkflowContent -NoNewline
+    return $DevEnv
 }
 
 function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
     #? Sync the contributor environment. Dirty working tree will fail CI.
-    Sync-ContribEnv
-    # #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
-    # $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
-    # if (!(Test-Path $PathFile)) { New-Item $PathFile }
-    # if ( !(Get-Content $PathFile | Select-String -Pattern '.venv') ) {
-    #     Add-Content $PathFile ('.venv/bin', '.venv/scripts')
-    # }
-    # #? Write environment variables to CI environment file
-    # $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
-    # if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
-    # if (!(Get-Content $EnvFile | Select-String -Pattern 'DEV_ENV_SET')) {
-    #     $Env:DEV_ENV -Split ';' | Add-Content $EnvFile
-    # }
+    $DevEnv = Sync-ContribEnv
+    #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
+    $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
+    if (!(Test-Path $PathFile)) { New-Item $PathFile }
+    if ( !(Get-Content $PathFile | Select-String -Pattern '.venv') ) {
+        Add-Content $PathFile ('.venv/bin', '.venv/scripts')
+    }
+    #? Write environment variables to CI environment file
+    $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
+    if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
+    if (!(Get-Content $EnvFile | Select-String -Pattern 'DEV_ENV_SET')) {
+        $DevEnv -Split ';' | Add-Content $EnvFile
+    }
+    Write-Output $DevEnv
 }

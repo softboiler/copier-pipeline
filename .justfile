@@ -78,12 +78,9 @@ alias c := con
 # 🤖 Run recipes in CI...
 [group('⛰️ Environments')]
 ci *args: uv-sync
-  {{pre}} Sync-ContribEnv
-  @{{ if args==empty {_no_recipe_given} else {empty} }}
+  {{pre}} Sync-CiEnv
+  {{pre}} {{_dev}} elevate-pyright-warnings
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}
-  # {{pre}} Sync-CiEnv
-  # {{pre}} {{_dev}} elevate-pyright-warnings
-  # {{ if args!=empty { pre + _just + sp + args } else {empty} }}
 
 # 📦 Run recipes in a devcontainer
 [script, group('⛰️ Environments')]
