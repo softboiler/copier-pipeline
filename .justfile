@@ -70,7 +70,7 @@ alias r := run
 # 👥 Run recipes as a contributor...
 [group('⛰️ Environments')]
 con *args: con-pre-commit-hooks uv-sync
-  {{pre}} Sync-ContribEnv
+  {{pre}} Sync-ContribEnv | Out-Null
   @{{ if args==empty {_no_recipe_given} else {empty} }}
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}
 alias c := con
@@ -78,7 +78,7 @@ alias c := con
 # 🤖 Run recipes in CI...
 [group('⛰️ Environments')]
 ci *args: uv-sync
-  {{pre}} Sync-CiEnv
+  {{pre}} Sync-CiEnv | Out-Null
   {{pre}} {{_dev}} elevate-pyright-warnings
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}
 
