@@ -93,7 +93,8 @@ function Sync-CiEnv {
     $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
     if (!(Test-Path $PathFile)) { New-Item $PathFile }
     if ( !(Get-Content $PathFile | Select-String -Pattern '.venv') ) {
-        Add-Content $PathFile ('.venv/bin', '.venv/scripts')
+        $Workdir = $PWD -Replace '\\', '/'
+        Add-Content $PathFile ("$Workdir/.venv/bin", "$Workdir/.venv/scripts")
     }
     #? Write environment variables to CI environment file
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
