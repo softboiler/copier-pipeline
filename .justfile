@@ -61,7 +61,7 @@ alias j := just
 [group('⛰️ Environments')]
 run *args: uv-sync
   @{{ if args==empty { quote(YELLOW+'No command given'+NORMAL) } else {empty} }}
-  {{ if args!=empty { pre + sp + args } else {empty} }}
+  -{{ if args!=empty { pre + sp + args } else {empty} }}
 alias r := run
 
 # 👥 Run recipes as a contributor...
@@ -235,7 +235,7 @@ pkg-build-changelog version:
   {{pre}} {{_templ-sync}} --data 'project_version={{version}}'
   {{pre}} {{_uvr}} towncrier build --yes --version '{{version}}'
   {{pre}} {{_post_template_task}}
-  {{pre}} try { git stage 'changelog/*.md' } catch [System.Exception] {}
+  -{{pre}} try { git stage 'changelog/*.md' } catch {}
   @{{quote(YELLOW+'Changelog draft built. Please finalize it, then run `./j.ps1 pkg-release`.'+NORMAL)}}
 
 # ✨ Release the current version
@@ -274,8 +274,7 @@ hooks :=\
 # 👥 Normalize line endings
 [group('👥 Contributor environment setup')]
 con-norm-line-endings:
-  {{pre}} try { {{_uvr}} pre-commit run mixed-line-ending --all-files | Out-Null } \
-  catch [System.Exception] {}
+  -{{pre}} try { {{_uvr}} pre-commit run mixed-line-ending --all-files | Out-Null } catch {}
 
 # 👥 Run dev task...
 [group('👥 Contributor environment setup')]
@@ -382,8 +381,7 @@ _copier :=\
   {{script_pre}}
   {{'#?'+BLUE+sp+'Initialize repo and set up remote if repo is fresh'+NORMAL}}
   git init
-  try { git rev-parse HEAD }
-  catch [System.Exception] {
+  try { git rev-parse HEAD } catch {
     gh repo create --public --source '.'
     (Get-Content -Raw '.copier-answers.yml') -Match '(?m)^project_description:\s(.+\n(?:\s{4}.+)*)'
     if ($Matches) {
@@ -397,7 +395,7 @@ _copier :=\
   {{_just}} con
   git add --all
   try { git commit --no-verify -m 'Prepare template using softboiler/copier-pipeline' }
-  catch [System.Exception] {}
+  catch {}
   git push
 
 #* 💻 Machine setup
