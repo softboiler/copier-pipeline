@@ -38,7 +38,7 @@
         "notebook.experimental.remoteSave": true,
         "python.experiments.enabled": true,
         "python.experiments.optInto": ["pythonTestAdapter"],
-        // ? Not picked up in workspace settings in Codespaces
+        //? Not picked up in workspace settings in Codespaces
         "[python]": {
           "editor.defaultFormatter": "charliermarsh.ruff",
           "editor.wordWrap": "off"

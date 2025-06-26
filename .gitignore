@@ -1,5 +1,5 @@
-# * -------------------------------------------------------------------------------- * #
-# * Template gitignore
+#* ---------------------------------------------------------------------------------- *#
+#* Template gitignore
 
 # Local uv
 /uv
@@ -37,22 +37,22 @@ _site/
 # Ignore generated credentials from google-github-actions/auth
 gha-creds-*.json
 
-# * -------------------------------------------------------------------------------- * #
-# * Node (partial)
-# * https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
+#* ---------------------------------------------------------------------------------- *#
+#* Node (partial)
+#* https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 
 # NPM/Node.JS because of Pyright CI/CD dependency
 node_modules/
 
-# * -------------------------------------------------------------------------------- * #
-# * MyST-NB
+#* ---------------------------------------------------------------------------------- *#
+#* MyST-NB
 
 jupyter_execute
 .jupyter_cache
 
-# * -------------------------------------------------------------------------------- * #
-# * Python
-# * https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
+#* ---------------------------------------------------------------------------------- *#
+#* Python
+#* https://raw.githubusercontent.com/github/gitignore/master/Python.gitignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
