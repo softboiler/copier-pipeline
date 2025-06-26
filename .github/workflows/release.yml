@@ -38,7 +38,7 @@ jobs:
       - run: "gh release create --draft --notes '' --title '${{ needs.env.outputs.project_version }}' '${{ needs.env.outputs.project_version }}' 'dist/**'"
         env:
           GITHUB_TOKEN: "${{ github.token }}"
-      - if: "${{ needs.env.outputs.publish_project }}"
+      - if: needs.env.outputs.publish_project != '0'
         run: "uv publish"
   changerelease:
     needs: "release"
