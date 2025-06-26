@@ -30,6 +30,9 @@ jobs:
         with:
           name: "lock"
           path: "uv.lock"
+      - run: "git status"
+      - run: "./j.ps1 ci"
+      - run: "git status"
       - run: "./j.ps1 ci tool-check-clean"
   build-docs:
     needs: "env"
