@@ -234,7 +234,7 @@ alias build := pkg-build
 pkg-build-changelog version:
   {{pre}} {{_templ-sync}} --data 'project_version={{version}}'
   {{pre}} {{_uvr}} towncrier build --yes --version '{{version}}'
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
   {{pre}} try { git stage 'changelog/*.md' } catch [System.Exception] {}
   @{{quote(YELLOW+'Changelog draft built. Please finalize it, then run `./j.ps1 pkg-release`.'+NORMAL)}}
 
@@ -320,19 +320,19 @@ ci-out-latest-release:
 [group('🧩 Templating')]
 templ-update:
   {{pre}} {{_update_template}} --defaults
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 
 # ⬆️  Update from template (prompt)
 [group('🧩 Templating')]
 templ-update-prompt:
   {{pre}} {{_update_template}}
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 
 # 🔃 Sync with current template
 [group('🧩 Templating')]
 templ-sync:
   {{pre}} {{_templ-sync}}
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 _templ-sync :=\
   _sync_template + sp + '--defaults'
 
@@ -340,19 +340,19 @@ _templ-sync :=\
 [group('🧩 Templating')]
 templ-sync-prompt:
   {{pre}} {{_sync_template}}
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 
 # ➡️  Recopy current template
 [group('🧩 Templating')]
 templ-recopy:
   {{pre}} {{_recopy_template}} --defaults
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 
 # ➡️  Recopy current template (prompt)
 [group('🧩 Templating')]
 templ-recopy-prompt:
   {{pre}} {{_recopy_template}}
-  {{pre}} {{_handle_stale_git_status}}
+  {{pre}} {{_post_template_task}}
 
 _update_template :=\
   _copier_update + sp + _latest_template
@@ -360,8 +360,8 @@ _sync_template :=\
   _copier_update + sp + _current_template
 _recopy_template :=\
   _copier_recopy + sp + _current_template
-_handle_stale_git_status :=\
-  'git add --all; git restore --staged .'
+_post_template_task :=\
+  'git add --all; git restore --staged .;' + sp + _just + sp + 'con'
 _latest_template :=\
   quote('--vcs-ref=HEAD')
 _current_template :=\

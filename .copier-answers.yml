@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
-_commit: 2024.2.0-53-gca4cd61
+_commit: 2025.1.2-3-gb0f7053
 _src_path: gh:softboiler/copier-pipeline
 actions_runner: ubuntu-24.04
 github_repo_name: copier-pipeline
@@ -10,5 +10,6 @@ project_name: copier-pipeline
 project_owner_github_username: softboiler
 project_owner_name: Blake Naccarato
 project_version: 2025.1.2
+publish_project: false
 python_version: '3.11'
 year_of_project_creation: 2022
