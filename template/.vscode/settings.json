@@ -1,36 +1,41 @@
 {
-  // ! Terminal
-  // ? Use PowerShell on all platforms, facilitates running template scripts
+  //* ---------------------------------------------------------------------------- * //
+  "yaml.schemas": {
+    "https://json.schemastore.org/github-workflow.json": ["*.yml.jinja"]
+  },
+  //* ---------------------------------------------------------------------------- * //
+  //! Terminal
+  //? Use PowerShell on all platforms, facilitates running template scripts
   "terminal.integrated.defaultProfile.windows": "PowerShell",
   "terminal.integrated.defaultProfile.linux": "pwsh",
   "terminal.integrated.defaultProfile.osx": "pwsh",
-  // ! File excludes
+  //! File excludes
   "files.exclude": {
     "**/__pycache__": true,
     "**/.jupyter_cache": true,
     "**/.pytest_cache": true
   },
   "search.exclude": {
-    // ? Don't search in locks by default
+    //? Don't search in locks by default
     "typings": true,
     "uv.lock": true
   },
-  // ! File nesting
+  //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": { "*.root": ".*, uv.lock" },
-  // ! File associations
+  //! File associations
   "files.associations": {
     ".all-contributorsrc": "jsonc",
     ".coveragerc": "ini",
     ".root": "plaintext",
     "*.just": "just"
   },
-  // ! Git
+  //! Git
   "git.allowNoVerifyCommit": true,
   "git.confirmNoVerifyCommit": false,
-  // ! Line-width
+  //! Line-width
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 88,
   "git.inputValidationLength": 1e100,
@@ -41,9 +46,9 @@
   "[scminput]": {
     "editor.rulers": [88]
   },
-  // ! pytest
+  //! pytest
   "python.testing.pytestEnabled": true,
-  // ! Formatting
+  //! Formatting
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "editor.wordWrap": "bounded",
@@ -55,7 +60,7 @@
   "notebook.insertFinalNewline": false,
   "notebook.formatOnCellExecution": true,
   "notebook.formatOnSave.enabled": true,
-  // ! Code Actions
+  //! Code Actions
   "editor.codeActionsOnSave": {
     "source.fixAll": "always",
     "source.organizeImports": "always"
@@ -64,10 +69,10 @@
     "notebook.source.fixAll": "explicit",
     "source.organizeImports": "explicit"
   },
-  // ! Extensions
-  // * autoDocstring
+  //! Extensions
+  //* autoDocstring
   "autoDocstring.docstringFormat": "numpy-notypes",
-  // * Better Comments
+  //* Better Comments
   "better-comments.tags": [
     {
       "tag": "!",
@@ -142,17 +147,17 @@
       "italic": false
     }
   ],
-  // * GitHub Actions
+  //* GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/ci.yml"],
-  // * Jupyter Notebooks
+  //* Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
-  // * MyST
+  //* MyST
   "myst.preview.extensions": ["colon_fence", "dollarmath"],
-  // * Python
+  //* Python
   "python.terminal.activateEnvInCurrentTerminal": false,
   "python.terminal.activateEnvironment": false,
-  // * Pylance
+  //* Pylance
   "editor.inlayHints.enabled": "offUnlessPressed",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.autoImportCompletions": true,
@@ -196,7 +201,7 @@
     { "name": "", "depth": 16, "includeAllSymbols": true }
   ],
 
-  // * PowerShell
+  //* PowerShell
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,
   "powershell.integratedConsole.showOnStartup": false,
@@ -207,24 +212,24 @@
   "powershell.codeFormatting.useCorrectCasing": true,
   "powershell.codeFormatting.whitespaceBetweenParameters": true,
   "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
-  // * Rewrap
+  //* Rewrap
   "rewrap.wrappingColumn": 88,
   "rewrap.wholeComment": false,
-  // * Sourcery
+  //* Sourcery
   "sourcery.codeLens": false,
-  // * vscode-icons
+  //* vscode-icons
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,
   "vsicons.dontShowNewVersionMessage": false,
-  // ! Filetype extensions
-  // * Built-in Markdown support
-  // ? Doesn't play nicely with All Contributors HTML
+  //! Filetype extensions
+  //* Built-in Markdown support
+  //? Doesn't play nicely with All Contributors HTML
   "markdown.validate.referenceLinks.enabled": "ignore",
-  // * Markdownlint (MD)
+  //* Markdownlint (MD)
   "[markdown]": {
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
   },
-  // * Prettier (JSON, JSONC, YAML)
+  //* Prettier (JSON, JSONC, YAML)
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -244,9 +249,9 @@
     "editor.wordWrap": "off"
   },
   "yaml.format.printWidth": 88,
-  // * Justfile (JUST)
+  //* Justfile (JUST)
   "[just]": { "editor.tabSize": 2, "editor.wordWrap": "off" },
-  // * ruff (PY, IPYNB)
+  //* ruff (PY, IPYNB)
   "ruff.importStrategy": "fromEnvironment",
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
@@ -256,103 +261,21 @@
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.wordWrap": "off"
   },
-  // * Even Better TOML (TOML)
+  //* Even Better TOML (TOML)
   "[toml]": {
     "editor.tabSize": 2,
     "editor.defaultFormatter": "tamasfe.even-better-toml",
     "editor.wordWrap": "off"
   },
   "evenBetterToml.taplo.configFile.path": ".taplo.toml",
-  // * Automatically synchronized environment variables
-  // ! To update, modify `env.json` and run `./j.ps1 con`
-  "terminal.integrated.env.linux": {
-    "ACTIONS_RUNNER": "{{ actions_runner }}",
-    "COPIER_VERSION": "9.7.1",
-    "COVERAGE_CORE": "sysmon",
-    "DEV_ENV_SET": "1",
-    "FORCE_COLOR": "1",
-    "GITHUB_REPO_NAME": "{{ github_repo_name }}",
-    "JUPYTER_PLATFORM_DIRS": "1",
-    "JUST_COMMAND_COLOR": "purple",
-    "JUST_EXPLAIN": "true",
-    "JUST_LIST_SUBMODULES": "true",
-    "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.39.0",
-    "PROJECT_DESCRIPTION": "{{ project_description }}",
-    "PROJECT_NAME": "{{ project_name }}",
-    "PROJECT_OWNER_GITHUB_USERNAME": "{{ project_owner_github_username }}",
-    "PROJECT_VERSION": "{{ project_version }}",
-    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
-    "PYTHON_VERSION": "{{ python_version }}",
-    "PYTHONIOENCODING": "utf-8:strict",
-    "PYTHONUTF8": "1",
-    "PYTHONWARNDEFAULTENCODING": "1",
-    "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "{{ _commit }}",
-    "UV_INSTALL_DIR": ".",
-    "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
-  },
-  "terminal.integrated.env.osx": {
-    "ACTIONS_RUNNER": "{{ actions_runner }}",
-    "COPIER_VERSION": "9.7.1",
-    "COVERAGE_CORE": "sysmon",
-    "DEV_ENV_SET": "1",
-    "FORCE_COLOR": "1",
-    "GITHUB_REPO_NAME": "{{ github_repo_name }}",
-    "JUPYTER_PLATFORM_DIRS": "1",
-    "JUST_COMMAND_COLOR": "purple",
-    "JUST_EXPLAIN": "true",
-    "JUST_LIST_SUBMODULES": "true",
-    "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.39.0",
-    "PROJECT_DESCRIPTION": "{{ project_description }}",
-    "PROJECT_NAME": "{{ project_name }}",
-    "PROJECT_OWNER_GITHUB_USERNAME": "{{ project_owner_github_username }}",
-    "PROJECT_VERSION": "{{ project_version }}",
-    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
-    "PYTHON_VERSION": "{{ python_version }}",
-    "PYTHONIOENCODING": "utf-8:strict",
-    "PYTHONUTF8": "1",
-    "PYTHONWARNDEFAULTENCODING": "1",
-    "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "{{ _commit }}",
-    "UV_INSTALL_DIR": ".",
-    "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
-  },
-  "terminal.integrated.env.windows": {
-    "ACTIONS_RUNNER": "{{ actions_runner }}",
-    "COPIER_VERSION": "9.7.1",
-    "COVERAGE_CORE": "sysmon",
-    "DEV_ENV_SET": "1",
-    "FORCE_COLOR": "1",
-    "GITHUB_REPO_NAME": "{{ github_repo_name }}",
-    "JUPYTER_PLATFORM_DIRS": "1",
-    "JUST_COMMAND_COLOR": "purple",
-    "JUST_EXPLAIN": "true",
-    "JUST_LIST_SUBMODULES": "true",
-    "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.39.0",
-    "PROJECT_DESCRIPTION": "{{ project_description }}",
-    "PROJECT_NAME": "{{ project_name }}",
-    "PROJECT_OWNER_GITHUB_USERNAME": "{{ project_owner_github_username }}",
-    "PROJECT_VERSION": "{{ project_version }}",
-    "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
-    "PYTHON_VERSION": "{{ python_version }}",
-    "PYTHONIOENCODING": "utf-8:strict",
-    "PYTHONUTF8": "1",
-    "PYTHONWARNDEFAULTENCODING": "1",
-    "PYTHONWARNINGS": "ignore",
-    "TEMPLATE_REF": "{{ _commit }}",
-    "UV_INSTALL_DIR": ".",
-    "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
-  },
-  // ! Other
-  // ? Other automatically added settings below
+  //* Automatically synchronized environment variables
+  //! Please only update by modifying `env.json` then running `./j.ps1 con` to sync
+  "terminal.integrated.env.linux": {},
+  //! Please only update by modifying `env.json` then running `./j.ps1 con` to sync
+  "terminal.integrated.env.osx": {},
+  //! Please only update by modifying `env.json` then running `./j.ps1 con` to sync
+  "terminal.integrated.env.windows": {},
+  //! Other
+  //? Other automatically added settings below
   "": ""
 }

@@ -61,7 +61,7 @@
   "tasks": [
     //! VSCode startup
     {
-      "label": "con 👥 Contributor environment setup",
+      "label": "con ⚡👥 Contributor environment setup",
       "command": "./j.ps1 con",
       "runOptions": { "runOn": "folderOpen" }
     },
@@ -190,8 +190,16 @@
       "command": "./j.ps1 tool-pre-commit ${input:args}"
     },
     {
+      "label": "tool-pre-commit ⚡🔵 pre-commit run",
+      "command": "./j.ps1 tool-pre-commit-all"
+    },
+    {
       "label": "tool-pre-commit-all 🔵 pre-commit run --all-files ...",
       "command": "./j.ps1 tool-pre-commit-all ${input:args}"
+    },
+    {
+      "label": "tool-pre-commit-all ⚡🔵 pre-commit run --all-files",
+      "command": "./j.ps1 tool-pre-commit-all"
     },
     {
       "label": "tool-fawltydeps ✔️ fawltydeps ...",
@@ -212,8 +220,12 @@
       "command": "./j.ps1 pkg-build ${input:args}"
     },
     {
-      "label": "pkg-release ✨ Release new version",
-      "command": "./j.ps1 pkg-release ${input:version}"
+      "label": "pkg-build-changelog 📜 Build changelog for new version",
+      "command": "./j.ps1 pkg-build-changelog ${input:version}"
+    },
+    {
+      "label": "pkg-release ✨ Release the current version",
+      "command": "./j.ps1 pkg-release"
     },
 
     //* 👥 Contributor environment setup
@@ -234,7 +246,7 @@
       "command": "./j.ps1 con-dev ${input:args}"
     },
     {
-      "label": "con-update-changelog 👥 Update changelog",
+      "label": "con-update-changelog 👥 Update changelog...",
       "command": "./j.ps1 con-update-changelog ${input:change_type}"
     },
     {

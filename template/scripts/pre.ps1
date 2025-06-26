@@ -53,20 +53,27 @@ function Sync-DevEnv {
 function Sync-ContribEnv {
     <#.SYNOPSIS
     Write environment variables to VSCode contributor environment.#>
-    $DevEnvJson = ''
+    $DevEnvSettingsJson = ''
+    $DevEnvWorkflowYaml = ''
     $Env:DEV_ENV -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
         $K, $V = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
-        $DevEnvJson += "`n    `"$K`": `"$V`","
+        $DevEnvSettingsJson += "`n    `"$K`": `"$V`","
+        $DevEnvWorkflowYaml += "`n      $($K.ToLower()): { value: `"$V`" }"
     }
-    $DevEnvJson = "{$($DevEnvJson.TrimEnd(','))`n  }"
+    $DevEnvSettingsJson = "{$($DevEnvSettingsJson.TrimEnd(','))`n  }"
     $Settings = '.vscode/settings.json'
     $SettingsContent = Get-Content $Settings -Raw
     foreach ($Plat in ('linux', 'osx', 'windows')) {
         $Pat = "(?m)`"terminal\.integrated\.env\.$Plat`"\s*:\s*\{[^}]*\}"
-        $Repl = "`"terminal.integrated.env.$Plat`": $DevEnvJson"
+        $Repl = "`"terminal.integrated.env.$Plat`": $DevEnvSettingsJson"
         $SettingsContent = $SettingsContent -Replace $Pat, $Repl
     }
     Set-Content $Settings $SettingsContent -NoNewline
+    $Workflow = '.github/workflows/env.yml'
+    $WorkflowPat = '(?m)^\s{4}outputs:(?:\s\{\}|(?:\n^\s{6}.+$)+)'
+    $WorkflowRepl = "    outputs:$DevEnvWorkflowYaml"
+    $WorkflowContent = (Get-Content $Workflow -Raw) -Replace $WorkflowPat, $WorkflowRepl
+    Set-Content $Workflow $WorkflowContent -NoNewline
 }
 
 function Sync-CiEnv {

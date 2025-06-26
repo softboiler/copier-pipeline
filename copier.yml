@@ -54,6 +54,11 @@ project_version:
   default: "0.0.0"
   validator: "{% if not project_version %}Please enter a value{% endif %}"
 
+publish_project:
+  type: "bool"
+  help: "Whether to publish the project on PyPI."
+  default: false
+
 python_version:
   type: "str"
   help: "The Python version for this project and the minimum supported version to be specified in `pyproject.toml`."
