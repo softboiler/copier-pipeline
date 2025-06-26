@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 <!-- towncrier release notes start -->
 
+## [2025.1.1](https://github.com/softboiler/copier-pipeline/tree/2025.1.1)
+
+### Changes
+
+- Separate GitHub release publishing into draft and publish stages ([cfe9986](https://github.com/softboiler/copier-pipeline/commit/cfe9986344778e6d484312148ac1e1f0d5c4171c))
+
 ## [2025.1.0](https://github.com/softboiler/copier-pipeline/tree/2025.1.0)
 
 - Don't recreate immortal PRs ([c034b08](https://github.com/softboiler/copier-pipeline/commit/c034b085f0eaeea5456728888293dfc35fd9e1a5))

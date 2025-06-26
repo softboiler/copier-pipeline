@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "copier-pipeline"
-version = "2025.1.0"
+version = "2025.1.1"
 authors = [{ name = "Blake Naccarato", email = "blake.naccarato@gmail.com" }]
 description = "Copier template for research data pipelines"
 readme = "README.md"
