@@ -86,8 +86,7 @@ jobs:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
       - run: |
-          ./j.ps1 ci
-          ./j.ps1 fawltydeps
+          ./j.ps1 ci fawltydeps
           ./j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml
   pyright:
     needs: "env"
