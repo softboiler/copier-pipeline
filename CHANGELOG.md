@@ -12,20 +12,36 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 <!-- towncrier release notes start -->
 
+## [2025.1.3](https://github.com/softboiler/copier-pipeline/tree/2025.1.3)
+
+- Retire the hacky "custom" lockfile approach and stabilize around now standardized `uv.lock`
+- Migrate to `packages` and `uv` workspaces layout
+- Introduce `pipeline` workflow package in preparation for migrating reproducible research pipelines from PhD work
+- Improve setup for first-timers, new machines, fresh repos, implemented as `just` recipes
+- Synchronize environment variables in a few places, unifying contrib/CI config by choosing the lesser of two evils, compared with a truly "single source of truth"
+- The above facilitated minimizing directly templated files (e.g. `template/**/*.jinja` files), reducing diffs on template updates
+- Install and use `uv` locally with a project-specific version instead of hijacking global uv and forcing it to a certain version
+- Funnel almost all useful actions through the `just` command runner via e.g. `./j.ps1 <recipe> <args> ...`
+- Retire PowerShell scripts except for `./j.ps1` and `scripts/pre.ps1` which thinly wrap `just` invocations and handle the few things `just` cannot do (or cannot do neatly)
+- Base most of CI on these `just` recipes, allowing local testing and debugging of CI actions. Only the potentially sensitive release workflow is "hard-coded" in the workflow file
+- Implement artifact attestation and PyPI publishing via OIDC in release workflows
+- After a few false starts (see the latest flurry of releases), implement release workflow that requires normal CI to pass, optionally publishes to PyPI, and updates release notes
+- Derive the optional VSCode layer's Tasks from the `just` recipes, and generally make the template more VSCode-optional
+- Modernize Renovate dependency management configuration, by default make it less noisy
+- Try generating CI environment workflow and separating changelog drafting from releasing ([75edd78](https://github.com/softboiler/copier-pipeline/commit/75edd78e299915e3faec08172df70e9ade8d009e))
+- Unify behavior of Pyright (or optional Pylance) locally and in CI without resorting to a platform-specific local extension approach
+
 ## [2025.1.2](https://github.com/softboiler/copier-pipeline/tree/2025.1.2)
 
-- Just publish the release since drafting/changrelease don't play nicely ([0a8e36b](https://github.com/softboiler/copier-pipeline/commit/0a8e36b0aacbfeaa8bed1964dc7189bc007217d8))
+Released while attempting to stabilize the release workflow, maintained here only to match the immutable Zenodo-tracked release record. Significant changes documented in `2025.1.3` above.
 
 ## [2025.1.1](https://github.com/softboiler/copier-pipeline/tree/2025.1.1)
 
-- Separate GitHub release publishing into draft and publish stages ([cfe9986](https://github.com/softboiler/copier-pipeline/commit/cfe9986344778e6d484312148ac1e1f0d5c4171c))
+Released while attempting to stabilize the release workflow, maintained here only to match the immutable Zenodo-tracked release record. Significant changes documented in `2025.1.3` above.
 
 ## [2025.1.0](https://github.com/softboiler/copier-pipeline/tree/2025.1.0)
 
-- Don't recreate immortal PRs ([c034b08](https://github.com/softboiler/copier-pipeline/commit/c034b085f0eaeea5456728888293dfc35fd9e1a5))
-- Fix Just recipe "Update changelog with the latest commit's message" ([a8ddcfb](https://github.com/softboiler/copier-pipeline/commit/a8ddcfb6fad3e7a09d9aee875a3f0274a5fc2179))
-- Make uv installation robust to other kinds of installs ([e10f56c](https://github.com/softboiler/copier-pipeline/commit/e10f56c6d537ad8c43d6e1d471dee43cb967b906))
-- Try generating CI environment workflow and separating changelog drafting from releasing ([75edd78](https://github.com/softboiler/copier-pipeline/commit/75edd78e299915e3faec08172df70e9ade8d009e))
+Released while attempting to stabilize the release workflow, maintained here only to match the immutable Zenodo-tracked release record. Significant changes documented in `2025.1.3` above.
 
 ## [2024.2.0](https://github.com/softboiler/copier-pipeline/tree/2024.2.0)
 

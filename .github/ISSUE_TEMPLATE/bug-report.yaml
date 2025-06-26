@@ -13,10 +13,10 @@ body:
     id: "latest-version"
     attributes:
       label: "Please confirm that this bug affects the latest version"
-      description: "Please verify the issue is present in the latest version by installing it with `pip install copier-pipeline==2025.1.2` and checking that the bug is still there"
+      description: "Please verify the issue is present in the latest version by installing it with `pip install copier-pipeline==2025.1.3` and checking that the bug is still there"
       options:
         - required: True
-          label: "This bug affects version `2025.1.2` of `copier-pipeline`."
+          label: "This bug affects version `2025.1.3` of `copier-pipeline`."
   - type: "checkboxes"
     id: "operating-systems"
     attributes:
