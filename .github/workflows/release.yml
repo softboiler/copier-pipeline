@@ -53,6 +53,7 @@ jobs:
       name: "release"
     permissions:
       contents: "write"
+      discussions: "write"
     runs-on: "${{ needs.env.outputs.actions_runner }}"
     steps:
       - run: "gh release edit --draft=false --discussion-category 'announcements' '${{ needs.env.outputs.project_version }}'"
