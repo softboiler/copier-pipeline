@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) 
 
 <!-- towncrier release notes start -->
 
+## [2025.1.2](https://github.com/softboiler/copier-pipeline/tree/2025.1.2)
+
+- Just publish the release since drafting/changrelease don't play nicely ([0a8e36b](https://github.com/softboiler/copier-pipeline/commit/0a8e36b0aacbfeaa8bed1964dc7189bc007217d8))
+
 ## [2025.1.1](https://github.com/softboiler/copier-pipeline/tree/2025.1.1)
 
 - Separate GitHub release publishing into draft and publish stages ([cfe9986](https://github.com/softboiler/copier-pipeline/commit/cfe9986344778e6d484312148ac1e1f0d5c4171c))

@@ -279,7 +279,7 @@ wheels = [
 
 [[package]]
 name = "copier-pipeline"
-version = "2025.1.1"
+version = "2025.1.2"
 source = { editable = "." }
 
 [package.dev-dependencies]
