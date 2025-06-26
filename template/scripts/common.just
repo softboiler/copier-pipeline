@@ -1,10 +1,6 @@
 #* Versions
-just_version :=\
-  env('JUST_VERSION', empty)
 python_version :=\
   env('PYTHON_VERSION', empty)
-uv_version :=\
-  env('UV_VERSION', empty)
 ci :=\
   env('CI', empty)
 
@@ -13,12 +9,6 @@ _uv :=\
   if ci==empty { './uv' } else { 'uv' }
 _uvx :=\
   if ci==empty { './uvx' } else { 'uvx' }
-_just :=\
-  _uvx + sp + '--from' + sp + quote(\
-    'rust-just' + \
-    if just_version==empty { empty } else { '@' + just_version } \
-  ) \
-  + sp + 'just' \
 
 #* Reusable shell preamble
 pwsh_pre := '.' + sp + 'scripts/pre.ps1'

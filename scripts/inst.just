@@ -25,7 +25,13 @@ _installed :=\
 
 #* Installers
 _just_inst :=\
-  _just + sp + '--justfile' + sp + quote('scripts/inst.just') + sp
+  _uvx + sp + '--from' + sp + quote(\
+    'rust-just' + \
+    if just_version==empty { empty } else { '@' + just_version } \
+  ) \
+  + sp + 'just' + sp + '--justfile' + sp + quote('scripts/inst.just') + sp
+just_version :=\
+  env('JUST_VERSION', empty)
 win_inst :=\
   pre \
   + sp + 'winget install' \
@@ -210,6 +216,8 @@ inst_uv_unix :=\
   pre + sp + "curl --proto '=https' --tlsv1.2 -LsSf" + sp + _inst_uv_script
 _inst_uv_script :=\
   quote('https://astral.sh/uv/' + uv_version + '/install' + sh_ext)
+uv_version :=\
+  env('UV_VERSION', empty)
 _uv_found_msg :=\
   quote(GREEN+_uv_name+sp+_installed+NORMAL)
 _uv_name :=\

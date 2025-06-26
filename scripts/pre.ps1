@@ -79,6 +79,8 @@ function Sync-ContribEnv {
 function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
+    #? Sync the contributor environment. Dirty working tree will fail CI.
+    Sync-ContribEnv
     #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
     $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
     if (!(Test-Path $PathFile)) { New-Item $PathFile }

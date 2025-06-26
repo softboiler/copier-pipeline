@@ -36,6 +36,9 @@ pre :=\
   pwsh_pre + ';'
 script_pre :=\
   pwsh_pre
+_just :=\
+  './j.ps1'
+
 
 #* Python dev package
 _dev :=\
