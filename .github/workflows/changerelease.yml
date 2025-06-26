@@ -32,6 +32,13 @@ jobs:
         env:
           GH_TOKEN: "${{ github.token }}"
         run: "./j.ps1 ci-out-latest-release"
+  check:
+    needs:
+      - "env"
+      - "now"
+    runs-on: "${{ needs.env.outputs.actions_runner }}"
+    steps:
+      - run: "proj: ${{needs.env.outputs.project_version}}, latest: ${{needs.now.outputs.latest_release}}"
   changerelease:
     needs:
       - "env"
