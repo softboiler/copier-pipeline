@@ -3,6 +3,12 @@ $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $True
 $ErrorView = 'NormalView'
 $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
+#? Extra variables only set in CI environment
+$ExtraVars = @{
+    JUST_COLOR     = $Env:CI ? 'always' : $null
+    JUST_NO_DOTENV = $Env:CI ? 'true' : $null
+    JUST_TIMESTAMP = $Env:CI ? 'true' : $null
+}
 
 function Sync-Uv {
     <#.SYNOPSIS
@@ -30,18 +36,15 @@ function Sync-Uv {
 function Sync-DevEnv {
     <#.SYNOPSIS
     Write environment variables to the development environment used e.g. in `j.ps1`.#>
+    Param([Hashtable]$ExtraVars = @{})
     #? Set verbosity and CI-specific environment variables
     $Verbose = $Env:CI -or ($DebugPreference -ne 'SilentlyContinue') -or ($VerbosePreference -ne 'SilentlyContinue')
     $Env:DEV_VERBOSE = $Verbose ? 'true' : $null
     $Env:JUST_VERBOSE = $Verbose ? '1' : $null
     $Env:OUTPUT_FILE = $Env:GITHUB_OUTPUT ? $Env:GITHUB_OUTPUT : '.dummy-ci-output-file'
-    #? Populate DEV_ENV environment variable for passing environment variables to set
+    #? Set and track environment variables
     $EnvVars = Get-Content 'env.json' | ConvertFrom-Json
-    @{
-        JUST_COLOR     = $Env:CI ? 'always' : $null
-        JUST_NO_DOTENV = $Env:CI ? 'true' : $null
-        JUST_TIMESTAMP = $Env:CI ? 'true' : $null
-    }.GetEnumerator() | ForEach-Object {
+    $ExtraVars.GetEnumerator() | ForEach-Object {
         $K, $V = $_.Key, $_.Value
         if ($V) { $EnvVars | Add-Member -NotePropertyName $K -NotePropertyValue $V }
     }
@@ -62,8 +65,7 @@ function Sync-ContribEnv {
     Write environment variables to VSCode contributor environment.#>
     $DevEnvSettingsJson = ''
     $DevEnvWorkflowYaml = ''
-    $DevEnv = Sync-DevEnv
-    $DevEnv -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
+    (Sync-DevEnv) -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
         $K, $V = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
         $DevEnvSettingsJson += "`n    `"$K`": `"$V`","
         $DevEnvWorkflowYaml += "`n      $($K.ToLower()): { value: `"$V`" }"
@@ -76,22 +78,17 @@ function Sync-ContribEnv {
         $Repl = "`"terminal.integrated.env.$Plat`": $DevEnvSettingsJson"
         $SettingsContent = $SettingsContent -Replace $Pat, $Repl
     }
-    if ($IsWindows) { Set-Content $Settings $SettingsContent -NoNewline }
-    else { Set-Content $Settings $SettingsContent }
+    Set-Content $Settings $SettingsContent -NoNewline
     $Workflow = '.github/workflows/env.yml'
     $WorkflowPat = '(?m)^\s{4}outputs:(?:\s\{\}|(?:\n^\s{6}.+$)+)'
     $WorkflowRepl = "    outputs:$DevEnvWorkflowYaml"
     $WorkflowContent = (Get-Content $Workflow -Raw) -Replace $WorkflowPat, $WorkflowRepl
-    if ($IsWindows) { Set-Content $Workflow $WorkflowContent -NoNewline }
-    else { Set-Content $Workflow $WorkflowContent }
-    return $DevEnv
+    Set-Content $Workflow $WorkflowContent -NoNewline
 }
 
 function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
-    #? Sync the contributor environment. Dirty working tree will fail CI.
-    $DevEnv = Sync-ContribEnv
     #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
     $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
     if (!(Test-Path $PathFile)) { New-Item $PathFile }
@@ -102,7 +99,6 @@ function Sync-CiEnv {
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
     if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
     if (!(Get-Content $EnvFile | Select-String -Pattern 'DEV_ENV_SET')) {
-        $DevEnv -Split ';' | Add-Content $EnvFile
+        (Sync-DevEnv $ExtraVars) -Split ';' | Add-Content $EnvFile
     }
-    Write-Output $DevEnv
 }
