@@ -76,12 +76,14 @@ function Sync-ContribEnv {
         $Repl = "`"terminal.integrated.env.$Plat`": $DevEnvSettingsJson"
         $SettingsContent = $SettingsContent -Replace $Pat, $Repl
     }
-    Set-Content $Settings $SettingsContent -NoNewline
+    if ($IsWindows) { Set-Content $Settings $SettingsContent -NoNewline }
+    else { Set-Content $Settings $SettingsContent }
     $Workflow = '.github/workflows/env.yml'
     $WorkflowPat = '(?m)^\s{4}outputs:(?:\s\{\}|(?:\n^\s{6}.+$)+)'
     $WorkflowRepl = "    outputs:$DevEnvWorkflowYaml"
     $WorkflowContent = (Get-Content $Workflow -Raw) -Replace $WorkflowPat, $WorkflowRepl
-    Set-Content $Workflow $WorkflowContent -NoNewline
+    if ($IsWindows) { Set-Content $Workflow $WorkflowContent -NoNewline }
+    else { Set-Content $Workflow $WorkflowContent }
     return $DevEnv
 }
 
