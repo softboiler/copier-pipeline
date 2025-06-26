@@ -69,7 +69,7 @@ alias r := run
 
 # 👥 Run recipes as a contributor...
 [group('⛰️ Environments')]
-con *args: con-pre-commit-hooks uv-sync
+con *args: con-git-submodules con-pre-commit-hooks uv-sync
   {{pre}} Sync-ContribEnv
   @{{ if args==empty {_no_recipe_given} else {empty} }}
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}
