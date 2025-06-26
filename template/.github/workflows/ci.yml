@@ -125,7 +125,7 @@ jobs:
         with:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
-      # ! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
+      #! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == needs.env.outputs.python_version
         run: "./j.ps1 ci pytest --cov --cov-config=pyproject.toml --cov-report=xml"
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == needs.env.outputs.python_version

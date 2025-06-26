@@ -16,7 +16,7 @@ default_install_hook_types:
 repos:
   - repo: "meta"
     hooks:
-      # ? Enable this to ensure each hook runs against at least one file
+      #? Enable this to ensure each hook runs against at least one file
       # - id: "check-hooks-apply"
       - id: "check-useless-excludes"
   - repo: "local"

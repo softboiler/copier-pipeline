@@ -314,7 +314,7 @@ ci-out-latest-release:
     ) ? $Latest : '-1' \
   )"
 
-# * 🧩 Templating
+#* 🧩 Templating
 
 # ⬆️  Update from template
 [group('🧩 Templating')]
@@ -361,7 +361,7 @@ _sync_template :=\
 _recopy_template :=\
   _copier_recopy + sp + _current_template
 _post_template_task :=\
-  'git add --all; git restore --staged .;' + sp + _just + sp + 'con'
+  'git add --all; git reset;' + sp + _just + sp + 'con'
 _latest_template :=\
   quote('--vcs-ref=HEAD')
 _current_template :=\

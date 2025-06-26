@@ -1,9 +1,9 @@
-# ? Prettier clobbers Myst-specific syntax in notebooks
+#? Prettier clobbers Myst-specific syntax in notebooks
 *.py
 *.ipynb
-# ? Markdownlint handles this
+#? Markdownlint handles this
 *.md
-# ? Don't traverse typings
+#? Don't traverse typings
 typings
-# ? Generated workflow
+#? Generated workflow
 .github/workflows/env.yml

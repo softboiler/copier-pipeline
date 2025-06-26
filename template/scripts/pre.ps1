@@ -79,13 +79,13 @@ function Sync-ContribEnv {
 function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
-    # ? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
+    #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
     $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
     if (!(Test-Path $PathFile)) { New-Item $PathFile }
     if ( !(Get-Content $PathFile | Select-String -Pattern '.venv') ) {
         Add-Content $PathFile ('.venv/bin', '.venv/scripts')
     }
-    # ? Write environment variables to CI environment file
+    #? Write environment variables to CI environment file
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
     if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
     if (!(Get-Content $EnvFile | Select-String -Pattern 'DEV_ENV_SET')) {
