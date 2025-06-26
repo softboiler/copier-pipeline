@@ -203,6 +203,13 @@ tool-pre-commit-all *args:
 alias pre-commit-all := tool-pre-commit-all
 alias pca := tool-pre-commit-all
 
+# ✔️  Check that the working tree is clean
+[group('⚙️  Tools')]
+tool-check-clean:
+  {{pre}} if (git status --porcelain) { \
+    throw 'Files changed when syncing contributor environment. Please commit and push changes with `./j.ps1 con`.' \
+  }
+
 # ✔️  fawltydeps ...
 [group('⚙️  Tools')]
 tool-fawltydeps *args:

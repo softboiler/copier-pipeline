@@ -202,6 +202,10 @@
       "command": "./j.ps1 tool-pre-commit-all"
     },
     {
+      "label": "tool-check-clean ✔️ Check that the working tree is clean",
+      "command": "./j.ps1 tool-check-clean"
+    },
+    {
       "label": "tool-fawltydeps ✔️ fawltydeps ...",
       "command": "./j.ps1 tool-fawltydeps ${input:args}"
     },
