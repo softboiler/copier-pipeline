@@ -5,14 +5,16 @@ $ErrorView = 'NormalView'
 $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
 #? Extra variables only set in certain environments
 $ExtraConVars = [ordered]@{
-    DEV_OUTPUT_FILE = '.dummy-ci-output-file'
+    DEV_OUTPUT_FILE        = '.dummy-ci-output-file'
+    DEV_PYRIGHTCONFIG_FILE = '.dummy-ci-pyrightconfig.json'
 }
 $ExtraCiVars = [ordered]@{
-    DEV_OUTPUT_FILE = $Env:GITHUB_OUTPUT
-    JUST_COLOR      = 'always'
-    JUST_NO_DOTENV  = 'true'
-    JUST_TIMESTAMP  = 'true'
-    JUST_VERBOSE    = '1'
+    DEV_OUTPUT_FILE        = $Env:GITHUB_OUTPUT
+    DEV_PYRIGHTCONFIG_FILE = 'pyrightconfig.json'
+    JUST_COLOR             = 'always'
+    JUST_NO_DOTENV         = 'true'
+    JUST_TIMESTAMP         = 'true'
+    JUST_VERBOSE           = '1'
 }
 
 function Sync-Uv {

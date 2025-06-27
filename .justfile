@@ -5,6 +5,8 @@ dev_verbose :=\
   if env('JUST_VERBOSE', empty)=='1' { true } else { false }
 dev_output_file :=\
   env('DEV_OUTPUT_FILE', empty)
+dev_pyrightconfig_file :=\
+  env('DEV_PYRIGHTCONFIG_FILE', empty)
 github_repo_name :=\
   env('GITHUB_REPO_NAME', empty)
 pre_commit_running :=\
@@ -89,7 +91,7 @@ alias c := con
 [group('⛰️ Environments')]
 ci *args: uv-sync
   {{pre}} Sync-CiEnv | Out-Null
-  {{pre}} {{_dev}} elevate-pyright-warnings
+  {{pre}} {{_dev}} elevate-pyright-warnings {{dev_pyrightconfig_file}}
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}
 
 # 📦 Run recipes in devcontainer
