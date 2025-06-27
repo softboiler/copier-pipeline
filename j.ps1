@@ -6,7 +6,7 @@ Param([Parameter(ValueFromRemainingArguments)][string[]]$RemainingArgs)
 #? Source common shell config
 . './scripts/pre.ps1'
 #? Set environment variables and uv version
-Sync-DevEnv $ExtraVars | Out-Null
+Sync-Env $ExtraCiVars | Out-Null
 if ($Env:CI) { $Uvx = 'uvx' }
 else { Sync-Uv; $Uvx = './uvx' }
 #? Pass arguments to Just

@@ -2,13 +2,13 @@
 python_version :=\
   env('PYTHON_VERSION', empty)
 ci :=\
-  env('CI', empty)
+  if env('CI', empty)=='1' { true } else { false }
 
 # Binaries
 _uv :=\
-  if ci==empty { './uv' } else { 'uv' }
+  if ci==true { './uv' } else { 'uv' }
 _uvx :=\
-  if ci==empty { './uvx' } else { 'uvx' }
+  if ci==true { './uvx' } else { 'uvx' }
 
 #* Reusable shell preamble
 pwsh_pre := '.' + sp + 'scripts/pre.ps1'

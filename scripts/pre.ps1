@@ -3,11 +3,16 @@ $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $True
 $ErrorView = 'NormalView'
 $OutputEncoding = [console]::InputEncoding = [console]::OutputEncoding = [System.Text.Encoding]::UTF8
-#? Extra variables only set in CI environment
-$ExtraVars = @{
-    JUST_COLOR     = $Env:CI ? 'always' : $null
-    JUST_NO_DOTENV = $Env:CI ? 'true' : $null
-    JUST_TIMESTAMP = $Env:CI ? 'true' : $null
+#? Extra variables only set in certain environments
+$ExtraConVars = [ordered]@{
+    DEV_OUTPUT_FILE = '.dummy-ci-output-file'
+}
+$ExtraCiVars = [ordered]@{
+    DEV_OUTPUT_FILE = $Env:GITHUB_OUTPUT
+    JUST_COLOR      = 'always'
+    JUST_NO_DOTENV  = 'true'
+    JUST_TIMESTAMP  = 'true'
+    JUST_VERBOSE    = '1'
 }
 
 function Sync-Uv {
@@ -33,30 +38,25 @@ function Sync-Uv {
     curl -LsSf "https://astral.sh/uv/$Env:UV_VERSION/install.sh" | sh
 }
 
-function Sync-DevEnv {
+function Sync-Env {
     <#.SYNOPSIS
     Write environment variables to the development environment used e.g. in `j.ps1`.#>
-    Param([Hashtable]$ExtraVars = @{})
-    #? Set verbosity and CI-specific environment variables
-    $Verbose = $Env:CI -or ($DebugPreference -ne 'SilentlyContinue') -or ($VerbosePreference -ne 'SilentlyContinue')
-    $Env:DEV_VERBOSE = $Verbose ? 'true' : $null
-    $Env:JUST_VERBOSE = $Verbose ? '1' : $null
-    $Env:OUTPUT_FILE = $Env:GITHUB_OUTPUT ? $Env:GITHUB_OUTPUT : '.dummy-ci-output-file'
+    Param([Hashtable]$ExtraVars = [ordered]@{})
+    $Env:DEV_ENV = 'contrib'
     #? Set and track environment variables
     $EnvVars = Get-Content 'env.json' | ConvertFrom-Json
     $ExtraVars.GetEnumerator() | ForEach-Object {
         $K, $V = $_.Key, $_.Value
-        if ($V) { $EnvVars | Add-Member -NotePropertyName $K -NotePropertyValue $V }
+        if ($null -ne $V) { $EnvVars | Add-Member -NotePropertyName $K -NotePropertyValue $V }
     }
-    $DevEnv = ''
-    $EnvVars.PsObject.Properties | Sort-Object Name | ForEach-Object {
-        $N, $V = $_.Name, $_.Value
-        if ($V) {
-            Set-Item "Env:$N" $V
-            $DevEnv += "$N=$V;"
+    $DevEnv = [ordered]@{}
+    $EnvVars.PsObject.Properties | Sort-Object 'Name' | ForEach-Object {
+        $K, $V = $_.Name, $_.Value
+        if ($null -ne $V) {
+            Set-Item "Env:$K" $V
+            $DevEnv[$K] = $V
         }
     }
-    $DevEnv = $DevEnv.TrimEnd(';')
     return $DevEnv
 }
 
@@ -65,8 +65,8 @@ function Sync-ContribEnv {
     Write environment variables to VSCode contributor environment.#>
     $DevEnvSettingsJson = ''
     $DevEnvWorkflowYaml = ''
-    (Sync-DevEnv) -Split ';' | Select-String -Pattern '([^=]+)=([^=]+)' | ForEach-Object {
-        $K, $V = $_.Matches.Groups[1].Value, $_.Matches.Groups[2].Value
+    (Sync-Env).GetEnumerator() | ForEach-Object {
+        $K, $V = $_.Key, $_.Value
         $DevEnvSettingsJson += "`n    `"$K`": `"$V`","
         $DevEnvWorkflowYaml += "`n      $($K.ToLower()): { value: `"$V`" }"
     }
@@ -84,11 +84,13 @@ function Sync-ContribEnv {
     $WorkflowRepl = "    outputs:$DevEnvWorkflowYaml"
     $WorkflowContent = (Get-Content $Workflow -Raw) -Replace $WorkflowPat, $WorkflowRepl
     Set-Content $Workflow $WorkflowContent -NoNewline
+    return Sync-Env $ExtraConVars
 }
 
 function Sync-CiEnv {
     <#.SYNOPSIS
     Sync CI environment path and environment variables.#>
+    $Env:DEV_ENV = 'ci'
     #? Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
     $PathFile = $Env:GITHUB_PATH ? $Env:GITHUB_PATH : '.dummy-ci-path-file'
     if (!(Test-Path $PathFile)) { New-Item $PathFile }
@@ -97,9 +99,16 @@ function Sync-CiEnv {
         Add-Content $PathFile ("$Workdir/.venv/bin", "$Workdir/.venv/scripts")
     }
     #? Write environment variables to CI environment file
+    $CiEnv = Sync-Env $ExtraCiVars
+    $CiEnvText = ''
+    $CiEnv.GetEnumerator() | ForEach-Object {
+        $K, $V = $_.Key, $_.Value
+        $CiEnvText += "$K=$V`n"
+    }
     $EnvFile = $Env:GITHUB_ENV ? $Env:GITHUB_ENV : '.dummy-ci-env-file'
     if (!(Test-Path $EnvFile)) { New-Item $EnvFile }
     if (!(Get-Content $EnvFile | Select-String -Pattern 'DEV_ENV_SET')) {
-        (Sync-DevEnv $ExtraVars) -Split ';' | Add-Content $EnvFile
+        $CiEnvText | Add-Content $EnvFile
     }
+    return $CiEnv
 }
