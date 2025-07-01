@@ -26,11 +26,12 @@ jobs:
         with:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
+      - run: "./j.ps1 ci"
       - uses: "actions/upload-artifact@0b2256b8c012f0828dc542b3febcab082c67f72b" # v4.3.4
         with:
           name: "lock"
           path: "uv.lock"
-      - run: "./j.ps1 ci tool-check-clean"
+      - run: "./j.ps1 tool-check-clean"
   build-docs:
     needs: "env"
     runs-on: "${{ needs.env.outputs.actions_runner }}"
@@ -85,8 +86,7 @@ jobs:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
       - run: |
-          ./j.ps1 ci
-          ./j.ps1 fawltydeps
+          ./j.ps1 ci fawltydeps
           ./j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml
   pyright:
     needs: "env"

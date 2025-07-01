@@ -28,11 +28,10 @@ jobs:
         with:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
-      - run: "./j.ps1 ci tool-check-clean"
       - id: "now"
         env:
           GH_TOKEN: "${{ github.token }}"
-        run: "./j.ps1 ci-out-latest-release"
+        run: "./j.ps1 ci tool-check-clean ci-out-latest-release"
   changerelease:
     needs:
       - "env"
