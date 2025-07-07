@@ -90,6 +90,7 @@ alias c := con
 # 🤖 Run recipes in CI...
 [group('⛰️ Environments')]
 ci *args: uv-sync
+  {{pre}} {{_just}} inst powershell-yaml
   {{pre}} Sync-CiEnv | Out-Null
   {{pre}} {{_dev}} elevate-pyright-warnings {{dev_pyrightconfig_file}}
   {{ if args!=empty { pre + _just + sp + args } else {empty} }}

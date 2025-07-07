@@ -71,13 +71,13 @@ sudo :=\
 
 # 🌐 [DEFAULT] Install Homebrew as needed, then install VSCode, GitHub CLI, Git, and cross-platform PowerShell
 [macos,group('🌐 Install')]
-all: code git gh pwsh wt
+all: code git gh pwsh powershell-yaml wt
 # 🌐 [DEFAULT] Install Snap as needed, then install VSCode, GitHub CLI, Git, and cross-platform PowerShell
 [linux, group('🌐 Install')]
-all: code git gh pwsh wt
+all: code git gh pwsh powershell-yaml wt
 # 🌐 [DEFAULT] Install VSCode, GitHub CLI, Git, Windows Terminal, and cross-platform PowerShell
 [windows, group('🌐 Install')]
-all: code git gh pwsh wt
+all: code git gh pwsh powershell-yaml wt
 
 # 🌐 Install VSCode
 [group('🌐 Install')]
@@ -194,6 +194,25 @@ _pwsh_found_msg :=\
   quote(GREEN+_pwsh_name+sp+_installed+NORMAL)
 _pwsh_name :=\
   'Cross-platform PowerShell (pwsh)'
+
+# 🌐 Install YAML utilities for cross-platform PowerShell
+[group('🌐 Install')]
+powershell-yaml:
+  {{_just_inst}}pwsh; . {{quote(pwsh_bin)}} -Command '{{_inst_powershell_yaml}}'
+_inst_powershell_yaml :=\
+  "if (!(Get-InstalledModule -ErrorAction 'Ignore' 'powershell-yaml')) {" \
+    + sp + '$InstallationPolicy = Get-PSRepository' + sp + quote('PSGallery') + sp + '|' \
+    + sp + 'Select-Object -ExpandProperty' + sp + quote('InstallationPolicy') + ';' \
+    + sp + 'try {' \
+      + sp + 'Set-PSRepository' + sp + quote('PSGallery') \
+        + sp + '-InstallationPolicy' + sp + quote('Trusted') + ';' \
+      + sp + 'Install-Module' + sp + quote('powershell-yaml') \
+    + sp + '}' \
+    + sp + 'finally {' \
+      + sp + 'Set-PSRepository' + sp + quote('PSGallery') \
+        + sp + '-InstallationPolicy $InstallationPolicy' \
+    + sp + '}' \
+  + sp + '}'
 
 # 🌐 Install a project version of uv if you've got global uv
 [group('🌐 Install')]
