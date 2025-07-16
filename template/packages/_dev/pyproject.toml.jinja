@@ -25,11 +25,6 @@ dependencies = [
 [tool.fawltydeps]
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
-ignore_undeclared = [
-  "{{ package_name }}_dev",
-  "{{ package_name }}_pipeline",
-  "{{ package_name }}",
-  "toml",
-]
+ignore_undeclared = ["{{ package_name }}_dev", "{{ package_name }}_pipeline", "{{ package_name }}", "toml"]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]
