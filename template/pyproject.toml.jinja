@@ -26,6 +26,9 @@ Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_na
 Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 [dependency-groups]
 dev = [
+  #? Packages
+  "cachier",
+  "context-models",
   #? Dev
   "debugpy>=1.8.2",
   "fawltydeps>=0.18.0",
@@ -73,14 +76,19 @@ constraint-dependencies = [
   #? Intentionally don't check new dependency groups where we keep our dev deps
   #? Avoids lots of repetition in `tool.fawltydeps.ignore_unused`
   "fawltydeps<0.19.0",
+  #? Need to fix issue with `context-models` for newer Pydantic
+  "pydantic<2.9.2",
 ]
 [tool.uv.pip]
 python-version = "{{ python_version }}"
 [tool.uv.sources]
 {{ project_name }}-dev = { workspace = true }
 {{ project_name }}-pipeline = { workspace = true }
+cachier = { path = "packages/cachier", editable = true }
+context-models = { path = "packages/context-models", editable = true }
+pipeline-helper = { workspace = true }
 [tool.uv.workspace]
-members = ["packages/*"]
+members = ["packages/_dev", "packages/_pipeline", "packages/_pipeline-helper"]
 
 [tool.coverage.report]
 exclude_also = ['if __name__ == "__main__":']
@@ -91,6 +99,7 @@ source = [
   "docs",
   "packages/_dev",
   "packages/_pipeline",
+  "packages/_pipeline-helper",
   "notebooks",
   "scripts",
   "tests",
@@ -145,10 +154,11 @@ include = [
   "notebooks",
   "packages/_dev",
   "packages/_pipeline",
+  "packages/_pipeline-helper",
   "scripts",
   "tests",
 ]
-ignore = ["**/.*", "*:/**/.*", "*:/**/appdata", "typings"]
+ignore = ["**/.*", "*:/**/.*", "*:/**/appdata", "typings", "packages/context-models"]
 # Default "true" in strict
 analyzeUnannotatedFunctions = true
 strictParameterNoneValue = true
@@ -246,7 +256,7 @@ reportUnusedCallResult = "none"
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"
-extend-exclude = ["typings"]
+extend-exclude = ["packages/cachier", "packages/context-models", "typings"]
 fix = true
 output-format = "grouped"
 preview = true
@@ -257,6 +267,7 @@ src = [
   "notebooks",
   "packages/_dev",
   "packages/_pipeline",
+  "packages/_pipeline-helper",
   "scripts",
   "tests",
 ]

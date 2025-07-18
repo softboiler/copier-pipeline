@@ -62,7 +62,7 @@
     //! VSCode startup
     {
       "label": "con ⚡👥 Contributor environment setup on folder open",
-      "command": "$Env:VSCODE_FOLDER_OPEN_TASK='1'; ./j.ps1 con",
+      "command": "$Env:VSCODE_FOLDER_OPEN_TASK_RUNNING='1'; ./j.ps1 con",
       "runOptions": { "runOn": "folderOpen" }
     },
     //* 🌐 Install

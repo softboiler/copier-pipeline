@@ -31,7 +31,7 @@ jobs:
         with:
           name: "lock"
           path: "uv.lock"
-      - run: "./j.ps1 tool-check-clean"
+      - run: "./j.ps1 con tool-check-clean"
   build-docs:
     needs: "env"
     runs-on: "${{ needs.env.outputs.actions_runner }}"
@@ -73,7 +73,7 @@ jobs:
         with:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
-      - run: "./j.ps1 ci ruff --no-fix --output-format github"
+      - run: "./j.ps1 ci tool-ruff --no-fix --output-format github"
   fawltydeps:
     needs: "env"
     runs-on: "${{ needs.env.outputs.actions_runner }}"
@@ -86,8 +86,8 @@ jobs:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
       - run: |
-          ./j.ps1 ci fawltydeps
-          ./j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml
+          ./j.ps1 ci tool-fawltydeps
+          ./j.ps1 tool-fawltydeps --config-file packages/_dev/pyproject.toml
   pyright:
     needs: "env"
     runs-on: "${{ needs.env.outputs.actions_runner }}"
@@ -125,10 +125,10 @@ jobs:
           enable-cache: true
       #! https://github.com/pytest-dev/pytest-cov/issues/479#issuecomment-1247444988
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == needs.env.outputs.python_version
-        run: "./j.ps1 ci pytest --cov --cov-config=pyproject.toml --cov-report=xml"
+        run: "./j.ps1 ci tool-pytest --cov --cov-config=pyproject.toml --cov-report=xml"
       - if: startsWith(matrix.runner, 'ubuntu') && matrix.python == needs.env.outputs.python_version
         uses: "codecov/codecov-action@e28ff129e5465c2c0dcc6f003fc735cb6ae0c673" # v4.5.0
         env:
           CODECOV_TOKEN: "${{ secrets.CODECOV_TOKEN }}"
       - if: (!(startsWith(matrix.runner, 'ubuntu') && matrix.python == needs.env.outputs.python_version))
-        run: "./j.ps1 'python_version=${{ matrix.python }}' ci pytest"
+        run: "./j.ps1 --set 'python_version' '${{ matrix.python }}' ci tool-pytest"

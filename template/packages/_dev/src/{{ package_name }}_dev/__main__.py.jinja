@@ -3,7 +3,6 @@
 from cappa.base import command, invoke
 from cappa.subcommand import Subcommands
 
-from {{ package_name }}_dev.cli import ElevatePyrightWarnings
 
 
 @command(invoke="{{ package_name }}_dev.tools.add_change")
@@ -19,6 +18,11 @@ class GetActions:
 @command(invoke="{{ package_name }}_dev.tools.sync_local_dev_configs")
 class SyncLocalDevConfigs:
     """Synchronize local dev configs."""
+
+
+@command(invoke="{{ package_name }}_dev.tools.elevate_pyright_warnings")
+class ElevatePyrightWarnings:
+    """Elevate Pyright warnings to errors."""
 
 
 @command()

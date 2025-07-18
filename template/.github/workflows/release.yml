@@ -42,7 +42,7 @@ jobs:
           catch { gh release create '${{ needs.env.outputs.project_version }}' 'dist/**' }
         env:
           GITHUB_TOKEN: "${{ github.token }}"
-      - if: needs.env.outputs.publish_project != '0'
+      - if: needs.env.outputs.publish_project == 'true'
         run: "uv publish"
   changerelease:
     needs: "release"

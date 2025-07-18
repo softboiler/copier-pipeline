@@ -8,6 +8,7 @@ ci:
     - "sync"
     - "fawltydeps"
     - "fawltydeps-dev"
+    - "fawltydeps-pipeline"
     - "pytest-fast-only"
   autoupdate_schedule: "quarterly"
 default_install_hook_types:
@@ -34,7 +35,7 @@ repos:
         name: "fawltydeps"
         pass_filenames: false
         language: "system"
-        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 fawltydeps'"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 tool-fawltydeps'"
         files: |
           (?x)^(
             src/.*
@@ -44,10 +45,32 @@ repos:
         name: "fawltydeps-dev"
         pass_filenames: false
         language: "system"
-        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 fawltydeps --config-file packages/_dev/pyproject.toml'"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 tool-fawltydeps --config-file packages/_dev/pyproject.toml'"
         files: |
           (?x)^(
             packages/_dev/.*
+            |docs/.*
+            |tests/.*
+          )$
+      - id: "fawltydeps-pipeline"
+        name: "fawltydeps-pipeline"
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 tool-fawltydeps --config-file packages/_pipeline/pyproject.toml'"
+        files: |
+          (?x)^(
+            packages/_pipeline/.*
+            |docs/.*
+            |tests/.*
+          )$
+      - id: "fawltydeps-pipeline-helper"
+        name: "fawltydeps-pipeline-helper"
+        pass_filenames: false
+        language: "system"
+        entry: "pwsh -NonInteractive -NoProfile -Command './j.ps1 tool-fawltydeps --config-file packages/_pipeline-helper/pyproject.toml'"
+        files: |
+          (?x)^(
+            packages/_pipeline/.*
             |docs/.*
             |tests/.*
           )$
@@ -55,7 +78,7 @@ repos:
         name: "pytest-fast-only"
         pass_filenames: false
         language: "system"
-        entry: 'pwsh -NonInteractive -NoProfile -Command ''./j.ps1 pytest -m `"not slow`"'''
+        entry: 'pwsh -NonInteractive -NoProfile -Command ''./j.ps1 tool-pytest -m `"not slow`"'''
         files: |
           (?x)^(
             .*/pyproject\.toml
