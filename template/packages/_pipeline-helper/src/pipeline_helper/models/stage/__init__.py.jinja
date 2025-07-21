@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Self
 
+from {{ package_name }}_pipeline.models.paths import paths
 from context_models.validators import context_field_validator, context_model_validator
 from pydantic import BaseModel
 from pydantic.functional_validators import ModelWrapValidatorHandler
@@ -15,7 +16,6 @@ from pipeline_helper.models.path import (
     PipelineHelperContextStore,
     get_pipeline_helper_config,
 )
-from pipeline_helper.models.paths import paths
 from pipeline_helper.sync_dvc.types import DvcValidationInfo
 from pipeline_helper.sync_dvc.validators import (
     dvc_add_param,

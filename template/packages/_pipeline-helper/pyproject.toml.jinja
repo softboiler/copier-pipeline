@@ -16,7 +16,6 @@ dependencies = [
   "pandas[hdf5,performance]>=2.2.2",
   "pint>=0.24.4",
   "ploomber-engine>=0.0.30",
-  "pyarrow>=14.0.1",
   "pydantic-settings>=2.5.2",
   "pydantic>=2.9.1",
   "pyyaml>=6.0.2",
@@ -26,6 +25,3 @@ dependencies = [
 deps = ["packages/_pipeline-helper/pyproject.toml"]
 code = ["packages/_pipeline-helper/src"]
 ignore_undeclared = ["{{ package_name }}_pipeline", "pipeline_helper", "cachier", "context_models"]
-ignore_unused = [
-  "pyarrow", # Used in `pipeline_helper.__init__`
-]
