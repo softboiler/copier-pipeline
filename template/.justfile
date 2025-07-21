@@ -461,9 +461,6 @@ _repo-init-set-up-remote:
 # Set up repo and push
 [script, group('🛠️ Repository setup')]
 _repo-set-up-push:
-# 🥾 Initialize repository
-[script, group('🛠️ Repository setup')]
-@repo-init:
   {{script_pre}}
   git submodule add --force --name 'typings' 'https://github.com/softboiler/python-type-stubs.git' 'typings'
   git submodule add --force --name 'context-models' 'https://github.com/softboiler/context-models.git' 'packages/context-models'
