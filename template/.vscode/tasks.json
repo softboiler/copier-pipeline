@@ -190,7 +190,7 @@
     },
     {
       "label": "tool-pre-commit ⚡🔵 pre-commit run",
-      "command": "./j.ps1 tool-pre-commit-all"
+      "command": "./j.ps1 tool-pre-commit"
     },
     {
       "label": "tool-pre-commit-all 🔵 pre-commit run --all-files ...",
