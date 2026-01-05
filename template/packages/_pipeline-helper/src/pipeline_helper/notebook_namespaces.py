@@ -110,7 +110,7 @@ class AccessedAttributesVisitor(NodeVisitor):
     def __init__(self):
         self.names: dict[str, set[str]] = defaultdict(set)
 
-    def visit_Attribute(self, node: ast.Attribute):  # noqa: N802
+    def visit_Attribute(self, node: ast.Attribute):
         if isinstance(node.value, ast.Name) and not node.attr.startswith("__"):
             self.names[node.value.id].add(node.attr)
         self.generic_visit(node)
