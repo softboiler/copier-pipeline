@@ -5,7 +5,6 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Self
 
-from {{ package_name }}_pipeline.models.paths import paths
 from context_models.validators import context_field_validator, context_model_validator
 from pydantic import BaseModel
 from pydantic.functional_validators import ModelWrapValidatorHandler
@@ -23,6 +22,7 @@ from pipeline_helper.sync_dvc.validators import (
     dvc_set_stage_path,
 )
 
+from {{ package_name }}_pipeline.models.paths import paths
 
 class Stage(PipelineHelperContextStore):
     """Base of pipeline stage models."""

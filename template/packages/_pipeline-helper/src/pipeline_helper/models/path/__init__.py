@@ -13,19 +13,14 @@ from context_models import ContextStore
 from context_models.serializers import ContextWrapSerializer
 from context_models.types import Context, ContextPluginSettings, Data, PluginConfigDict
 from context_models.validators import ContextAfterValidator
-from pydantic import (
-    DirectoryPath,
-    FilePath,
-    SerializerFunctionWrapHandler,
-    WrapSerializer,
-    model_validator,
-)
+from pydantic import SerializerFunctionWrapHandler, model_validator
 
 from pipeline_helper.models.contexts import (
     PipelineHelperContext,
     PipelineHelperContexts,
     Roots,
     pipeline_helper,
+    resolve_path,
 )
 from pipeline_helper.models.contexts.types import (
     Kind,
@@ -147,11 +142,6 @@ def make_path(
     return path
 
 
-def resolve_path(value: Path | str, nxt: SerializerFunctionWrapHandler) -> str:
-    """Resolve paths and serialize POSIX-style."""
-    return nxt(Path(value).resolve().as_posix())
-
-
 def ser_rooted_path(
     value: Path | str,
     nxt: SerializerFunctionWrapHandler,
@@ -167,10 +157,6 @@ def ser_rooted_path(
     )
 
 
-FilePathSerPosix: TypeAlias = Ann[FilePath, WrapSerializer(resolve_path)]
-"""Directory path that serializes as POSIX."""
-DirectoryPathSerPosix: TypeAlias = Ann[DirectoryPath, WrapSerializer(resolve_path)]
-"""Directory path that serializes as POSIX."""
 DataDir: TypeAlias = Ann[
     Path,
     ContextAfterValidator(partial(make_path, key="data", file=False)),

@@ -3,13 +3,14 @@
 from pathlib import Path
 from typing import get_args
 
-from {{ package_name }}_pipeline.models.generated.types.stages import StageName
 from pipeline_helper.models.path import (
     DataDir,
     DocsFile,
     PipelineHelperContextStore,
     get_pipeline_helper_config,
 )
+
+from {{ package_name }}_pipeline.models.generated.types.stages import StageName
 
 
 class Paths(PipelineHelperContextStore):

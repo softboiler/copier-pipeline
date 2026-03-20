@@ -5,7 +5,7 @@ build-backend = "uv_build"
 [project]
 name = "{{ project_name }}-dev"
 version = "0.0.0"
-requires-python = ">=3.11"
+requires-python = ">={{ python_version }}"
 dependencies = [
   "cappa>=0.22.4",
   "cyclopts>=3.14.2",
