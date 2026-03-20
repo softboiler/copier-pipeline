@@ -6,12 +6,7 @@ build-backend = "flit_core.buildapi"
 name = "copier-pipeline-pipeline"
 version = "0.0.0"
 description = "Data pipeline"
-dependencies = [
-  "astroid>=3.3.1",
-  "cappa>=0.22.4",
-  "more-itertools>=10.4.0",
-  "pydantic>=2.9.1",
-]
+dependencies = ["astroid>=3.3.1", "cappa>=0.22.4", "pydantic>=2.9.1"]
 [project.scripts]
 "copier-pipeline-pipeline" = "copier_pipeline_pipeline.__main__:main"
 
@@ -21,7 +16,5 @@ code = ["packages/_pipeline/src"]
 ignore_undeclared = [
   "copier_pipeline_dev",
   "copier_pipeline_pipeline",
-  "cachier",
-  "context_models",
   "pipeline_helper",
 ]

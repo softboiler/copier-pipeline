@@ -1,7 +1,8 @@
 """Command-line interface."""
 
+from cappa import invoke
+
 from copier_pipeline_pipeline.cli import Pipeline
-from copier_pipeline_pipeline.parser import invoke
 
 
 def main():

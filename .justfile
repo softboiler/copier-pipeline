@@ -22,6 +22,12 @@ dev :=\
 pipeline :=\
   uvr + sp + quote(env("PROJECT_NAME") + '-pipeline')
 
+#* Prek
+prek :=\
+  'prek --config prek.toml'
+prek_run :=\
+  prek + sp + 'run --verbose'
+
 #* ♾️ Self
 
 # 📃 [DEFAULT] List recipes
@@ -44,10 +50,10 @@ run *args: uv-sync
 # 👥 Run recipes as a contributor...
 [group('⛰️ Environments')]
 con *args: uv-sync
-  {{j}} _sync_settings_json _sync_env_yml{{ if env("PRE_COMMIT", empty)=='1' { \
+  {{j}} _sync_settings_json _sync_env_yml{{ if env("PREK", empty)=='1' { \
     sp + 'con-git-submodules' \
   } else {empty} }}{{ if env("VSCODE_FOLDER_OPEN_TASK_RUNNING", empty)=='1' { \
-    sp + 'con-git-submodules' + sp + 'con-pre-commit-hooks' \
+    sp + 'con-git-submodules' + sp + 'con-prek-hooks' \
   } else {empty} }}
   {{ if args!=empty { j + sp + args } else {empty} }}
 
@@ -55,14 +61,11 @@ con *args: uv-sync
 [group('⛰️ Environments')]
 ci *args: uv-sync
   {{j}} _sync-ci-path-file _sync-ci-env-file; \
-  {{pre}} Set-Content {{pyright_config}} ({{j}} {{dev}} elevate-pyright-warnings)
   {{ if args!=empty { ';' + sp + j + sp + args } else {empty} }}
-  if (!$Env:CI) { {{pre}} Remove-Item {{pyright_config}} }
 
-pyright_config :=\
-  'pyrightconfig.json'
+# TODO: The below was needed previously for pyright, might not be needed anymore
 
-# Add `.venv` tools to CI path. Needed for some GitHub Actions like pyright
+# Add `.venv` tools to CI path. Needed for some GitHub Actions
 [script, group('⛰️ Environments')]
 _sync-ci-path-file:
   {{script_pre}}
@@ -135,7 +138,7 @@ _sync_settings_json:
   }
   if ($AnyChanged) {
     Set-Content $Settings $SettingsContent -NoNewline
-    try { {{uvr}} pre-commit run 'prettier' --files $Settings | Out-Null } catch {}
+    try { {{uvr}} {{prek_run}} 'prettier' --files $Settings } catch {}
   }
 
 # Sync environment variables to '.github/workflows/env.yml'
@@ -159,8 +162,8 @@ _sync_env_yml:
   '@
     $WorkflowData.on.workflow_call.outputs = $LimitedEnviron
     $WorkflowData | ConvertTo-Yaml | Add-Content $Workflow -NoNewline
-    try { {{uvr}} pre-commit run 'trailing-whitespace' --files $Workflow | Out-Null } catch {}
-    try { {{uvr}} pre-commit run 'mixed-line-ending' --files $Workflow | Out-Null } catch {}
+    try { {{uvr}} {{prek_run}} 'trailing-whitespace' --files $Workflow } catch {}
+    try { {{uvr}} {{prek_run}} 'mixed-line-ending' --files $Workflow } catch {}
   }
 
 ci_variables :=\
@@ -168,18 +171,21 @@ ci_variables :=\
   + sp + 'project_name' \
   + sp + 'project_version' \
   + sp + 'publish_project' \
-  + sp + 'pyright_python_pylance_version' \
   + sp + 'uv_version'
 
 #* 🟣 uv
 
 #? uv invocations
 uv_options :=\
-  '--all-packages' + sp + '--python' + sp + quote(python_version)
+  '--python' + sp + quote(python_version)
 uvr :=\
-  uv + sp + 'run' + sp + uv_options
+  uv + sp + 'run' + sp + '--all-packages' + sp + uv_options
 uvs :=\
-  uv + sp + 'sync' + sp + uv_options
+  uv + sp + 'sync' + sp + '--all-packages' + sp + uv_options
+uva :=\
+  uv + sp + 'add' + sp + uv_options
+uvrm :=\
+  uv + sp + 'remove' + sp + uv_options
 
 # 🟣 uv ...
 [group('🟣 uv')]
@@ -200,6 +206,24 @@ uvx *args:
 [group('🟣 uv')]
 uv-sync *args:
   {{pre}} {{uvs}} {{args}}
+
+# ➕ Add Python package to pyproject.toml (uv add ...)
+[group('🟣 uv')]
+uv-add *args:
+  {{pre}} {{uva}} {{args}}
+
+# ➖ Remove Python package from pyproject.toml (uv remove ...)
+[group('🟣 uv')]
+uv-remove *args:
+  {{pre}} {{uvrm}} --no-sync {{args}}
+  {{pre}} {{uvs}}
+
+# ➖➕ Re-add Python package to change version in pyproject.toml
+[group('🟣 uv')]
+uv-re-add *args:
+  {{pre}} {{uvrm}} --no-sync {{args}}
+  {{pre}} {{uva}} --no-sync {{args}}
+  {{pre}} {{uvs}}
 
 #* 🐍 Python
 
@@ -240,6 +264,11 @@ py-gui:
 tool-pytest *args:
   {{pre}} {{uvr}} pytest {{args}}
 
+# 🧪 pytest fast (pytest -m 'not slow' ...)
+[group('⚙️  Tools')]
+tool-pytest-fast *args:
+  {{pre}} {{uvr}} pytest -m 'not slow' {{args}}
+
 # 📖 preview docs
 [group('⚙️  Tools')]
 tool-docs-preview:
@@ -251,15 +280,15 @@ tool-docs-preview:
 tool-docs-build:
   {{pre}} {{uvr}} sphinx-build -EaT 'docs' '_site'
 
-# 🔵 pre-commit run ...
+# 🔵 prek run ...
 [group('⚙️  Tools')]
-tool-pre-commit *args:
-  {{pre}} {{uvr}} pre-commit run --verbose {{args}}
+tool-prek *args:
+  {{pre}} {{uvr}} {{prek_run}} {{args}}
 
-# 🔵 pre-commit run --all-files ...
+# 🔵 prek run --all-files ...
 [group('⚙️  Tools')]
-tool-pre-commit-all *args:
-  {{j}} tool-pre-commit --all-files {{args}}
+tool-prek-all *args:
+  {{j}} tool-prek --all-files {{args}}
 
 # ✔️  Check that the working tree is clean
 [group('⚙️  Tools')]
@@ -271,12 +300,12 @@ tool-check-clean:
 # ✔️  fawltydeps ...
 [group('⚙️  Tools')]
 tool-fawltydeps *args:
-  {{pre}} {{uvr}} fawltydeps {{args}}
+  {{pre}} {{uvr}} fawltydeps --detailed {{args}}
 
-# ✔️  pyright
+# ✔️  ty
 [group('⚙️  Tools')]
-tool-pyright:
-  {{pre}} {{uvr}} pyright
+tool-ty *args:
+  {{pre}} {{uvr}} ty check {{args}}
 
 # ✔️  ruff check ... '.'
 [group('⚙️  Tools')]
@@ -316,25 +345,15 @@ con-git-submodules:
       Remove-Item
   {{pre}} git submodule update --init --merge
 
-# 👥 Install pre-commit hooks
+# 👥 Install prek hooks
 [group('👥 Contributor environment setup')]
-con-pre-commit-hooks:
-  {{pre}} if ( \
-    ({{quote(hooks)}} -Split {{quote(sp)}} | \
-      ForEach-Object { ".git/hooks/$_" } | \
-      Test-Path \
-    ) -Contains $False \
-  ) { \
-    {{uvr}} pre-commit install --install-hooks | Out-Null; \
-    Write-Host -ForegroundColor 'Green' 'Pre-commit hooks installed.' \
-  }
-hooks :=\
-  'pre-commit'
+con-prek-hooks:
+  {{uvr}} {{prek}} install --install-hooks
 
 # 👥 Normalize line endings
 [group('👥 Contributor environment setup')]
 con-norm-line-endings:
-  -{{pre}} try { {{uvr}} pre-commit run 'mixed-line-ending' --all-files | Out-Null } catch {}
+  -{{pre}} try { {{uvr}} {{prek_run}} 'mixed-line-ending' --all-files } catch {}
 
 # 👥 Run dev task...
 [group('👥 Contributor environment setup')]
@@ -441,7 +460,6 @@ copier :=\
 [group('🛠️ Repository setup')]
 repo-init:
   {{j}} _repo-init-set-up-remote
-  {{j}} _repo-set-up-push
 
 # Initialize repo and set up remote if repo is fresh
 [script, group('🛠️ Repository setup')]
@@ -457,23 +475,6 @@ _repo-init-set-up-remote:
     $Matches = $null
     gh repo edit --homepage 'https://{{env("PROJECT_OWNER_GITHUB_USERNAME")}}.github.io/{{env("GITHUB_REPO_NAME")}}/'
   }
-
-# Set up repo and push
-[script, group('🛠️ Repository setup')]
-_repo-set-up-push:
-  {{script_pre}}
-  git submodule add --force --name 'typings' 'https://github.com/softboiler/python-type-stubs.git' 'typings'
-  git submodule add --force --name 'context-models' 'https://github.com/softboiler/context-models.git' 'packages/context-models'
-  git submodule add --force --name 'cachier' 'https://github.com/blakeNaccarato/cachier.git' 'packages/cachier'
-  Set-Location 'packages/cachier'
-  git checkout 'db7f394a553a90944ca25c2d687771006e77a024'
-  Set-Location '../..'
-  git add --all
-  {{j}} con
-  git add --all
-  try { git commit --no-verify -m 'Prepare template using softboiler/copier-pipeline' }
-  catch {}
-  git push
 
 #* 💻 Machine setup
 

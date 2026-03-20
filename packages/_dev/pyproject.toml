@@ -31,6 +31,11 @@ copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 [tool.fawltydeps]
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
-ignore_undeclared = ["copier_pipeline_dev", "copier_pipeline_pipeline", "copier_pipeline", "toml"]
+ignore_undeclared = [
+  "copier_pipeline_dev",
+  "copier_pipeline_pipeline",
+  "copier_pipeline",
+  "toml",
+]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]

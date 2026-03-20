@@ -1,3 +1,0 @@
-[submodule "typings"]
-	path = typings
-	url = https://github.com/softboiler/python-type-stubs.git

@@ -50,6 +50,7 @@
       },
       "extensions": [
         "aaron-bond.better-comments@3.0.2",
+        "astral-sh.ty@2026.28.0",
         "bierner.markdown-preview-github-styles@2.0.4",
         "charliermarsh.ruff@2024.30.0",
         "davidanson.vscode-markdownlint@0.55.0",

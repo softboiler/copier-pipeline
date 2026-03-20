@@ -7,7 +7,5 @@ template/.all-contributorsrc.jinja
 *.ipynb
 #? Markdownlint handles this
 *.md
-#? Don't traverse typings
-typings
 #? Generated workflow
 .github/workflows/env.yml

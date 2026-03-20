@@ -7,8 +7,6 @@ from pathlib import Path
 from typing import Any, Literal
 
 from cappa.arg import Arg
-from context_models import CONTEXT
-from matplotlib.figure import Figure
 from more_itertools import first
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
@@ -116,7 +114,7 @@ def dvc_set_stage_path(
     path: Path, info: DvcValidationInfo, kind: Literal["deps", "outs"]
 ) -> Path:
     """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
-    if info.field_name != CONTEXT and (dvc := info.context.get(DVC)):
+    if info.field_name != "context" and (dvc := info.context.get(DVC)):
         path = Path(path).resolve().relative_to(Path.cwd())
         if info.field_name == "plots":
             dvc.plot_dir = path
@@ -134,19 +132,12 @@ def dvc_set_stage_path(
     return path
 
 
-def dvc_append_plot_name(figure: Figure, info: DvcValidationInfo) -> Figure:
-    """Append plot name for `dvc.yaml`."""
-    if info.field_name != CONTEXT and (dvc := info.context.get(DVC)):
-        dvc.plot_names.append(info.field_name)
-    return figure
-
-
 def dvc_set_only_sample(
     only_sample: bool, info: DvcValidationInfo, sample_field: str
 ) -> bool:
     """Set the only sample for `dvc.yaml` if `only_sample` is enabled."""
     if (
-        info.field_name != CONTEXT
+        info.field_name != "context"
         and (dvc := info.context.get(DVC))
         and dvc.plot_dir
         and only_sample
@@ -159,7 +150,7 @@ def dvc_extend_with_timestamp_suffixed_plots(
     times: list[str], info: DvcValidationInfo
 ) -> list[str]:
     """Extend stage plots for `dvc.yaml` with timestamp-suffixed plots."""
-    if info.field_name != CONTEXT and (dvc := info.context.get(DVC)) and dvc.plot_dir:
+    if info.field_name != "context" and (dvc := info.context.get(DVC)) and dvc.plot_dir:
         dvc.stage.plots.extend(
             sorted(
                 (dvc.plot_dir / ("_".join([f"{name}", time]) + ".png")).as_posix()
@@ -177,7 +168,7 @@ def dvc_extend_with_named_plots_if_missing(
 ) -> Any:
     """Extend stage plots for `dvc.yaml` with named plots if plots haven't been set."""
     if (
-        info.field_name != CONTEXT
+        info.field_name != "context"
         and (dvc := info.context.get(DVC))
         and dvc.plot_dir
         and not dvc.stage.plots

@@ -275,6 +275,6 @@ class Submodule:
 
 
 def get_submodules() -> list[Submodule]:
-    """Get the special template and typings submodules, as well as the rest."""
+    """Get the special template submodule, as well as the rest."""
     with closing(repo := Repo(str(Path.cwd()))):
         return [Submodule(*item) for item in list(submodule_list(repo))]

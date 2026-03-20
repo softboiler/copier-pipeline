@@ -20,8 +20,6 @@
 .comps
 # Ignore `.ruff-cache` just in case, and to grey it out in the sidebar
 .ruff_cache
-# To allow for local variation in type checking without overriding CI
-pyrightconfig.json
 # To allow for local variation in test configuration without overriding CI
 pytest.ini
 # To avoid committing profiler results
@@ -41,7 +39,6 @@ gha-creds-*.json
 #* Node (partial)
 #* https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 
-# NPM/Node.JS because of Pyright CI/CD dependency
 node_modules/
 
 #* ---------------------------------------------------------------------------------- *#

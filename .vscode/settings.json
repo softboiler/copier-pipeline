@@ -12,14 +12,11 @@
   //! File excludes
   "files.exclude": {
     "**/__pycache__": true,
+    "**/.cache": true,
     "**/.jupyter_cache": true,
     "**/.pytest_cache": true
   },
-  "search.exclude": {
-    //? Don't search in locks by default
-    "typings": true,
-    "uv.lock": true
-  },
+  "search.exclude": { "uv.lock": true },
   //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
@@ -284,7 +281,6 @@
     "JUST_VERSION": "1.41.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
     "PYTHONUTF8": "1",
@@ -309,7 +305,6 @@
     "JUST_VERSION": "1.41.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
     "PYTHONUTF8": "1",
@@ -334,7 +329,6 @@
     "JUST_VERSION": "1.41.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
-    "PYRIGHT_PYTHON_PYLANCE_VERSION": "2025.2.1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
     "PYTHONUTF8": "1",

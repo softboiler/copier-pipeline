@@ -1,9 +1,8 @@
 """Contexts."""
 
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
-from context_models.types import Context
 from pydantic import BaseModel, Field
 
 from pipeline_helper.sync_dvc.dvc import DvcYamlModel, Stage
@@ -29,7 +28,7 @@ class DvcContext(BaseModel):
     """Current plot names."""
 
 
-class DvcContexts(Context):
+class DvcContexts(TypedDict):
     """DVC contexts."""
 
     dvc: DvcContext

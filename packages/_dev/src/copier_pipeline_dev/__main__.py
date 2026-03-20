@@ -19,18 +19,11 @@ class SyncLocalDevConfigs:
     """Synchronize local dev configs."""
 
 
-@command(invoke="copier_pipeline_dev.tools.elevate_pyright_warnings")
-class ElevatePyrightWarnings:
-    """Elevate Pyright warnings to errors."""
-
-
 @command()
 class Dev:
     """Dev tools."""
 
-    commands: Subcommands[
-        AddChange | GetActions | SyncLocalDevConfigs | ElevatePyrightWarnings
-    ]
+    commands: Subcommands[AddChange | GetActions | SyncLocalDevConfigs]
 
 
 def main():

@@ -8,7 +8,6 @@ from types import NoneType
 from typing import Any, get_args
 
 from cappa.base import invoke
-from context_models import CONTEXT, PLUGIN_SETTINGS, ContextStore
 from more_itertools import first, one
 from pydantic import create_model
 from pydantic.alias_generators import to_pascal
@@ -60,7 +59,7 @@ def main(params: SyncDvc):
             },
         ),
     )
-    run(args="pre-commit run --all-files prettier", check=False, capture_output=True)
+    run(args="prek run --all-files prettier", check=False, capture_output=True)
 
 
 def get_dvc_context(params: dict[str, Any], stages: str) -> DvcContext:
@@ -74,13 +73,14 @@ def get_dvc_context(params: dict[str, Any], stages: str) -> DvcContext:
 
     class CombinedContext(stage.model_fields["context"].annotation, DvcContexts): ...
 
-    return create_model(  # pyright: ignore[reportCallIssue]
+    return create_model(
         "_Stages",
-        __base__=ContextStore,
-        **{k: (v, ...) for k, v in {CONTEXT: CombinedContext, **stage_models}.items()},  # pyright: ignore[reportArgumentType]
-    )(**{
-        CONTEXT: {
-            **stage.model_config[PLUGIN_SETTINGS][CONTEXT],
+        **{
+            k: (v, ...) for k, v in {"context": CombinedContext, **stage_models}.items()
+        },
+    )(**{  # ty:ignore[no-matching-overload]
+        "context": {
+            **stage.model_config["plugin_settings"]["context"],
             **DvcContexts(dvc=DvcContext()),
         },
         **{
@@ -90,7 +90,7 @@ def get_dvc_context(params: dict[str, Any], stages: str) -> DvcContext:
                 if k in stage.model_fields
             }
             for field, stage in stage_models.items()
-            if field != CONTEXT
+            if field != "context"
         },
     }).context[DVC]
 

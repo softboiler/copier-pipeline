@@ -14,7 +14,7 @@ This guide consists of the following:
 
 - [We're always learning](#were-always-learning): Some context for new and experienced contributors alike.
 - [Workflow](#workflow): A high-level overview of the contribution process.
-- [Checks](#checks): Checks applied during `pre-commit` and in continuous integration (CI).
+- [Checks](#checks): Checks applied during `prek` and in continuous integration (CI).
 - [Code](#code): This project's code style and the tools that help you to maintain it.
 - [Tests](#tests): Guidance on running, writing, and adding tests.
 - [Documentation](#documentation): Details on documentation.
@@ -60,15 +60,15 @@ To make a new contribution, fork this repository, clone it, switch to a new bran
 
 ## Checks
 
-Code and documentation style is checked with `pre-commit` and in continuous integration (CI) when you submit a Pull Request. Please ask [a question](<https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a>) if you are having trouble passing local `pre-commit` checks. `pyright` checks Python type annotations, `ruff` checks and formats code, `markdownlint-cli2` chcks and formats Markdown, and `fawltydeps` checks dependencies. VSCode is configured to auto-format on save, and certain tools will automatically apply fixes on save. See the [contributor tools guide](#contributor-tools-guide) for more detail on interactive tool usage in VSCode.
+Code and documentation style is checked with `prek` and in continuous integration (CI) when you submit a Pull Request. Please ask [a question](<https://github.com/softboiler/copier-pipeline/discussions/new?category=q-a>) if you are having trouble passing local `prek` checks. `ty` checks Python type annotations, `ruff` checks and formats code, `markdownlint-cli2` chcks and formats Markdown, and `fawltydeps` checks dependencies. VSCode is configured to auto-format on save, and certain tools will automatically apply fixes on save. See the [contributor tools guide](#contributor-tools-guide) for more detail on interactive tool usage in VSCode.
 
 > [!IMPORTANT]
-> If `pre-commit` fails while committing with the VSCode UI, it will throw up a dialog with a scary red "X" and an unhelpful message. Always select `Show Command Output` in this dialog and search for `failed` in the resulting window with `Ctrl+F`. Alternatively, run the [`pre-commit` VSCode Task](#run-a-vscode-task) to get color-coded feedback in the terminal instead.
+> If `prek` fails while committing with the VSCode UI, it will throw up a dialog with a scary red "X" and an unhelpful message. Always select `Show Command Output` in this dialog and search for `failed` in the resulting window with `Ctrl+F`. Alternatively, run the [`prek` VSCode Task](#run-a-vscode-task) to get color-coded feedback in the terminal instead.
 
-While `pre-commit` will run all necessary checks, manual checks for individual tools may be run from the command-line interface (CLI) and have the following VSCode interactions:
+While `prek` will run all necessary checks, manual checks for individual tools may be run from the command-line interface (CLI) and have the following VSCode interactions:
 
-- `pre-commit` and the [`pre-commit` VSCode Task](#run-a-vscode-task).
-- `pyright` and in the VSCode problems pane.
+- `prek` and the [`prek` VSCode Task](#run-a-vscode-task).
+- `ty` and in the VSCode problems pane.
 - `ruff check .; ruff format .` and in the VSCode problems pane and the [`task: Run ruff` VSCode Task](#run-a-vscode-task).
 - `markdownlint-cli2` and in the VSCode problems pane.
 - `fawltydeps` or e.g. `fawltydeps --config-file docs/pyproject.toml`.
@@ -126,7 +126,7 @@ This guide details VSCode-specific tool usage. The following technqiuqes are fac
 
 If you're editing files in VSCode, certain tools give feedback by placing squiggly underlines under problem areas. These are also shown in the Problems pane ([Palette: `View: Focus Problems`](#vscode-command-palette)). Interact with these warnings clicking the lightbulb that appears near your cursor or by pressing `Ctrl+.`. You can often click links in the Problems pane for more details.
 
-Tools like `ruff`, `pyright`, `markdownlint-cli2`, and [`sourcery`](#sourcery) gently nudge us towards writing better code by bringing up things we might not have even known to search for. In VSCode, we can press `Ctrl+.` (or select the floating lightbulb) and interact with such warnings. You may invoke `pyright` at the command line or use [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance) in VSCode, which uses `pyright` to provide squiggly underlines for incorrect type annotations in code.
+Tools like `ruff`, `ty`, `markdownlint-cli2`, and [`sourcery`](#sourcery) gently nudge us towards writing better code by bringing up things we might not have even known to search for. In VSCode, we can press `Ctrl+.` (or select the floating lightbulb) and interact with such warnings. You may invoke `ty` at the command line or use [ty](https://marketplace.visualstudio.com/items?itemName=astral-sh.ty) in VSCode, which provides squiggly underlines for incorrect type annotations in code.
 
 #### Sourcery
 
@@ -145,11 +145,11 @@ The `fawltydeps` tool ensures that all Python dependencies in use are declared, 
 
 ### Keep track of expected data types
 
-Pylance uses `pyright` to look for issues with the "types" of variables passing through code. But how does Pylance know what "type" a certain variable should be? We can use "type annotations" to tell it what type we *want* a variable to have. For instance the first parameter in the `do_something_fancy` function signature is `an_argument: int`, where `an_argument` is the name of that first argument, and `int` is the type that we *want* it to be.
+`ty` looks for issues with the "types" of variables passing through code. But how does `ty` know what "type" a certain variable should be? We can use "type annotations" to tell it what type we *want* a variable to have. For instance the first parameter in the `do_something_fancy` function signature is `an_argument: int`, where `an_argument` is the name of that first argument, and `int` is the type that we *want* it to be.
 
-Python won't *guarantee* that `an_argument` is an `int`, but Pylance will warn us if we try to pass something else in. Try passing a non-integer to `do_something_fancy`. This is useful for catching bugs early, and for documenting our code. We also see from the `-> float` annotation that `do_something_fancy` should return a `float`.
+Python won't *guarantee* that `an_argument` is an `int`, but `ty` will warn us if we try to pass something else in. Try passing a non-integer to `do_something_fancy`. This is useful for catching bugs early, and for documenting our code. We also see from the `-> float` annotation that `do_something_fancy` should return a `float`.
 
-We can even "reveal" the expected types of things by holding down the `Ctrl+Alt` keys. We can see a ghostly `: float` appear next to the `result` variable in the `main()` function body. This tells us that Pylance has inferred `result` to be a floating point number.
+We also use Pylance, a different type checker, but we don't use it's type checking features rather its language server and refactoring features. We can use Pylance to "reveal" the expected types of things by holding down the `Ctrl+Alt` keys. We can see a ghostly `: float` appear next to the `result` variable in the `main()` function body. This tells us that `ty` has inferred `result` to be a floating point number.
 
 You can interact with Pylance underlines much in the same way as you do with Ruff, the lightbulb or `Ctrl+.` will let you interact with them.
 
@@ -259,7 +259,7 @@ It should only trigger if you have allowed VSCode Tasks to run automatically and
 
 ### Cross-platform PowerShell
 
-PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell. The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `pre-commit` hooks and in VSCode Tasks.
+PowerShell, once a Windows-only system shell, is now supported on Windows, MacOS, and Linux alike. This repository features tooling that sets up the environment with [`scripts/Sync-Py.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Sync-Py.ps1>), to be run on cross-platform PowerShell. The contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Initialize-Shell.ps1>) represents a sort of "profile" for your PowerShell terminal sessions. But you are not required to add it to your user shell profile. Instead, it is explicitly invoked whenever needed, including in other shell scripts, local `prek` hooks and in VSCode Tasks.
 
 However, if you do want to add it to your user shell profile, you may do so by running `code $PROFILE` in `pwsh` after you have installed it, which will open your `pwsh` user profile in VSCode. You may then copy the contents of [`scripts/Initialize-Shell.ps1`](<https://github.com/softboiler/copier-pipeline/blob/main/scripts/Initialize-Shell.ps1>) into a conditional statement that checks whether you are in this project's directory (e.g. `copier-pipeline`), like so:
 
@@ -313,7 +313,7 @@ This repository features tooling that bootstraps the entire development environm
 - Creates a virtual environment.
 - Syncs submodules.
 - Syncs a Python [virtual environment](#virtual-environment) to platform-specific dependencies in `lock.json`.
-- Installs pre-commit hooks.
+- Installs prek hooks.
 - Conditionally runs setup specific to CI or Dev Containers.
 
 [Workflow](#workflow)
@@ -323,7 +323,7 @@ This repository features tooling that bootstraps the entire development environm
 This project defines VSCode Tasks ([Palette: `Tasks: Run task`](#vscode-command-palette)) defined in `.vscode/tasks.json` that run some common actions:
 
 - `setup: Sync contributor environment`: Run the [contribution environment sync](#contribution-environment-sync) script.
-- `pre-commit`: Trigger `pre-commit` on your staged changes.
+- `prek`: Trigger `prek` on your staged changes.
 - `git: Rebase back to fork`: Trigger an interactive rebase of commits made to a feature branch
 - `task: Run pytest with coverage`: Generates a local coverage report for review with `coverage report` or for local gutter highlights with the [Coverage Gutters VSCode extension](https://marketplace.visualstudio.com/items?itemName=ryanluker.vscode-coverage-gutters).
 - `task: sphinx-autobuild docs (preview)`: Build and serve the documentation locally for previewing. `Ctrl+click` on the displayed IP `http://127.0.0.1:8000` (points to `localhost`) in the terminal to preview documentation live as you make changes.
@@ -353,7 +353,7 @@ You may choose to bind `Tasks: Run task` command to a keyboard shortcut of your 
 
 The following tasks are less-commonly needed, used mostly by maintainers, or can otherwise be disruptive by triggering lots of changes across the project:
 
-- `pre-commit: all`: Trigger `pre-commit` on all tracked files. Run this if making rule changes in tooling or when tool behavior changes (e.g. `ruff`, `markdownlint-cli2`).
+- `prek: all`: Trigger `prek` on all tracked files. Run this if making rule changes in tooling or when tool behavior changes (e.g. `ruff`, `markdownlint-cli2`).
 - `task: Run ruff`: Check and format all files with `ruff`. Run this whenever an update to `ruff` or its rules causes a behavior change.
 - `setup: Sync with template`: Sync the project with its template, generally only used by maintainers and when bumping versions.
 - `setup: Perform first-time setup`: Usually only run after the very first commits of a project.

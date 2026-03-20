@@ -148,6 +148,18 @@
       "label": "uv-sync 🔃 uv sync ...",
       "command": "./j.ps1 uv-sync ${input:args}"
     },
+    {
+      "label": "uv-add ➕ Add Python package to pyproject.toml (uv add ...)",
+      "command": "./j.ps1 uv-add ${input:args}"
+    },
+    {
+      "label": "uv-remove ➖ Remove Python package from pyproject.toml (uv remove ...)",
+      "command": "./j.ps1 uv-remove ${input:args}"
+    },
+    {
+      "label": "uv-re-add ➖➕ Re-add Python package to change version in pyproject.toml",
+      "command": "./j.ps1 uv-re-add ${input:args}"
+    },
 
     //* 🐍 Python
     {
@@ -177,6 +189,10 @@
       "command": "./j.ps1 tool-pytest ${input:args}"
     },
     {
+      "label": "tool-pytest-fast 🧪 pytest fast (pytest -m 'not slow' ...)",
+      "command": "./j.ps1 tool-pytest ${input:args}"
+    },
+    {
       "label": "tool-docs-preview 📖 preview docs",
       "command": "./j.ps1 tool-docs-preview"
     },
@@ -185,20 +201,20 @@
       "command": "./j.ps1 tool-docs-build"
     },
     {
-      "label": "tool-pre-commit 🔵 pre-commit run ...",
-      "command": "./j.ps1 tool-pre-commit ${input:args}"
+      "label": "tool-prek 🔵 prek run ...",
+      "command": "./j.ps1 tool-prek ${input:args}"
     },
     {
-      "label": "tool-pre-commit ⚡🔵 pre-commit run",
-      "command": "./j.ps1 tool-pre-commit"
+      "label": "tool-prek ⚡🔵 prek run",
+      "command": "./j.ps1 tool-prek"
     },
     {
-      "label": "tool-pre-commit-all 🔵 pre-commit run --all-files ...",
-      "command": "./j.ps1 tool-pre-commit-all ${input:args}"
+      "label": "tool-prek-all 🔵 prek run --all-files ...",
+      "command": "./j.ps1 tool-prek-all ${input:args}"
     },
     {
-      "label": "tool-pre-commit-all ⚡🔵 pre-commit run --all-files",
-      "command": "./j.ps1 tool-pre-commit-all"
+      "label": "tool-prek-all ⚡🔵 prek run --all-files",
+      "command": "./j.ps1 tool-prek-all"
     },
     {
       "label": "tool-check-clean ✔️ Check that the working tree is clean",
@@ -209,12 +225,12 @@
       "command": "./j.ps1 tool-fawltydeps ${input:args}"
     },
     {
-      "label": "tool-pyright ✔️ pyright",
-      "command": "./j.ps1 tool-pyright"
-    },
-    {
       "label": "tool-ruff ✔️ ruff check ... '.'",
       "command": "./j.ps1 tool-ruff ${input:args}"
+    },
+    {
+      "label": "tool-ty ✔️ ty",
+      "command": "./j.ps1 tool-ty"
     },
 
     //* 📦 Packaging
@@ -237,8 +253,8 @@
       "command": "./j.ps1 con-git-submodules"
     },
     {
-      "label": "con-pre-commit-hooks 👥 Install pre-commit hooks",
-      "command": "./j.ps1 con-pre-commit-hooks"
+      "label": "con-prek-hooks 👥 Install prek hooks",
+      "command": "./j.ps1 con-prek-hooks"
     },
     {
       "label": "con-norm-line-endings 👥 Normalize line endings",

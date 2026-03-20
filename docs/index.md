@@ -11,7 +11,6 @@ Copier template for research data pipelines.
 :::{toctree}
 :hidden:
 contributing
-examples/index
 changelog
 contributors
 apidocs/index

@@ -1,7 +1,6 @@
 """CLI for tools."""
 
 from collections.abc import Collection
-from json import dumps
 from pathlib import Path
 from re import finditer, sub
 from shlex import join, split
@@ -14,9 +13,9 @@ from copier_pipeline_dev.tools.environment import escape, run
 from copier_pipeline_dev.tools.types import ChangeType
 
 if version_info >= (3, 11):  # noqa: UP036, RUF100
-    from tomllib import loads  # pyright: ignore[reportMissingImports]
+    from tomllib import loads
 else:
-    from toml import loads  # pyright: ignore[reportMissingModuleSource]
+    from toml import loads
 
 APP = App(help_format="markdown")
 """CLI."""
@@ -85,19 +84,6 @@ def sync_local_dev_configs():
 def disable_concurrent_tests(addopts: str) -> str:
     """Normalize `addopts` string and disable concurrent pytest tests."""
     return sub(pattern=r"-n\s[^\s]+", repl="-n 0", string=join(split(addopts)))
-
-
-@APP.command
-def elevate_pyright_warnings():
-    """Elevate Pyright warnings to errors."""
-    config = loads(Path("pyproject.toml").read_text("utf-8"))
-    pyright = config["tool"]["pyright"]
-    for k, v in pyright.items():
-        if (rule := k).startswith("report") and (_level := v) == "warning":
-            pyright[rule] = "error"
-    Path("pyrightconfig.json").write_text(
-        encoding="utf-8", data=dumps(pyright, indent=2)
-    )
 
 
 @APP.command()

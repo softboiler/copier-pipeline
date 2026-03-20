@@ -1,7 +1,6 @@
 """Tools."""
 
 from base64 import b64encode
-from json import dumps
 from pathlib import Path
 from re import finditer, sub
 from shlex import join, split
@@ -62,16 +61,6 @@ def sync_local_dev_configs():
 def disable_concurrent_tests(addopts: str) -> str:
     """Normalize `addopts` string and disable concurrent pytest tests."""
     return sub(pattern=r"-n\s[^\s]+", repl="-n 0", string=join(split(addopts)))
-
-
-def elevate_pyright_warnings():
-    """Elevate Pyright warnings to errors."""
-    config = loads(Path("pyproject.toml").read_text("utf-8"))
-    pyright = config["tool"]["pyright"]
-    for k, v in pyright.items():
-        if (rule := k).startswith("report") and (_level := v) == "warning":
-            pyright[rule] = "error"
-    print(dumps(pyright, indent=2))  # noqa: T201
 
 
 def encode_powershell_script(script: str) -> bytes:

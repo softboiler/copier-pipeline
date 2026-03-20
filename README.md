@@ -11,11 +11,11 @@ This is a Copier template for Python projects, allowing for template evolution o
 
 This template should set up tooling that will help you as you code. Contributor and CI workflows in this template are tested on Windows 2022, MacOS 13, and Ubuntu 22.04 runners. Static analysis "moves errors to the left", allowing you to catch issues as soon as possible. Linting and code checks run as you write to catch problems before you run/publish/package your code. Features include:
 
-- [Pylance](https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance)/`pyright`: Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
+- [ty](https://marketplace.visualstudio.com/items?itemName=astral-sh.ty): Code refactoring tools, allowing you to move/rename functions and variables around your project, effortlessly refactoring code as your project grows in complexity. Also performs type-checking which will keep you honest if you're using type annotations. But you don't have to use type annotations out of the gate, consier delaying that learning journey until you get the basics down.
 - [Sourcery](https://sourcery.ai/): Teaches "Pythonic" behavior as you learn to code, encouraging cleaner ways of writing things.
 - [MyST-NB](https://myst-nb.readthedocs.io/en/latest/): Documentation in Markdown, supporting Jupyter notebooks, instead of rST. Having a docs page at project inception should encourage documentation as you go. Don't be afraid to publish incomplete pages, early adopters will appreciate the breadcrumbs. Use docs to help explain the "why" of things.
 - `pytest`: Write tests for your code in `tests` that ensure certain functionality works the way you say it does. The more robust your tests, the easier it is to make sweeping changes to your code.
-- `pre-commit`: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `pre-commit` happy and you will be happier in the long run.
+- `prek`: Enforces the above standards at commit time. If you must, skip the check with `git commit --no-verify`, but try to keep `prek` happy and you will be happier in the long run.
 - `ruff`: Formats code, enforces code style and best practices. Don't be afraid to suppress Ruff messages if you find them truly inappropriate for your use case, but consider the advice before suppressing messages.
 
 ## Account-enhanced features
@@ -24,7 +24,7 @@ Projects generated from this template have some features that require certain Gi
 
 - [Sourcery](https://sourcery.ai/): Sourcery does a great job of teaching valuable Python lessons as you code. It will suggest alternative wording for given code patterns, gently guiding you towards more "Pythonic" code.
 - [GitLens](https://www.gitkraken.com/gitlens): Installed along with recommended extensions. You may be prompted to create an account, which you can just link to your GitHub account if desired. This extension is indispensable for managing git-versioned projects.
-- [pre-commit.ci](https://pre-commit.ci/): The GitHub organization/user hosting this project needs `pre-commit.ci` enabled to leverage automatic running of `pre-commit` hooks online. This is not strictly necessary, but encouraged as a way to help keep your code in good shape as you write it.
+- [prek.ci](https://prek.ci/): The GitHub organization/user hosting this project needs `prek.ci` enabled to leverage automatic running of `prek` hooks online. This is not strictly necessary, but encouraged as a way to help keep your code in good shape as you write it.
 - [Codecov](https://about.codecov.io/): The GitHub organization/user hosting this project needs this app to check code coverage. A provider for determining test coverage in your CI. Tests are an important part of modern software. This template allows you to write tests when you are ready, but will not penalize you for not using tests early on, though you should configure Codecov for your GitHub user or organization so CI runs properly.
 - [Renovate](https://github.com/marketplace/renovate): This tool manages your dependencies automatically. When writing code, it is sensible to pin all of the packages you depend on to exact or minimum versions, and periodically bump those versions when you are certain it won't break your project. Using CI tools and tests, as well as local testing, will increase your confidence in being able to safely upgrade.
 
@@ -67,7 +67,6 @@ Generating a project from this template involves creating a local folder, initia
 - Run `copier copy gh:blakeNaccarato/copier-python .` and answer the questions.
 - Run `.tools/scripts/Initialize_Repo.ps1`. You can inspect the [setup script](https://github.com/blakeNaccarato/copier-python/blob/main/template/.tools/scripts/Initialize-Repo.ps1) if you like. It does the following:
   - Adds a `template` submodule for later updating.
-  - Adds a `typings` submodule to synchronize `pyright` in GitHub Actions with Pylance.
   - Sets up a Python virtual environment specific to this project. This may take a little while.
 - Restart VSCode to refresh the "Source Control" sidebar, removing duplicate buttons/submodules which have already been deinitialized. This can be done easily with the "Developer: Reload Window" command.
 - There should be only one button in the "Source Control" sidebar now, indicating "Publish Branch". Press that button.

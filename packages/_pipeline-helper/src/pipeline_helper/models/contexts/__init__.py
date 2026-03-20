@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-from context_models.types import Context
 from pydantic import BaseModel, Field
 
 from pipeline_helper.config import const
@@ -36,7 +35,7 @@ class PipelineHelperContext(BaseModel):
     """Whether to track kinds."""
 
 
-class PipelineHelperContexts(Context):
+class PipelineHelperContexts(BaseModel):
     """AMSL LabJack pipeline context."""
 
     pipeline_helper: PipelineHelperContext

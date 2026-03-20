@@ -48,8 +48,8 @@ Released while attempting to stabilize the release workflow, maintained here onl
 This release stabilizes the core mechanics of the template, including environment setup and synchronization, CI/CD workflows, documentation and tests, and more. The template now wraps `uv run` in `./dev.ps1` as `Invoke-Uv`, aliased to `iuv`, which keeps environment variables and hooks in sync in addition to the syncing done by `uv` itself.
 
 - Restructure template as a modern `uv` project with workspace layout and lockfiles
-- Add TOML and Prettier formatting to `pre-commit`
-- Introduce `Invoke-Uv.ps1` and `iuv` alias which wraps `uv run`, but also syncs submodules, environment variables, ensures pre-commit hooks are installed
+- Add TOML and Prettier formatting to `prek`
+- Introduce `Invoke-Uv.ps1` and `iuv` alias which wraps `uv run`, but also syncs submodules, environment variables, ensures prek hooks are installed
 - Have `Invoke-Uv.ps1` also work correctly in CI, invoking `--locked` and `--frozen` when appropriate and generating artifacts for inspecting the packages installed in CI runs
 - Transition Renovate dependency management to maintain PEP 621 requirements in `pyproject.toml` by automatically re-locking with `uv`
 - Simplify CI pipelines, don't commit during them, allowing this template to function in repos where `main` has push protection

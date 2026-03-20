@@ -5,17 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Self
 
-from copier_pipeline_pipeline.models.paths import paths
-from context_models.validators import context_field_validator, context_model_validator
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator, model_validator
 from pydantic.functional_validators import ModelWrapValidatorHandler
 
-from pipeline_helper.models.contexts import ROOTED
-from pipeline_helper.models.path import (
-    DataDir,
-    PipelineHelperContextStore,
-    get_pipeline_helper_config,
-)
 from pipeline_helper.sync_dvc.types import DvcValidationInfo
 from pipeline_helper.sync_dvc.validators import (
     dvc_add_param,
@@ -24,12 +16,10 @@ from pipeline_helper.sync_dvc.validators import (
 )
 
 
-class Stage(PipelineHelperContextStore):
+class Stage(BaseModel):
     """Base of pipeline stage models."""
 
-    model_config = get_pipeline_helper_config(ROOTED, kinds_from=paths)
-
-    @context_model_validator(mode="wrap")
+    @model_validator(mode="wrap")
     @classmethod
     def dvc_prepare_stage(
         cls,
@@ -40,19 +30,17 @@ class Stage(PipelineHelperContextStore):
         """Prepare a pipeline stage for `dvc.yaml`."""
         return dvc_prepare_stage(data, handler, info, model=cls)
 
-    @context_field_validator("*", mode="after")
+    @field_validator("*", mode="after")
     @classmethod
     def dvc_add_param(cls, value: Any, info: DvcValidationInfo) -> Any:
         """Add param to global parameters and stage command for `dvc.yaml`."""
         return dvc_add_param(value, info, fields=cls.model_fields)
 
 
-class StagePaths(PipelineHelperContextStore):
+class StagePaths(BaseModel):
     """Paths for stage dependencies and outputs."""
 
-    model_config = get_pipeline_helper_config(ROOTED, kinds_from=paths)
-
-    @context_field_validator("*", mode="after")
+    @field_validator("*", mode="after")
     @classmethod
     def dvc_set_stage_path(cls, path: Path, info: DvcValidationInfo) -> Path:
         """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
@@ -72,9 +60,9 @@ class Outs(StagePaths):
 class DfsPlotsOuts(Outs):
     """Stage output paths including data frames and plots."""
 
-    dfs: DataDir
+    dfs: Path
     """Output data directory for this stage."""
-    plots: DataDir
+    plots: Path
     """Output plots directory for this stage."""
 
 
