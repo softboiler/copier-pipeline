@@ -7,17 +7,23 @@ name = "copier-pipeline-dev"
 version = "0.0.0"
 requires-python = ">=3.11"
 dependencies = [
-  "cappa>=0.26.4",
+  "cappa>=0.22.4",
   "cyclopts>=3.14.2",
+  "devtools>=0.12.2",
   "dulwich>=0.22.1",
+  "ipython>=9.3.0",
   "pydantic-settings>=2.5.2",
+  "pydantic>=2.9.1",
   "python-dotenv>=1.0.1",
   #? Docs
   "docutils>=0.21.2",
   "myst-parser>=3.0.1",
   "numpydoc>=1.7.0",
+  "python-dotenv>=1.1.1",
   "ruamel-yaml>=0.18.6",
   "sphinx>=7.3.7",
+  #? Tests
+  "pytest>=8.4.1",
 ]
 [project.scripts]
 copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
@@ -25,11 +31,6 @@ copier-pipeline-dev = "copier_pipeline_dev.__main__:main"
 [tool.fawltydeps]
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
-ignore_undeclared = [
-  "copier_pipeline_dev",
-  "copier_pipeline_pipeline",
-  "copier_pipeline",
-  "toml",
-]
+ignore_undeclared = ["copier_pipeline_dev", "copier_pipeline_pipeline", "copier_pipeline", "toml"]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]

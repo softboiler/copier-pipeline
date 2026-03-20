@@ -1,17 +1,22 @@
-#* Versions
+#* Variables
+ci :=\
+  env('CI', empty)
 python_version :=\
   env('PYTHON_VERSION', empty)
-ci :=\
-  if env('CI', empty)=='1' { true } else { false }
 
-# Binaries
-_uv :=\
-  if ci==true { './uv' } else { 'uv' }
-_uvx :=\
-  if ci==true { './uvx' } else { 'uvx' }
+#* Binaries
+uv :=\
+  if ci!=empty { 'uv' } else { './uv' }
+uvx :=\
+  if ci!=empty { 'uvx' } else { './uvx' }
 
-#* Reusable shell preamble
-pwsh_pre := '.' + sp + 'scripts/pre.ps1'
+#* Shell preamble
+pre :=\
+  script_pre + ';'
+script_pre :=\
+  '.' + sp + j
+j :=\
+  './j.ps1'
 
 #* File extensions
 sh_ext :=\
@@ -35,7 +40,7 @@ dquote :=\
   '"'
 
 #* Messages
-_na :=\
+na :=\
   'not applicable for this OS.'
 
 #* Used to represent a null result where Just would otherwise mishandle a ''
