@@ -8,14 +8,14 @@ from typing import Any, Literal
 
 from cappa.arg import Arg
 from more_itertools import first
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationInfo
 from pydantic.fields import FieldInfo
 from pydantic.functional_validators import ModelWrapValidatorHandler
 
 from pipeline_helper import sync_dvc
 from pipeline_helper.sync_dvc.contexts import DVC
 from pipeline_helper.sync_dvc.dvc import OutFlags, Stage
-from pipeline_helper.sync_dvc.types import DvcValidationInfo, Model
+from pipeline_helper.sync_dvc.types import Model
 
 
 class Constants(BaseModel):
@@ -37,7 +37,7 @@ const = Constants()
 def dvc_prepare_stage(
     data: dict[str, Any],
     handler: ModelWrapValidatorHandler[Model],
-    info: DvcValidationInfo,
+    info: ValidationInfo,
     model: type[Model],
 ) -> Model:
     """Prepare a pipeline stage for `dvc.yaml`."""
@@ -62,7 +62,7 @@ def dvc_prepare_stage(
 
 
 def dvc_add_param(
-    value: Any, info: DvcValidationInfo, fields: dict[str, FieldInfo]
+    value: Any, info: ValidationInfo, fields: dict[str, FieldInfo]
 ) -> Any:
     # sourcery skip: low-code-quality
     """Add param to global parameters and stage command for `dvc.yaml`."""
@@ -111,7 +111,7 @@ def dvc_add_param(
 
 
 def dvc_set_stage_path(
-    path: Path, info: DvcValidationInfo, kind: Literal["deps", "outs"]
+    path: Path, info: ValidationInfo, kind: Literal["deps", "outs"]
 ) -> Path:
     """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
     if info.field_name != "context" and (dvc := info.context.get(DVC)):
@@ -133,7 +133,7 @@ def dvc_set_stage_path(
 
 
 def dvc_set_only_sample(
-    only_sample: bool, info: DvcValidationInfo, sample_field: str
+    only_sample: bool, info: ValidationInfo, sample_field: str
 ) -> bool:
     """Set the only sample for `dvc.yaml` if `only_sample` is enabled."""
     if (
@@ -147,7 +147,7 @@ def dvc_set_only_sample(
 
 
 def dvc_extend_with_timestamp_suffixed_plots(
-    times: list[str], info: DvcValidationInfo
+    times: list[str], info: ValidationInfo
 ) -> list[str]:
     """Extend stage plots for `dvc.yaml` with timestamp-suffixed plots."""
     if info.field_name != "context" and (dvc := info.context.get(DVC)) and dvc.plot_dir:
@@ -164,7 +164,7 @@ def dvc_extend_with_timestamp_suffixed_plots(
 
 
 def dvc_extend_with_named_plots_if_missing(
-    model: BaseModel, info: DvcValidationInfo
+    model: BaseModel, info: ValidationInfo
 ) -> Any:
     """Extend stage plots for `dvc.yaml` with named plots if plots haven't been set."""
     if (

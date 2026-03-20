@@ -3,8 +3,9 @@
 from pathlib import Path
 from typing import get_args
 
-from copier_pipeline_pipeline.models.generated.types.stages import StageName
 from pydantic import BaseModel
+
+from copier_pipeline_pipeline.models.generated.types.stages import StageName
 
 
 class Paths(BaseModel):

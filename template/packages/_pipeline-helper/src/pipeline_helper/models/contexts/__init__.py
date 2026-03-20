@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import Annotated as Ann
 from typing import TypeAlias
 
-from context_models.types import Context
 from pydantic import (
     BaseModel,
     DirectoryPath,
@@ -15,7 +14,6 @@ from pydantic import (
 )
 
 from pipeline_helper.config import const
-from pipeline_helper.models.contexts.types import Kinds
 
 pipeline_helper = "pipeline_helper"
 """Context name for `pipeline_helper`."""

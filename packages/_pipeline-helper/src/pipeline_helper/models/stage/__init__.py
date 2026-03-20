@@ -5,10 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any, Self
 
-from pydantic import BaseModel, field_validator, model_validator
+from pydantic import BaseModel, ValidationInfo, field_validator, model_validator
 from pydantic.functional_validators import ModelWrapValidatorHandler
 
-from pipeline_helper.sync_dvc.types import DvcValidationInfo
 from pipeline_helper.sync_dvc.validators import (
     dvc_add_param,
     dvc_prepare_stage,
@@ -25,14 +24,14 @@ class Stage(BaseModel):
         cls,
         data: dict[str, Any],
         handler: ModelWrapValidatorHandler[Self],
-        info: DvcValidationInfo,
+        info: ValidationInfo,
     ) -> Self:
         """Prepare a pipeline stage for `dvc.yaml`."""
         return dvc_prepare_stage(data, handler, info, model=cls)
 
     @field_validator("*", mode="after")
     @classmethod
-    def dvc_add_param(cls, value: Any, info: DvcValidationInfo) -> Any:
+    def dvc_add_param(cls, value: Any, info: ValidationInfo) -> Any:
         """Add param to global parameters and stage command for `dvc.yaml`."""
         return dvc_add_param(value, info, fields=cls.model_fields)
 
@@ -42,7 +41,7 @@ class StagePaths(BaseModel):
 
     @field_validator("*", mode="after")
     @classmethod
-    def dvc_set_stage_path(cls, path: Path, info: DvcValidationInfo) -> Path:
+    def dvc_set_stage_path(cls, path: Path, info: ValidationInfo) -> Path:
         """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
         return dvc_set_stage_path(
             path, info, kind="deps" if issubclass(cls, Deps) else "outs"

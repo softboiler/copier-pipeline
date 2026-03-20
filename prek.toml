@@ -59,8 +59,6 @@ language = "system"
 entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps --config-file packages/_pipeline/pyproject.toml"
 files = '''(?x)^(
   packages/_pipeline/.*
-  |docs/.*
-  |tests/.*
 )$'''
 
 [[repos.hooks]]
@@ -71,9 +69,7 @@ pass_filenames = false
 language = "system"
 entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps --config-file packages/_pipeline-helper/pyproject.toml"
 files = '''(?x)^(
-  packages/_pipeline/.*
-  |docs/.*
-  |tests/.*
+  packages/_pipeline-helper/.*
 )$'''
 
 [[repos.hooks]]
@@ -86,12 +82,43 @@ entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-pytest-fast'
 files = '''(?x)^(
   .*/pyproject\.toml
   |docs/.*
-  |requirements/.*
+  |packages/.*
   |scripts/.*
   |src/.*
   |tests/.*
 )$'''
 
+[[repos.hooks]]
+priority = 2
+id = "ruff"
+name = "ruff"
+pass_filenames = false
+language = "system"
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ruff'
+files = '''(?x)^(
+  .*/pyproject\.toml
+  |docs/.*
+  |packages/.*
+  |scripts/.*
+  |src/.*
+  |tests/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "ty"
+name = "ty"
+pass_filenames = false
+language = "system"
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ty'
+files = '''(?x)^(
+  .*/pyproject\.toml
+  |docs/.*
+  |packages/.*
+  |scripts/.*
+  |src/.*
+  |tests/.*
+)$'''
 
 [[repos]]
 repo = "builtin"

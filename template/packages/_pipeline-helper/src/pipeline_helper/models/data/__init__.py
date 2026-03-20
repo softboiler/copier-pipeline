@@ -2,8 +2,6 @@
 
 from typing import Generic
 
-from context_models.validators import context_field_validator
-from matplotlib.figure import Figure
 from pandas import DataFrame
 from pydantic import BaseModel, Field
 
@@ -12,8 +10,6 @@ from pipeline_helper.models.path import (
     PipelineHelperContextStore,
     get_pipeline_helper_config,
 )
-from pipeline_helper.sync_dvc.types import DvcValidationInfo
-from pipeline_helper.sync_dvc.validators import dvc_append_plot_name
 
 
 class Dfs(BaseModel, arbitrary_types_allowed=True):

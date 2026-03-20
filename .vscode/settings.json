@@ -214,6 +214,9 @@
   "rewrap.wholeComment": false,
   //* Sourcery
   "sourcery.codeLens": false,
+  //* Ty
+  "ty.importStrategy": "fromEnvironment",
+  "ty.diagnosticMode": "workspace",
   //* vscode-icons
   "workbench.iconTheme": "vscode-icons",
   "vsicons.presets.hideExplorerArrows": true,

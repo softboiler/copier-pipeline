@@ -3,7 +3,6 @@
 from pathlib import Path
 from typing import Any
 
-from context_models.types import Context
 from pydantic import BaseModel, Field
 
 from pipeline_helper.sync_dvc.dvc import DvcYamlModel, Stage
