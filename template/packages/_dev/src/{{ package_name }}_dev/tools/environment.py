@@ -54,7 +54,7 @@ class Environment(BaseSettings):
     )
 
     @classmethod
-    def settings_customise_sources(cls, settings_cls, **_):  # pyright: ignore[reportIncompatibleMethodOverride]
+    def settings_customise_sources(cls, settings_cls, **_):
         """Customize so that all keys are loaded despite not being model fields."""
         return (PyprojectTomlConfigSettingsSource(settings_cls),)
 

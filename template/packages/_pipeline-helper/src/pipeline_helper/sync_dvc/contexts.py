@@ -1,7 +1,7 @@
 """Contexts."""
 
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from pydantic import BaseModel, Field
 
@@ -28,7 +28,7 @@ class DvcContext(BaseModel):
     """Current plot names."""
 
 
-class DvcContexts(Context):
+class DvcContexts(TypedDict):
     """DVC contexts."""
 
     dvc: DvcContext

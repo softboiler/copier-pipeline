@@ -59,7 +59,7 @@ def main(params: SyncDvc):
             },
         ),
     )
-    run(args="pre-commit run --all-files prettier", check=False, capture_output=True)
+    run(args="prek run --all-files prettier", check=False, capture_output=True)
 
 
 def get_dvc_context(params: dict[str, Any], stages: str) -> DvcContext:
@@ -77,8 +77,8 @@ def get_dvc_context(params: dict[str, Any], stages: str) -> DvcContext:
         "_Stages",
         **{
             k: (v, ...) for k, v in {"context": CombinedContext, **stage_models}.items()
-        },  # pyright: ignore[reportArgumentType]
-    )(**{
+        },
+    )(**{  # ty:ignore[no-matching-overload]
         "context": {
             **stage.model_config["plugin_settings"]["context"],
             **DvcContexts(dvc=DvcContext()),

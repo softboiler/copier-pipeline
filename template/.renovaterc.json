@@ -14,14 +14,12 @@
   "separateMajorMinor": false,
   "lockFileMaintenance": { "enabled": true },
   "git-submodules": { "enabled": true },
-  "pre-commit": { "enabled": true },
   "enabledManagers": [
     "custom.regex",
     "devcontainer",
     "git-submodules",
     "github-actions",
-    "pep621",
-    "pre-commit"
+    "pep621"
   ],
   "pep621": { "rangeStrategy": "bump" },
   "customManagers": [
@@ -53,21 +51,6 @@
       "matchStrings": [
         "^\\s+\"JUST_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
         "^\\s+just_version: { value: \"(?<currentValue>[^\"]+)\" }$"
-      ]
-    },
-    {
-      "description": "pylance",
-      "customType": "regex",
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "microsoft/pylance-release",
-      "managerFilePatterns": [
-        "^env\\.json$",
-        "^\\.github/workflows/env\\.yml$",
-        "^\\.vscode/settings\\.json$"
-      ],
-      "matchStrings": [
-        "^\\s+\"PYRIGHT_PYTHON_PYLANCE_VERSION\": \"(?<currentValue>[^\"]+)\",?$",
-        "^\\s+pyright_python_pylance_version: { value: \"(?<currentValue>[^\"]+)\" }$"
       ]
     },
     {

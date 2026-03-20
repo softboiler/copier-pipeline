@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "aaron-bond.better-comments",
+    "astral-sh.ty",
     "bierner.markdown-mermaid",
     "bierner.markdown-preview-github-styles",
     "charliermarsh.ruff",
@@ -13,7 +14,7 @@
     "GitHub.remotehub",
     "github.vscode-github-actions",
     "github.vscode-pull-request-github",
-    "iterative.dvc",
+    "lakefs.lakefs-dvc",
     "ms-azuretools.vscode-docker",
     "ms-python.debugpy",
     "ms-python.python",

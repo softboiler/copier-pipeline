@@ -109,9 +109,9 @@ def report_errors_in_docstring(doc: str, document: nodes.document) -> None:
     parsed = NumpyDocString(doc)
     for section_title in _PARAMETERS_SECTIONS:
         for parameter in parsed[section_title]:
-            if ":" in parameter.name and (source := document.current_source):  # pyright: ignore[reportAttributeAccessIssue]
+            if ":" in parameter.name and (source := document.current_source):
                 document.reporter.warning(
-                    f"Found colon in parameter name ({parameter.name}), please leave a space between the parameter name and the colon if you meant this to be a type annotation.",  # pyright: ignore[reportAttributeAccessIssue]
+                    f"Found colon in parameter name ({parameter.name}), please leave a space between the parameter name and the colon if you meant this to be a type annotation.",
                     # If we don't explicitly pass "source" here, then
                     # `docutils.utils.system_message` will try to find both the source
                     # and line number. Unfortunately, `autodoc2.sphinx.docstring`
@@ -128,19 +128,19 @@ def to_pure_markdown(doc: str, use_other_params_as_outputs: bool = True) -> str:
     result = ""
     if summary := parsed["Summary"]:
         # Can be multiple lines
-        result += render_regular_section(summary)  # pyright: ignore[reportArgumentType]
+        result += render_regular_section(summary)
     if extended_summary := parsed["Extended Summary"]:
-        result += "\n\n" + render_regular_section(extended_summary)  # pyright: ignore[reportArgumentType]
+        result += "\n\n" + render_regular_section(extended_summary)
     for section_title in _PARAMETERS_SECTIONS:
         section = parsed[section_title]
         if not section:
             continue
         if section_title == "Other Parameters" and use_other_params_as_outputs:
             section_title = "Output Files"
-        result += f"\n\n# {section_title}\n\n{render_parameter_section(section)}"  # pyright: ignore[reportArgumentType]
+        result += f"\n\n# {section_title}\n\n{render_parameter_section(section)}"
     for section_title in _REGULAR_SECTIONS:
         if section := parsed[section_title]:
-            result += f"\n\n# {section_title}\n\n{render_regular_section(section)}"  # pyright: ignore[reportArgumentType]
+            result += f"\n\n# {section_title}\n\n{render_regular_section(section)}"
     return result
 
 

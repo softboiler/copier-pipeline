@@ -1,0 +1,186 @@
+exclude = '''(?x)^(
+  \.copier-answers\.yml
+  |changelog/towncrier_template\.md\.jinja
+)$'''
+
+default_install_hook_types = ["pre-commit", "post-checkout"]
+
+[[repos]]
+repo = "meta"
+hooks = [
+  # { priority = 0, id = "check-hooks-apply" },      #? Enable this to ensure each hook runs against at least one file
+  { priority = 0, id = "check-useless-excludes" },
+]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+priority = 1
+id = "sync"
+name = "sync"
+stages = ["pre-commit", "post-checkout"]
+pass_filenames = false
+language = "system"
+entry = "pwsh ./j.ps1 uv-sync"
+
+[[repos.hooks]]
+priority = 2
+id = "fawltydeps"
+name = "fawltydeps"
+pass_filenames = false
+language = "system"
+entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps"
+files = '''(?x)^(
+  src/.*
+  |pyproject\.toml
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "fawltydeps-dev"
+name = "fawltydeps-dev"
+pass_filenames = false
+language = "system"
+entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps --config-file packages/_dev/pyproject.toml"
+files = '''(?x)^(
+  packages/_dev/.*
+  |docs/.*
+  |tests/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "fawltydeps-pipeline"
+name = "fawltydeps-pipeline"
+pass_filenames = false
+language = "system"
+entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps --config-file packages/_pipeline/pyproject.toml"
+files = '''(?x)^(
+  packages/_pipeline/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "fawltydeps-pipeline-helper"
+name = "fawltydeps-pipeline-helper"
+pass_filenames = false
+language = "system"
+entry = "pwsh -NonInteractive -NoProfile ./j.ps1 tool-fawltydeps --config-file packages/_pipeline-helper/pyproject.toml"
+files = '''(?x)^(
+  packages/_pipeline-helper/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "pytest-fast"
+name = "pytest-fast"
+pass_filenames = false
+language = "system"
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-pytest-fast'
+files = '''(?x)^(
+  .*/pyproject\.toml
+  |docs/.*
+  |packages/.*
+  |scripts/.*
+  |src/.*
+  |tests/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "ruff"
+name = "ruff"
+pass_filenames = false
+language = "system"
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ruff'
+files = '''(?x)^(
+  .*/pyproject\.toml
+  |docs/.*
+  |packages/.*
+  |scripts/.*
+  |src/.*
+  |tests/.*
+)$'''
+
+[[repos.hooks]]
+priority = 2
+id = "ty"
+name = "ty"
+pass_filenames = false
+language = "system"
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ty'
+files = '''(?x)^(
+  .*/pyproject\.toml
+  |docs/.*
+  |packages/.*
+  |scripts/.*
+  |src/.*
+  |tests/.*
+)$'''
+
+[[repos]]
+repo = "builtin"
+hooks = [
+  { priority = 2, id = "check-merge-conflict" },
+  { priority = 2, id = "detect-private-key" },
+  { priority = 2, id = "end-of-file-fixer" },
+  { priority = 2, id = "mixed-line-ending" },
+  { priority = 2, id = "trailing-whitespace", args = [
+    "--markdown-linebreak-ext=md",
+  ] },
+]
+
+[[repos]]
+repo = "https://github.com/DavidAnson/markdownlint-cli2"
+rev = "v0.13.0"
+[[repos.hooks]]
+priority = 2
+id = "markdownlint-cli2"
+
+[[repos]]
+repo = "https://github.com/srstevenson/nb-clean"
+rev = "3.3.0"
+[[repos.hooks]]
+priority = 2
+id = "nb-clean"
+args = [
+  "--remove-empty-cells",
+  "--preserve-notebook-metadata",
+  "--preserve-cell-metadata",
+  "tags",
+  "--",
+]
+files = '''(?x)^(
+  docs/.*
+  |notebooks/.*
+  |src/.*
+  |tests/.*
+)$'''
+
+[[repos]]
+repo = "https://github.com/rbubley/mirrors-prettier"
+rev = "v3.5.1"
+[[repos.hooks]]
+priority = 2
+id = "prettier"
+
+[[repos]]
+repo = "https://github.com/ComPWA/taplo-pre-commit"
+rev = "v0.9.3"
+[[repos.hooks]]
+priority = 2
+id = "taplo-format"
+
+[[repos]]
+repo = "https://github.com/charliermarsh/ruff-pre-commit"
+rev = "v0.9.3"
+[[repos.hooks]]
+priority = 2
+id = "ruff"
+args = ["--extend-fixable", "PIE790"]
+types_or = ["python", "pyi", "jupyter"]
+[[repos.hooks]]
+priority = 2
+id = "ruff-format"
+types_or = ["python", "pyi", "jupyter"]
