@@ -21,4 +21,4 @@ dependencies = [
 [tool.fawltydeps]
 deps = ["packages/_pipeline-helper/pyproject.toml"]
 code = ["packages/_pipeline-helper/src"]
-ignore_undeclared = ["copier_pipeline_pipeline", "pipeline_helper", "context_models"]
+ignore_undeclared = ["copier_pipeline_pipeline", "pipeline_helper"]

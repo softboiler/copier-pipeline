@@ -14,14 +14,12 @@
   "separateMajorMinor": false,
   "lockFileMaintenance": { "enabled": true },
   "git-submodules": { "enabled": true },
-  "prek": { "enabled": true },
   "enabledManagers": [
     "custom.regex",
     "devcontainer",
     "git-submodules",
     "github-actions",
-    "pep621",
-    "prek"
+    "pep621"
   ],
   "github-actions": {
     "managerFilePatterns": ["(^|/)\\.github/workflows/[^/]+$"]

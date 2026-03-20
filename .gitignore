@@ -10,6 +10,8 @@
 /uv.previous
 /uvx.exe
 /uv.exe.previous.exe
+# Logs
+log.jsonl
 # Dummy files for testing recipes
 .dummy*
 # Local dev environment settings
