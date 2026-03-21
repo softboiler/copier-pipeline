@@ -1,4 +1,4 @@
-"""Sync `dvc.yaml` and `params.yaml` with pipeline specification."""
+"""Sync `dvc.yml` and `params.yml` with pipeline specification."""
 
 from collections.abc import Sized
 from importlib import import_module
@@ -21,7 +21,7 @@ from pipeline_helper.sync_dvc.types import Model
 
 
 def main(params: SyncDvc):
-    """Sync `dvc.yaml` and `params.yaml` with pipeline specification."""
+    """Sync `dvc.yml` and `params.yml` with pipeline specification."""
     dvc = get_dvc_context(
         params=(
             safe_load(params.params.read_text(encoding="utf-8"))

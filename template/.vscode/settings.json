@@ -26,7 +26,10 @@
   },
   //! Git
   "git.allowNoVerifyCommit": true,
+  "git.commandsToLog": ["commit", "push"],
   "git.confirmNoVerifyCommit": false,
+  "git.diagnosticsCommitHook.enabled": true,
+  "git.diagnosticsCommitHook.sources": { "*": "error" },
   //! Line-width
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 88,
@@ -209,6 +212,7 @@
   "rewrap.wholeComment": false,
   //* Sourcery
   "sourcery.codeLens": false,
+  "sourcery.suggestFixes": false,
   //* Ty
   "ty.importStrategy": "fromEnvironment",
   "ty.diagnosticMode": "workspace",

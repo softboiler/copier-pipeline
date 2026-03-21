@@ -15,9 +15,9 @@ class DvcContext(BaseModel):
     """DVC context."""
 
     model: DvcYamlModel = Field(default_factory=DvcYamlModel)
-    """Synchronized `dvc.yaml` configuration."""
+    """Synchronized `dvc.yml` configuration."""
     params: dict[str, Any] = Field(default_factory=dict)
-    """DVC `params.yaml` synchronized to `dvc.yaml`."""
+    """DVC `params.yml` synchronized to `dvc.yml`."""
     stage: Stage = Field(default_factory=lambda: Stage(cmd=""))
     """Current stage."""
     only_sample: str = ""

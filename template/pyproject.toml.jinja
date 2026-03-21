@@ -79,8 +79,6 @@ python-version = "{{ python_version }}"
 [tool.uv.sources]
 {{ project_name }}-dev = { workspace = true }
 {{ project_name }}-pipeline = { workspace = true }
-cachier = { path = "packages/cachier", editable = true }
-context-models = { path = "packages/context-models", editable = true }
 pipeline-helper = { workspace = true }
 [tool.uv.workspace]
 members = ["packages/_dev", "packages/_pipeline", "packages/_pipeline-helper"]
@@ -107,6 +105,7 @@ code = ["src"]
 addopts = """
   -p no:legacypaths
   -r a
+  --full-trace
   --strict-config
   --strict-markers
   --suppress-no-test-exit-code
@@ -144,7 +143,6 @@ typeCheckingMode = "off"
 include = [
   "src",
   "docs",
-  "notebooks",
   "packages/_dev",
   "packages/_pipeline",
   "packages/_pipeline-helper",

@@ -1,4 +1,4 @@
-"""Validators for syncing `dvc.yaml` and `params.yaml` with pipeline specification."""
+"""Validators for syncing `dvc.yml` and `params.yml` with pipeline specification."""
 
 from collections.abc import Sequence
 from datetime import datetime
@@ -24,11 +24,11 @@ class Constants(BaseModel):
     table_key: str = sync_dvc.const.table_key
     """Key for the global parameters table."""
     out_config: OutFlags = OutFlags(persist=True)
-    """Default `dvc.yaml` configuration for `outs`."""
+    """Default `dvc.yml` configuration for `outs`."""
     skip_cloud: list[str] = ["data/mboxes", "data/reqs"]
     """These paths are too large and unwieldy to cache or push to cloud storage."""
     out_skip_cloud_config: OutFlags = OutFlags(cache=False, persist=True, push=False)
-    """Default `dvc.yaml` configuration for `outs` that skip the cloud."""
+    """Default `dvc.yml` configuration for `outs` that skip the cloud."""
 
 
 const = Constants()
@@ -40,7 +40,7 @@ def dvc_prepare_stage(
     info: ValidationInfo,
     model: type[Model],
 ) -> Model:
-    """Prepare a pipeline stage for `dvc.yaml`."""
+    """Prepare a pipeline stage for `dvc.yml`."""
     if not (dvc := info.context.get(DVC)):
         return handler(data)
     if not dvc.model.stages:
@@ -65,7 +65,7 @@ def dvc_add_param(
     value: Any, info: ValidationInfo, fields: dict[str, FieldInfo]
 ) -> Any:
     # sourcery skip: low-code-quality
-    """Add param to global parameters and stage command for `dvc.yaml`."""
+    """Add param to global parameters and stage command for `dvc.yml`."""
     param = first(
         (m for m in fields[info.field_name].metadata if isinstance(m, Arg)), default=Arg
     )
@@ -113,7 +113,7 @@ def dvc_add_param(
 def dvc_set_stage_path(
     path: Path, info: ValidationInfo, kind: Literal["deps", "outs"]
 ) -> Path:
-    """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
+    """Set stage path as a stage dep, plot, or out for `dvc.yml`."""
     if info.field_name != "context" and (dvc := info.context.get(DVC)):
         path = Path(path).resolve().relative_to(Path.cwd())
         if info.field_name == "plots":
@@ -135,7 +135,7 @@ def dvc_set_stage_path(
 def dvc_set_only_sample(
     only_sample: bool, info: ValidationInfo, sample_field: str
 ) -> bool:
-    """Set the only sample for `dvc.yaml` if `only_sample` is enabled."""
+    """Set the only sample for `dvc.yml` if `only_sample` is enabled."""
     if (
         info.field_name != "context"
         and (dvc := info.context.get(DVC))
@@ -149,7 +149,7 @@ def dvc_set_only_sample(
 def dvc_extend_with_timestamp_suffixed_plots(
     times: list[str], info: ValidationInfo
 ) -> list[str]:
-    """Extend stage plots for `dvc.yaml` with timestamp-suffixed plots."""
+    """Extend stage plots for `dvc.yml` with timestamp-suffixed plots."""
     if info.field_name != "context" and (dvc := info.context.get(DVC)) and dvc.plot_dir:
         dvc.stage.plots.extend(
             sorted(
@@ -166,7 +166,7 @@ def dvc_extend_with_timestamp_suffixed_plots(
 def dvc_extend_with_named_plots_if_missing(
     model: BaseModel, info: ValidationInfo
 ) -> Any:
-    """Extend stage plots for `dvc.yaml` with named plots if plots haven't been set."""
+    """Extend stage plots for `dvc.yml` with named plots if plots haven't been set."""
     if (
         info.field_name != "context"
         and (dvc := info.context.get(DVC))

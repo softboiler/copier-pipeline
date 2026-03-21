@@ -1,4 +1,4 @@
-"""Model for `dvc.yaml`.
+"""Model for `dvc.yml`.
 
 Adapted from [iterative/dvcyaml-schema](https://github.com/iterative/dvcyaml-schema).
 
@@ -185,11 +185,11 @@ class Stage(DvcBaseModel):
     cmd: str | list[str]
     """(Required) Command to run (anything your system terminal can run).\n\nCan be a string or a list of commands."""
     wdir: str | None = None
-    """Working directory for the cmd, relative to `dvc.yaml`"""
+    """Working directory for the cmd, relative to `dvc.yml`"""
     deps: Dependencies = Field(default_factory=list)  # | None
     """List of the dependencies for the stage."""
     params: Params = Field(default_factory=list)  # | None
-    """List of dot-separated parameter dependency keys to track from `params.yaml`.\n\nMay contain other YAML/JSON/TOML/Python parameter file names, with a sub-list of the param names to track in them (leave empty to include all)."""
+    """List of dot-separated parameter dependency keys to track from `params.yml`.\n\nMay contain other YAML/JSON/TOML/Python parameter file names, with a sub-list of the param names to track in them (leave empty to include all)."""
     outs: Outs = Field(default_factory=list)  # | None
     """List of the outputs of the stage."""
     metrics: Outs = Field(default_factory=list)  # | None
@@ -244,9 +244,9 @@ TopLevelArtifacts: TypeAlias = dict[ArtifactIdOrFilePath, TopLevelArtifactFlags]
 
 
 class DvcYamlModel(DvcBaseModel):
-    model_config = ConfigDict(title="dvc.yaml", extra="forbid")
+    model_config = ConfigDict(title="dvc.yml", extra="forbid")
     vars: Vars = Field(default_factory=list, title="Variables")  # | None
-    """List of values for substitution.\n\nMay include any dict or a path to a params file which may be a string or a dict to params in the file).\n\nUse elsewhere in `dvc.yaml` with the `${}` substitution expression."""
+    """List of values for substitution.\n\nMay include any dict or a path to a params file which may be a string or a dict to params in the file).\n\nUse elsewhere in `dvc.yml` with the `${}` substitution expression."""
     stages: dict[StageName, Definition] = Field(default_factory=dict)  # | None
     """List of stages that form a pipeline."""
     plots: TopLevelPlots | TopLevelPlotsList = Field(default_factory=list)  # | None

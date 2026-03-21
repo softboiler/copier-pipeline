@@ -1,3 +1,5 @@
+#? Ignore template file
+.copier-answers.yml
 #? Prettier clobbers Myst-specific syntax in notebooks
 *.py
 *.ipynb

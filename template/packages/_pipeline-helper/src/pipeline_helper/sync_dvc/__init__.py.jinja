@@ -1,4 +1,4 @@
-"""Sync `dvc.yaml` and `params.yaml` with pipeline specification."""
+"""Sync `dvc.yml` and `params.yml` with pipeline specification."""
 
 from pathlib import Path
 
@@ -18,13 +18,13 @@ const = Constants()
 
 @command(default_long=True, invoke="pipeline_helper.sync_dvc.__main__.main")
 class SyncDvc(BaseModel):
-    """Sync `dvc.yaml` and `params.yaml` with pipeline specification."""
+    """Sync `dvc.yml` and `params.yml` with pipeline specification."""
 
     root: Path = Path.cwd()
     """Root directory for synced DVC configurations."""
-    pipeline: Path = Path("dvc.yaml")
+    pipeline: Path = Path("dvc.yml")
     """Primary config file describing the DVC pipeline."""
-    params: Path = Path("params.yaml")
+    params: Path = Path("params.yml")
     """DVC's primary parameters YAML file."""
     stages: str = "{{ package_name }}_pipeline.stages"
     """Dotted module path to the package containing stages."""

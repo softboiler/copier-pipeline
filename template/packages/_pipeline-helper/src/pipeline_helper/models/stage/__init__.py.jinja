@@ -26,13 +26,13 @@ class Stage(BaseModel):
         handler: ModelWrapValidatorHandler[Self],
         info: ValidationInfo,
     ) -> Self:
-        """Prepare a pipeline stage for `dvc.yaml`."""
+        """Prepare a pipeline stage for `dvc.yml`."""
         return dvc_prepare_stage(data, handler, info, model=cls)
 
     @field_validator("*", mode="after")
     @classmethod
     def dvc_add_param(cls, value: Any, info: ValidationInfo) -> Any:
-        """Add param to global parameters and stage command for `dvc.yaml`."""
+        """Add param to global parameters and stage command for `dvc.yml`."""
         return dvc_add_param(value, info, fields=cls.model_fields)
 
 
@@ -42,7 +42,7 @@ class StagePaths(BaseModel):
     @field_validator("*", mode="after")
     @classmethod
     def dvc_set_stage_path(cls, path: Path, info: ValidationInfo) -> Path:
-        """Set stage path as a stage dep, plot, or out for `dvc.yaml`."""
+        """Set stage path as a stage dep, plot, or out for `dvc.yml`."""
         return dvc_set_stage_path(
             path, info, kind="deps" if issubclass(cls, Deps) else "outs"
         )
