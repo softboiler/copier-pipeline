@@ -1,5 +1,5 @@
 [build-system]
-requires = ["uv-build==0.7.2"]
+requires = ["uv-build==0.11.11"]
 build-backend = "uv_build"
 
 [project]
@@ -18,11 +18,6 @@ classifiers = [
   # "Programming Language :: Python :: 3.14",  #? Not yet beta (https://peps.python.org/pep-0745)
 ]
 dependencies = []
-[project.urls]
-Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
-Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
-Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
-Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 [dependency-groups]
 dev = [
   #? Dev
@@ -61,9 +56,14 @@ dev = [
   "pytest-github-actions-annotate-failures>=0.2.0",
   "pytest>=8.3.4",
 ]
+[project.urls]
+Changes = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}/changelog.html"
+Docs = "https://{{ project_owner_github_username }}.github.io/{{ github_repo_name }}"
+Home = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}"
+Tracker = "https://github.com/{{ project_owner_github_username }}/{{ github_repo_name }}/issues"
 
 [tool.uv]
-required-version = ">=0.7.2"
+required-version = ">=0.11.11"
 constraint-dependencies = [
   #? Security
   #? https://nvd.nist.gov/vuln/detail/CVE-2024-37891
@@ -138,18 +138,20 @@ name = "Changes"
 showcontent = true
 
 [tool.pyright]
-typeCheckingMode = "off"
+typeCheckingMode = "off" #? Explicitly disable Pylance type checking to avoid prompt
+reportMissingImports = "none" #? Needed even when `typeCheckingMode` is `off`
 include = [
   "src",
   "docs",
+  "notebooks",
   "packages/_dev",
   "packages/_pipeline",
   "packages/_pipeline-helper",
+  "packages/my_shortcuts",
   "scripts",
   "tests",
 ]
 ignore = ["**/.*", "*:/**/.*", "*:/**/appdata"]
-
 
 [tool.ruff]
 cache-dir = ".cache/.ruff_cache"

@@ -1,6 +1,8 @@
 [build-system]
-requires = ["flit_core==3.9.0"]
-build-backend = "flit_core.buildapi"
+requires = ["uv-build==0.11.11"]
+build-backend = "uv_build"
+[tool.uv.build-backend]
+module-root = "."
 
 [project]
 name = "pipeline-helper"
@@ -21,4 +23,4 @@ dependencies = [
 [tool.fawltydeps]
 deps = ["packages/_pipeline-helper/pyproject.toml"]
 code = ["packages/_pipeline-helper/src"]
-ignore_undeclared = ["{{ package_name }}_pipeline", "pipeline_helper"]
+ignore_undeclared = ["{{ package_name }}", "{{ package_name }}_dev", "{{ package_name }}_pipeline", "pipeline_helper"]

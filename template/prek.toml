@@ -89,27 +89,11 @@ files = '''(?x)^(
 
 [[repos.hooks]]
 priority = 2
-id = "ruff"
-name = "ruff"
-pass_filenames = false
-language = "system"
-entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ruff'
-files = '''(?x)^(
-  .*/pyproject\.toml
-  |docs/.*
-  |packages/.*
-  |scripts/.*
-  |src/.*
-  |tests/.*
-)$'''
-
-[[repos.hooks]]
-priority = 2
 id = "ty"
 name = "ty"
 pass_filenames = false
 language = "system"
-entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ty'
+entry = 'pwsh -NonInteractive -NoProfile ./j.ps1 tool-ty --error-on-warning'
 files = '''(?x)^(
   .*/pyproject\.toml
   |docs/.*
@@ -174,10 +158,10 @@ id = "taplo-format"
 
 [[repos]]
 repo = "https://github.com/charliermarsh/ruff-pre-commit"
-rev = "v0.9.3"
+rev = "v0.15.6"
 [[repos.hooks]]
 priority = 2
-id = "ruff"
+id = "ruff-check"
 args = ["--extend-fixable", "PIE790"]
 types_or = ["python", "pyi", "jupyter"]
 [[repos.hooks]]

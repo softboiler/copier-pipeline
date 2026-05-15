@@ -27,7 +27,8 @@ function Invoke-Just {
     }
 
     #? Sync environment variables necessary for bootstrapping
-    $Uvx = $Env:CI ? 'uvx' : './uvx'
+    $ScriptRoot = Get-ScriptRoot
+    $Uvx = $Env:CI ? 'uvx' : "$ScriptRoot/uvx"
     $Environ = Merge-Envs ((Get-Env 'base'), $Vars)
     $Just = @('--from', "rust-just@$($Environ['JUST_VERSION'])", 'just')
 
@@ -48,7 +49,9 @@ function Invoke-Just {
     $Env:JUST = '1'
 
     #? Invoke Just if arguments passed, otherwise can dot-source in recipes w/o recurse
-    try { if ($RemainingArgs) { & $Uvx @Just @RemainingArgs } }
+    try { if ($RemainingArgs) {
+        & $Uvx @Just @RemainingArgs
+    } }
     finally { $Env:JUST = $null }
 }
 
@@ -58,8 +61,9 @@ function Sync-Uv {
     <#.SYNOPSIS
     Sync uv version.#>
     param([Parameter(Mandatory, ValueFromPipeline)][string]$Version)
-    if (Get-Command './uv' -ErrorAction 'Ignore') {
-        (./uv --color 'never' self version) -match 'uv ([\d.]+)' | Out-Null
+    $ScriptRoot = Get-ScriptRoot
+    if (Get-Command "$ScriptRoot/uv" -ErrorAction 'Ignore') {
+        (& $ScriptRoot/uv --color 'never' self version) -match 'uv ([\d.]+)' | Out-Null
         if ($Matches[1] -eq $Version) { return }
     }
     if ($IsWindows) {
@@ -110,8 +114,10 @@ function Get-Env {
     Get environment variables.#>
     param([Parameter(Mandatory, ValueFromPipeline)][string]$Name)
     process {
-        $Envs = (Get-Content 'env.json' | ConvertFrom-Json)
+        $ScriptRoot = Get-ScriptRoot
+        $Envs = (Get-Content "$ScriptRoot/env.json" | ConvertFrom-Json)
         if (($Path = $Envs.$Name) -is [string]) {
+            $Path = "$ScriptRoot/$Path"
             if ($Path.EndsWith('.json')) {
                 $RawEnviron = Get-Content $Path | ConvertFrom-Json
             }
@@ -161,6 +167,12 @@ function Get-EnvVar {
         if (!$Var) { return }
         return $Var | Select-Object -ExpandProperty 'Value'
     }
+}
+
+function Get-ScriptRoot {
+    <#.SYNOPSIS
+    Get the root of the script.#>
+    $PSScriptRoot -Replace '\\', '/'
 }
 
 #* MARK: Invoke Just

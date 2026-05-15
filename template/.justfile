@@ -175,18 +175,6 @@ ci_variables :=\
 
 #* 🟣 uv
 
-#? uv invocations
-uv_options :=\
-  '--python' + sp + quote(python_version)
-uvr :=\
-  uv + sp + 'run' + sp + '--all-packages' + sp + uv_options
-uvs :=\
-  uv + sp + 'sync' + sp + '--all-packages' + sp + uv_options
-uva :=\
-  uv + sp + 'add' + sp + uv_options
-uvrm :=\
-  uv + sp + 'remove' + sp + uv_options
-
 # 🟣 uv ...
 [group('🟣 uv')]
 uv *args:

@@ -10,6 +10,19 @@ uv :=\
 uvx :=\
   if ci!=empty { 'uvx' } else { './uvx' }
 
+#* uv
+
+uv_options :=\
+  '--python' + sp + quote(python_version)
+uvr :=\
+  uv + sp + 'run' + sp + '--all-packages' + sp + uv_options
+uvs :=\
+  uv + sp + 'sync' + sp + '--all-packages' + sp + uv_options
+uva :=\
+  uv + sp + 'add' + sp + uv_options
+uvrm :=\
+  uv + sp + 'remove' + sp + uv_options
+
 #* Shell preamble
 pre :=\
   script_pre + ';'

@@ -1,7 +1,24 @@
 {
+  //! AI chat agent settings
+  "chat.agent.enabled": false, //! Disable agent until we can usefully constrain it
+  "chat.detectParticipant.enabled": false, //! Allows "Ask" mode to "escape" ask mode and make edits via `@workspace` participant, often escaping to edit WAY MORE than it should, https://github.com/orgs/community/discussions/153443
+  "chat.mcp.autostart": "never", //! Disable MCP autostart until we're actually using it
+  "chat.tools.edits.autoApprove": { "**/*": false }, //! Just say "no" to agent auto-approve!
+  "chat.tools.global.autoApprove": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.autoApprove": { "/.*/": false }, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.autoApproveWorkspaceNpmScripts": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.enableAutoApprove": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.ignoreDefaultAutoApproveRules": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.urls.autoApprove": { "*": false }, //! Just say "no" to agent auto-approve!
+  "inlineChat.enableV2": true, //! Not working in Jupyter notebooks
+  "search.searchView.semanticSearchBehavior": "manual", //! VSCode hangs after the final find/replace operation empties the search window, kicking off slow Copilot, possibly fixed //? https://code.visualstudio.com/updates/v1_95#_sort-by-relevance-in-semantic-search-experimental
+  "chat.implicitContext.enabled": {
+    //! Often we want to ask questions without auto-adding context
+    "panel": "never",
+    "editing-session": "never"
+  },
   //! Terminal
-  //? Use PowerShell on all platforms, facilitates running template scripts
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.windows": "PowerShell", //? Use PowerShell on all platforms, facilitates running template scripts
   "terminal.integrated.defaultProfile.linux": "pwsh",
   "terminal.integrated.defaultProfile.osx": "pwsh",
   //! File excludes
@@ -16,14 +33,22 @@
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
-  "explorer.fileNesting.patterns": { "*.root": ".*, uv.lock" },
+  "explorer.fileNesting.patterns": {
+    "root.mdRt": "*.md, LICENSE",
+    "root.confRt": ".*, *.exe, *.json, *.lock, *.ps1, *.toml, *.yml, dvc.*"
+  },
   //! File associations
   "files.associations": {
     ".all-contributorsrc": "jsonc",
     ".coveragerc": "ini",
-    ".root": "plaintext",
-    "*.just": "just"
+    "*.base": "yaml",
+    "*.just": "just",
+    "root.*Rt": "markdown"
   },
+  "vsicons.associations.files": [
+    { "icon": "config", "extensions": ["confRt"] },
+    { "icon": "markdown", "extensions": ["mdRt"] }
+  ],
   //! Git
   "git.allowNoVerifyCommit": true,
   "git.commandsToLog": ["commit", "push"],
@@ -57,12 +82,49 @@
   "notebook.formatOnSave.enabled": true,
   //! Code Actions
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always"
+    "source.addTypeAnnotation": "never",
+    "source.convertImportFormat": "never",
+    "source.convertImportStar": "never",
+    "source.convertImportToModule": "never",
+    "source.fixAll.eslint": "always",
+    "source.fixAll.prettier": "always",
+    "source.fixAll.pylance": "never",
+    "source.fixAll.ruff": "always",
+    "source.fixAll": "never",
+    "source.organizeImports.ruff": "never",
+    "source.organizeImports": "never",
+    "source.renameShadowedStdlibImports": "never",
+    "source.sort.json": "never",
+    "source.unusedImports": "never"
   },
   "notebook.codeActionsOnSave": {
-    "notebook.source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
+    "notebook.source.fixAll.ruff": "explicit",
+    "notebook.source.organizeImports.ruff": "explicit",
+    "notebook.source.fixAll": "never",
+    "source.addTypeAnnotation": "never",
+    "source.convertImportFormat": "never",
+    "source.convertImportStar": "never",
+    "source.convertImportToModule": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.prettier": "explicit",
+    "source.fixAll.pylance": "never",
+    // "source.fixAll.ruff": "never", //! Warned that it leads to unexpected behavior
+    "source.fixAll": "never",
+    // "source.organizeImports.ruff": "never", //! Warned that it leads to unexpected behavior
+    "source.organizeImports": "never",
+    "source.renameShadowedStdlibImports": "never",
+    "source.sort.json": "never",
+    "source.unusedImports": "never"
+  },
+  "python.analysis.fixAll": [
+    // "source.addTypeAnnotation",
+    // "source.convertImportFormat",
+    // "source.convertImportStar",
+    // "source.unusedImports"
+  ],
+  //! JSON schemas
+  "json.schemaDownload.trustedDomains": {
+    "https://docs.renovatebot.com/renovate-schema.json": true
   },
   //! Extensions
   //* autoDocstring
@@ -116,7 +178,7 @@
     },
     {
       "tag": "*",
-      "color": "#98C379",
+      "color": "#789359",
       "strikethrough": false,
       "underline": false,
       "backgroundColor": "transparent",
@@ -142,14 +204,41 @@
       "italic": false
     }
   ],
+  //* Data Wrangler
+  "dataWrangler.defaultViewingFilterOptions": "advanced",
+  "dataWrangler.enabledFileTypes": {
+    "csv": true,
+    "jsonl": true,
+    "parquet": true,
+    "tsv": true,
+    "xls": true,
+    "xlsx": true
+  },
+  "dataWrangler.experiments.autoDetectCsvDelimiter": true,
+  "dataWrangler.experiments.copilot.enabled": true,
+  "dataWrangler.experiments.datatypes.pyspark": true,
+  "dataWrangler.experiments.fastCsvParsing": true,
+  "dataWrangler.outputRenderer.columnInsights.displayByDefault": true,
+  "dataWrangler.outputRenderer.enabled": true,
+  "dataWrangler.outputRenderer.enabledTypes": {
+    "pandas.core.frame.DataFrame": true
+  },
+  "dataWrangler.outputRenderer.pagination.defaultSize": 10,
+  "dataWrangler.panels.displayOnTabFocus": false,
+  "dataWrangler.useRelativePath": true,
   //* GitHub Actions
   "github-actions.workflows.pinned.workflows": [".github/workflows/ci.yml"],
   //* Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
+  //* Marimo
+  "marimo.telemetry": false,
+  "marimo.disableUvIntegration": true,
   //* MyST
   "myst.preview.extensions": ["colon_fence", "dollarmath"],
   //* Python
+  "python.createEnvironment.contentButton": "hide",
+  "python.createEnvironment.trigger": "off",
   "python.terminal.activateEnvInCurrentTerminal": false,
   "python.terminal.activateEnvironment": false,
   //* Pylance
@@ -188,14 +277,9 @@
     "generateDocstring": true,
     "generateSymbol": true
   },
-  "python.analysis.fixAll": [
-    "source.convertImportFormat",
-    "source.unusedImports"
-  ],
   "python.analysis.packageIndexDepths": [
     { "name": "", "depth": 16, "includeAllSymbols": true }
   ],
-
   //* PowerShell
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,

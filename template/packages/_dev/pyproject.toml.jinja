@@ -1,6 +1,8 @@
 [build-system]
-requires = ["uv-build==0.7.2"]
+requires = ["uv-build==0.11.11"]
 build-backend = "uv_build"
+[tool.uv.build-backend]
+module-root = "."
 
 [project]
 name = "{{ project_name }}-dev"
@@ -28,6 +30,6 @@ dependencies = [
 [tool.fawltydeps]
 deps = ["packages/_dev/pyproject.toml"]
 code = ["packages/_dev", "docs", "tests"]
-ignore_undeclared = ["{{ package_name }}_dev", "{{ package_name }}_pipeline", "{{ package_name }}", "toml"]
+ignore_undeclared = ["{{ package_name }}", "{{ package_name }}_dev", "{{ package_name }}_pipeline", "{{ package_name }}"]
 [tool.fawltydeps.custom_mapping]
 ruamel-yaml = ["ruamel"]

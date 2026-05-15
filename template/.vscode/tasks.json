@@ -1,7 +1,13 @@
 {
   "version": "2.0.0",
   "type": "shell",
-  "problemMatcher": [],
+  "problemMatcher": ["$python"],
+  "presentation": {
+    "clear": true,
+    "close": true,
+    "group": "tasks",
+    "reveal": "silent"
+  },
   "inputs": [
     {
       "id": "args",
@@ -59,6 +65,56 @@
     }
   ],
   "tasks": [
+    {
+      "label": "Run pytest",
+      "runOptions": { "runOn": "folderOpen" },
+      "presentation": { "group": "background", "reveal": "never" },
+      "icon": { "id": "beaker" },
+      "command": "./j.ps1 proj::watch-src-and-tests",
+      "group": { "kind": "test", "isDefault": true },
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "base": "$python",
+          "source": "pytest",
+          "background": {
+            "beginsPattern": "=+ test session starts =+",
+            "endsPattern": "=+ (?:\\d+ passed|\\d+ failed|no tests ran|\\d+ deselected).* =+"
+          }
+        }
+      ]
+    },
+    {
+      "label": "Run ruff",
+      "runOptions": { "runOn": "folderOpen" },
+      "presentation": { "group": "background", "reveal": "never" },
+      "icon": { "id": "check" },
+      "command": "./j.ps1 tool-ruff --watch --output-format github",
+      "isBackground": true,
+      "problemMatcher": [
+        {
+          "source": "Ruff",
+          "owner": "Ruff",
+          "severity": "warning",
+          "background": {
+            "beginsPattern": "\\[[^\\]]+\\] Found \\d+ errors\\. Watching for file changes\\.",
+            "endsPattern": "^$"
+          },
+          "pattern": [
+            {
+              "regexp": "^::\\w+ title=ruff \\(([^)]+)\\),file=[^,]+,line=(\\d+),col=(\\d+),endLine=(\\d+),endColumn=(\\d+)::([^:]+):\\d+:\\d+: [^\\s]+ (.*)$",
+              "code": 1,
+              "line": 2,
+              "column": 3,
+              "endLine": 4,
+              "endColumn": 5,
+              "file": 6,
+              "message": 7
+            }
+          ]
+        }
+      ]
+    },
     //! VSCode startup
     {
       "label": "con ⚡👥 Contributor environment setup on folder open",

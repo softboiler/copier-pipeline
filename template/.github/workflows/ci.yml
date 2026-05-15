@@ -99,7 +99,7 @@ jobs:
         with:
           version: "${{ needs.env.outputs.uv_version }}"
           enable-cache: true
-      - run: "./j.ps1 ci tool-ty"
+      - run: "./j.ps1 ci tool-ty --error-on-warning"
   test:
     needs: "env"
     strategy:
@@ -109,8 +109,7 @@ jobs:
           - "ubuntu-24.04"
           - "windows-2025"
         python:
-          - "3.11"
-          - "3.12"
+          - "3.14"
     runs-on: "${{ matrix.runner }}"
     steps:
       - uses: "actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332" # v4.1.7

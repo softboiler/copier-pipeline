@@ -1,0 +1,3 @@
+Facilitates collapsible, folder-like nesting of files at the root of the project.
+
+See `explorer.fileNesting.*` settings in `.vscode/settings.json`.
