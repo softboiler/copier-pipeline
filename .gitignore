@@ -7,9 +7,13 @@
 /uv.exe
 /uv.exe.previous.exe
 /uvx
-/uv.previous
+/uvx.previous
 /uvx.exe
-/uv.exe.previous.exe
+/uvx.exe.previous.exe
+/uvw
+/uvw.previous
+/uvw.exe
+/uvw.exe.previous.exe
 # Logs
 log.jsonl
 # Dummy files for testing recipes

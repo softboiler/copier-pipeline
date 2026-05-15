@@ -4,9 +4,25 @@
     "https://json.schemastore.org/github-workflow.json": ["*.yml.jinja"]
   },
   //* ---------------------------------------------------------------------------- * //
+  //! AI chat agent settings
+  "chat.agent.enabled": false, //! Disable agent until we can usefully constrain it
+  "chat.detectParticipant.enabled": false, //! Allows "Ask" mode to "escape" ask mode and make edits via `@workspace` participant, often escaping to edit WAY MORE than it should, https://github.com/orgs/community/discussions/153443
+  "chat.mcp.autostart": "never", //! Disable MCP autostart until we're actually using it
+  "chat.tools.edits.autoApprove": { "**/*": false }, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.autoApprove": { "/.*/": false }, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.autoApproveWorkspaceNpmScripts": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.enableAutoApprove": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.terminal.ignoreDefaultAutoApproveRules": false, //! Just say "no" to agent auto-approve!
+  "chat.tools.urls.autoApprove": { "*": false }, //! Just say "no" to agent auto-approve!
+  "inlineChat.enableV2": true, //! Not working in Jupyter notebooks
+  "search.searchView.semanticSearchBehavior": "manual", //! VSCode hangs after the final find/replace operation empties the search window, kicking off slow Copilot, possibly fixed //? https://code.visualstudio.com/updates/v1_95#_sort-by-relevance-in-semantic-search-experimental
+  "chat.implicitContext.enabled": {
+    //! Often we want to ask questions without auto-adding context
+    "panel": "never",
+    "editing-session": "never"
+  },
   //! Terminal
-  //? Use PowerShell on all platforms, facilitates running template scripts
-  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.defaultProfile.windows": "PowerShell", //? Use PowerShell on all platforms, facilitates running template scripts
   "terminal.integrated.defaultProfile.linux": "pwsh",
   "terminal.integrated.defaultProfile.osx": "pwsh",
   //! File excludes
@@ -16,22 +32,38 @@
     "**/.jupyter_cache": true,
     "**/.pytest_cache": true
   },
-  "search.exclude": { "uv.lock": true },
+  "search.exclude": {
+    "uv.lock": true,
+    "packages/templater-obsidian/**": true //? Obsidian templater
+  },
   //! File nesting
   "explorer.sortOrder": "foldersNestsFiles",
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
-  "explorer.fileNesting.patterns": { "*.root": ".*, uv.lock" },
+  "explorer.fileNesting.patterns": {
+    "root.mdRt": "*.md, LICENSE",
+    "root.tsRt": "package.json, eslint.config.mjs, tsconfig.json",
+    "root.confRt": ".*, *.exe, *.json, *.lock, *.ps1, *.toml, *.yml, dvc.*"
+  },
   //! File associations
   "files.associations": {
     ".all-contributorsrc": "jsonc",
     ".coveragerc": "ini",
-    ".root": "plaintext",
-    "*.just": "just"
+    "*.base": "yaml",
+    "*.just": "just",
+    "root.*Rt": "markdown"
   },
+  "vsicons.associations.files": [
+    { "icon": "config", "extensions": ["confRt"] },
+    { "icon": "markdown", "extensions": ["mdRt"] },
+    { "icon": "typescript", "extensions": ["tsRt"] }
+  ],
   //! Git
   "git.allowNoVerifyCommit": true,
+  "git.commandsToLog": ["commit", "push"],
   "git.confirmNoVerifyCommit": false,
+  "git.diagnosticsCommitHook.enabled": true,
+  "git.diagnosticsCommitHook.sources": { "*": "error" },
   //! Line-width
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 88,
@@ -59,16 +91,75 @@
   "notebook.formatOnSave.enabled": true,
   //! Code Actions
   "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.organizeImports": "always"
+    "source.addTypeAnnotation": "never",
+    "source.convertImportFormat": "never",
+    "source.convertImportStar": "never",
+    "source.convertImportToModule": "never",
+    "source.fixAll.eslint": "always",
+    "source.fixAll.prettier": "always",
+    "source.fixAll.pylance": "never",
+    "source.fixAll.ruff": "always",
+    "source.fixAll": "never",
+    "source.organizeImports.ruff": "never",
+    "source.organizeImports": "never",
+    "source.renameShadowedStdlibImports": "never",
+    "source.sort.json": "never",
+    "source.unusedImports": "never"
   },
   "notebook.codeActionsOnSave": {
-    "notebook.source.fixAll": "explicit",
-    "source.organizeImports": "explicit"
+    "notebook.source.fixAll.ruff": "explicit",
+    "notebook.source.organizeImports.ruff": "explicit",
+    "notebook.source.fixAll": "never",
+    "source.addTypeAnnotation": "never",
+    "source.convertImportFormat": "never",
+    "source.convertImportStar": "never",
+    "source.convertImportToModule": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.prettier": "explicit",
+    "source.fixAll.pylance": "never",
+    // "source.fixAll.ruff": "never", //! Warned that it leads to unexpected behavior
+    "source.fixAll": "never",
+    // "source.organizeImports.ruff": "never", //! Warned that it leads to unexpected behavior
+    "source.organizeImports": "never",
+    "source.renameShadowedStdlibImports": "never",
+    "source.sort.json": "never",
+    "source.unusedImports": "never"
+  },
+  "python.analysis.fixAll": [
+    // "source.addTypeAnnotation",
+    // "source.convertImportFormat",
+    // "source.convertImportStar",
+    // "source.unusedImports"
+  ],
+  //! JSON schemas
+  "json.schemaDownload.trustedDomains": {
+    "https://docs.renovatebot.com/renovate-schema.json": true
   },
   //! Extensions
   //* autoDocstring
   "autoDocstring.docstringFormat": "numpy-notypes",
+  //* Data Wrangler
+  "dataWrangler.defaultViewingFilterOptions": "advanced",
+  "dataWrangler.enabledFileTypes": {
+    "csv": true,
+    "jsonl": true,
+    "parquet": true,
+    "tsv": true,
+    "xls": true,
+    "xlsx": true
+  },
+  "dataWrangler.experiments.autoDetectCsvDelimiter": true,
+  "dataWrangler.experiments.copilot.enabled": true,
+  "dataWrangler.experiments.datatypes.pyspark": true,
+  "dataWrangler.experiments.fastCsvParsing": true,
+  "dataWrangler.outputRenderer.columnInsights.displayByDefault": true,
+  "dataWrangler.outputRenderer.enabled": true,
+  "dataWrangler.outputRenderer.enabledTypes": {
+    "pandas.core.frame.DataFrame": true
+  },
+  "dataWrangler.outputRenderer.pagination.defaultSize": 10,
+  "dataWrangler.panels.displayOnTabFocus": false,
+  "dataWrangler.useRelativePath": true,
   //* Better Comments
   "better-comments.tags": [
     {
@@ -118,7 +209,7 @@
     },
     {
       "tag": "*",
-      "color": "#98C379",
+      "color": "#789359",
       "strikethrough": false,
       "underline": false,
       "backgroundColor": "transparent",
@@ -149,9 +240,14 @@
   //* Jupyter Notebooks
   "jupyter.notebookFileRoot": "${workspaceFolder}",
   "jupyter.showVariableViewWhenDebugging": true,
+  //* Marimo
+  "marimo.telemetry": false,
+  "marimo.disableUvIntegration": true,
   //* MyST
   "myst.preview.extensions": ["colon_fence", "dollarmath"],
   //* Python
+  "python.createEnvironment.contentButton": "hide",
+  "python.createEnvironment.trigger": "off",
   "python.terminal.activateEnvInCurrentTerminal": false,
   "python.terminal.activateEnvironment": false,
   //* Pylance
@@ -190,14 +286,9 @@
     "generateDocstring": true,
     "generateSymbol": true
   },
-  "python.analysis.fixAll": [
-    "source.convertImportFormat",
-    "source.unusedImports"
-  ],
   "python.analysis.packageIndexDepths": [
     { "name": "", "depth": 16, "includeAllSymbols": true }
   ],
-
   //* PowerShell
   "powershell.startAutomatically": false,
   "powershell.promptToUpdatePowerShell": false,
@@ -214,6 +305,7 @@
   "rewrap.wholeComment": false,
   //* Sourcery
   "sourcery.codeLens": false,
+  "sourcery.suggestFixes": false,
   //* Ty
   "ty.importStrategy": "fromEnvironment",
   "ty.diagnosticMode": "workspace",
@@ -281,8 +373,14 @@
     "JUST_EXPLAIN": "true",
     "JUST_LIST_SUBMODULES": "true",
     "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.41.0",
+    "JUST_VERSION": "1.50.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
+    "PROJECT_MARIMO_VERSION": "0.23.5",
+    "PROJECT_MARIMO_VSCODE_VERSION": "0.13.1",
+    "PROJECT_RUFF_VERSION": "0.15.10",
+    "PROJECT_RUFF_VSCODE_VERSION": "2026.40.0",
+    "PROJECT_TY_VERSION": "0.0.34",
+    "PROJECT_TY_VSCODE_VERSION": "2026.44.0",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
@@ -291,7 +389,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
+    "UV_VERSION": "0.11.11"
   },
   //! Please only update by modifying `env.json` then running `./j.ps1 con` to sync
   "terminal.integrated.env.osx": {
@@ -305,8 +403,14 @@
     "JUST_EXPLAIN": "true",
     "JUST_LIST_SUBMODULES": "true",
     "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.41.0",
+    "JUST_VERSION": "1.50.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
+    "PROJECT_MARIMO_VERSION": "0.23.5",
+    "PROJECT_MARIMO_VSCODE_VERSION": "0.13.1",
+    "PROJECT_RUFF_VERSION": "0.15.10",
+    "PROJECT_RUFF_VSCODE_VERSION": "2026.40.0",
+    "PROJECT_TY_VERSION": "0.0.34",
+    "PROJECT_TY_VSCODE_VERSION": "2026.44.0",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
@@ -315,7 +419,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
+    "UV_VERSION": "0.11.11"
   },
   //! Please only update by modifying `env.json` then running `./j.ps1 con` to sync
   "terminal.integrated.env.windows": {
@@ -329,8 +433,14 @@
     "JUST_EXPLAIN": "true",
     "JUST_LIST_SUBMODULES": "true",
     "JUST_UNSORTED": "true",
-    "JUST_VERSION": "1.41.0",
+    "JUST_VERSION": "1.50.0",
     "POWERSHELL_YAML_VERSION": "0.4.12",
+    "PROJECT_MARIMO_VERSION": "0.23.5",
+    "PROJECT_MARIMO_VSCODE_VERSION": "0.13.1",
+    "PROJECT_RUFF_VERSION": "0.15.10",
+    "PROJECT_RUFF_VSCODE_VERSION": "2026.40.0",
+    "PROJECT_TY_VERSION": "0.0.34",
+    "PROJECT_TY_VSCODE_VERSION": "2026.44.0",
     "PYDEVD_DISABLE_FILE_VALIDATION": "1",
     "PYTHONIOENCODING": "utf-8:strict",
     "PYTHONPYCACHEPREFIX": ".cache/.pycache",
@@ -339,7 +449,7 @@
     "PYTHONWARNINGS": "ignore",
     "UV_INSTALL_DIR": ".",
     "UV_NO_MODIFY_PATH": "1",
-    "UV_VERSION": "0.7.2"
+    "UV_VERSION": "0.11.11"
   },
   //! Other
   //? Other automatically added settings below
