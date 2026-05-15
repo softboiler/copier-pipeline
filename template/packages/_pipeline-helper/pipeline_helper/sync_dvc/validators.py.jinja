@@ -97,9 +97,9 @@ def dvc_add_param(
         if isinstance(value, bool) or (
             not isinstance(value, str) and isinstance(value, Sequence)
         ):
-            args = [f"${{{const.table_key}.{name}}}"]
+            args = [f"{% raw %}${{{const.table_key}.{name}}}{% endraw %}"]
         else:
-            args = [f"--{arg}", f"${{{const.table_key}.{name}}}"]
+            args = [f"--{arg}", f"{% raw %}${{{const.table_key}.{name}}}{% endraw %}"]
         dvc.stage.cmd = sep.join([
             *(
                 dvc.stage.cmd
